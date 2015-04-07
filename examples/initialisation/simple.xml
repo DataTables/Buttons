@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="2">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'B<"clear">lfrtip',
+		buttons: [
+			'csv', 'print', {
+				extend: 'collection',
+				buttons: [ 'pdf', 'copy' ]
+			}
+		]
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Simple initialisation</title>
+
+<info><![CDATA[
+
+
+
+]]></info>
+
+</dt-example>
+

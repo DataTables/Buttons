@@ -1,0 +1,128 @@
+
+@mixin dtb-three-stop-gradient($fromColor, $middleColor, $toColor) {
+	background-color: $toColor; /* Fallback */
+	background-image: -webkit-linear-gradient(top, $fromColor, $middleColor, $toColor); /* Chrome 10+, Saf5.1+, iOS 5+ */
+	background-image:    -moz-linear-gradient(top, $fromColor, $middleColor, $toColor); /* FF3.6 */
+	background-image:     -ms-linear-gradient(top, $fromColor, $middleColor, $toColor); /* IE10 */
+	background-image:      -o-linear-gradient(top, $fromColor, $middleColor, $toColor); /* Opera 11.10+ */
+	background-image:         linear-gradient(top, $fromColor, $middleColor, $toColor);
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#{nth( $fromColor, 1 )}', EndColorStr='#{nth( $toColor, 1 )}');
+}
+
+@mixin dtb-radial-gradient ($fromColor, $toColor ) {
+	background: $toColor; /* Fallback */
+	background:     -ms-radial-gradient(center, ellipse farthest-corner, $fromColor 0%, $toColor 100%); /* IE10 Consumer Preview */ 
+	background:    -moz-radial-gradient(center, ellipse farthest-corner, $fromColor 0%, $toColor 100%); /* Firefox */ 
+	background:      -o-radial-gradient(center, ellipse farthest-corner, $fromColor 0%, $toColor 100%); /* Opera */ 
+	background: -webkit-gradient(radial, center center, 0, center center, 497, color-stop(0, $fromColor), color-stop(1, $toColor)); /* Webkit (Safari/Chrome 10) */ 
+	background: -webkit-radial-gradient(center, ellipse farthest-corner, $fromColor 0%, $toColor 100%); /* Webkit (Chrome 11+) */ 
+	background: radial-gradient(ellipse farthest-corner at center, $fromColor 0%, $toColor 100%); /* W3C Markup, IE10 Release Preview */ 
+}
+
+
+
+button.dt-button,
+div.dt-button,
+a.dt-button {
+	position: relative;
+	display: inline-block;
+	box-sizing: border-box;
+	margin-right: 5px;
+	padding: 5px 10px;
+	border: 1px solid #999;
+	border-radius: 2px;
+	cursor: pointer;
+	font-size: 0.88em;
+	color: black;
+	box-shadow: 1px 1px 3px #ccc;
+	@include dtb-three-stop-gradient(#ffffff 0%,#f3f3f3 89%,#f9f9f9 100%);
+
+	&.disabled {
+		color: #999;
+		border: 1px solid #d0d0d0;
+		cursor: default;
+		@include dtb-three-stop-gradient(#ffffff 0%,#f9f9f9 89%,#fafafa 100%);
+	}
+
+	&:hover:not(.disabled) {
+		border: 1px solid #666;
+		text-decoration: none !important;
+		box-shadow: 1px 1px 3px #999;
+		@include dtb-three-stop-gradient(#f3f3f3 0%,#e2e2e2 89%,#f4f4f4 100%);
+	}
+
+	&:focus:not(.disabled) {
+		border: 1px solid #426c9e;
+		text-shadow: 0 1px 0 #c4def1;
+		outline: none;
+		@include dtb-three-stop-gradient(#a3d0ef 0%, #79ace9 65%, #a3d0ef 100%);
+	}
+}
+
+
+.dt-button embed { 
+	outline: none;
+}
+
+
+div.dt-buttons {
+	position: relative;
+	float: right;
+	margin-bottom: 1em;
+}
+
+div.dt-button-collection {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 150px;
+	margin-top: 15px;
+	padding: 8px 8px 4px 8px;
+	border: 1px solid #ccc;
+	border: 1px solid rgba( 0, 0, 0, 0.4 );
+	background-color: #f3f3f3;
+	background-color: rgba( 255, 255, 255, 0.3 );
+	overflow: hidden;
+	z-index: 2002;
+	border-radius: 5px;
+	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+
+	z-index: 2002;
+
+	button.dt-button,
+	div.dt-button,
+	a.dt-button {
+		position: relative;
+		left: 0;
+		right: 0;
+
+		display: block;
+		float: none;
+		margin-bottom: 4px;
+		margin-right: 0;
+	}
+}
+
+div.dt-button-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	@include dtb-radial-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7) );
+
+	z-index: 2001;
+}
+
+
+
+
+@media screen and (max-width: 640px) {
+	div.dt-buttons {
+		float: none !important;
+		text-align: center;
+	}
+}
+
+
