@@ -9,16 +9,19 @@ var factory = function( $, DataTable ) {
 
 
 
-var Buttons = function( dt, buttons )
+var Buttons = function( dt, config )
 {
-	this.c = $.extend( true, {}, Buttons.defaults );
+	this.c = $.extend( true, {}, Buttons.defaults, config );
 
-	if ( buttons ) {
-		this.c.buttons = buttons;
+	// Don't want a deep copy for the buttons
+	if ( config.buttons ) {
+		this.c.buttons = config.buttons;
 	}
 
 	this.s = {
-		dt: new DataTable.Api( dt )
+		dt: new DataTable.Api( dt ),
+		buttons: [],
+		subButtons: []
 	};
 
 	this.dom = {
@@ -30,9 +33,76 @@ var Buttons = function( dt, buttons )
 };
 
 Buttons.prototype = {
-	node: function ()
+	container: function ()
 	{
 		return this.dom.container;
+	},
+
+
+	disable: function ( idx ) {
+		var button = this._indexToButton( idx );
+		button.node.addClass( 'disabled' );
+
+		return this;
+	},
+
+	enable: function ( idx, flag )
+	{
+		if ( flag === false ) {
+			return this.disable( idx );
+		}
+
+		var button = this._indexToButton( idx );
+		button.node.removeClass( 'disabled' );
+
+		return this;
+	},
+
+	name: function ()
+	{
+		this.c.name;
+	},
+
+	node: function ( idx )
+	{
+		var button = this._indexToButton( idx );
+		return button.node;
+	},
+
+	toIndex: function ( node )
+	{
+		var i, ien, j, jen;
+		var buttons = this.s.buttons;
+		var subButtons = this.s.subButtons;
+
+		// Loop the main buttons first
+		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+			if ( buttons[i].node[0] === node ) {
+				return i+'';
+			}
+		}
+
+		// Then the sub-buttons
+		for ( i=0, ien=subButtons.length ; i<ien ; i++ ) {
+			for ( j=0, jen=subButtons[i].length ; j<jen ; j++ ) {
+				if ( subButtons[i][j].node[0] === node ) {
+					return i+'-'+j;
+				}
+			}
+		}
+	},
+
+	_indexToButton: function ( idx )
+	{
+		if ( typeof idx === 'number' ) {
+			return this.s.buttons[ idx ];
+		}
+		else if ( idx.indexOf('-') === -1 ) {
+			return this.s.buttons[ idx*1 ];
+		}
+
+		var idxs = idx.split('-');
+		return this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ];
 	},
 
 
@@ -40,12 +110,26 @@ Buttons.prototype = {
 	{
 		var that = this;
 		var dt = this.s.dt;
+		var dtSettings = dt.settings()[0];
+
+		if ( ! dtSettings._buttons ) {
+			dtSettings._buttons = [];
+		}
+
+		if ( $.inArray( this.c.name, $.map( dtSettings._buttons, function (v) { return v.name; } ) ) !== -1 ) {
+			throw 'A button set of this name ('+this.c.name+') is already attached to this table';
+		}
+
+		dtSettings._buttons.push( {
+			inst: this,
+			name: this.c.name
+		} );
 
 		this._buildButtons( this.c.buttons );
 	},
 
 
-	_buildButtons: function ( buttons, container )
+	_buildButtons: function ( buttons, container, collectionCounter )
 	{
 		var dtButtons = DataTable.ext.buttons;
 
@@ -79,12 +163,26 @@ Buttons.prototype = {
 
 			container.append( button );
 
+			if ( collectionCounter === undefined ) {
+				this.s.buttons.push( {
+					node: button,
+					conf: conf
+				} );
+				this.s.subButtons.push( [] );
+			}
+			else {
+				this.s.subButtons[ collectionCounter ].push( {
+					node: button,
+					conf: conf
+				} );
+			}
+
 			if ( conf.buttons ) {
 				var collectionDom = this.c.dom.collection;
 				conf._collection = $('<'+collectionDom.tag+'/>')
 					.addClass( collectionDom.className );
 
-				this._buildButtons( conf.buttons, conf._collection );
+				this._buildButtons( conf.buttons, conf._collection, i );
 			}
 		}
 	},
@@ -120,6 +218,7 @@ Buttons.prototype = {
 
 Buttons.defaults = {
 	buttons: [ 'copy', 'csv', 'pdf', 'print' ],
+	name: 'main',
 	dom: {
 		container: {
 			tag: 'div',
@@ -148,7 +247,7 @@ Buttons.defaults = {
  * @name Buttons.version
  * @static
  */
-Buttons.version = '1.0.0';
+Buttons.version = '0.0.1-dev';
 
 
 
@@ -242,11 +341,231 @@ $.fn.dataTable.Buttons = Buttons;
 $.fn.DataTable.Buttons = Buttons;
 
 
+function groupSelector ( group, buttons )
+{
+	if ( ! group ) {
+		return $.map( buttons, function ( v ) {
+			return v.inst;
+		} );
+	}
+
+	var ret = [];
+	var names = $.map( buttons, function ( v ) {
+		return v.name;
+	} );
+
+	// Flatten the group selector into an array of single options
+	var process = function ( input ) {
+		if ( $.isArray( input ) ) {
+			for ( var i=0, ien=input.length ; i<ien ; i++ ) {
+				process( input[i] );
+			}
+			return;
+		}
+
+		if ( typeof input === 'string' ) {
+			if ( input.indexOf( ',' ) !== 0 ) {
+				// String selector, list of names
+				process( input.split(',') );
+			}
+			else {
+				// String selector individual name
+				var idx = $.inArray( $.trim(input), names );
+
+				if ( idx !== -1 ) {
+					ret.push( buttons[ idx ].inst );
+				}
+			}
+		}
+		else if ( typeof input === 'number' ) {
+			// Index selector
+			ret.push( buttons[ input ].inst );
+		}
+	};
+	
+	process( group );
+
+	return ret;
+}
+
+
+function buttonSelector ( insts, selector )
+{
+	var ret = [];
+	var run = function ( selector, inst ) {
+		var i, ien, j, jen;
+		var buttons = [];
+
+		$.each( inst.s.buttons, function (i, v) {
+			buttons.push( {
+				node: v.node[0],
+				name: v.name
+			} );
+		} );
+
+		$.each( inst.s.subButtons, function (i, v) {
+			$.each( v, function (j, w) {
+				buttons.push( {
+					node: w.node[0],
+					name: w.name
+				} );
+			} );
+		} );
+
+		var nodes = $.map( buttons, function (v) {
+			return v.node;
+		} );
+
+		if ( $.isArray( selector ) || selector instanceof $ ) {
+			for ( i=0, ien=selector.length ; i<ien ; i++ ) {
+				run( selector[i], inst );
+			}
+			return;
+		}
+
+		if ( typeof selector === 'number' ) {
+			// Main button index selector
+			ret.push( {
+				inst: inst,
+				idx: selector
+			} );
+		}
+		else if ( typeof selector === 'string' ) {
+			if ( selector.indexOf( ',' ) !== -1 ) {
+				// Split
+				var a = selector.split(',');
+
+				for ( i=0, ien=a.length ; i<ien ; i++ ) {
+					run( $.trim(a[i]), inst );
+				}
+			}
+			else if ( selector.match( /^\d+\-\d+$/ ) ) {
+				// Sub-button index selector
+				ret.push( {
+					inst: inst,
+					idx: selector
+				} );
+			}
+			else if ( selector.indexOf( ':name' ) !== -1 ) {
+				// Button name selector
+				var name = selector.replace( ':name', '' );
+
+				for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+					if ( buttons[i].name === name ) {
+						ret.push( {
+							inst: inst,
+							idx: inst.toIndex( buttons[i].node )
+						} );
+					}
+				}
+			}
+			else {
+				// jQuery selector on the nodes
+				$( nodes ).filter( selector ).each( function () {
+					ret.push( {
+						inst: inst,
+						idx: inst.toIndex( this )
+					} );
+				} );
+			}
+		}
+		else if ( typeof selector === 'object' && selector.nodeName ) {
+			// Node selector
+			var idx = $.inArray( selector, nodes );
+
+			if ( idx !== -1 ) {
+				ret.push( {
+					inst: inst,
+					idx: inst.toIndex( nodes[ idx ] )
+				} );
+			}
+		}
+	};
+
+
+	for ( var i=0, ien=insts.length ; i<ien ; i++ ) {
+		var inst = insts[i];
+
+		run( selector, inst );
+	}
+
+	return ret;
+}
+
 
 // DataTables 1.10 API
-DataTable.Api.register( 'buttons()', function () {
+// xxx how to handle the case whereby there are multiple button sets for a table
+// name them? indexes? if no button set option is passed in, then always assume
+// index 0. Buttons can be hosted by one table only (actions could be used to
+// modify multiple)
+DataTable.Api.register( 'buttons()', function ( group, selector ) {
+	// Argument shifting
+	if ( selector === undefined ) {
+		selector = group;
+		group = undefined;
+	}
 
+	return this.iterator( true, 'table', function ( ctx ) {
+		if ( ctx._buttons ) {
+			var buttonInsts = groupSelector( group, ctx._buttons );
+
+			return buttonSelector( buttonInsts, selector );
+		}
+	}, true );
 } );
+
+
+DataTable.Api.register( 'buttons().enable()', function ( flag ) {
+	return this.each( function ( set ) {
+		set.inst.enable( set.idx, flag );
+	} );
+} );
+
+DataTable.Api.register( 'buttons().disable()', function () {
+	return this.each( function ( set ) {
+		set.inst.disable( set.idx );
+	} );
+} );
+
+
+DataTable.Api.register( 'button()', function ( group, selector ) {
+	// just run buttons() and truncate
+	var buttons = this.buttons( group, selector );
+
+	if ( buttons.length > 1 ) {
+		buttons.splice( 1, buttons.length );
+	}
+
+	return buttons;
+} );
+
+DataTable.Api.register( 'button().enable()', function ( flag ) {
+	return this.each( function ( set ) {
+		set.inst.enable( set.idx, flag );
+	} );
+} );
+
+DataTable.Api.register( 'button().disable()', function () {
+	return this.each( function ( set ) {
+		set.inst.disable( set.idx );
+	} );
+} );
+
+DataTable.Api.register( 'button().node()', function () {
+	return this.map( function ( set ) {
+		return set.inst.node( set.idx );
+	} );
+} );
+
+// buttons()
+// 
+// button()
+// 
+// button().enable()
+// button().disable()
+// button().text()
+// button().action()
+// button().node()
 
 
 // Attach a listener to the document which listens for DataTables initialisation
@@ -256,19 +575,26 @@ $(document).on( 'init.dt.dtb', function (e, settings, json) {
 		return;
 	}
 
+/* xxx
 	if ( settings.oInit.buttons ||
 		 DataTable.defaults.buttons
 	) {
 
 	}
+*/
 } );
 
 
 DataTable.ext.feature.push( {
 	fnInit: function( settings ) {
 		var api = new DataTable.Api( settings );
-		var opts = api.init().buttons || {};
-		return new Buttons( api, opts ).node();
+		var opts = api.init().buttons;
+
+		if ( $.isArray( opts ) ) {
+			opts = { buttons: opts };
+		}
+
+		return new Buttons( api, opts ).container();
 	},
 	cFeature: "B"
 } );
