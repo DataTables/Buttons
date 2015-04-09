@@ -33,6 +33,37 @@ var Buttons = function( dt, config )
 };
 
 Buttons.prototype = {
+	action: function ( idx, action )
+	{
+		var button = this._indexToButton( idx ).conf;
+
+		if ( action === undefined ) {
+			return button.action;
+		}
+
+		button.action = action;
+
+		return this;
+	},
+
+
+	add: function ( idx, config )
+	{
+		if ( typeof idx === 'string' && idx.indexOf('-') !== -1 ) {
+			var idxs = idx.split('-');
+			this.c.buttons[idxs[0]*1].buttons.splice( idxs[1]*1, 0, config );
+		}
+		else {
+			this.c.buttons.splice( idx*1, 0, config );
+		}
+
+		this.dom.container.empty();
+		this._buildButtons( this.c.buttons );
+
+		return this;
+	},
+
+
 	container: function ()
 	{
 		return this.dom.container;
@@ -69,6 +100,68 @@ Buttons.prototype = {
 		return button.node;
 	},
 
+	removePrep: function ( idx )
+	{
+		if ( typeof idx === 'number' || idx.indexOf('-') === -1 ) {
+			this.s.buttons[ idx*1 ].node.remove();
+			this.s.buttons[ idx*1 ] = null;
+		}
+		else {
+			var idxs = idx.split('-');
+			this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ].node.remove();
+			this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ] = null;
+		}
+
+		return this;
+	},
+
+	removeCommit: function ()
+	{
+		var buttons = this.s.buttons;
+		var subButtons = this.s.subButtons;
+		var i, ien, j;
+
+		for ( i=buttons.length-1 ; i>=0 ; i-- ) {
+			if ( buttons[i] === null ) {
+				buttons.splice( i, 1 );
+				subButtons.splice( i, 1 );
+				this.c.buttons.splice( i, 1 );
+			}
+		}
+
+		for ( i=0, ien=subButtons.length ; i<ien ; i++ ) {
+			for ( j=subButtons[i].length-1 ; j>=0 ; j-- ) {
+				if ( subButtons[i][j] === null ) {
+					subButtons[i].splice( j, 1 );
+					this.c.buttons[i].buttons.splice( j, 1 );
+				}
+			}
+		}
+
+		return this;
+	},
+
+	text: function ( idx, label )
+	{
+		var button = this._indexToButton( idx );
+		var linerTag = this.c.dom.buttonLiner.tag;
+
+		if ( label === undefined ) {
+			return button.conf.text;
+		}
+
+		button.conf.text = label;
+
+		if ( linerTag ) {
+			button.node.children( linerTag ).html( label );
+		}
+		else {
+			button.node.html( label );
+		}
+
+		return this;
+	},
+
 	toIndex: function ( node )
 	{
 		var i, ien, j, jen;
@@ -94,10 +187,7 @@ Buttons.prototype = {
 
 	_indexToButton: function ( idx )
 	{
-		if ( typeof idx === 'number' ) {
-			return this.s.buttons[ idx ];
-		}
-		else if ( idx.indexOf('-') === -1 ) {
+		if ( typeof idx === 'number' || idx.indexOf('-') === -1 ) {
 			return this.s.buttons[ idx*1 ];
 		}
 
@@ -135,6 +225,8 @@ Buttons.prototype = {
 
 		if ( ! container ) {
 			container = this.dom.container;
+			this.s.buttons = [];
+			this.s.subButtons = [];
 		}
 
 		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
@@ -145,13 +237,13 @@ Buttons.prototype = {
 			}
 
 			if ( typeof conf === 'string' ) {
-				conf = $.extend( true, {}, dtButtons[ conf ] );
+				conf = $.extend( {}, dtButtons[ conf ] );
 			}
 
 			while ( conf.extend ) {
 				// xxx what if dtButtons[ conf.extend ] is a function? or a string (why would it be a string?)
 				// xxx drop the function and string resolver into a function?
-				conf = $.extend( true, {}, dtButtons[ conf.extend ], conf );
+				conf = $.extend( {}, dtButtons[ conf.extend ], conf );
 
 				// Although we want the `conf` object to overwrite almost all of
 				// the properties of the object being extended, the `extend`
@@ -273,6 +365,8 @@ $.extend( DataTable.ext.buttons, {
 					left: hostOffset.left
 				} );
 
+			// xxx only do this if it is position: absolute
+			// xxx add css options for two-column three-column
 			var listRight = hostOffset.left + config._collection.outerWidth();
 			var tableRight = tableContainer.offset().left + tableContainer.width();
 			if ( listRight > tableRight ) {
@@ -290,7 +384,7 @@ $.extend( DataTable.ext.buttons, {
 			setTimeout( function () {
 				$(document).on( 'click.dtb-collection', function (e) {
 					if ( ! $(e.target).parents().andSelf().filter( config._collection ).length ) {
-						config._collection.remove();
+						config._collection.detach();
 
 						if ( background ) {
 							background.remove();
@@ -423,7 +517,16 @@ function buttonSelector ( insts, selector )
 			return;
 		}
 
-		if ( typeof selector === 'number' ) {
+		if ( selector === undefined || selector === '*' ) {
+			// Select all
+			for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+				ret.push( {
+					inst: inst,
+					idx: inst.toIndex( buttons[i].node )
+				} );
+			}
+		}
+		else if ( typeof selector === 'number' ) {
 			// Main button index selector
 			ret.push( {
 				inst: inst,
@@ -439,7 +542,7 @@ function buttonSelector ( insts, selector )
 					run( $.trim(a[i]), inst );
 				}
 			}
-			else if ( selector.match( /^\d+\-\d+$/ ) ) {
+			else if ( selector.match( /^\d+(\-\d+)?$/ ) ) {
 				// Sub-button index selector
 				ret.push( {
 					inst: inst,
@@ -494,10 +597,6 @@ function buttonSelector ( insts, selector )
 
 
 // DataTables 1.10 API
-// xxx how to handle the case whereby there are multiple button sets for a table
-// name them? indexes? if no button set option is passed in, then always assume
-// index 0. Buttons can be hosted by one table only (actions could be used to
-// modify multiple)
 DataTable.Api.register( 'buttons()', function ( group, selector ) {
 	// Argument shifting
 	if ( selector === undefined ) {
@@ -515,19 +614,6 @@ DataTable.Api.register( 'buttons()', function ( group, selector ) {
 } );
 
 
-DataTable.Api.register( 'buttons().enable()', function ( flag ) {
-	return this.each( function ( set ) {
-		set.inst.enable( set.idx, flag );
-	} );
-} );
-
-DataTable.Api.register( 'buttons().disable()', function () {
-	return this.each( function ( set ) {
-		set.inst.disable( set.idx );
-	} );
-} );
-
-
 DataTable.Api.register( 'button()', function ( group, selector ) {
 	// just run buttons() and truncate
 	var buttons = this.buttons( group, selector );
@@ -539,33 +625,81 @@ DataTable.Api.register( 'button()', function ( group, selector ) {
 	return buttons;
 } );
 
-DataTable.Api.register( 'button().enable()', function ( flag ) {
+
+DataTable.Api.registerPlural( 'buttons().action()', 'button().action()', function ( action ) {
+	if ( action === undefined ) {
+		return this.map( function ( set ) {
+			 return set.inst.action( set.idx );
+		} );
+	}
+
+	return this.each( function ( set ) {
+		set.inst.action( set.idx, action );
+	} );
+} );
+
+DataTable.Api.register( ['buttons().enable()', 'button().enable()'], function ( flag ) {
 	return this.each( function ( set ) {
 		set.inst.enable( set.idx, flag );
 	} );
 } );
 
-DataTable.Api.register( 'button().disable()', function () {
+DataTable.Api.register( ['buttons().disable()', 'button().disable()'], function () {
 	return this.each( function ( set ) {
 		set.inst.disable( set.idx );
 	} );
 } );
 
-DataTable.Api.register( 'button().node()', function () {
+DataTable.Api.registerPlural( 'buttons().nodes()', 'button().node()', function () {
 	return this.map( function ( set ) {
 		return set.inst.node( set.idx );
 	} );
 } );
 
-// buttons()
-// 
-// button()
-// 
-// button().enable()
-// button().disable()
-// button().text()
-// button().action()
-// button().node()
+DataTable.Api.registerPlural( 'buttons().text()', 'button().text()', function ( label ) {
+	if ( label === undefined ) {
+		return this.map( function ( set ) {
+			 return set.inst.text( set.idx );
+		} );
+	}
+
+	return this.each( function ( set ) {
+		set.inst.text( set.idx, label );
+	} );
+} );
+
+DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', function () {
+	return this.each( function ( set ) {
+		set.inst.node( set.idx ).trigger( 'click' );
+	} );
+} );
+
+DataTable.Api.registerPlural( 'buttons().containers()', 'buttons().container()', function () {
+	return this.map( function ( set ) {
+		return set.inst.container();
+	} ).unique();
+} );
+
+DataTable.Api.register( 'button().add()', function ( idx, conf ) {
+	if ( this.length === 1 ) {
+		this[0].inst.add( idx, conf );
+	}
+
+	return this;
+} );
+
+DataTable.Api.registerPlural( 'buttons().remove()', 'buttons().remove()', function () {
+	// Need to split into prep and commit so the indexes remain constant during the remove
+	this.each( function ( set ) {
+		set.inst.removePrep( set.idx );
+	} );
+
+	this.pluck( 'inst' ).unique().each( function ( inst ) {
+		inst.removeCommit();
+	} );
+
+	return this;
+} );
 
 
 // Attach a listener to the document which listens for DataTables initialisation
