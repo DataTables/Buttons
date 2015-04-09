@@ -77,6 +77,22 @@ Buttons.prototype = {
 		return this;
 	},
 
+	destroy: function ()
+	{
+		this.dom.container.remove();
+
+		var buttonInsts = this.s.dt.settings()[0];
+
+		for ( var i=0, ien=buttonInsts.length ; i<ien ; i++ ) {
+			if ( buttonInsts.inst === this ) {
+				buttonInsts.splice( i, 1 );
+				break;
+			}
+		}
+
+		return this;
+	},
+
 	enable: function ( idx, flag )
 	{
 		if ( flag === false ) {
@@ -216,6 +232,10 @@ Buttons.prototype = {
 		} );
 
 		this._buildButtons( this.c.buttons );
+
+		dt.on( 'destroy', function () {
+			that.destroy();
+		} );
 	},
 
 
@@ -684,6 +704,14 @@ DataTable.Api.register( 'button().add()', function ( idx, conf ) {
 	if ( this.length === 1 ) {
 		this[0].inst.add( idx, conf );
 	}
+
+	return this;
+} );
+
+DataTable.Api.register( 'buttons().destroy()', function ( idx ) {
+	this.pluck( 'inst' ).unique().each( function ( inst ) {
+		inst.destroy();
+	} );
 
 	return this;
 } );
