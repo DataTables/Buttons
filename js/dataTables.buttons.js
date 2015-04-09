@@ -21,7 +21,8 @@ var Buttons = function( dt, config )
 	this.s = {
 		dt: new DataTable.Api( dt ),
 		buttons: [],
-		subButtons: []
+		subButtons: [],
+		listenKeys: ''
 	};
 
 	this.dom = {
@@ -118,13 +119,21 @@ Buttons.prototype = {
 
 	removePrep: function ( idx )
 	{
+		var button;
+
 		if ( typeof idx === 'number' || idx.indexOf('-') === -1 ) {
-			this.s.buttons[ idx*1 ].node.remove();
+			button = this.s.buttons[ idx*1 ];
+
+			button.node.remove();
+			this._removeKey( button.conf );
 			this.s.buttons[ idx*1 ] = null;
 		}
 		else {
 			var idxs = idx.split('-');
-			this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ].node.remove();
+			button = this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ];
+
+			button.node.remove();
+			this._removeKey( button.conf );
 			this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ] = null;
 		}
 
@@ -201,16 +210,6 @@ Buttons.prototype = {
 		}
 	},
 
-	_indexToButton: function ( idx )
-	{
-		if ( typeof idx === 'number' || idx.indexOf('-') === -1 ) {
-			return this.s.buttons[ idx*1 ];
-		}
-
-		var idxs = idx.split('-');
-		return this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ];
-	},
-
 
 	_constructor: function ()
 	{
@@ -236,6 +235,97 @@ Buttons.prototype = {
 		dt.on( 'destroy', function () {
 			that.destroy();
 		} );
+
+		// Global key event binding to listen for button keys
+		// xxx namespace needs to be unique
+		$('body').on( 'keyup.dtb', function ( e ) {
+			if ( ! document.activeElement || document.activeElement === document.body ) {
+				// SUse a string of characters for fast lookup of if we need to
+				// handle this
+				var character = String.fromCharCode(e.keyCode).toLowerCase();
+
+				if ( that.s.listenKeys.toLowerCase().indexOf( character ) !== -1 ) {
+					that._keypress( character, e );
+				}
+			}
+		} );
+	},
+
+	_addKey: function ( conf )
+	{
+		if ( conf.key ) {
+			this.s.listenKeys += $.isPlainObject( conf.key ) ?
+				conf.key.key :
+				conf.key;
+		}
+	},
+
+	_removeKey: function ( conf )
+	{
+		if ( conf.key ) {
+			var character = $.isPlainObject( conf.key ) ?
+				conf.key.key :
+				conf.key;
+
+			// Remove only one character, as multiple buttons could have the
+			// same listening key
+			var a = this.s.listenKeys.split('');
+			var idx = $.inArray( character, a );
+			a.splice( idx, 1 );
+			this.s.listenKeys = a.join('');
+		}
+	},
+
+	_keypress: function ( character, e )
+	{
+		var i, ien, j, jen;
+		var buttons = this.s.buttons;
+		var subButtons = this.s.subButtons;
+		var run = function ( conf, node ) {
+			if ( ! conf.key ) {
+				return;
+			}
+
+			if ( conf.key === character ) {
+				node.click();
+			}
+			else if ( $.isPlainObject( conf.key ) ) {
+				if ( conf.key.key !== character ) {
+					return;
+				}
+
+				if ( conf.key.shiftKey && ! e.shiftKey ) {
+					return;
+				}
+
+				if ( conf.key.altkey && ! e.altkey ) {
+					return;
+				}
+
+				if ( conf.key.ctrlKey && ! e.ctrlKey ) {
+					return;
+				}
+
+				if ( conf.key.metaKey && ! e.altkmetaKeyeymetaKey ) {
+					return;
+				}
+
+				// Made it this far - it is good
+				node.click();
+			}
+		};
+
+		// Loop the main buttons first
+		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+			run( buttons[i].conf, buttons[i].node );
+		}
+
+		// Then the sub-buttons
+		for ( i=0, ien=subButtons.length ; i<ien ; i++ ) {
+			for ( j=0, jen=subButtons[i].length ; j<jen ; j++ ) {
+				run( subButtons[i][j].conf, subButtons[i][j].node );
+			}
+		}
 	},
 
 
@@ -308,8 +398,17 @@ Buttons.prototype = {
 
 		var button = $('<'+buttonDom.tag+'/>')
 			.addClass( buttonDom.className )
-			.on( 'click', function (e) {
+			.attr( 'tabindex', this.c.tabIndex )
+			.attr( 'aria-controls', this.s.dt.table().node().id )
+			.on( 'click.dtb', function (e) {
+				// xxx the instance should be the dt API for the button in question
+				// that.s.dt.button( button ) I think xxx
 				config.action.call( that, e, that.s.dt, button, config );
+			} )
+			.on( 'keyup.dtb', function (e) {
+				if ( e.keyCode === 13 ) {
+					config.action.call( that, e, that.s.dt, button, config );
+				}
 			} );
 
 		if ( linerDom.tag ) {
@@ -323,7 +422,19 @@ Buttons.prototype = {
 			button.html( config.text );
 		}
 
+		this._addKey( config );
+
 		return button;
+	},
+
+	_indexToButton: function ( idx )
+	{
+		if ( typeof idx === 'number' || idx.indexOf('-') === -1 ) {
+			return this.s.buttons[ idx*1 ];
+		}
+
+		var idxs = idx.split('-');
+		return this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ];
 	}
 };
 
@@ -331,6 +442,7 @@ Buttons.prototype = {
 Buttons.defaults = {
 	buttons: [ 'copy', 'csv', 'pdf', 'print' ],
 	name: 'main',
+	tabIndex: 0,
 	dom: {
 		container: {
 			tag: 'div',
@@ -367,7 +479,9 @@ $.extend( DataTable.ext.buttons, {
 	text: {
 		text: '',
 		className: 'buttons-text',
-		action: function ( e, dt, button, config ) {}
+		action: function ( e, dt, button, config ) {
+			console.log( 'action: text' );
+		}
 	},
 	collection: {
 		text: 'Collection',
@@ -423,28 +537,28 @@ $.extend( DataTable.ext.buttons, {
 		text: 'Copy',
 		className: 'buttons-copy',
 		action: function ( e, dt, button, config ) {
-
+			console.log( 'action: copy' );
 		}
 	},
 	csv: {
 		text: 'CSV',
 		className: 'buttons-csv',
 		action: function ( e, dt, button, config ) {
-
+			console.log( 'action: csv' );
 		}
 	},
 	pdf: {
 		text: 'PDF',
 		className: 'buttons-pdf',
 		action: function ( e, dt, button, config ) {
-
+			console.log( 'action: pdf' );
 		}
 	},
 	print: {
 		text: 'Print',
 		className: 'buttons-print',
 		action: function ( e, dt, button, config ) {
-
+			console.log( 'action: print' );
 		}
 	}
 } );

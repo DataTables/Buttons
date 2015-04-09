@@ -9,7 +9,9 @@ $(document).ready(function() {
 	$('#example').DataTable( {
 		dom: 'B<"clear">lfrtip',
 		buttons: [
-			'csv', 'print', {
+			{ extend: 'csv', key: 'a', text: '<u>A</u> CSV button' },
+			{ extend: 'print', key: { shiftKey: true, key: 'b' } },
+			{
 				extend: 'collection',
 				buttons: [ 'pdf', 'copy' ]
 			}
