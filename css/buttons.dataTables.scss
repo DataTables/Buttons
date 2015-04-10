@@ -35,7 +35,13 @@ a.dt-button {
 	font-size: 0.88em;
 	color: black;
 	box-shadow: 1px 1px 3px #ccc;
+	white-space: nowrap;
+	overflow: hidden;
 	@include dtb-three-stop-gradient(#ffffff 0%,#f3f3f3 89%,#f9f9f9 100%);
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 
 	&.disabled {
 		color: #999;
@@ -100,6 +106,71 @@ div.dt-button-collection {
 		float: none;
 		margin-bottom: 4px;
 		margin-right: 0;
+	}
+
+	// Fixed positioning feature
+	&.fixed {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		margin-left: -75px;
+
+		&.two-column {
+			margin-left: -150px;
+		}
+
+		&.three-column {
+			margin-left: -225px;
+		}
+
+		&.four-column {
+			margin-left: -300px;
+		}
+	}
+
+	// Multi-column layout feature
+	-webkit-column-gap: 8px;
+	   -moz-column-gap: 8px;
+	    -ms-column-gap: 8px;
+	     -o-column-gap: 8px;
+	column-count: 8px;
+
+	> * {
+		-webkit-column-break-inside: avoid;
+		break-inside: avoid;
+	}
+
+	&.two-column {
+		width: 300px;
+		padding-bottom: 1px;
+
+		-webkit-column-count: 2;
+		   -moz-column-count: 2;
+		    -ms-column-count: 2;
+		     -o-column-count: 2;
+		column-count: 2;
+	}
+
+	&.three-column {
+		width: 450px;
+		padding-bottom: 1px;
+
+		-webkit-column-count: 3;
+		   -moz-column-count: 3;
+		    -ms-column-count: 3;
+		     -o-column-count: 3;
+		column-count: 3;
+	}
+
+	&.four-column {
+		width: 600px;
+		padding-bottom: 1px;
+
+		-webkit-column-count: 4;
+		   -moz-column-count: 4;
+		    -ms-column-count: 4;
+		     -o-column-count: 4;
+		column-count: 4;
 	}
 }
 

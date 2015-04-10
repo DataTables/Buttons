@@ -11,9 +11,14 @@ $(document).ready(function() {
 		buttons: [
 			{ extend: 'csv', key: 'a', text: '<u>A</u> CSV button' },
 			{ extend: 'print', key: { shiftKey: true, key: 'b' } },
+			{ extend: 'text', text: 1, action: function () {
+				this.text( this.text()*1 + 1 );
+				this.disable();
+			} },
+			'copy',
 			{
 				extend: 'collection',
-				buttons: [ 'pdf', 'copy' ]
+				buttons: [ 'pdf', 'copy', 'pdf', 'copy', 'pdf', 'copy', 'pdf' ]
 			}
 		]
 	} );

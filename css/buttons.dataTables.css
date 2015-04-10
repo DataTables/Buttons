@@ -12,6 +12,8 @@ a.dt-button {
   font-size: 0.88em;
   color: black;
   box-shadow: 1px 1px 3px #ccc;
+  white-space: nowrap;
+  overflow: hidden;
   background-color: #f9f9f9 100%;
   /* Fallback */
   background-image: -webkit-linear-gradient(top, white 0%, #f3f3f3 89%, #f9f9f9 100%);
@@ -24,6 +26,10 @@ a.dt-button {
   /* Opera 11.10+ */
   background-image: linear-gradient(top, white 0%, #f3f3f3 89%, #f9f9f9 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='white', EndColorStr='#f9f9f9');
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 button.dt-button.disabled,
 div.dt-button.disabled,
@@ -109,6 +115,11 @@ div.dt-button-collection {
   border-radius: 5px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
   z-index: 2002;
+  -webkit-column-gap: 8px;
+  -moz-column-gap: 8px;
+  -ms-column-gap: 8px;
+  -o-column-gap: 8px;
+  column-count: 8px;
 }
 div.dt-button-collection button.dt-button,
 div.dt-button-collection div.dt-button,
@@ -120,6 +131,52 @@ div.dt-button-collection a.dt-button {
   float: none;
   margin-bottom: 4px;
   margin-right: 0;
+}
+div.dt-button-collection.fixed {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -75px;
+}
+div.dt-button-collection.fixed.two-column {
+  margin-left: -150px;
+}
+div.dt-button-collection.fixed.three-column {
+  margin-left: -225px;
+}
+div.dt-button-collection.fixed.four-column {
+  margin-left: -300px;
+}
+div.dt-button-collection > * {
+  -webkit-column-break-inside: avoid;
+  break-inside: avoid;
+}
+div.dt-button-collection.two-column {
+  width: 300px;
+  padding-bottom: 1px;
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  -ms-column-count: 2;
+  -o-column-count: 2;
+  column-count: 2;
+}
+div.dt-button-collection.three-column {
+  width: 450px;
+  padding-bottom: 1px;
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
+  -ms-column-count: 3;
+  -o-column-count: 3;
+  column-count: 3;
+}
+div.dt-button-collection.four-column {
+  width: 600px;
+  padding-bottom: 1px;
+  -webkit-column-count: 4;
+  -moz-column-count: 4;
+  -ms-column-count: 4;
+  -o-column-count: 4;
+  column-count: 4;
 }
 
 div.dt-button-background {
