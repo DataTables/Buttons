@@ -12,6 +12,11 @@ var factory = function( $, DataTable ) {
 var _instCounter = 0;
 
 
+/**
+ * [Buttons description]
+ * @param {[type]}
+ * @param {[type]}
+ */
 var Buttons = function( dt, config )
 {
 	if ( $.isArray( config ) ) {
@@ -47,6 +52,16 @@ Buttons.prototype = {
 	 * Public methods
 	 */
 
+	/**
+	 * Get the action of a button
+	 * @param  {int|string} Button index
+	 * @return {function}
+	 *//**
+	 * Set the action of a button
+	 * @param  {int|string} Button index
+	 * @param  {function} Function to set
+	 * @return {Buttons} Self for chaining
+	 */
 	action: function ( idx, action )
 	{
 		var button = this._indexToButton( idx ).conf;
@@ -60,7 +75,12 @@ Buttons.prototype = {
 		return this;
 	},
 
-
+	/**
+	 * Add a new button
+	 * @param {int|string} Button index for where to insert the button
+	 * @param {object} Button configuration object, base string name or function
+	 * @return {Buttons} Self for chaining
+	 */
 	add: function ( idx, config )
 	{
 		if ( typeof idx === 'string' && idx.indexOf('-') !== -1 ) {
@@ -77,13 +97,20 @@ Buttons.prototype = {
 		return this;
 	},
 
-
+	/**
+	 * Get the container node for the buttons
+	 * @return {jQuery} Buttons node
+	 */
 	container: function ()
 	{
 		return this.dom.container;
 	},
 
-
+	/**
+	 * Disable a button
+	 * @param  {int|string} Button index
+	 * @return {Buttons} Self for chaining
+	 */
 	disable: function ( idx ) {
 		var button = this._indexToButton( idx );
 		button.node.addClass( 'disabled' );
@@ -91,6 +118,11 @@ Buttons.prototype = {
 		return this;
 	},
 
+	/**
+	 * Destroy the instance, cleaning up event handlers and removing DOM
+	 * elements
+	 * @return {Buttons} Self for chaining
+	 */
 	destroy: function ()
 	{
 		$('body').off( 'keyup.'+this.s.namespace );
@@ -108,6 +140,12 @@ Buttons.prototype = {
 		return this;
 	},
 
+	/**
+	 * Enable / disable a button
+	 * @param  {int|string} Button index
+	 * @param  {boolean} [flag=true] Enable / disable flag
+	 * @return {Buttons} Self for chaining
+	 */
 	enable: function ( idx, flag )
 	{
 		if ( flag === false ) {
@@ -120,17 +158,33 @@ Buttons.prototype = {
 		return this;
 	},
 
+	/**
+	 * Get the instance name for the button set selector
+	 * @return {[type]}
+	 */
 	name: function ()
 	{
 		this.c.name;
 	},
 
+	/**
+	 * Get a button's node
+	 * @param  {int|string} Button index
+	 * @return {jQuery} Button element
+	 */
 	node: function ( idx )
 	{
 		var button = this._indexToButton( idx );
 		return button.node;
 	},
 
+	/**
+	 * Tidy up any buttons that have been scheduled for removal. This is
+	 * required so multiple buttons can be removed without upsetting the button
+	 * indexes while removing them.
+	 * @param  {int|string} Button index
+	 * @return {Buttons} Self for chaining
+	 */
 	removeCommit: function ()
 	{
 		var buttons = this.s.buttons;
@@ -157,6 +211,11 @@ Buttons.prototype = {
 		return this;
 	},
 
+	/**
+	 * Scheduled a button for removal. This is required so multiple buttons can
+	 * be removed without upsetting the button indexes while removing them.
+	 * @return {Buttons} Self for chaining
+	 */
 	removePrep: function ( idx )
 	{
 		var button;
@@ -180,6 +239,16 @@ Buttons.prototype = {
 		return this;
 	},
 
+	/**
+	 * Get the text for a button
+	 * @param  {int|string} Button index
+	 * @return {string} Button text
+	 *//**
+	 * Set the text for a button
+	 * @param  {int|string} Button index
+	 * @param  {string} Text
+	 * @return {Buttons} Self for chaining
+	 */
 	text: function ( idx, label )
 	{
 		var button = this._indexToButton( idx );
@@ -201,6 +270,11 @@ Buttons.prototype = {
 		return this;
 	},
 
+	/**
+	 * Calculate button index from a node
+	 * @param  {node} Button node (_not_ a jQuery object)
+	 * @return {string} Index. Undefined if not found
+	 */
 	toIndex: function ( node )
 	{
 		var i, ien, j, jen;
@@ -229,6 +303,10 @@ Buttons.prototype = {
 	 * Constructor
 	 */
 
+	/**
+	 * Buttons constructor
+	 * @private
+	 */
 	_constructor: function ()
 	{
 		var that = this;
@@ -273,6 +351,11 @@ Buttons.prototype = {
 	 * Private methods
 	 */
 
+	/**
+	 * Add a new button to the key press listener
+	 * @param {object} Resolved button configuration object
+	 * @private
+	 */
 	_addKey: function ( conf )
 	{
 		if ( conf.key ) {
@@ -282,7 +365,14 @@ Buttons.prototype = {
 		}
 	},
 
-
+	/**
+	 * Create buttons from an array of buttons
+	 * @param  {array} Buttons to create
+	 * @param  {jQuery} Container node into which the created button should be
+	 *   inserted.
+	 * @param  {int} Counter for sub-buttons to be stored in a collection
+	 * @private
+	 */
 	_buildButtons: function ( buttons, container, collectionCounter )
 	{
 		var dtButtons = DataTable.ext.buttons;
@@ -323,7 +413,12 @@ Buttons.prototype = {
 		}
 	},
 
-
+	/**
+	 * Create an individual button
+	 * @param  {object} Resolved button configuration
+	 * @return {jQuery} Created button node (jQuery)
+	 * @private
+	 */
 	_buildButton: function ( config )
 	{
 		var that = this;
@@ -368,6 +463,13 @@ Buttons.prototype = {
 		return button;
 	},
 
+	/**
+	 * Get a button's host information from a button index
+	 * @param  {int|string} Button index
+	 * @return {object} Button information - object contains `node` and `conf`
+	 *   properties
+	 * @private
+	 */
 	_indexToButton: function ( idx )
 	{
 		if ( typeof idx === 'number' || idx.indexOf('-') === -1 ) {
@@ -378,6 +480,13 @@ Buttons.prototype = {
 		return this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ];
 	},
 
+	/**
+	 * Handle a key press - determine if any button's key configured matches
+	 * what was typed and trigger the action if so.
+	 * @param  {string} The character pressed
+	 * @param  {object} Key event that triggered this call
+	 * @private
+	 */
 	_keypress: function ( character, e )
 	{
 		var i, ien, j, jen;
@@ -408,7 +517,7 @@ Buttons.prototype = {
 					return;
 				}
 
-				if ( conf.key.metaKey && ! e.altkmetaKeyeymetaKey ) {
+				if ( conf.key.metaKey && ! e.metaKey ) {
 					return;
 				}
 
@@ -430,6 +539,11 @@ Buttons.prototype = {
 		}
 	},
 
+	/**
+	 * Remove a key from the key listener for this instance (to be used when a
+	 * button is removed)
+	 * @param  {object} Button configuration
+	 */
 	_removeKey: function ( conf )
 	{
 		if ( conf.key ) {
@@ -446,6 +560,11 @@ Buttons.prototype = {
 		}
 	},
 
+	/**
+	 * Resolve a button configuration
+	 * @param  {string|function|object} Button config to resolve
+	 * @return {object} Button configuration
+	 */
 	_resolveExtends: function ( conf )
 	{
 		var dt = this.s.dt;
@@ -491,6 +610,13 @@ Buttons.prototype = {
  * Statics
  */
 
+/**
+ * Show / hide a background layer behind a collection
+ * @param  {boolean} Flag to indicate if the background should be shown or
+ *   hidden 
+ * @param  {string} Class to assign to the background
+ * @static
+ */
 Buttons.background = function ( show, className ) {
 	if ( show ) {
 		$('<div/>')
@@ -502,6 +628,17 @@ Buttons.background = function ( show, className ) {
 	}
 };
 
+/**
+ * Instance selector - select Buttons instances based on an instance selector
+ * value from the buttons assigned to a DataTable. This is only useful if
+ * multiple instances are attached to a DataTable.
+ * @param  {string|int|array} Instance selector - see `instance-selector`
+ *   documentation on the DataTables site
+ * @param  {array} Button instance array that was attached to the DataTables
+ *   settings object
+ * @return {array} Buttons instances
+ * @static
+ */
 Buttons.instanceSelector = function ( group, buttons )
 {
 	if ( ! group ) {
@@ -549,7 +686,16 @@ Buttons.instanceSelector = function ( group, buttons )
 	return ret;
 };
 
-
+/**
+ * Button selector - select one or more buttons from a selector input so some
+ * operation can be performed on them.
+ * @param  {array} Button instances array that the selector should operate on
+ * @param  {string|int|node|jQuery|array} Button selector - see
+ *   `button-selector` documentation on the DataTables site
+ * @return {array} Array of objects containing `inst` and `idx` properties of
+ *   the selected buttons so you know which instance each button belongs to.
+ * @static
+ */
 Buttons.buttonSelector = function ( insts, selector )
 {
 	var ret = [];
@@ -663,9 +809,12 @@ Buttons.buttonSelector = function ( insts, selector )
 };
 
 
-
-
-
+/**
+ * Buttons defaults. For full documentation, please refer to the docs/option
+ * directory or the DataTables site.
+ * @type {Object}
+ * @static
+ */
 Buttons.defaults = {
 	buttons: [ 'copy', 'csv', 'pdf', 'print' ],
 	name: 'main',
@@ -690,12 +839,9 @@ Buttons.defaults = {
 	}
 };
 
-
-
 /**
  * Version information
- *
- * @name Buttons.version
+ * @type {string}
  * @static
  */
 Buttons.version = '0.0.1-dev';
@@ -801,8 +947,12 @@ $.extend( DataTable.ext.buttons, {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables API
+ *
+ * For complete documentation, please refer to the docs/api directory or the
+ * DataTables site
  */
 
+// Buttons group and individual button selector
 DataTable.Api.register( 'buttons()', function ( group, selector ) {
 	// Argument shifting
 	if ( selector === undefined ) {
@@ -820,7 +970,7 @@ DataTable.Api.register( 'buttons()', function ( group, selector ) {
 	}, true );
 } );
 
-
+// Individual button selector
 DataTable.Api.register( 'button()', function ( group, selector ) {
 	// just run buttons() and truncate
 	var buttons = this.buttons( group, selector );
@@ -832,7 +982,7 @@ DataTable.Api.register( 'button()', function ( group, selector ) {
 	return buttons;
 } );
 
-
+// Get / set button action
 DataTable.Api.registerPlural( 'buttons().action()', 'button().action()', function ( action ) {
 	if ( action === undefined ) {
 		return this.map( function ( set ) {
@@ -845,24 +995,28 @@ DataTable.Api.registerPlural( 'buttons().action()', 'button().action()', functio
 	} );
 } );
 
+// Enable / disable buttons
 DataTable.Api.register( ['buttons().enable()', 'button().enable()'], function ( flag ) {
 	return this.each( function ( set ) {
 		set.inst.enable( set.idx, flag );
 	} );
 } );
 
+// Disable buttons
 DataTable.Api.register( ['buttons().disable()', 'button().disable()'], function () {
 	return this.each( function ( set ) {
 		set.inst.disable( set.idx );
 	} );
 } );
 
+// Get button nodes
 DataTable.Api.registerPlural( 'buttons().nodes()', 'button().node()', function () {
 	return this.map( function ( set ) {
 		return set.inst.node( set.idx );
 	} );
 } );
 
+// Get / set button text (i.e. the button labels)
 DataTable.Api.registerPlural( 'buttons().text()', 'button().text()', function ( label ) {
 	if ( label === undefined ) {
 		return this.map( function ( set ) {
@@ -875,18 +1029,21 @@ DataTable.Api.registerPlural( 'buttons().text()', 'button().text()', function ( 
 	} );
 } );
 
+// Trigger a button's action
 DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', function () {
 	return this.each( function ( set ) {
 		set.inst.node( set.idx ).trigger( 'click' );
 	} );
 } );
 
+// Get the container elements for the button sets selected
 DataTable.Api.registerPlural( 'buttons().containers()', 'buttons().container()', function () {
 	return this.map( function ( set ) {
 		return set.inst.container();
 	} ).unique();
 } );
 
+// Add a new button
 DataTable.Api.register( 'button().add()', function ( idx, conf ) {
 	if ( this.length === 1 ) {
 		this[0].inst.add( idx, conf );
@@ -895,6 +1052,7 @@ DataTable.Api.register( 'button().add()', function ( idx, conf ) {
 	return this;
 } );
 
+// Destroy the button sets selected
 DataTable.Api.register( 'buttons().destroy()', function ( idx ) {
 	this.pluck( 'inst' ).unique().each( function ( inst ) {
 		inst.destroy();
@@ -903,6 +1061,7 @@ DataTable.Api.register( 'buttons().destroy()', function ( idx ) {
 	return this;
 } );
 
+// Remove a button
 DataTable.Api.registerPlural( 'buttons().remove()', 'buttons().remove()', function () {
 	// Need to split into prep and commit so the indexes remain constant during the remove
 	this.each( function ( set ) {
