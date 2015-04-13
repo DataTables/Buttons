@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option group="core">
+	<name>buttons.dom.collection.className</name>
+	<summary>Set the class name to use for the collection container element</summary>
+	<since>1.0.0</since>
+
+	<default value="dt-button-collection"/>
+
+	<type type="string">
+		<description>
+			The class name. Multiple classes can be given using space separation.
+		</description>
+	</type>
+
+	<description>
+	<![CDATA[
+		This option controls the class name of the tag that contains the buttons that Buttons will create.
+
+		The Buttons stylesheet has a number of display options for the collection buttons that can be enabled using this option. The built in class name options are:
+
+		* `fixed` - Show the collection in the middle of the display, rather than immediately below the collection trigger button
+		* `two-column` - Show the buttons in two columns
+		* `three-column` - Show the buttons in three columns
+		* `four-column` - Show the buttons in four columns
+
+		The `fixed` option can optionally be used with any of the column display options.
+
+		Please refer to the `b-init buttons.dom` documentation for an overview of the DOM structure that Buttons will create. In this specific case, this option controls the class name of the `<div class="dt-button-collection">...</div>` element that is shown in the example HTML there.
+	]]>
+	</description>
+
+	<example title="DataTables initialisation: Three column fixed display"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: {
+		dom: {
+			collection: {
+				className: 'dt-buttons-collection fixed three-column'
+			}
+		}
+	}
+} );
+
+]]></example>
+
+	<example title="Instance initialisation: Two column display"><![CDATA[
+
+new $.fn.dataTable.Buttons( table, {
+	buttons: {
+		dom: {
+			collection: {
+				className: 'buttons-control two-column'
+			}
+		}
+	]
+} );
+
+]]></example>
+</dt-option>

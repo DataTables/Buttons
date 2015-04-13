@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option group="core">
+	<name>buttons.dom.container</name>
+	<summary>Container object for DOM configuration of the Buttons container element</summary>
+	<since>1.0.0</since>
+
+	<type type="object">
+		<description>
+			Plain object which will can have the properties `tag` and / or `className` set.
+		</description>
+	</type>
+
+	<description>
+			This is a container object for the following two properties:
+
+			* `b-init buttons.dom.container.tag`
+			* `b-init buttons.dom.container.className`
+	</description>
+
+	<example title="DataTables initialisation: Use an `aside` tag for the container display"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: {
+		dom: {
+			container: {
+				tag: 'aside'
+			}
+		}
+	}
+} );
+
+]]></example>
+
+	<example title="Instance initialisation: Use an `aside` tag for the container display"><![CDATA[
+
+new $.fn.dataTable.Buttons( table, {
+	buttons: {
+		dom: {
+			container: {
+				tag: 'aside'
+			}
+		}
+	]
+} );
+
+]]></example>
+</dt-option>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option group="core">
+	<name>buttons.buttons.text</name>
+	<summary>The text to show in the button</summary>
+	<since>1.0.0</since>
+
+	<type type="string">
+		<description>
+			An HTML string to be shown inside the button. This is written to the document using `$().html()`, so HTML can be used for additional formatting.
+		</description>
+	</type>
+	<default value="Dependent on button type" />
+
+	<description>
+		Being able to let your users know what will happen when they activate a button is obviously fundamentally important to the Buttons extension and this option provides exactly that ability.
+	</description>
+
+	<example title="DataTables initialisation: Set the text "><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: [
+		{ extends: 'copy', text: 'Copy to clipboard' }
+	}
+} );
+
+]]></example>
+
+	<example title="Instance initialisation: Highlight an action key using HTML"><![CDATA[
+
+new $.fn.dataTable.Buttons( table, {
+	buttons: [
+		{
+			extends: 'print',
+			text: '<em>P</em>rint',
+			key: {
+				key: 'p',
+				altkey: true
+			}
+		}
+	}
+} );
+
+]]></example>
+</dt-option>

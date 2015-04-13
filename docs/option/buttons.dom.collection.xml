@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option group="core">
+	<name>buttons.dom.collection</name>
+	<summary>Container object for DOM configuration of the collection display</summary>
+	<since>1.0.0</since>
+
+	<type type="object">
+		<description>
+			Plain object which will can have the properties `tag` and / or `className` set.
+		</description>
+	</type>
+
+	<description>
+			This is a container object for the following two properties:
+
+			* `b-init buttons.dom.collection.tag`
+			* `b-init buttons.dom.collection.className`
+	</description>
+
+	<example title="DataTables initialisation: Use an `aside` tag for the collection display"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: {
+		dom: {
+			collection: {
+				tag: 'aside'
+			}
+		}
+	}
+} );
+
+]]></example>
+
+	<example title="Instance initialisation: Use an `aside` tag for the collection display"><![CDATA[
+
+new $.fn.dataTable.Buttons( table, {
+	buttons: {
+		dom: {
+			collection: {
+				tag: 'aside'
+			}
+		}
+	]
+} );
+
+]]></example>
+</dt-option>

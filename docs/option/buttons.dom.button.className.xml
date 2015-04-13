@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option group="core">
+	<name>buttons.dom.button.className</name>
+	<summary>Set the class name to use for the elements used to create individual button</summary>
+	<since>1.0.0</since>
+
+	<default value="dt-button"/>
+
+	<type type="string">
+		<description>
+			The class name. Multiple classes can be given using space separation.
+		</description>
+	</type>
+
+	<description>
+	<![CDATA[
+		This option controls the class name of the tag that that each button is comprised of.
+
+		Please refer to the `b-init buttons.dom` documentation for an overview of the DOM structure that Buttons will create. In this specific case, this option controls the class name of the `<a class="dt-button">...</a>` element that is shown in the example HTML there.
+	]]>
+	</description>
+
+	<example title="DataTables initialisation: Add an additional class name to the button"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: {
+		dom: {
+			button: {
+				className: 'dt-button tiny'
+			}
+		}
+	}
+} );
+
+]]></example>
+
+	<example title="Instance initialisation: Set a tag and class name"><![CDATA[
+
+new $.fn.dataTable.Buttons( table, {
+	buttons: {
+		dom: {
+			button: {
+				tag: 'input',
+				className: 'button-important'
+			}
+		}
+	]
+} );
+
+]]></example>
+</dt-option>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option group="core">
+	<name>buttons.dom.button</name>
+	<summary>Container object for DOM configuration of the buttons element</summary>
+	<since>1.0.0</since>
+
+	<type type="object">
+		<description>
+			Plain object which will can have the properties `tag` and / or `className` set.
+		</description>
+	</type>
+
+	<description>
+			This is a container object for the following two properties:
+
+			* `b-init buttons.dom.button.tag`
+			* `b-init buttons.dom.button.className`
+	</description>
+
+	<example title="DataTables initialisation: Use an `input` for the button display"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: {
+		dom: {
+			button: {
+				tag: 'input'
+			}
+		}
+	}
+} );
+
+]]></example>
+
+	<example title="Instance initialisation: Use a `button` tag for the button display"><![CDATA[
+
+new $.fn.dataTable.Buttons( table, {
+	buttons: {
+		dom: {
+			container: {
+				tag: 'button'
+			}
+		}
+	]
+} );
+
+]]></example>
+</dt-option>

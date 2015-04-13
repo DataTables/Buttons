@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option group="core">
+	<name>buttons.dom.buttonLiner</name>
+	<summary>Container object for DOM configuration of the buttons element</summary>
+	<since>1.0.0</since>
+
+	<type type="object">
+		<description>
+			Plain object which will can have the properties `tag` and / or `className` set.
+		</description>
+	</type>
+
+	<description>
+			This is a container object for the following two properties:
+
+			* `b-init buttons.dom.buttonLiner.tag`
+			* `b-init buttons.dom.buttonLiner.className`
+	</description>
+
+	<example title="DataTables initialisation: Use an `i` tag to line the button element"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: {
+		dom: {
+			buttonLiner: {
+				tag: 'i'
+			}
+		}
+	}
+} );
+
+]]></example>
+
+	<example title="Instance initialisation: Disable the button liner using `null` as the tag value"><![CDATA[
+
+new $.fn.dataTable.Buttons( table, {
+	buttons: {
+		dom: {
+			buttonLiner: {
+				tag: null
+			}
+		}
+	]
+} );
+
+]]></example>
+</dt-option>
