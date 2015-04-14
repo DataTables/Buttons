@@ -19,6 +19,12 @@ var _instCounter = 0;
  */
 var Buttons = function( dt, config )
 {
+	// Allow a boolean true for defaults
+	if ( config === true ) {
+		config = {};
+	}
+
+	// For easy configuration of buttons an array can be given
 	if ( $.isArray( config ) ) {
 		config = { buttons: config };
 	}
@@ -160,11 +166,11 @@ Buttons.prototype = {
 
 	/**
 	 * Get the instance name for the button set selector
-	 * @return {[type]}
+	 * @return {string} Instance name
 	 */
 	name: function ()
 	{
-		this.c.name;
+		return this.c.name;
 	},
 
 	/**
@@ -317,10 +323,6 @@ Buttons.prototype = {
 			dtSettings._buttons = [];
 		}
 
-		if ( $.inArray( this.c.name, $.map( dtSettings._buttons, function (v) { return v.name; } ) ) !== -1 ) {
-			throw 'A button set of this name ('+this.c.name+') is already attached to this table';
-		}
-
 		dtSettings._buttons.push( {
 			inst: this,
 			name: this.c.name
@@ -426,9 +428,12 @@ Buttons.prototype = {
 		var linerDom = this.c.dom.buttonLiner;
 		var dt = this.s.dt;
 
+		// Need a pre-check method to ensure that the button can be used
+		// i.e. for Flash buttons, check Flash is available - xxx
+
 		var button = $('<'+buttonDom.tag+'/>')
 			.addClass( buttonDom.className )
-			.attr( 'tabindex', this.c.tabIndex )
+			.attr( 'tabindex', this.s.dt.settings()[0].iTabIndex )
 			.attr( 'aria-controls', this.s.dt.table().node().id )
 			.on( 'click.dtb', function (e) {
 				e.preventDefault();
@@ -456,6 +461,10 @@ Buttons.prototype = {
 		}
 		else {
 			button.html( config.text );
+		}
+
+		if ( config.enabled === false ) {
+			button.addClass( 'disabled' );
 		}
 
 		this._addKey( config );
@@ -601,7 +610,7 @@ Buttons.prototype = {
 		}
 
 		return conf;
-	},
+	}
 };
 
 
@@ -662,7 +671,7 @@ Buttons.instanceSelector = function ( group, buttons )
 		}
 
 		if ( typeof input === 'string' ) {
-			if ( input.indexOf( ',' ) !== 0 ) {
+			if ( input.indexOf( ',' ) !== -1 ) {
 				// String selector, list of names
 				process( input.split(',') );
 			}
@@ -730,7 +739,7 @@ Buttons.buttonSelector = function ( insts, selector )
 			return;
 		}
 
-		if ( selector === undefined || selector === '*' ) {
+		if ( selector === null || selector === undefined || selector === '*' ) {
 			// Select all
 			for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
 				ret.push( {
@@ -912,7 +921,7 @@ $.extend( DataTable.ext.buttons, {
 		background: true,
 		collectionClassName: '',
 		backgroundClassName: 'dt-button-background',
-		fade: true
+		fade: true // xxx
 	},
 	copy: {
 		text: 'Copy',
@@ -1011,9 +1020,14 @@ DataTable.Api.register( ['buttons().disable()', 'button().disable()'], function 
 
 // Get button nodes
 DataTable.Api.registerPlural( 'buttons().nodes()', 'button().node()', function () {
-	return this.map( function ( set ) {
-		return set.inst.node( set.idx );
-	} );
+	var jq = $();
+
+	// jQuery will automatically reduce duplicates to a single entry
+	$( this.each( function ( set ) {
+		jq = jq.add( set.inst.node( set.idx ) );
+	} ) );
+
+	return jq;
 } );
 
 // Get / set button text (i.e. the button labels)
@@ -1038,9 +1052,14 @@ DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', funct
 
 // Get the container elements for the button sets selected
 DataTable.Api.registerPlural( 'buttons().containers()', 'buttons().container()', function () {
-	return this.map( function ( set ) {
-		return set.inst.container();
-	} ).unique();
+	var jq = $();
+
+	// jQuery will automatically reduce duplicates to a single entry
+	$( this.each( function ( set ) {
+		jq = jq.add( set.inst.container() );
+	} ) );
+
+	return jq;
 } );
 
 // Add a new button
@@ -1049,7 +1068,7 @@ DataTable.Api.register( 'button().add()', function ( idx, conf ) {
 		this[0].inst.add( idx, conf );
 	}
 
-	return this;
+	return this.button( idx );
 } );
 
 // Destroy the button sets selected

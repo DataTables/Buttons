@@ -73,8 +73,11 @@ a.dt-button {
 
 div.dt-buttons {
 	position: relative;
-	float: right;
-	margin-bottom: 1em;
+	float: left;
+
+	&.buttons-right {
+		float: right;
+	}
 }
 
 div.dt-button-collection {

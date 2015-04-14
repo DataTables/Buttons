@@ -7,7 +7,7 @@
 
 $(document).ready(function() {
 	$('#example').DataTable( {
-		dom: 'B<"clear">lfrtip',
+		dom: 'Bfrtip',
 		buttons: [
 			{ extend: 'csv', key: 'a', text: '<u>A</u> CSV button' },
 			{ extend: 'print', key: { shiftKey: true, key: 'b' } },
@@ -19,6 +19,12 @@ $(document).ready(function() {
 			{
 				extend: 'collection',
 				buttons: [ 'pdf', 'copy', 'pdf', 'copy', 'pdf', 'copy', 'pdf' ]
+			},
+			{
+				text: 'No extend',
+				action: function () {
+					console.log( 'No extend' );
+				}
 			}
 		]
 	} );
