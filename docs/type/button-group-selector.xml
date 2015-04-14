@@ -47,7 +47,7 @@ Please note that the index of each instance can be changed if the `b-api buttons
 ###### Select the first button instance and disable the second button
 
 ```js
-var table = $('#example').DataTable();
+var table = $('#myTable').DataTable();
 
 table.buttons( 0, 1 ).disable();
 ```
@@ -62,7 +62,7 @@ In addition to being able to select a single instance with a string, multiple in
 ###### Table with two button sets; enable button index 0 from the `main` instance
 
 ```js
-var table = $('#example').DataTable( {
+var table = $('#myTable').DataTable( {
 	buttons: {
 		name: 'main'
 	}
@@ -80,7 +80,7 @@ table.buttons( 'main', 0 ).enable();
 ###### Using a comma to select two button instances
 
 ```js
-var table = $('#example').DataTable();
+var table = $('#myTable').DataTable();
 
 new $.fn.dataTable.Buttons( table, {
 	name: 'export',
