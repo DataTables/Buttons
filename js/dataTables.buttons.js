@@ -458,7 +458,7 @@ Buttons.prototype = {
 			.on( 'click.dtb', function (e) {
 				e.preventDefault();
 
-				if ( ! button.hasClass( 'disabled' ) ) {
+				if ( ! button.hasClass( 'disabled' ) && config.action ) {
 					config.action.call( dt.button( button ), e, dt, button, config );
 				}
 
@@ -466,7 +466,7 @@ Buttons.prototype = {
 			} )
 			.on( 'keyup.dtb', function (e) {
 				if ( e.keyCode === 13 ) {
-					if ( ! button.hasClass( 'disabled' ) ) {
+					if ( ! button.hasClass( 'disabled' ) && config.action ) {
 						config.action.call( dt.button( button ), e, dt, button, config );
 					}
 				}
