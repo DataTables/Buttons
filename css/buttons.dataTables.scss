@@ -42,6 +42,7 @@ a.dt-button {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	text-decoration: none;
 
 	&.disabled {
 		color: #999;
@@ -54,11 +55,19 @@ a.dt-button {
 	&.active {
 		@include dtb-three-stop-gradient(#f3f3f3 0%,#e2e2e2 89%,#f4f4f4 100%);
 		box-shadow: inset 1px 1px 3px #999999;
+
+		&:hover:not(.disabled) {
+			box-shadow: inset 1px 1px 3px #999999;
+			@include dtb-three-stop-gradient(#eaeaea 0%,#d1d1d1 89%,#e2e2e2 100%);
+		}
+	}
+
+	&:hover {
+		text-decoration: none;
 	}
 
 	&:hover:not(.disabled) {
 		border: 1px solid #666;
-		text-decoration: none !important;
 		box-shadow: 1px 1px 3px #999;
 		@include dtb-three-stop-gradient(#f3f3f3 0%,#e2e2e2 89%,#f4f4f4 100%);
 	}
