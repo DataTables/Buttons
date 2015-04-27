@@ -16,16 +16,16 @@ a.dt-button {
   overflow: hidden;
   background-color: #f9f9f9 100%;
   /* Fallback */
-  background-image: -webkit-linear-gradient(top, white 0%, #f3f3f3 89%, #f9f9f9 100%);
+  background-image: -webkit-linear-gradient(top, #ffffff 0%, #f3f3f3 89%, #f9f9f9 100%);
   /* Chrome 10+, Saf5.1+, iOS 5+ */
-  background-image: -moz-linear-gradient(top, white 0%, #f3f3f3 89%, #f9f9f9 100%);
+  background-image: -moz-linear-gradient(top, #ffffff 0%, #f3f3f3 89%, #f9f9f9 100%);
   /* FF3.6 */
-  background-image: -ms-linear-gradient(top, white 0%, #f3f3f3 89%, #f9f9f9 100%);
+  background-image: -ms-linear-gradient(top, #ffffff 0%, #f3f3f3 89%, #f9f9f9 100%);
   /* IE10 */
-  background-image: -o-linear-gradient(top, white 0%, #f3f3f3 89%, #f9f9f9 100%);
+  background-image: -o-linear-gradient(top, #ffffff 0%, #f3f3f3 89%, #f9f9f9 100%);
   /* Opera 11.10+ */
-  background-image: linear-gradient(top, white 0%, #f3f3f3 89%, #f9f9f9 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='white', EndColorStr='#f9f9f9');
+  background-image: linear-gradient(top, #ffffff 0%, #f3f3f3 89%, #f9f9f9 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ffffff', EndColorStr='#f9f9f9');
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -39,16 +39,16 @@ a.dt-button.disabled {
   cursor: default;
   background-color: #fafafa 100%;
   /* Fallback */
-  background-image: -webkit-linear-gradient(top, white 0%, #f9f9f9 89%, #fafafa 100%);
+  background-image: -webkit-linear-gradient(top, #ffffff 0%, #f9f9f9 89%, #fafafa 100%);
   /* Chrome 10+, Saf5.1+, iOS 5+ */
-  background-image: -moz-linear-gradient(top, white 0%, #f9f9f9 89%, #fafafa 100%);
+  background-image: -moz-linear-gradient(top, #ffffff 0%, #f9f9f9 89%, #fafafa 100%);
   /* FF3.6 */
-  background-image: -ms-linear-gradient(top, white 0%, #f9f9f9 89%, #fafafa 100%);
+  background-image: -ms-linear-gradient(top, #ffffff 0%, #f9f9f9 89%, #fafafa 100%);
   /* IE10 */
-  background-image: -o-linear-gradient(top, white 0%, #f9f9f9 89%, #fafafa 100%);
+  background-image: -o-linear-gradient(top, #ffffff 0%, #f9f9f9 89%, #fafafa 100%);
   /* Opera 11.10+ */
-  background-image: linear-gradient(top, white 0%, #f9f9f9 89%, #fafafa 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='white', EndColorStr='#fafafa');
+  background-image: linear-gradient(top, #ffffff 0%, #f9f9f9 89%, #fafafa 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ffffff', EndColorStr='#fafafa');
 }
 button.dt-button:hover:not(.disabled),
 div.dt-button:hover:not(.disabled),

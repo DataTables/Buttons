@@ -378,6 +378,7 @@ Buttons.prototype = {
 	_buildButtons: function ( buttons, container, collectionCounter )
 	{
 		var dtButtons = DataTable.ext.buttons;
+		var dt = this.s.dt;
 
 		if ( ! container ) {
 			container = this.dom.container;
@@ -411,6 +412,12 @@ Buttons.prototype = {
 					.addClass( collectionDom.className );
 
 				this._buildButtons( conf.buttons, conf._collection, i );
+			}
+
+			// init call is made here, rather than buildButton as it needs to
+			// have been added to the buttons / subButtons array first
+			if ( conf.init ) {
+				conf.init.call( dt.button( button ), dt, button, conf );
 			}
 		}
 	},
