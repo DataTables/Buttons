@@ -82,6 +82,19 @@ Buttons.prototype = {
 	},
 
 	/**
+	 * Add an active class to the button to make to look active
+	 * @param  {int|string} Button index
+	 * @param  {boolean} [flag=true] Enable / disable flag
+	 * @return {Buttons} Self for chaining
+	 */
+	active: function ( idx, flag ) {
+		var button = this._indexToButton( idx );
+		button.node.toggleClass( 'active', flag === undefined ? true : flag );
+
+		return this;
+	},
+
+	/**
 	 * Add a new button
 	 * @param {int|string} Button index for where to insert the button
 	 * @param {object} Button configuration object, base string name or function
@@ -996,6 +1009,13 @@ DataTable.Api.register( 'button()', function ( group, selector ) {
 	}
 
 	return buttons;
+} );
+
+// Active buttons
+DataTable.Api.register( ['buttons().active()', 'button().active()'], function ( flag ) {
+	return this.each( function ( set ) {
+		set.inst.active( set.idx, flag );
+	} );
 } );
 
 // Get / set button action

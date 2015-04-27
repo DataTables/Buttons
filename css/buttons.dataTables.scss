@@ -50,6 +50,12 @@ a.dt-button {
 		@include dtb-three-stop-gradient(#ffffff 0%,#f9f9f9 89%,#fafafa 100%);
 	}
 
+	&:active,
+	&.active {
+		@include dtb-three-stop-gradient(#f3f3f3 0%,#e2e2e2 89%,#f4f4f4 100%);
+		box-shadow: inset 1px 1px 3px #999999;
+	}
+
 	&:hover:not(.disabled) {
 		border: 1px solid #666;
 		text-decoration: none !important;
