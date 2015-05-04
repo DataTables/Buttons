@@ -47,17 +47,15 @@
 		The rest of the markup can be controlled using the following options:
 
 		* Container (`<div class="dt-buttons">...</div>` above):
-		  * Tag: `b-init buttons.dom.container.tag`
-		  * Class name: `b-init buttons.dom.container.className`
+		  * `b-init buttons.dom.container`
 		* Button (`<a class="dt-button">...</a>` above - common to both the main buttons and those in the collection display):
-		  * Tag: `b-init buttons.dom.button.tag`
-		  * Class name: `b-init buttons.dom.button.className`
+		  * `b-init buttons.dom.button`
+		* Button container (note used above, `-type null` by default - common to both the main buttons and those in the collection display):
+		  * `b-init buttons.dom.buttonContainer`
 		* Button liner (`<span>` in the button - common to both the main buttons and those in the collection display):
-		  * Tag: `b-init buttons.dom.buttonLiner.tag`
-		  * Class name: `b-init buttons.dom.buttonLiner.className`
+		  * `b-init buttons.dom.buttonLiner`
 		* Collection container (`<div class="dt-button-collection">...</div>` above):
-		  * Tag: `b-init buttons.dom.collection.tag`
-		  * Class name: `b-init buttons.dom.collection.className`
+		  * `b-init buttons.dom.collection`
 
 		All options are given as strings, and are generally self explanatory, however, please refer to the documentation for each option for full details.
 	]]>

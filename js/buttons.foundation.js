@@ -7,13 +7,16 @@ $.extend( true, DataTables.Buttons.defaults, {
 			tag: 'ul',
 			className: 'dt-buttons button-group'
 		},
-		button: {
+		buttonContainer: {
 			tag: 'li',
 			className: ''
 		},
-		buttonLiner: {
+		button: {
 			tag: 'a',
 			className: 'button small'
+		},
+		buttonLiner: {
+			tag: null
 		},
 		collection: {
 			tag: 'ul',

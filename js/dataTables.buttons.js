@@ -132,10 +132,7 @@ Buttons.prototype = {
 	 */
 	disable: function ( idx ) {
 		var button = this._indexToButton( idx );
-		button.node.addClass( 'disabled' )
-			.children().addClass( 'disabled' );
-		// Foundation needs the liner to have the class - a blanket setting
-		// appears okay, but might need to be a configurable option in future
+		button.node.addClass( 'disabled' );
 
 		return this;
 	},
@@ -175,8 +172,7 @@ Buttons.prototype = {
 		}
 
 		var button = this._indexToButton( idx );
-		button.node.removeClass( 'disabled' )
-			.children().removeClass( 'disabled' );
+		button.node.removeClass( 'disabled' );
 
 		return this;
 	},
@@ -416,19 +412,22 @@ Buttons.prototype = {
 				collectionCounter!==undefined ? true : false
 			);
 
-			container.append( button );
+			var buttonNode = button.node;
+			container.append( button.inserter );
 
 			if ( collectionCounter === undefined ) {
 				this.s.buttons.push( {
-					node: button,
-					conf: conf
+					node:     buttonNode,
+					conf:     conf,
+					inserter: button.inserter
 				} );
 				this.s.subButtons.push( [] );
 			}
 			else {
 				this.s.subButtons[ collectionCounter ].push( {
-					node: button,
-					conf: conf
+					node:     buttonNode,
+					conf:     conf,
+					inserter: button.inserter
 				} );
 			}
 
@@ -443,7 +442,7 @@ Buttons.prototype = {
 			// init call is made here, rather than buildButton as it needs to
 			// have been added to the buttons / subButtons array first
 			if ( conf.init ) {
-				conf.init.call( dt.button( button ), dt, button, conf );
+				conf.init.call( dt.button( buttonNode ), dt, buttonNode, conf );
 			}
 		}
 	},
@@ -515,9 +514,23 @@ Buttons.prototype = {
 			button.addClass( 'disabled' );
 		}
 
+		var buttonContainer = this.c.dom.buttonContainer;
+		var inserter;
+		if ( buttonContainer ) {
+			inserter = $('<'+buttonContainer.tag+'/>')
+				.addClass( buttonContainer.className )
+				.append( button );
+		}
+		else {
+			inserter = button;
+		}
+
 		this._addKey( config );
 
-		return button;
+		return {
+			node: button,
+			inserter: inserter
+		};
 	},
 
 	/**
