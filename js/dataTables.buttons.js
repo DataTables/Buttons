@@ -264,7 +264,7 @@ Buttons.prototype = {
 	 * @return {string} Button text
 	 *//**
 	 * Set the text for a button
-	 * @param  {int|string} Button index
+	 * @param  {int|string|function} Button index
 	 * @param  {string} Text
 	 * @return {Buttons} Self for chaining
 	 */
@@ -272,18 +272,24 @@ Buttons.prototype = {
 	{
 		var button = this._indexToButton( idx );
 		var linerTag = this.c.dom.buttonLiner.tag;
+		var dt = this.s.dt;
+		var text = function ( opt ) {
+			return typeof opt === 'function' ?
+				opt( dt, button.node, button.conf ) :
+				opt;
+		};
 
 		if ( label === undefined ) {
-			return button.conf.text;
+			return text( button.conf.text );
 		}
 
 		button.conf.text = label;
 
 		if ( linerTag ) {
-			button.node.children( linerTag ).html( label );
+			button.node.children( linerTag ).html( text(label) );
 		}
 		else {
-			button.node.html( label );
+			button.node.html( text(label) );
 		}
 
 		return this;
@@ -447,6 +453,11 @@ Buttons.prototype = {
 		var buttonDom = this.c.dom.button;
 		var linerDom = this.c.dom.buttonLiner;
 		var dt = this.s.dt;
+		var text = function ( opt ) {
+			return typeof opt === 'function' ?
+				opt( dt, button, config ) :
+				opt;
+		};
 
 		// Need a pre-check method to ensure that the button can be used
 		// i.e. for Flash buttons, check Flash is available - xxx
@@ -475,12 +486,12 @@ Buttons.prototype = {
 		if ( linerDom.tag ) {
 			button.append(
 				$('<'+linerDom.tag+'/>')
-					.html( config.text )
+					.html( text( config.text ) )
 					.addClass( linerDom.className )
 			);
 		}
 		else {
-			button.html( config.text );
+			button.html( text( config.text ) );
 		}
 
 		if ( config.enabled === false ) {
@@ -886,7 +897,9 @@ $.extend( DataTable.ext.buttons, {
 		}
 	},
 	collection: {
-		text: 'Collection',
+		text: function ( dt, button, config ) {
+			return dt.i18n( 'buttons.collection', 'Collection' );
+		},
 		className: 'buttons-collection',
 		action: function ( e, dt, button, config ) {
 			var background;
