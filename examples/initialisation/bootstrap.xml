@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="table table-border table-striped" order="2" framework="bootstrap">
+
+<css lib="bootstrap datatables buttons"/>
+<js lib="jquery datatables buttons">
+<![CDATA[
+
+$(document).ready(function() {
+	var table = $('#example').DataTable( {
+		buttons: [
+			{ extend: 'csv', key: 'a', text: '<u>A</u> CSV button' },
+			'copy',
+			{
+				extend: 'collection',
+				buttons: [ 'pdf', 'copy', 'pdf', 'copy', 'pdf', 'copy', 'pdf' ]
+			},
+			{
+				extend: 'collection',
+				collectionLayout: 'fixed three-column',
+				buttons: [ 'pdf', 'copy', 'pdf', 'copy', 'pdf', 'copy', 'pdf' ]
+			},
+			{
+				text: 'No extend',
+				action: function () {
+					console.log( 'No extend' );
+				}
+			}
+		]
+	} );
+
+	$( 'div.dataTables_length', table.table().container() ).replaceWith(
+		table.buttons().container()
+	);
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Bootstrap styling</title>
+
+<info><![CDATA[
+
+
+
+]]></info>
+
+</dt-example>
+

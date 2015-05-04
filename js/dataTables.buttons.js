@@ -407,7 +407,10 @@ Buttons.prototype = {
 
 		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
 			var conf = this._resolveExtends( buttons[i] );
-			var button = this._buildButton( conf );
+			var button = this._buildButton(
+				conf,
+				collectionCounter!==undefined ? true : false
+			);
 
 			container.append( button );
 
@@ -443,21 +446,31 @@ Buttons.prototype = {
 
 	/**
 	 * Create an individual button
-	 * @param  {object} Resolved button configuration
+	 * @param  {object} config            Resolved button configuration
+	 * @param  {boolean} collectionButton `true` if a collection button
 	 * @return {jQuery} Created button node (jQuery)
 	 * @private
 	 */
-	_buildButton: function ( config )
+	_buildButton: function ( config, collectionButton )
 	{
 		var that = this;
 		var buttonDom = this.c.dom.button;
 		var linerDom = this.c.dom.buttonLiner;
+		var collectionDom = this.c.dom.collection;
 		var dt = this.s.dt;
 		var text = function ( opt ) {
 			return typeof opt === 'function' ?
 				opt( dt, button, config ) :
 				opt;
 		};
+
+		if ( collectionButton && collectionDom.button ) {
+			buttonDom = collectionDom.button;
+		}
+
+		if ( collectionButton && collectionDom.buttonLiner ) {
+			linerDom = collectionDom.buttonLiner;
+		}
 
 		// Need a pre-check method to ensure that the button can be used
 		// i.e. for Flash buttons, check Flash is available - xxx
@@ -908,12 +921,12 @@ $.extend( DataTable.ext.buttons, {
 			var tableContainer = $( dt.table().container() );
 
 			config._collection
-				.addClass( config.collectionClassName )
+				.addClass( config.collectionLayout )
 				.appendTo( 'body' );
 
 			if ( config._collection.css( 'position' ) === 'absolute' ) {
 				config._collection.css( {
-					top: hostOffset.top + host.height(),
+					top: hostOffset.top + host.outerHeight(),
 					left: hostOffset.left
 				} );
 
@@ -952,7 +965,7 @@ $.extend( DataTable.ext.buttons, {
 			}, 10 );
 		},
 		background: true,
-		collectionClassName: '',
+		collectionLayout: '',
 		backgroundClassName: 'dt-button-background',
 		fade: true // xxx
 	},
