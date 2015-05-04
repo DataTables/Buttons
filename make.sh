@@ -14,6 +14,7 @@ DT_BUILT="${DT_SRC}/built/DataTables"
 rsync -r css $OUT_DIR
 scss_compile $OUT_DIR/css/buttons.dataTables.scss
 scss_compile $OUT_DIR/css/buttons.bootstrap.scss
+scss_compile $OUT_DIR/css/buttons.foundation.scss
 
 # Copy images
 #rsync -r images $OUT_DIR
@@ -22,6 +23,7 @@ scss_compile $OUT_DIR/css/buttons.bootstrap.scss
 rsync -r js $OUT_DIR
 js_compress $OUT_DIR/js/dataTables.buttons.js
 js_compress $OUT_DIR/js/buttons.bootstrap.js
+js_compress $OUT_DIR/js/buttons.foundation.js
 
 # Copy and build examples
 rsync -r examples $OUT_DIR

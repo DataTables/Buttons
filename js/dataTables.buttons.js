@@ -132,7 +132,10 @@ Buttons.prototype = {
 	 */
 	disable: function ( idx ) {
 		var button = this._indexToButton( idx );
-		button.node.addClass( 'disabled' );
+		button.node.addClass( 'disabled' )
+			.children().addClass( 'disabled' );
+		// Foundation needs the liner to have the class - a blanket setting
+		// appears okay, but might need to be a configurable option in future
 
 		return this;
 	},
@@ -172,7 +175,8 @@ Buttons.prototype = {
 		}
 
 		var button = this._indexToButton( idx );
-		button.node.removeClass( 'disabled' );
+		button.node.removeClass( 'disabled' )
+			.children().removeClass( 'disabled' );
 
 		return this;
 	},

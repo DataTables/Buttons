@@ -1,0 +1,31 @@
+
+(function($, DataTables){
+
+$.extend( true, DataTables.Buttons.defaults, {
+	dom: {
+		container: {
+			tag: 'ul',
+			className: 'dt-buttons button-group'
+		},
+		button: {
+			tag: 'li',
+			className: ''
+		},
+		buttonLiner: {
+			tag: 'a',
+			className: 'button small'
+		},
+		collection: {
+			tag: 'ul',
+			className: 'dt-button-collection f-dropdown open',
+			buttonLiner: {
+				tag: 'a',
+				className: 'small'
+			}
+		}
+	}
+} );
+
+DataTables.ext.buttons.collection.className = 'buttons-collection dropdown';
+
+})(jQuery, jQuery.fn.dataTable);
