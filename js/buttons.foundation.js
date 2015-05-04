@@ -21,7 +21,7 @@ $.extend( true, DataTables.Buttons.defaults, {
 		collection: {
 			tag: 'ul',
 			className: 'dt-button-collection f-dropdown open',
-			buttonLiner: {
+			button: {
 				tag: 'a',
 				className: 'small'
 			}

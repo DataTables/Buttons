@@ -514,6 +514,10 @@ Buttons.prototype = {
 			button.addClass( 'disabled' );
 		}
 
+		if ( config.className ) {
+			button.addClass( config.className );
+		}
+
 		var buttonContainer = this.c.dom.buttonContainer;
 		var inserter;
 		if ( buttonContainer ) {
