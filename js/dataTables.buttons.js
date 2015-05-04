@@ -89,7 +89,10 @@ Buttons.prototype = {
 	 */
 	active: function ( idx, flag ) {
 		var button = this._indexToButton( idx );
-		button.node.toggleClass( 'active', flag === undefined ? true : flag );
+		button.node.toggleClass(
+			this.c.dom.button.active,
+			flag === undefined ? true : flag
+		);
 
 		return this;
 	},
@@ -132,7 +135,7 @@ Buttons.prototype = {
 	 */
 	disable: function ( idx ) {
 		var button = this._indexToButton( idx );
-		button.node.addClass( 'disabled' );
+		button.node.addClass( this.c.dom.button.disabled );
 
 		return this;
 	},
@@ -172,7 +175,7 @@ Buttons.prototype = {
 		}
 
 		var button = this._indexToButton( idx );
-		button.node.removeClass( 'disabled' );
+		button.node.removeClass( this.c.dom.button.disabled );
 
 		return this;
 	},
@@ -485,7 +488,7 @@ Buttons.prototype = {
 			.on( 'click.dtb', function (e) {
 				e.preventDefault();
 
-				if ( ! button.hasClass( 'disabled' ) && config.action ) {
+				if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
 					config.action.call( dt.button( button ), e, dt, button, config );
 				}
 
@@ -493,7 +496,7 @@ Buttons.prototype = {
 			} )
 			.on( 'keyup.dtb', function (e) {
 				if ( e.keyCode === 13 ) {
-					if ( ! button.hasClass( 'disabled' ) && config.action ) {
+					if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
 						config.action.call( dt.button( button ), e, dt, button, config );
 					}
 				}
@@ -511,7 +514,7 @@ Buttons.prototype = {
 		}
 
 		if ( config.enabled === false ) {
-			button.addClass( 'disabled' );
+			button.addClass( buttonDom.disabled );
 		}
 
 		if ( config.className ) {
@@ -904,7 +907,9 @@ Buttons.defaults = {
 		},
 		button: {
 			tag: 'a',
-			className: 'dt-button'
+			className: 'dt-button',
+			active: 'active',
+			disabled: 'disabled'
 		},
 		buttonLiner: {
 			tag: 'span',

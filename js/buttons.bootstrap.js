@@ -25,7 +25,7 @@ $.extend( true, DataTables.Buttons.defaults, {
 } );
 
 DataTables.ext.buttons.collection.text = function ( dt ) {
-	return dt.i18n('buttons.collection', 'Collection <span class="caret"></span>');
+	return dt.i18n('buttons.collection', 'Collection <span class="caret"/>');
 };
 
 })(jQuery, jQuery.fn.dataTable);

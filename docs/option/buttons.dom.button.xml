@@ -6,10 +6,12 @@
 
 	<type type="object">
 		<description>
-			Plain object which will can have the properties `tag` and / or `className` set.
+			Plain object which will can have the following properties set:
 
 			* `tag` - a `-type string` value which defines the HTML tag to use. There should be no spaces or any other formatting - e.g. it should simply be `span`, `div`, `a` etc.
 			* `className` - a `-type string` value which defines the element's class name. Multiple classes can be given using space separation.
+			* `disabled` - The class name to assign to the button when the button is in the _disabled_ state.
+			* `active` - The class name to assign to the button when the button is in the _active_ state.
 		</description>
 	</type>
 
