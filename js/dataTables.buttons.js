@@ -931,9 +931,7 @@ $.extend( DataTable.ext.buttons, {
 	text: {
 		text: '',
 		className: 'buttons-text',
-		action: function ( e, dt, button, config ) {
-			console.log( 'action: text' );
-		}
+		action: function ( e, dt, button, config ) {}
 	},
 	collection: {
 		text: function ( dt, button, config ) {
@@ -993,7 +991,7 @@ $.extend( DataTable.ext.buttons, {
 		background: true,
 		collectionLayout: '',
 		backgroundClassName: 'dt-button-background',
-		fade: true // xxx
+		fade: false // xxx
 	},
 	copy: {
 		text: 'Copy',
