@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button group="core">
+	<name>text</name>
+	<summary>Simple text button with no predefined action</summary>
+	<since>Buttons 1.0.0</since>
+
+	<description>
+		The `text` button type is the simplest of all possible buttons - it has no predefined action or label text, giving you a blank canvas with which to extend and create your own button types. Typically you would use `b-init buttons.buttons.text` and `b-init buttons.buttons.action` to give the button a label for the end user to see and an action to perform when activated.
+
+		It should be noted that you do not need to use this button as the basis for custom buttons (i.e. extending from this button type), but it can be useful to use as an initial starting point.
+	</description>
+
+	<defaults>
+		<text>_None_ (i.e. empty string)</text>
+		<className value="buttons-text"/>
+		<action>_None_</action>
+	</defaults>
+
+	<example title="DataTables initialisation: Create a button that extends the `text` type"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: [
+		{
+			extends: 'text',
+			text: 'Action'
+			action: function ( e, dt, button, config ) {
+				// perform some action on the table
+			}
+		}
+	}
+} );
+
+]]></example>
+
+	<example title="DataTables initialisation: Create a button that extends the `text` type"><![CDATA[
+
+new $.fn.dataTable.Buttons( table, {
+	buttons: [
+		{
+			extends: 'text',
+			text: 'Action'
+			action: function ( e, dt, button, config ) {
+				// perform some action on the table
+			}
+		}
+	}
+} );
+
+]]></example>
+</dt-button>

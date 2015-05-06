@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button group="core">
+	<name>text</name>
+	<summary>A button which triggers a drop down with another set of buttons</summary>
+	<since>Buttons 1.0.0</since>
+
+	<description>
+		The collection button type is integral to Buttons as it provides the ability to show one or more "sub-buttons" in a drop down that is displayed when the button is activated. This provides a method of collecting like buttons and displaying them in a space efficient manner for the end user.
+
+		The key aspect of this button type is the `buttons` option, which is an array of the buttons that you want to show in the drop down. The buttons defined here are exactly the same as any other button and can also be accessed via the API and manipulated as such.
+	</description>
+
+	<defaults>
+		<parameter name="text" value="Collection">
+			This can be configured using the `buttons.collection` option of the DataTables `dt-init language` object, or using the `b-init buttons.buttons.text` option for this button.
+		</parameter>
+		<parameter name="className" value="buttons-collection"/>
+		<parameter name="function" value="Collection">
+			Show the collection
+		</parameter>
+
+		<parameter name="background" value="true"/>
+		<parameter name="backgroundClassName" value="dt-button-background"/>
+		<parameter name="buttons" value=""/>
+		<parameter name="collectionLayout" value=""/>
+		<parameter name="fade" value="false"/>
+	</defaults>
+
+	<option type="boolean" name="background">
+		Show (`true`) a background element, which can be styling using CSS to visually highlight the collection by fading out the rest of the page, or not (`false`).
+	</option>
+	<option type="string" name="backgroundClassName">
+		Class name to add to the background element if it is enabled.
+	</option>
+	<option type="array" name="buttons">
+		The buttons to show in the collection. The elements in this array follow the same rules as the `b-init buttons.buttons` array - i.e. it can contain strings, objects and functions that describe buttons.
+	</option>
+	<option type="string" name="collectionLayout">
+		Layout options for the buttons shown in the collection. This is a string which can have:
+
+		* Fixed position layout - centred over the window:
+			* Use `-string fixed`
+		* Multi-column layout:
+			* Use one of `-string two-column`, `-string three-column` or `-string four-column`.
+
+		The multi-column layout can be use with the default absolute positioning of the drop down, or with the fixed position layout option. To use fixed positioning and multi-column layout, simply space separate the options - e.g. `fixed two-column`.
+
+		These options can be used with the default DataTables styling, Bootstrap, Foundation and jQuery UI.
+	</option>
+	<option type="boolean" name="fade">
+		Fade the collection in / out (`true`) or immediately display with no animation (`false`).
+	</option>
+
+
+	<example title="DataTables initialisation: Create an export collection"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: [
+		{
+			extends: 'collection',
+			text: 'Export'
+			buttons: [ 'csv-flash', 'xls-flash', 'pdf-flash' ]
+		}
+	}
+} );
+
+]]></example>
+
+	<example title="DataTables initialisation: Collection of custom buttons"><![CDATA[
+
+new $.fn.dataTable.Buttons( table, {
+	buttons: [
+		{
+			extends: 'collection',
+			text: 'Flag'
+			buttons: [
+				{ text: 'High priority',   action: function () { ... } },
+				{ text: 'Medium priority', action: function () { ... } },
+				{ text: 'Low priority',    action: function () { ... } }
+			],
+			fade: true
+		}
+	}
+} );
+
+]]></example>
+</dt-button>
