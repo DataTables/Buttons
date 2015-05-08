@@ -410,6 +410,14 @@ Buttons.prototype = {
 
 		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
 			var conf = this._resolveExtends( buttons[i] );
+
+			// If the configuration is an array, then expand the buttons at this
+			// point
+			if ( $.isArray( conf ) ) {
+				this._buildButtons( conf, container, collectionCounter );
+				continue;
+			}
+
 			var button = this._buildButton(
 				conf,
 				collectionCounter!==undefined ? true : false
@@ -647,16 +655,33 @@ Buttons.prototype = {
 		var dt = this.s.dt;
 		var dtButtons = DataTable.ext.buttons;
 		var toConfObject = function ( base ) {
-			if ( typeof base === 'function' ) {
-				base = base( dt );
+			var loop = 0;
+
+			// Loop until we have resolved to a button configuration, or an
+			// array of button configurations (which will be iterated
+			// separately)
+			while ( ! $.isPlainObject(base) && ! $.isArray(base) ) {
+				if ( typeof base === 'function' ) {
+					base = base( dt, conf );
+				}
+				else if ( typeof base === 'string' ) {
+					if ( ! dtButtons[ base ] ) {
+						throw 'Unknown button type: '+base;
+					}
+
+					base = dtButtons[ base ];
+				}
+
+				loop++;
+				if ( loop > 30 ) {
+					// Protect against misconfiguration killing the browser
+					throw 'Buttons: Too many iterations';
+				}
 			}
 
-			if ( typeof base === 'string' ) {
-				if ( ! dtButtons[ base ] ) {
-					throw 'Unknown button type: '+base;
-				}
-				base = $.extend( {}, dtButtons[ base ] );
-			}
+			base = $.isArray( base ) ?
+				base :
+				$.extend( {}, base );
 
 			return base;
 		};
@@ -666,7 +691,12 @@ Buttons.prototype = {
 		while ( conf.extend ) {
 			// Use `toConfObject` in case the button definition being extended
 			// is itself a string or a function
-			conf = $.extend( {}, toConfObject( dtButtons[ conf.extend ] ), conf );
+			var objArray = toConfObject( dtButtons[ conf.extend ] );
+			if ( $.isArray( objArray ) ) {
+				return objArray;
+			}
+
+			conf = $.extend( {}, objArray, conf );
 
 			// Although we want the `conf` object to overwrite almost all of
 			// the properties of the object being extended, the `extend`
