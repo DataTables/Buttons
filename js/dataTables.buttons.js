@@ -11,6 +11,9 @@ var factory = function( $, DataTable ) {
 // can be removed on destroy
 var _instCounter = 0;
 
+// Button namespacing counter for namespacing events on individual buttons
+var _buttonCounter = 0;
+
 
 /**
  * [Buttons description]
@@ -147,12 +150,32 @@ Buttons.prototype = {
 	 */
 	destroy: function ()
 	{
+		// Key event listener
 		$('body').off( 'keyup.'+this.s.namespace );
+
+		// Individual button destroy (so they can remove their own events if
+		// needed
+		var buttons = this.s.buttons;
+		var subButtons = this.s.subButtons;
+		var i, ien, j, jen;
+		
+		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+			this.removePrep( i );
+
+			for ( j=0, jen=subButtons[i].length; j<0 ; j++ ) {
+				this.removePrep( i+'-'+j );
+			}
+		}
+
+		this.removeCommit();
+
+		// Container
 		this.dom.container.remove();
 
+		// Remove from the settings object collection
 		var buttonInsts = this.s.dt.settings()[0];
 
-		for ( var i=0, ien=buttonInsts.length ; i<ien ; i++ ) {
+		for ( i=0, ien=buttonInsts.length ; i<ien ; i++ ) {
 			if ( buttonInsts.inst === this ) {
 				buttonInsts.splice( i, 1 );
 				break;
@@ -241,17 +264,28 @@ Buttons.prototype = {
 	removePrep: function ( idx )
 	{
 		var button;
+		var dt = this.s.dt;
 
 		if ( typeof idx === 'number' || idx.indexOf('-') === -1 ) {
+			// Top level button
 			button = this.s.buttons[ idx*1 ];
+
+			if ( button.conf.destroy ) {
+				button.conf.destroy.call( dt.button(idx), dt, button, button.conf );
+			}
 
 			button.node.remove();
 			this._removeKey( button.conf );
 			this.s.buttons[ idx*1 ] = null;
 		}
 		else {
+			// Collection button
 			var idxs = idx.split('-');
 			button = this.s.subButtons[ idxs[0]*1 ][ idxs[1]*1 ];
+
+			if ( button.conf.destroy ) {
+				button.conf.destroy.call( dt.button(idx), dt, button, button.conf );
+			}
 
 			button.node.remove();
 			this._removeKey( button.conf );
@@ -529,6 +563,10 @@ Buttons.prototype = {
 			button.addClass( config.className );
 		}
 
+		if ( ! config.namespace ) {
+			config.namespace = '.dt-button-'+(_buttonCounter++);
+		}
+
 		var buttonContainer = this.c.dom.buttonContainer;
 		var inserter;
 		if ( buttonContainer ) {
@@ -679,11 +717,9 @@ Buttons.prototype = {
 				}
 			}
 
-			base = $.isArray( base ) ?
+			return $.isArray( base ) ?
 				base :
 				$.extend( {}, base );
-
-			return base;
 		};
 
 		conf = toConfObject( conf );
@@ -700,11 +736,8 @@ Buttons.prototype = {
 
 			// Although we want the `conf` object to overwrite almost all of
 			// the properties of the object being extended, the `extend`
-			// property should from from the object being extended
-			if ( ! dtButtons[ conf.extend ] ) {
-				throw 'Unknown button type: '+conf.extend;
-			}
-			conf.extend = dtButtons[ conf.extend ].extend;
+			// property should come from the object being extended
+			conf.extend = objArray.extend;
 		}
 
 		return conf;

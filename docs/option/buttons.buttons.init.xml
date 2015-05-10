@@ -4,7 +4,9 @@
 	<summary>Initialisation function that can be used to add events specific to this button</summary>
 	<since>1.0.0</since>
 
-	<default value="Default init function depends upon the button type. Please refer to the button type documentation"/>
+	<default value="">
+		Default function depends upon the button type. Please refer to the button type documentation
+	</default>
 
 	<type type="function">
 		<signature>init( dt, node, config )</signature>
