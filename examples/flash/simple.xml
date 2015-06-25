@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="2">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons buttons-flash">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			'copyFlash',
+			'csvFlash',
+			'excelFlash',
+			'pdfFlash'
+		]
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Flash export buttons</title>
+
+<info><![CDATA[
+
+
+
+]]></info>
+
+</dt-example>
+
