@@ -2,7 +2,7 @@
 <dt-button group="core">
 	<name>text</name>
 	<summary>A button which triggers a drop down with another set of buttons</summary>
-	<since>Buttons 1.0.0</since>
+	<since>1.0.0</since>
 
 	<description>
 		The collection button type is integral to Buttons as it provides the ability to show one or more "sub-buttons" in a drop down that is displayed when the button is activated. This provides a method of collecting like buttons and displaying them in a space efficient manner for the end user.
@@ -15,7 +15,7 @@
 			This can be configured using the `buttons.collection` option of the DataTables `dt-init language` object, or using the `b-init buttons.buttons.text` option for this button.
 		</parameter>
 		<parameter name="className" value="buttons-collection"/>
-		<parameter name="function" value="Collection">
+		<parameter name="action" value="function">
 			Show the collection
 		</parameter>
 
@@ -61,12 +61,12 @@ $('#myTable').DataTable( {
 			text: 'Export'
 			buttons: [ 'csv-flash', 'xls-flash', 'pdf-flash' ]
 		}
-	}
+	]
 } );
 
 ]]></example>
 
-	<example title="DataTables initialisation: Collection of custom buttons"><![CDATA[
+	<example title="Direct initialisation: Collection of custom buttons"><![CDATA[
 
 new $.fn.dataTable.Buttons( table, {
 	buttons: [
@@ -80,7 +80,7 @@ new $.fn.dataTable.Buttons( table, {
 			],
 			fade: true
 		}
-	}
+	]
 } );
 
 ]]></example>

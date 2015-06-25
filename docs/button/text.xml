@@ -2,7 +2,7 @@
 <dt-button group="core">
 	<name>text</name>
 	<summary>Simple text button with no predefined action</summary>
-	<since>Buttons 1.0.0</since>
+	<since>1.0.0</since>
 
 	<description>
 		The `text` button type is the simplest of all possible buttons - it has no predefined action or label text, giving you a blank canvas with which to extend and create your own button types. Typically you would use `b-init buttons.buttons.text` and `b-init buttons.buttons.action` to give the button a label for the end user to see and an action to perform when activated.
@@ -11,9 +11,7 @@
 	</description>
 
 	<defaults>
-		<text>_None_ (i.e. empty string)</text>
-		<className value="buttons-text"/>
-		<action>_None_</action>
+		<parameter name="className" value="buttons-text"/>
 	</defaults>
 
 	<example title="DataTables initialisation: Create a button that extends the `text` type"><![CDATA[
@@ -27,12 +25,12 @@ $('#myTable').DataTable( {
 				// perform some action on the table
 			}
 		}
-	}
+	]
 } );
 
 ]]></example>
 
-	<example title="DataTables initialisation: Create a button that extends the `text` type"><![CDATA[
+	<example title="Direct initialisation: Create a button that extends the `text` type"><![CDATA[
 
 new $.fn.dataTable.Buttons( table, {
 	buttons: [
@@ -43,7 +41,7 @@ new $.fn.dataTable.Buttons( table, {
 				// perform some action on the table
 			}
 		}
-	}
+	]
 } );
 
 ]]></example>

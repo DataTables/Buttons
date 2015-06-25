@@ -1234,6 +1234,105 @@ DataTable.Api.registerPlural( 'buttons().remove()', 'buttons().remove()', functi
 	return this;
 } );
 
+// Information box that can be used by buttons
+var _infoTimer;
+DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
+	var that = this;
+
+	if ( title === false ) {
+		$('#datatables_buttons_info').fadeOut( function () {
+			$(this).remove();
+		} );
+		clearTimeout( _infoTimer );
+		_infoTimer = null;
+
+		return this;
+	}
+
+	if ( _infoTimer ) {
+		clearTimeout( _infoTimer );
+	}
+
+	if ( $('#datatables_buttons_info').length ) {
+		$('#datatables_buttons_info').remove();
+	}
+
+	title = title ? '<h2>'+title+'</h2>' : '';
+
+	$('<div id="datatables_buttons_info" class="dt-button-info"/>')
+		.html( title + '<div>' + message + '</div>' )
+		.css( 'display', 'none' )
+		.appendTo( 'body' )
+		.fadeIn();
+
+	if ( time !== undefined && time !== 0 ) {
+		_infoTimer = setTimeout( function () {
+			that.buttons.info( false );
+		}, time );
+	}
+
+	return this;
+} );
+
+// Get data from the table for export - this is common to a number of plug-in
+// buttons so it is included in the Buttons core library
+DataTable.Api.register( 'buttons.exportData()', function ( options ) {
+	if ( this.context.length ) {
+		return _exportData( new DataTable.Api( this.context[0], options ) );
+	}
+} );
+
+var _exportData = function ( dt, inOpts )
+{
+	var config = $.extend( true, {}, {
+		rows:          null,
+		columns:       '',
+		modifier:      {
+			search: 'applied',
+			order:  'applied'
+		},
+		orthogonal:    'display',
+		stripHtml:     true,
+		stripNewlines: true,
+		trim:          true
+	}, inOpts );
+
+	var strip = function ( str ) {
+		if ( config.stripHtml ) {
+			str = str.replace( /<.*?>/g, '' );
+		}
+
+		if ( config.trim ) {
+			str = str.replace( /^\s+|\s+$/g, '' );
+		}
+
+		if ( config.trim ) {
+			str = str.replace( /\n/g, ' ' );
+		}
+
+		return str;
+	};
+
+	var header = dt.columns( config.columns ).indexes().map( function (idx, i) {
+		return strip( dt.column( idx ).header().innerHTML );
+	} ).toArray();
+
+	var footer = dt.columns( config.columns ).indexes().map( function (idx, i) {
+		return strip( dt.column( idx ).footer().innerHTML );
+	} ).toArray();
+
+	var body = dt.rows( config.rows, config.modifier ).indexes().map( function (rowIdx, i) {
+		return dt.cells( rowIdx, config.columns ).indexes().map( function (cellIdx) {
+			return strip( dt.cell( cellIdx ).render( config.orthogonal ) );
+		} ).toArray();
+	} ).toArray();
+
+	return {
+		header: header,
+		footer: footer,
+		body:   body
+	};
+};
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
