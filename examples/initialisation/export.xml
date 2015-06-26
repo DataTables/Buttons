@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" table-class="display nowrap" order="2">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons buttons-flash jszip pdfmake vfsfonts buttons-html5">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			'copy', 'csv', 'excel', 'pdf'
+		]
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">File export</title>
+
+<info><![CDATA[
+
+
+
+]]></info>
+
+</dt-example>
+

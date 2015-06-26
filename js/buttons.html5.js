@@ -365,7 +365,7 @@ var excelStrings = {
 //
 DataTable.ext.buttons.copyHtml5 = {
 	text: function ( dt ) {
-		return dt.i18n( 'buttons.copyHtml5', 'Copy' );
+		return dt.i18n( 'buttons.copy', 'Copy' );
 	},
 
 	action: function ( e, dt, button, config ) {
@@ -436,7 +436,7 @@ DataTable.ext.buttons.csvHtml5 = {
 	},
 
 	text: function ( dt ) {
-		return dt.i18n( 'buttons.csvHtml5', 'CSV' );
+		return dt.i18n( 'buttons.csv', 'CSV' );
 	},
 
 	action: function ( e, dt, button, config ) {
@@ -474,7 +474,7 @@ DataTable.ext.buttons.excelHtml5 = {
 	},
 
 	text: function ( dt ) {
-		return dt.i18n( 'buttons.excelHtml5', 'Excel' );
+		return dt.i18n( 'buttons.excel', 'Excel' );
 	},
 
 	action: function ( e, dt, button, config ) {
@@ -544,7 +544,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 	},
 
 	text: function ( dt ) {
-		return dt.i18n( 'buttons.pdfHtml5', 'PDF' );
+		return dt.i18n( 'buttons.pdf', 'PDF' );
 	},
 
 	action: function ( e, dt, button, config ) {

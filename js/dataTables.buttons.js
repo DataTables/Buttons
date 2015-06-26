@@ -14,6 +14,7 @@ var _instCounter = 0;
 // Button namespacing counter for namespacing events on individual buttons
 var _buttonCounter = 0;
 
+var _dtButtons = DataTable.ext.buttons;
 
 /**
  * [Buttons description]
@@ -433,7 +434,6 @@ Buttons.prototype = {
 	 */
 	_buildButtons: function ( buttons, container, collectionCounter )
 	{
-		var dtButtons = DataTable.ext.buttons;
 		var dt = this.s.dt;
 
 		if ( ! container ) {
@@ -444,6 +444,10 @@ Buttons.prototype = {
 
 		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
 			var conf = this._resolveExtends( buttons[i] );
+
+			if ( ! conf ) {
+				continue;
+			}
 
 			// If the configuration is an array, then expand the buttons at this
 			// point
@@ -699,7 +703,6 @@ Buttons.prototype = {
 	_resolveExtends: function ( conf )
 	{
 		var dt = this.s.dt;
-		var dtButtons = DataTable.ext.buttons;
 		var toConfObject = function ( base ) {
 			var loop = 0;
 
@@ -709,13 +712,17 @@ Buttons.prototype = {
 			while ( ! $.isPlainObject(base) && ! $.isArray(base) ) {
 				if ( typeof base === 'function' ) {
 					base = base( dt, conf );
+
+					if ( ! base ) {
+						return false;
+					}
 				}
 				else if ( typeof base === 'string' ) {
-					if ( ! dtButtons[ base ] ) {
+					if ( ! _dtButtons[ base ] ) {
 						throw 'Unknown button type: '+base;
 					}
 
-					base = dtButtons[ base ];
+					base = _dtButtons[ base ];
 				}
 
 				loop++;
@@ -732,10 +739,10 @@ Buttons.prototype = {
 
 		conf = toConfObject( conf );
 
-		while ( conf.extend ) {
+		while ( conf && conf.extend ) {
 			// Use `toConfObject` in case the button definition being extended
 			// is itself a string or a function
-			var objArray = toConfObject( dtButtons[ conf.extend ] );
+			var objArray = toConfObject( _dtButtons[ conf.extend ] );
 			if ( $.isArray( objArray ) ) {
 				return objArray;
 			}
@@ -997,8 +1004,7 @@ Buttons.defaults = {
 Buttons.version = '0.0.1-dev';
 
 
-
-$.extend( DataTable.ext.buttons, {
+$.extend( _dtButtons, {
 	text: {
 		text: '',
 		className: 'buttons-text',
@@ -1064,32 +1070,41 @@ $.extend( DataTable.ext.buttons, {
 		backgroundClassName: 'dt-button-background',
 		fade: false // xxx
 	},
-	copy: {
-		text: 'Copy',
-		className: 'buttons-copy',
-		action: function ( e, dt, button, config ) {
-			console.log( 'action: copy' );
+	copy: function ( dt, conf ) {
+		// Common option that will use the HTML5 or Flash export buttons
+		// For copy, the Flash option gets priority since it is one click only
+		if ( _dtButtons.copyFlash && _dtButtons.copyFlash.available( dt, conf ) ) {
+			return 'copyFlash';
+		}
+		if ( _dtButtons.copyHtml5 ) {
+			return 'copyHtml5';
 		}
 	},
-	csv: {
-		text: 'CSV',
-		className: 'buttons-csv',
-		action: function ( e, dt, button, config ) {
-			console.log( 'action: csv' );
+	csv: function ( dt, conf ) {
+		// Common option that will use the HTML5 or Flash export buttons
+		if ( _dtButtons.csvHtml5 && _dtButtons.csvFlash.available( dt, conf ) ) {
+			return 'csvHtml5';
+		}
+		if ( _dtButtons.csvFlash && _dtButtons.csvFlash.available( dt, conf ) ) {
+			return 'csvFlash';
 		}
 	},
-	pdf: {
-		text: 'PDF',
-		className: 'buttons-pdf',
-		action: function ( e, dt, button, config ) {
-			console.log( 'action: pdf' );
+	excel: function ( dt, conf ) {
+		// Common option that will use the HTML5 or Flash export buttons
+		if ( _dtButtons.excelHtml5 && _dtButtons.excelFlash.available( dt, conf ) ) {
+			return 'excelHtml5';
+		}
+		if ( _dtButtons.excelFlash && _dtButtons.excelFlash.available( dt, conf ) ) {
+			return 'excelFlash';
 		}
 	},
-	print: {
-		text: 'Print',
-		className: 'buttons-print',
-		action: function ( e, dt, button, config ) {
-			console.log( 'action: print' );
+	pdf: function ( dt, conf ) {
+		// Common option that will use the HTML5 or Flash export buttons
+		if ( _dtButtons.pdfHtml5 && _dtButtons.pdfFlash.available( dt, conf ) ) {
+			return 'pdfHtml5';
+		}
+		if ( _dtButtons.pdfFlash && _dtButtons.pdfFlash.available( dt, conf ) ) {
+			return 'pdfFlash';
 		}
 	}
 } );

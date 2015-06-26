@@ -6,6 +6,7 @@
  * Copyright (c) 2012 Joseph Huckaby
  */
 
+// xxx need a flash resize method
 (function($, DataTable) {
 
 
@@ -402,35 +403,33 @@ ZeroClipboard_TableTools.Client.prototype = {
 				}
 			} // foreach event handler defined
 		} // user defined handler for event
-	},
-
-
-	hasFlash: function ()
-	{
-		try {
-			var fo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
-			if (fo) {
-				return true;
-			}
-		}
-		catch (e) {
-			if (
-				navigator.mimeTypes &&
-				navigator.mimeTypes['application/x-shockwave-flash'] !== undefined &&
-				navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin
-			) {
-				return true;
-			}
-		}
-
-		return false;
 	}
+};
+
+ZeroClipboard_TableTools.hasFlash = function ()
+{
+	try {
+		var fo = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+		if (fo) {
+			return true;
+		}
+	}
+	catch (e) {
+		if (
+			navigator.mimeTypes &&
+			navigator.mimeTypes['application/x-shockwave-flash'] !== undefined &&
+			navigator.mimeTypes['application/x-shockwave-flash'].enabledPlugin
+		) {
+			return true;
+		}
+	}
+
+	return false;
 };
 
 // For the Flash binding to work, ZeroClipboard_TableTools must be on the global
 // object list
 window.ZeroClipboard_TableTools = ZeroClipboard_TableTools;
-
 
 
 
@@ -595,7 +594,7 @@ DataTable.Buttons.swfPath = '../../swf/flashExport.swf';
 // Copy to clipboard
 DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 	text: function ( dt ) {
-		return dt.i18n( 'buttons.copyFlash', 'Copy' );
+		return dt.i18n( 'buttons.copy', 'Copy' );
 	},
 
 	action: function ( e, dt, button, config ) {
@@ -624,7 +623,7 @@ DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 // CSV save file
 DataTable.ext.buttons.csvFlash = $.extend( {}, flashButton, {
 	text: function ( dt ) {
-		return dt.i18n( 'buttons.csvFlash', 'CSV' );
+		return dt.i18n( 'buttons.csv', 'CSV' );
 	},
 
 	action: function ( e, dt, button, config ) {
@@ -641,7 +640,7 @@ DataTable.ext.buttons.csvFlash = $.extend( {}, flashButton, {
 // Excel save file - this is really a CSV file using UTF-8 that Excel can read
 DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 	text: function ( dt ) {
-		return dt.i18n( 'buttons.excelFlash', 'Excel' );
+		return dt.i18n( 'buttons.excel', 'Excel' );
 	},
 
 	action: function ( e, dt, button, config ) {
@@ -660,7 +659,7 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 // PDF export
 DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
 	text: function ( dt ) {
-		return dt.i18n( 'buttons.pdfFlash', 'PDF' );
+		return dt.i18n( 'buttons.pdf', 'PDF' );
 	},
 
 	action: function ( e, dt, button, config ) {
