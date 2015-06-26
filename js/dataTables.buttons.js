@@ -1260,7 +1260,8 @@ DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
 	title = title ? '<h2>'+title+'</h2>' : '';
 
 	$('<div id="datatables_buttons_info" class="dt-button-info"/>')
-		.html( title + '<div>' + message + '</div>' )
+		.html( title )
+		.append( $('<div/>')[ typeof message === 'string' ? 'html' : 'append' ]( message ) )
 		.css( 'display', 'none' )
 		.appendTo( 'body' )
 		.fadeIn();

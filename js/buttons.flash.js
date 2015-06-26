@@ -1,7 +1,9 @@
 /*!
  * Flash export buttons for Buttons and DataTables.
  * 2015 SpryMedia Ltd - datatables.net/license
- * ZeroClipbaord - Copyright (c) 2012 Joseph Huckaby
+ *
+ * ZeroClipbaord - MIT license
+ * Copyright (c) 2012 Joseph Huckaby
  */
 
 (function($, DataTable) {
@@ -469,11 +471,8 @@ var _filename = function ( config, incExtension )
 	var title = $('title').text();
 	title = config.title.replace( '*', title );
 
-	// Strip characters which the OS will object to - checking for UTF8 support
-	// in the scripting engine
-	title = "\u00A1".toString().length < 4 ?
-		title.replace(/[^a-zA-Z0-9_\u00A1-\uFFFF\.,\-_ !\(\)]/g, "") :
-		title.replace(/[^a-zA-Z0-9_\.,\-_ !\(\)]/g, "");
+	// Strip characters which the OS will object to
+	title = title.replace(/[^a-zA-Z0-9_\u00A1-\uFFFF\.,\-_ !\(\)]/g, "");
 
 	return incExtension === undefined || incExtension === true ?
 		title+config.extension :
