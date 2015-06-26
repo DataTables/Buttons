@@ -457,6 +457,10 @@ Buttons.prototype = {
 				collectionCounter!==undefined ? true : false
 			);
 
+			if ( ! button ) {
+				continue;
+			}
+
 			var buttonNode = button.node;
 			container.append( button.inserter );
 
@@ -520,8 +524,12 @@ Buttons.prototype = {
 			linerDom = collectionDom.buttonLiner;
 		}
 
-		// Need a pre-check method to ensure that the button can be used
-		// i.e. for Flash buttons, check Flash is available - xxx
+		// Make sure that the button is available based on whatever requirements
+		// it has. For example, Flash buttons require Flash
+		if ( config.available && ! config.available( dt, config ) ) {
+			console.log( 'not available', config );
+			return false;
+		}
 
 		var button = $('<'+buttonDom.tag+'/>')
 			.addClass( buttonDom.className )
