@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="2">
+
+<css lib="datatables buttons">
+	button {
+		margin: 1em;
+		padding: 1em;
+	}
+</css>
+<js lib="jquery datatables buttons buttons-flash">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').wrap('<div id="hide" style="display:none"/>');
+
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			'copyFlash',
+			'csvFlash',
+			'excelFlash',
+			'pdfFlash'
+		]
+	} );
+
+	$('#vis').one( 'click', function () {
+		$('#hide').css( 'display', 'block' );
+	} );
+
+	$('#resize').on( 'click', function () {
+		$.fn.dataTable.tables( { visible: true, api: true } ).buttons.resize();
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Hidden initialisation</title>
+
+<info><![CDATA[
+
+
+
+
+]]></info>
+
+<demo-html>
+	<button id="vis">Make table visible</button>
+	<button id="resize">Resize buttons</button>
+</demo-html>
+
+</dt-example>
+

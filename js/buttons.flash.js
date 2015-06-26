@@ -6,7 +6,6 @@
  * Copyright (c) 2012 Joseph Huckaby
  */
 
-// xxx need a flash resize method
 (function($, DataTable) {
 
 
@@ -560,7 +559,9 @@ var flashButton = {
 
 		flash.setHandCursor( true );
 		flash.addEventListener('mouseDown', function(client) {
+			config._fromFlash = true;
 			dt.button( button[0] ).trigger();
+			config._fromFlash = false;
 		} );
 
 		_glue( flash, button );
@@ -574,7 +575,7 @@ var flashButton = {
 
 	exportOptions: {},
 
-	title: null,
+	title: '*',
 
 	extension: '.csv',
 
@@ -583,8 +584,24 @@ var flashButton = {
 	footer: false
 };
 
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables options and methods
+ */
+
 // Set the default SWF path
+// xxx this should point to the CDN
 DataTable.Buttons.swfPath = '../../swf/flashExport.swf';
+
+// Method to allow Flash buttons to be resized when made visible - as they are
+// of zero height and width if initialised hidden
+DataTable.Api.register( 'buttons.resize()', function () {
+	$.each( ZeroClipboard_TableTools.clients, function ( i, client ) {
+		if ( client.domElement !== undefined && client.domElement.parentNode ) {
+			client.positionElement();
+		}
+	} );
+} );
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -598,7 +615,11 @@ DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 	},
 
 	action: function ( e, dt, button, config ) {
-		// Set the text
+		// Check that the trigger did actually occur due to a Flash activation
+		if ( ! config._fromFlash ) {
+			return;
+		}
+
 		var flash = config._flash;
 		var data = _exportData( dt, config );
 
