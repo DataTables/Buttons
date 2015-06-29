@@ -4,6 +4,7 @@
  */
 
 (function($, DataTable) {
+"use strict";
 
 
 var _link = document.createElement( 'a' );

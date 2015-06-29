@@ -7,6 +7,7 @@
  */
 
 (function($, DataTable) {
+"use strict";
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -16,7 +17,6 @@
 /*jslint bitwise: true, indent: 4, laxbreak: true, laxcomma: true, smarttabs: true, plusplus: true */
 
 var _saveAs = (function(view) {
-	"use strict";
 	// IE <10 is explicitly unsupported
 	if (typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
 		return;
