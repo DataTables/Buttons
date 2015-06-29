@@ -10,9 +10,14 @@
 		It should be noted that you do not need to use this button as the basis for custom buttons (i.e. extending from this button type), but it can be useful to use as an initial starting point.
 	</description>
 
-	<defaults>
-		<parameter name="className" value="buttons-text"/>
-	</defaults>
+
+	<option type="string" name="text" default="">
+		The button's display text. See `b-init buttons.buttons.text` for details.
+	</option>
+
+	<option type="string" name="className" default="buttons-text">
+		The button's class name. See `b-init buttons.buttons.className` for details.
+	</option>
 
 	<example title="DataTables initialisation: Create a button that extends the `text` type"><![CDATA[
 

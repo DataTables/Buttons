@@ -10,32 +10,31 @@
 		The key aspect of this button type is the `buttons` option, which is an array of the buttons that you want to show in the drop down. The buttons defined here are exactly the same as any other button and can also be accessed via the API and manipulated as such.
 	</description>
 
-	<defaults>
-		<parameter name="text" value="Collection">
-			This can be configured using the `buttons.collection` option of the DataTables `dt-init language` object, or using the `b-init buttons.buttons.text` option for this button.
-		</parameter>
-		<parameter name="className" value="buttons-collection"/>
-		<parameter name="action" value="function">
-			Show the collection
-		</parameter>
+	<option type="string" name="text" default="Collection">
+		The button's display text. The text can be configured using this option (see `b-init buttons.buttons.text`) or the `buttons.print` option of the DataTables `dt-init language` object.
+	</option>
 
-		<parameter name="background" value="true"/>
-		<parameter name="backgroundClassName" value="dt-button-background"/>
-		<parameter name="buttons" value=""/>
-		<parameter name="collectionLayout" value=""/>
-		<parameter name="fade" value="false"/>
-	</defaults>
+	<option type="string" name="className" default="buttons-collection">
+		The button's class name. See `b-init buttons.buttons.className` for details.
+	</option>
 
-	<option type="boolean" name="background">
+	<option type="function" name="action">
+		Show the collection
+	</option>
+
+	<option type="boolean" name="background" default="true">
 		Show (`true`) a background element, which can be styling using CSS to visually highlight the collection by fading out the rest of the page, or not (`false`).
 	</option>
-	<option type="string" name="backgroundClassName">
+
+	<option type="string" name="backgroundClassName" default="dt-button-background">
 		Class name to add to the background element if it is enabled.
 	</option>
-	<option type="array" name="buttons">
+
+	<option type="array" name="buttons" default="[]">
 		The buttons to show in the collection. The elements in this array follow the same rules as the `b-init buttons.buttons` array - i.e. it can contain strings, objects and functions that describe buttons.
 	</option>
-	<option type="string" name="collectionLayout">
+
+	<option type="string" name="collectionLayout" default="">
 		Layout options for the buttons shown in the collection. This is a string which can have:
 
 		* Fixed position layout - centred over the window:
@@ -47,7 +46,8 @@
 
 		These options can be used with the default DataTables styling, Bootstrap, Foundation and jQuery UI.
 	</option>
-	<option type="boolean" name="fade">
+
+	<option type="boolean" name="fade" default="false">
 		Fade the collection in / out (`true`) or immediately display with no animation (`false`).
 	</option>
 
