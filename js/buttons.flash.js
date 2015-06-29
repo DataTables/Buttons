@@ -611,6 +611,8 @@ DataTable.Api.register( 'buttons.resize()', function () {
 
 // Copy to clipboard
 DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
+	className: 'buttons-copy buttons-flash',
+
 	text: function ( dt ) {
 		return dt.i18n( 'buttons.copy', 'Copy' );
 	},
@@ -644,6 +646,8 @@ DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 
 // CSV save file
 DataTable.ext.buttons.csvFlash = $.extend( {}, flashButton, {
+	className: 'buttons-csv buttons-flash',
+
 	text: function ( dt ) {
 		return dt.i18n( 'buttons.csv', 'CSV' );
 	},
@@ -661,6 +665,8 @@ DataTable.ext.buttons.csvFlash = $.extend( {}, flashButton, {
 
 // Excel save file - this is really a CSV file using UTF-8 that Excel can read
 DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
+	className: 'buttons-excel buttons-flash',
+
 	text: function ( dt ) {
 		return dt.i18n( 'buttons.excel', 'Excel' );
 	},
@@ -680,6 +686,8 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 
 // PDF export
 DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
+	className: 'buttons-pdf buttons-flash',
+
 	text: function ( dt ) {
 		return dt.i18n( 'buttons.pdf', 'PDF' );
 	},

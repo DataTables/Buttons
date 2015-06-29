@@ -364,6 +364,8 @@ var excelStrings = {
 // Copy to clipboard
 //
 DataTable.ext.buttons.copyHtml5 = {
+	className: 'buttons-copy buttons-html5',
+
 	text: function ( dt ) {
 		return dt.i18n( 'buttons.copy', 'Copy' );
 	},
@@ -431,6 +433,8 @@ DataTable.ext.buttons.copyHtml5 = {
 // CSV export
 //
 DataTable.ext.buttons.csvHtml5 = {
+	className: 'buttons-csv buttons-html5',
+
 	available: function () {
 		return window.FileReader !== undefined && window.Blob;
 	},
@@ -469,6 +473,8 @@ DataTable.ext.buttons.csvHtml5 = {
 // Excel (xlsx) export
 //
 DataTable.ext.buttons.excelHtml5 = {
+	className: 'buttons-excel buttons-html5',
+
 	available: function () {
 		return window.FileReader !== undefined && window.JSZip !== undefined;
 	},
@@ -539,6 +545,8 @@ DataTable.ext.buttons.excelHtml5 = {
 // PDF export - using pdfMake - http://pdfmake.org
 //
 DataTable.ext.buttons.pdfHtml5 = {
+	className: 'buttons-pdf buttons-html5',
+
 	available: function () {
 		return window.FileReader !== undefined && window.pdfMake;
 	},
