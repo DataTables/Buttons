@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="1">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons buttons-print">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			'print'
+		]
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Print button</title>
+
+<info><![CDATA[
+
+
+
+]]></info>
+
+</dt-example>
+
