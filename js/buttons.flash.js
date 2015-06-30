@@ -264,18 +264,6 @@ ZeroClipboard_TableTools.Client.prototype = {
 		if (this.ready) { this.movie.setText(newText) ;}
 	},
 
-	setCharSet: function(charSet) {
-		// set the character set (UTF16LE or UTF8)
-		this.charSet = charSet;
-		if (this.ready) { this.movie.setCharSet(charSet) ;}
-	},
-
-	setBomInc: function(bomInc) {
-		// set if the BOM should be included or not
-		this.incBom = bomInc;
-		if (this.ready) { this.movie.setBomInc(bomInc) ;}
-	},
-
 	setFileName: function(newText) {
 		// set the file name
 		this.fileName = newText;
@@ -346,8 +334,6 @@ ZeroClipboard_TableTools.Client.prototype = {
 				this.movie.appendText( this.clipText );
 				this.movie.setFileName( this.fileName );
 				this.movie.setAction( this.action );
-				this.movie.setCharSet( this.charSet );
-				this.movie.setBomInc( this.incBom );
 				this.movie.setHandCursor( this.handCursorEnabled );
 				break;
 
@@ -592,7 +578,7 @@ var flashButton = {
 
 // Set the default SWF path
 // xxx this should point to the CDN
-DataTable.Buttons.swfPath = '../../swf/flashExport.swf';
+DataTable.Buttons.swfPath = '../../swf/flashExport.swf?_='+Math.random();
 
 // Method to allow Flash buttons to be resized when made visible - as they are
 // of zero height and width if initialised hidden
@@ -657,7 +643,7 @@ DataTable.ext.buttons.csvFlash = $.extend( {}, flashButton, {
 		var flash = config._flash;
 		var data = _exportData( dt, config );
 
-		flash.setAction( 'save' );
+		flash.setAction( 'csv' );
 		flash.setFileName( _filename( config ) );
 		_setText( flash, data.str );
 	}
@@ -673,15 +659,40 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 
 	action: function ( e, dt, button, config ) {
 		// Set the text
+		var xml = '';
 		var flash = config._flash;
-		var data = _exportData( dt, config );
+		var data = dt.buttons.exportData( config.exportOptions );
+		var addRow = function ( row ) {
+			var cells = [];
 
-		flash.setAction( 'save' );
-		flash.setCharSet( 'UTF16LE' );
-		flash.setBomInc( true );
+			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
+				cells.push( $.isNumeric( row[i] ) ?
+					'<c t="n"><v>'+row[i]+'</v></c>' :
+					'<c t="inlineStr"><is><t>'+row[i]+'</t></is></c>'
+				);
+			}
+
+			return '<row>'+cells.join('')+'</row>';
+		};
+
+		if ( config.header ) {
+			xml += addRow( data.header );
+		}
+
+		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
+			xml += addRow( data.body[i] );
+		}
+
+		if ( config.header ) {
+			xml += addRow( data.footer );
+		}
+
+		flash.setAction( 'excel' );
 		flash.setFileName( _filename( config ) );
-		_setText( flash, data.str );
-	}
+		_setText( flash, xml );
+	},
+
+	extension: '.xlsx'
 } );
 
 // PDF export

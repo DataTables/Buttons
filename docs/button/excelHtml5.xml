@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button group="core">
 	<name>excelHtml5</name>
-	<summary>Create and save an Excel CSV file that contains the data from the table (HTML5)</summary>
+	<summary>Create and save an Excel XLSX file that contains the data from the table (HTML5)</summary>
 	<since>1.0.0</since>
 
 	<requires>

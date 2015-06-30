@@ -1,4 +1,4 @@
-﻿/* Compile using: mxmlc --target-player=10.0.0 -static-link-runtime-shared-libraries=true -library-path+=lib ZeroClipboardPdf.as */
+﻿/* Compile using: /usr/local/flex_sdk_4.12/bin/mxmlc --target-player=10.0.0 -static-link-runtime-shared-libraries=true -library-path+=lib ZeroClipboard.as */
 package {
 	import flash.display.Stage;
 	import flash.display.Sprite;
@@ -27,18 +27,61 @@ package {
 	import org.alivepdf.fonts.Style;
 	import org.alivepdf.fonts.CoreFont;
 	import org.alivepdf.colors.RGBColor;
+
+	/* ZIP  imports */
+	import deng.fzip.*;
  
-	public class ZeroClipboard extends Sprite {
-		
+	public class ZeroClipboard extends Sprite
+	{
 		private var domId:String = '';
 		private var button:Sprite;
 		private var clipText:String = 'blank';
 		private var fileName:String = '';
 		private var action:String = 'copy';
-		private var incBom:Boolean = true;
-		private var charSet:String = 'utf8';
-		
-		
+
+		// Excel - Pre-defined strings to build a minimal XLSX file
+		private var excelStrings:Object = {
+	"_rels/.rels": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">\
+	<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>\
+</Relationships>',
+
+	"xl/_rels/workbook.xml.rels": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">\
+	<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>\
+</Relationships>',
+
+	"[Content_Types].xml": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">\
+	<Default Extension="xml" ContentType="application/xml"/>\
+	<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>\
+	<Default Extension="jpeg" ContentType="image/jpeg"/>\
+	<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>\
+	<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>\
+</Types>',
+
+	"xl/workbook.xml": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
+<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">\
+	<fileVersion appName="xl" lastEdited="5" lowestEdited="5" rupBuild="24816"/>\
+	<workbookPr showInkAnnotation="0" autoCompressPictures="0"/>\
+	<bookViews>\
+		<workbookView xWindow="0" yWindow="0" windowWidth="25600" windowHeight="19020" tabRatio="500"/>\
+	</bookViews>\
+	<sheets>\
+		<sheet name="Sheet1" sheetId="1" r:id="rId1"/>\
+	</sheets>\
+</workbook>',
+
+	"xl/worksheets/sheet1.xml": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">\
+	<sheetData>\
+		__DATA__\
+	</sheetData>\
+</worksheet>'
+		};
+
+
+
 		public function ZeroClipboard() {
 			// constructor, setup event listeners and external interfaces
 			stage.scaleMode = StageScaleMode.EXACT_FIT;
@@ -86,81 +129,104 @@ package {
 			ExternalInterface.call( 'ZeroClipboard_TableTools.dispatch', domId, 'load', null );
 		}
 		
-		public function addCallbacks (evt:Event = null):void {
+
+		public function addCallbacks (evt:Event = null):void
+		{
 			ExternalInterface.addCallback("setHandCursor", setHandCursor);
 			ExternalInterface.addCallback("clearText", clearText);
 			ExternalInterface.addCallback("setText", setText);
 			ExternalInterface.addCallback("appendText", appendText);
 			ExternalInterface.addCallback("setFileName", setFileName);
 			ExternalInterface.addCallback("setAction", setAction);
-			ExternalInterface.addCallback("setCharSet", setCharSet);
-			ExternalInterface.addCallback("setBomInc", setBomInc);
 		}
 		
-		
-		public function setCharSet(newCharSet:String):void {
-			if ( newCharSet == 'UTF16LE' ) {
-				charSet = newCharSet;
-			} else {
-				charSet = 'UTF8';
-			}
-		}
-		
-		public function setBomInc(newBomInc:Boolean):void {
-			incBom = newBomInc;
-		}
-		
-		public function clearText():void {
+
+		public function clearText():void
+		{
 			clipText = '';
 		}
 		
-		public function appendText(newText:String):void {
+
+		public function appendText(newText:String):void
+		{
 			clipText += newText;
 		}
 		
-		public function setText(newText:String):void {
+
+		public function setText(newText:String):void
+		{
 			clipText = newText;
 		}
 		
-		public function setFileName(newFileName:String):void {
+
+		public function setFileName(newFileName:String):void
+		{
 			fileName = newFileName;
 		}
 		
-		public function setAction(newAction:String):void {
+
+		public function setAction(newAction:String):void
+		{
 			action = newAction;
 		}
 		
-		public function setHandCursor(enabled:Boolean):void {
+
+		public function setHandCursor(enabled:Boolean):void
+		{
 			// control whether the hand cursor is shown on rollover (true)
 			// or the default arrow cursor (false)
 			button.useHandCursor = enabled;
 		}
 		
 		
-		private function clickHandler(event:Event):void {
+		private function clickHandler(event:Event):void
+		{
 			var fileRef:FileReference = new FileReference();
 			fileRef.addEventListener(Event.COMPLETE, saveComplete);
 			
-			if ( action == "save" ) {
-				/* Save as a file */
-				if ( charSet == 'UTF16LE' ) {
-					fileRef.save( strToUTF16LE(clipText), fileName );
-				} else {
-					fileRef.save( strToUTF8(clipText), fileName );
-				}
-			} else if ( action == "pdf" ) {
-				/* Save as a PDF */
+			if ( action == "csv" ) {
+				// Simple save of the inbound data
+				var bytes:ByteArray = new ByteArray();
+
+				bytes.writeUTFBytes( clipText );
+				fileRef.save( bytes, fileName );
+			}
+			else if ( action == "excel" ) {
+				// Create an XLSX file using FZip and a set of predefined strings
+				var zip:FZip = new FZip();
+				var addFile:Function = function( file:String, str:String ):void {
+					var bytes:ByteArray = new ByteArray();
+					bytes.writeUTFBytes( str );
+
+					zip.addFile( file, bytes );
+				};
+
+				addFile( '[Content_Types].xml',        excelStrings['[Content_Types].xml'] );
+				addFile( '_rels/.rels',                excelStrings['_rels/.rels'] );
+				addFile( 'xl/workbook.xml',            excelStrings['xl/workbook.xml'] );
+				addFile( 'xl/_rels/workbook.xml.rels', excelStrings['xl/_rels/workbook.xml.rels'] );
+				addFile( 'xl/worksheets/sheet1.xml',   excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', clipText ) );
+
+				var out:ByteArray = new ByteArray();
+				zip.serialize( out );
+
+				fileRef.save( out, fileName );
+			}
+			else if ( action == "pdf" ) {
+				// Save as a PDF
 				var pdf:PDF = configPdf();
 				fileRef.save( pdf.save( Method.LOCAL ), fileName );
-			} else {
-				/* Copy the text to the clipboard. Note charset and BOM have no effect here */
+			}
+			else {
+				// Copy the text to the clipboard
 				System.setClipboard( clipText );
 				ExternalInterface.call( 'ZeroClipboard_TableTools.dispatch', domId, 'complete', clipText );
 			}
 		}
 		
 		
-		private function saveComplete(event:Event):void {
+		private function saveComplete(event:Event):void
+		{
 			ExternalInterface.call( 'ZeroClipboard_TableTools.dispatch', domId, 'complete', clipText );
 		}
 		
@@ -248,68 +314,6 @@ package {
 			
 			pdf.addGrid( grid, 0, y );
 			return pdf;
-		}
-		
-		
-		/*
-		 * Function: strToUTF8
-		 * Purpose:  Convert a string to the output utf-8
-		 * Returns:  ByteArray
-		 * Inputs:   String
-		 */
-		private function strToUTF8( str:String ):ByteArray {
-			var utf8:ByteArray = new ByteArray();
-			
-			/* BOM first */
-			if ( incBom ) {
-				utf8.writeByte( 0xEF );
-				utf8.writeByte( 0xBB );
-				utf8.writeByte( 0xBF );
-			}
-			utf8.writeUTFBytes( str );
-			
-			return utf8;
-		}
-		
-		
-		/*
-		 * Function: strToUTF16LE
-		 * Purpose:  Convert a string to the output utf-16
-		 * Returns:  ByteArray
-		 * Inputs:   String
-		 * Notes:    The fact that this function is needed is a little annoying. Basically, strings in
-		 *   AS3 are UTF-16 (with surrogate pairs and everything), but characters which take up less
-		 *   than 8 bytes appear to be stored as only 8 bytes. This function effective adds the 
-		 *   padding required, and the BOM
-		 */
-		private function strToUTF16LE( str:String ):ByteArray {
-			var utf16:ByteArray = new ByteArray();
-			var iChar:uint;
-			var i:uint=0, iLen:uint = str.length;
-			
-			/* BOM first */
-			if ( incBom ) {
-				utf16.writeByte( 0xFF );
-				utf16.writeByte( 0xFE );
-			}
-			
-			while ( i < iLen ) {
-				iChar = str.charCodeAt(i);
-				
-				if ( iChar < 0xFF ) {
-					/* one byte char */
-					utf16.writeByte( iChar );
-					utf16.writeByte( 0 );
-				} else {
-					/* two byte char */
-					utf16.writeByte( iChar & 0x00FF );
-					utf16.writeByte( iChar >> 8 );
-				}
-				
-				i++;
-			}
-			
-			return utf16;
 		}
 	}
 }

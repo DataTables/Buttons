@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button group="core">
 	<name>excelFlash</name>
-	<summary>Create and save an Excel CSV file that contains the data from the table (Adobe Flash)</summary>
+	<summary>Create and save an Excel XLSX file that contains the data from the table (Adobe Flash)</summary>
 	<since>1.0.0</since>
 
 	<requires>
@@ -10,14 +10,14 @@
 	</requires>
 
 	<description>
-		This button provides the end user with the ability to save the table's data into a locally created Excel CSV file.
+		This button provides the end user with the ability to save the table's data into a locally created Excel XLSX file.
 
 		Please note that this button has a number of restrictions:
 
-		* It **does not** create a true XLS or XLSX file - but rather a CSV file using UTF16-LE encoding that can be read by Excel. For true XLSX file creation please see the `b-button excelHtml5` button.
 		* Adobe Flash must be installed.
 		* The action for this button _cannot_ be activated using the `b-api button().trigger()` method due to the security restrictions of Flash
 		* The created file save dialogue must be shown and the file cannot be automatically opened.
+		* The XLSX file cannot contain any styling information. Only the raw data from the table is included.
 		
 		The `b-button excelHtml5` method provides much greater flexibility and thus button is considered to be sunsetted, but is still provided for use with older browsers that do not support the APIs required for the `b-button excelHtml5` button type.
 
@@ -34,7 +34,7 @@
 	</option>
 
 	<option type="function" name="action">
-		Create and save a Excel CSV file.
+		Create and save a Excel XLSX file.
 	</option>
 
 	<option type="string" name="fieldSeparator" default=",">
@@ -61,7 +61,7 @@
 		File name to give the created file (plus the extension defined by the `extension` option). The special character `*` is automatically replaced with the value read from the host document's `-tag title` tag.
 	</option>
 
-	<option type="string" name="extension" default=".csv">
+	<option type="string" name="extension" default=".xlsx">
 		The extension to give the created file name.
 	</option>
 
@@ -76,7 +76,7 @@ $('#myTable').DataTable( {
 
 ]]></example>
 
-	<example title="DataTables initialisation: Use the `b-button csv` button type to automatically select between the Flash and HTML button options."><![CDATA[
+	<example title="DataTables initialisation: Use the `b-button excel` button type to automatically select between the Flash and HTML button options."><![CDATA[
 
 $('#myTable').DataTable( {
 	buttons: [
