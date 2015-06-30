@@ -1,4 +1,4 @@
-﻿/* Compile using: /usr/local/flex_sdk_4.12/bin/mxmlc --target-player=10.0.0 -static-link-runtime-shared-libraries=true -library-path+=lib ZeroClipboard.as */
+﻿/* Compile using: /usr/local/flex_sdk_4.12/bin/mxmlc --target-player=11.0.0 -static-link-runtime-shared-libraries=true -library-path+=lib ZeroClipboard.as */
 package {
 	import flash.display.Stage;
 	import flash.display.Sprite;
@@ -132,53 +132,32 @@ package {
 
 		public function addCallbacks (evt:Event = null):void
 		{
-			ExternalInterface.addCallback("setHandCursor", setHandCursor);
-			ExternalInterface.addCallback("clearText", clearText);
-			ExternalInterface.addCallback("setText", setText);
-			ExternalInterface.addCallback("appendText", appendText);
-			ExternalInterface.addCallback("setFileName", setFileName);
-			ExternalInterface.addCallback("setAction", setAction);
-		}
-		
+			ExternalInterface.addCallback( "setHandCursor", function(enabled:Boolean):void {
+				button.useHandCursor = enabled;
+			} );
 
-		public function clearText():void
-		{
-			clipText = '';
-		}
-		
+			ExternalInterface.addCallback( "clearText", function():void {
+				clipText = '';
+			} );
 
-		public function appendText(newText:String):void
-		{
-			clipText += newText;
-		}
-		
+			ExternalInterface.addCallback( "setText", function(t:String):void {
+				clipText = t;
+			} );
 
-		public function setText(newText:String):void
-		{
-			clipText = newText;
-		}
-		
+			ExternalInterface.addCallback( "appendText", function(t:String):void {
+				clipText += t;
+			} );
 
-		public function setFileName(newFileName:String):void
-		{
-			fileName = newFileName;
-		}
-		
+			ExternalInterface.addCallback( "setFileName", function(t:String):void {
+				fileName = t;
+			} );
 
-		public function setAction(newAction:String):void
-		{
-			action = newAction;
+			ExternalInterface.addCallback( "setAction", function(t:String):void {
+				action = t;
+			} );
 		}
-		
 
-		public function setHandCursor(enabled:Boolean):void
-		{
-			// control whether the hand cursor is shown on rollover (true)
-			// or the default arrow cursor (false)
-			button.useHandCursor = enabled;
-		}
-		
-		
+
 		private function clickHandler(event:Event):void
 		{
 			var fileRef:FileReference = new FileReference();
@@ -231,77 +210,47 @@ package {
 		}
 		
 		
-		private function getProp( prop:String, opts:Array ):String
-		{
-			var i:int, iLen:int;
-			for ( i=0, iLen=opts.length ; i<iLen ; i++ )
-			{
-				if ( opts[i].indexOf( prop+":" ) != -1 )
-				{
-					return opts[i].replace( prop+":", "" );
-				}
-			}
-			return "";
-		}
-		
-		
 		private function configPdf():PDF
 		{
-			var
-				pdf:PDF,
-				i:int, iLen:int,
-				splitText:Array    = clipText.split("--/TableToolsOpts--\n"),
-				opts:Array         = splitText[0].split("\n"),
-				dataIn:Array       = splitText[1].split("\n"),
-				aColRatio:Array    = getProp( 'colWidth', opts ).split('\t'),
-				title:String       = getProp( 'title', opts ),
-				message:String     = getProp( 'message', opts ),
-				orientation:String = getProp( 'orientation', opts ),
-				size:String        = getProp( 'size', opts ),
-				iPageWidth:int     = 0,
-				dataOut:Array      = [],
-				columns:Array      = [],
-				headers:Array,
-				y:int = 0;
-			
-			/* Create the PDF */
-			pdf = new PDF( Orientation[orientation.toUpperCase()], Unit.MM, Size[size.toUpperCase()] );
+			var json:Object   = JSON.parse( clipText );
+			var columns:Array = [];
+
+			// Create the PDF
+			var pdf:PDF = new PDF(
+				Orientation[ json.orientation.toUpperCase() ],
+				Unit.MM,
+				Size[ json.size.toUpperCase() ]
+			);
+
 			pdf.setDisplayMode( Display.FULL_WIDTH );
 			pdf.addPage();
-			iPageWidth = pdf.getCurrentPage().w-20;
-			pdf.textStyle( new RGBColor(0), 1 );
+
+			var pageWidth:int = pdf.getCurrentPage().w-20;
 			
-			/* Add the title / message if there is one */
+			// Add the title / message if there is one
+			pdf.textStyle( new RGBColor(0), 1 );
 			pdf.setFont( new CoreFont(FontFamily.HELVETICA), 14 );
-			if ( title != "" )
-			{
-				pdf.writeText(11, title+"\n");
+			if ( json.title != "" ) {
+				pdf.writeText(11, json.title+"\n");
 			}
 			
 			pdf.setFont( new CoreFont(FontFamily.HELVETICA), 11 );
-			if ( message != "" )
-			{
-				pdf.writeText(11, message+"\n");
+			if ( json.message != "" ) {
+				pdf.writeText(11, json.message+"\n");
 			}
-			
-			/* Data setup. Split up the headers, and then construct the columns */
-			for ( i=0, iLen=dataIn.length ; i<iLen ; i++ )
-			{
-				if ( dataIn[i] != "" )
-				{
-					dataOut.push( dataIn[i].split("\t") );
-				}
-			}
-			headers = dataOut.shift();
-			
-			for ( i=0, iLen=headers.length ; i<iLen ; i++ )
-			{
-				columns.push( new GridColumn( " \n"+headers[i]+"\n ", i.toString(), aColRatio[i]*iPageWidth, 'C' ) );
+
+			for ( var i:int=0, ien:int=json.header.length ; i<ien ; i++ ) {
+				columns.push( new GridColumn(
+					" \n"+json.header[i]+"\n ", // text
+					i.toString(),               // data field
+					json.colWidth[i]*pageWidth, // width
+					'C'                         // align
+				) );
 			}
 			
 			var grid:Grid = new Grid(
-				dataOut,                  /* 1. data */
-				iPageWidth,               /* 2. width */
+				json.body,                /* 1. data */
+				pageWidth,                /* 2. width */
 				100,                      /* 3. height */
 				new RGBColor (0xE0E0E0),  /* 4. headerColor */
 				new RGBColor (0xFFFFFF),  /* 5. backgroundColor */
@@ -312,7 +261,7 @@ package {
 				columns                   /* 10. columns */
 			);
 			
-			pdf.addGrid( grid, 0, y );
+			pdf.addGrid( grid, 0, 0 );
 			return pdf;
 		}
 	}

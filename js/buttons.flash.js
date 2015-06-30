@@ -706,7 +706,7 @@ DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
 	action: function ( e, dt, button, config ) {
 		// Set the text
 		var flash = config._flash;
-		var data = _exportData( dt, config );
+		var data = dt.buttons.exportData( config.exportOptions );
 		var totalWidth = dt.table().node().offsetWidth;
 
 		// Calculate the column width ratios for layout of the table in the PDF
@@ -716,24 +716,20 @@ DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
 
 		flash.setAction( 'pdf' );
 		flash.setFileName( _filename( config ) );
-		_setText( flash, data.str );
 
-		_setText( flash,
-			"title:"+ _filename(config, false) +"\n"+
-			"message:"+ config.message +"\n"+
-			"colWidth:"+ ratios.join('\t') +"\n"+
-			"orientation:"+ config.orientation +"\n"+
-			"size:"+ config.pageSize +"\n"+
-			"--/TableToolsOpts--\n" +
-			data.str
-		);
+		_setText( flash, JSON.stringify( {
+			title:       _filename(config, false),
+			message:     config.message,
+			colWidth:    ratios.toArray(),
+			orientation: config.orientation,
+			size:        config.pageSize,
+			header:      config.header ? data.header : null,
+			footer:      config.footer ? data.footer : null,
+			body:        data.body
+		} ) );
 	},
 
 	extension: '.pdf',
-
-	fieldSeparator: '\t',
-
-	fieldBoundary: '',
 
 	orientation: 'portrait',
 
