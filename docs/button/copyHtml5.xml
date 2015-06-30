@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button group="core">
-	<name>copyFlash</name>
-	<summary>Click to copy table data to clipboard button (Adobe Flash)</summary>
+	<name>copyHtml5</name>
+	<summary>Copy table data to clipboard button</summary>
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _Flash export button_ plug-in.
-		* Adobe Flash
+		* Buttons' _HTML5 export button_ plug-in.
 	</requires>
 
 	<description>
-		This button provides a simple copy-to-clipboard action to the end user - they click the button and the table's content is automatically written into their clipboard.
+		<![CDATA[
+		This button provides a simple copy-to-clipboard action to the end user. There is unfortunately no API in HTML5 to provide an immediate copy to clipboard of the table's data when the user clicks the button (unlike the `b-button copyFlash` button which does provide that ability), so this button shows a message to the end user inviting them to use their keyboard or the _Edit_ menu to copy the table's data. The copy is done from an almost completely hidden `-tag textarea` element so the end user won't see it, but the browser is still above to give the textarea focus and select the text.
 
-		Once the data from the table has been written to the clipboard, a message is shown to the end user stating this fact. The message shown can be customised through the `buttons.copyTitle` (title) and `buttons.copyInfo` (more detailed information) options of the DataTables `dt-init language` configuration object (see example below). By default they are is:
+		When the user activates the copy command the dialogue box is dismissed. They can also click on the box or press escape to dismiss it without performing the copy action.
+
+		There are a number of language strings that can be set to configure the messages shown to the end user - these are set in the `buttons` property of the `dt-init language` configuration option of the DataTable (see below for examples) - these are, including the default values:
 
 		```js
-		copyTitle: 'Copy to clipboard',
-		copyInfo: {
-			_: 'Copied %d rows to clipboard',
-			1: 'Copied 1 row to clipboard'
+		{
+			copy: 'Copy',
+			copyTitle: 'Copy to clipboard',
+			copyKeys: 'Press <i>ctrl</i> or <i>\u2318</i> + <i>C</i> to copy the table data<br>to your system clipboard.<br><br>To cancel, click this message or press escape.'
 		}
 		```
-
-		[Adobe Flash](https://get.adobe.com/flashplayer/) is required for this button to operate. If Flash is not installed, or disabled, in the end user's browser this button will not appear. For a non-Flash alternative please see the `b-button copyHtml5` button type. Additionally the `b-button copy` will automatically select between this button and `b-button copyHtml5` depending on the features of the browser.
-
-		The action for this button _cannot_ be activated using the `b-api button().trigger()` method due to the security restrictions of Flash.
+		]]>
 	</description>
 
 
@@ -32,12 +31,12 @@
 		The button's display text. The text can be configured using this option (see `b-init buttons.buttons.text`) or the `buttons.copy` option of the DataTables `dt-init language` object.
 	</option>
 
-	<option type="string" name="className" default="buttons-copy buttons-flash">
+	<option type="string" name="className" default="buttons-copy buttons-html5">
 		The button's class name. See `b-init buttons.buttons.className` for details.
 	</option>
 
 	<option type="function" name="action">
-		Copy table data to clipboard
+		Display a dialogue box that the user can use to copy table data to clipboard
 	</option>
 
 	<option type="string" name="fieldSeparator" default="\t">
@@ -65,7 +64,7 @@
 
 $('#myTable').DataTable( {
 	buttons: [
-		'copyFlash'
+		'copyHtml5'
 	]
 } );
 
@@ -86,7 +85,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'copyFlash',
+			extends: 'copyHtml5',
 			text: 'Copy current page',
 			exportOptions: {
 				modifier: {
@@ -105,14 +104,11 @@ $('#myTable').DataTable( {
 	language: 
 		buttons: {
 			copyTitle: 'Data copied',
-			copyInfo: {
-				_: 'Copied %d items',
-				1: 'Copied a single item'
-			}
+			copyKeys: 'Use your keyboard or menu to select the copy command'
 		}
 	},
 	buttons: [
-		'copyFlash'
+		'copyHtml5'
 	]
 } );
 

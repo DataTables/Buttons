@@ -378,9 +378,9 @@ DataTable.ext.buttons.copyHtml5 = {
 		// activate their system clipboard.
 		var newLine = _newLine( config );
 		var output = _exportData( dt, config ).str;
-		var message = $('<span>'+
-				'Press <i>ctrl</i> or <i>\u2318</i> + <i>C</i> to copy the table data to your system clipboard.<br><br>'+
-				'To cancel, click this message or press escape.</span>'
+		var message = $('<span>'+dt.i18n( 'buttons.copyKeys',
+				'Press <i>ctrl</i> or <i>\u2318</i> + <i>C</i> to copy the table data<br>to your system clipboard.<br><br>'+
+				'To cancel, click this message or press escape.' )+'</span>'
 			)
 			.append( $('<div/>')
 				.css( {
@@ -389,11 +389,11 @@ DataTable.ext.buttons.copyHtml5 = {
 					overflow: 'hidden'
 				} )
 				.append(
-					$('<textarea/>').val( output )
+					$('<textarea readonly/>').val( output )
 				)
 		);
 
-		dt.buttons.info( 'Copy to clipboard', message, 0 );
+		dt.buttons.info( dt.i18n( 'button.copyTitle', 'Copy to clipboard' ), message, 0 );
 
 		// Select the text so when the user activates their system clipboard
 		// it will copy that text
@@ -403,19 +403,20 @@ DataTable.ext.buttons.copyHtml5 = {
 		var container = $(message).closest('.dt-button-info');
 		var close = function () {
 			container.off( 'click.buttons-copy' );
-			$(document).off( 'keydown.buttons-copy' );
+			$(document).off( '.buttons-copy' );
 			dt.buttons.info( false );
 		};
 
 		container.on( 'click.buttons-copy', close );
-		$(document).on( 'keydown.buttons-copy', function (e) {
-			if ( e.keyCode === 27 ) { // esc
+		$(document)
+			.on( 'keydown.buttons-copy', function (e) {
+				if ( e.keyCode === 27 ) { // esc
+					close();
+				}
+			} )
+			.on( 'copy.buttons-copy cut.buttons-copy', function () {
 				close();
-			}
-			if ( e.keyCode === 67 && (e.ctrlKey || e.metaKey) ) { // copy
-				close();
-			}
-		} );
+			} );
 	},
 
 	exportOptions: {},

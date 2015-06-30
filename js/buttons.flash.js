@@ -630,7 +630,7 @@ DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 		_setText( flash, data.str ); 
 
 		dt.buttons.info(
-			'Copy to clipboard',
+			dt.i18n( 'button.copyTitle', 'Copy to clipboard' ),
 			dt.i18n( 'buttons.copyInfo', {
 				_: 'Copied %d rows to clipboard',
 				1: 'Copied 1 row to clipboard'

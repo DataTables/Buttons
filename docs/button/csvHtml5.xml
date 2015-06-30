@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button group="core">
-	<name>csvFlash</name>
-	<summary>Create and save a CSV file that contains the data from the table (Adobe Flash)</summary>
+	<name>csvHtml5</name>
+	<summary>Create and save a CSV file that contains the data from the table</summary>
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _Flash export button_ plug-in.
-		* Adobe Flash
+		* Buttons' _HTML5 export button_ plug-in.
+		* A browser that supports local file saving (IE10+, Chrome, Safari, Firefox, Opera)
 	</requires>
 
 	<description>
 		This button provides the end user with the ability to save the table's data into a locally created Comma Separated Values (CSV) file. That file can then be used by variety of programs including spreadsheet and data analysis applications.
 
-		Please note that this button has a number of restrictions:
-
-		* Adobe Flash must be installed.
-		* The action for this button _cannot_ be activated using the `b-api button().trigger()` method due to the security restrictions of Flash
-		* The created file save dialogue must be shown and the file cannot be automatically opened.
-		
-		The `b-button csvHtml5` method provides much greater flexibility and thus button is considered to be sunsetted, but is still provided for use with older browsers that do not support the APIs required for the `b-button csvHtml5` button type.
-
-		[Adobe Flash](https://get.adobe.com/flashplayer/) is required for this button to operate. If Flash is not installed, or disabled, in the end user's browser this button will not appear. For a non-Flash alternative please see the `b-button csvHtml5` button type. Additionally the `b-button csv` will automatically select between this button and `b-button csvHtml5` depending on the features of the browser.
+		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported). For older browsers, the `b-button csvFlash` button provides similar file creation and save options using the Flash plug-in. The `b-button csv` button can be used to automatically select between this and the `b-button csvFlash` buttons based on the browser's capabilities.
 	</description>
 
 
@@ -28,7 +20,7 @@
 		The button's display text. The text can be configured using this option (see `b-init buttons.buttons.text`) or the `buttons.copy` option of the DataTables `dt-init language` object.
 	</option>
 
-	<option type="string" name="className" default="buttons-csv buttons-flash">
+	<option type="string" name="className" default="buttons-csv buttons-html5">
 		The button's class name. See `b-init buttons.buttons.className` for details.
 	</option>
 
@@ -65,11 +57,11 @@
 	</option>
 
 
-	<example title="DataTables initialisation: Use the Flash CSV button"><![CDATA[
+	<example title="DataTables initialisation: Use the HTML5 CSV button"><![CDATA[
 
 $('#myTable').DataTable( {
 	buttons: [
-		'csvFlash'
+		'csvHtml5'
 	]
 } );
 
@@ -90,7 +82,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'csvFlash',
+			extends: 'csvHtml5',
 			text: 'Copy all data',
 			exportOptions: {
 				modifier: {

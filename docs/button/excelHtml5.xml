@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button group="core">
+	<name>excelHtml5</name>
+	<summary>Create and save an Excel CSV file that contains the data from the table</summary>
+	<since>1.0.0</since>
+
+	<requires>
+		* Buttons' _Flash export button_ plug-in.
+		* A browser that supports local file saving (IE10+, Chrome, Safari, Firefox, Opera)
+		* [JSZip](https://stuk.github.io/jszip/)
+	</requires>
+
+	<description>
+		This button provides the end user with the ability to save the table's data into a locally created Excel XLSX file.
+
+		At this time, although an XLSX file is created, data formatting, colours, etc are not retained. Only the raw data from the table is included in the exported file. For complete control over the generated file, a custom button could be constructed using the [SheetJS](http://sheetjs.com/) library.
+
+		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported). For older browsers, the `b-button excelFlash` button provides similar file creation and save options using the Flash plug-in. The `b-button excel` button can be used to automatically select between this and the `b-button excelFlash` buttons based on the browser's capabilities.
+
+		In addition to this, the [JSZip](https://stuk.github.io/jszip/) library must also be available on the page. This MIT licensed library provides the ability to create a ZIP file in the browser, which is required to build a valid XLSX file.
+	</description>
+
+
+	<option type="string" name="text" default="Excel">
+		The button's display text. The text can be configured using this option (see `b-init buttons.buttons.text`) or the `buttons.copy` option of the DataTables `dt-init language` object.
+	</option>
+
+	<option type="string" name="className" default="buttons-excel buttons-html5">
+		The button's class name. See `b-init buttons.buttons.className` for details.
+	</option>
+
+	<option type="function" name="action">
+		Create and save a Excel XLSX file.
+	</option>
+
+	<option type="object" name="exportOptions" default="{}">
+		Select the data to be gathered from the DataTable for export. This includes options for which columns, rows, ordering and search. Please see the `b-api buttons.exportData()` method for full details - the object given by this parameter is passed directly into that action to gather the required data.
+	</option>
+
+	<option type="boolean" name="header" default="true">
+		Indicate if the table header should be included in the exported data or not.
+	</option>
+
+	<option type="boolean" name="footer" default="false">
+		Indicate if the table footer should be included in the exported data or not.
+	</option>
+
+	<option type="string" name="title" default="*">
+		File name to give the created file (plus the extension defined by the `extension` option). The special character `*` is automatically replaced with the value read from the host document's `-tag title` tag.
+	</option>
+
+	<option type="string" name="extension" default=".xlsx">
+		The extension to give the created file name.
+	</option>
+
+
+	<example title="DataTables initialisation: Use the HTML5 Excel button"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: [
+		'excelHtml5'
+	]
+} );
+
+]]></example>
+
+	<example title="DataTables initialisation: Use the `b-button excel` button type to automatically select between the Flash and HTML button options."><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: [
+		'excel'
+	]
+} );
+
+]]></example>
+
+	<example title="DataTables initialisation: Use the `exportOptions` to save only the data shown on the current DataTable page"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: [
+		{
+			extends: 'excelHtml5',
+			text: 'Save current page',
+			exportOptions: {
+				modifier: {
+					page: 'current'
+				}
+			}
+		}
+	]
+} );
+
+]]></example>
+</dt-button>
