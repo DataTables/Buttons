@@ -28,6 +28,8 @@ var _relToAbs = function( i, el ) {
 
 
 DataTable.ext.buttons.print = {
+	className: 'buttons-print',
+
 	text: function ( dt ) {
 		return dt.i18n( 'buttons.print', 'Print' );
 	},
