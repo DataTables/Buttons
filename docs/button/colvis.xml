@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button group="core">
+	<name>colvis</name>
+	<summary>A button collection that provides column visibility control</summary>
+	<since>1.0.0</since>
+
+	<requires>
+		* Buttons' _Column visibility button_ plug-in
+	</requires>
+
+	<description>
+		This button will create a collection button that when activated will show a list of the columns in the table and provide the end user with the ability to toggle column visibility to suit their own requirements.
+	</description>
+
+	<extend>collection</extend>
+
+	<option type="string" name="text" default="Column visibility">
+		The button's display text. The text can be configured using this option (see `b-init buttons.buttons.text`) or the `buttons.colvis` option of the DataTables `dt-init language` object.
+	</option>
+
+	<option type="string" name="className" default="buttons-collection buttons-colvis">
+		The button's class name. See `b-init buttons.buttons.className` for details.
+	</option>
+
+	<option type="function" name="action">
+		Show the collection to control column visibility.
+	</option>
+
+	<option type="column-selector" name="columns" default="undefined">
+		Columns selector that defines the columns to include in the column visibility button set. By default this is `-type undefined` which results in all columns being selected, but any of the `-type column-selector` options can be used to define a custom button set.
+	</option>
+
+
+	<example title="DataTables initialisation: Show the `colvis` button with default options"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: [ 'colvis' ]
+} );
+
+]]></example>
+
+	<example title="Direct initialisation: Show the `colvis` button, but do not include the first column in the list of columns"><![CDATA[
+
+new $.fn.dataTable.Buttons( table, {
+	buttons: [
+		{
+			extends: 'colvis',
+			columns: ':gt(0)'
+		}
+	]
+} );
+
+]]></example>
+</dt-button>
