@@ -1071,6 +1071,10 @@ $.extend( _dtButtons, {
 		fade: false // xxx
 	},
 	copy: function ( dt, conf ) {
+		if ( conf.preferHtml && _dtButtons.copyHtml5 ) {
+			return 'copyHtml5';
+		}
+
 		// Common option that will use the HTML5 or Flash export buttons
 		// For copy, the Flash option gets priority since it is one click only
 		if ( _dtButtons.copyFlash && _dtButtons.copyFlash.available( dt, conf ) ) {
