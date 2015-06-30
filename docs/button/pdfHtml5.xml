@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button group="core">
 	<name>pdfHtml5</name>
-	<summary>Create and save a PDF file that contains the data from the table (Adobe Flash)</summary>
+	<summary>Create and save a PDF file that contains the data from the table (HTML5)</summary>
 	<since>1.0.0</since>
 
 	<requires>

@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button group="core">
-	<name>excelHtml5</name>
-	<summary>Create and save an Excel CSV file that contains the data from the table (HTML5)</summary>
+	<name>excel</name>
+	<summary>Create and save an Excel CSV file that contains the data from the table</summary>
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _Flash export button_ plug-in.
-		* A browser that supports local file saving (IE10+, Chrome, Safari, Firefox, Opera)
-		* [JSZip](https://stuk.github.io/jszip/)
+		* Buttons' _Flash export button_ plug-in **and / or**
+		* Buttons' _HTML5 export button_ plug-in
 	</requires>
 
 	<description>
-		This button provides the end user with the ability to save the table's data into a locally created Excel XLSX file.
+		This button type serves as a proxy that will automatically detect if the `b-button excelHtml5` or `b-button excelFlash` buttons can be used based on the browser's capabilities and the libraries available on the page.
 
-		At this time, although an XLSX file is created, data formatting, colours, etc are not retained. Only the raw data from the table is included in the exported file. For complete control over the generated file, a custom button could be constructed using the [SheetJS](http://sheetjs.com/) library.
+		This is provided as an option since the HTML5 button type requires a reasonably modern browser which may not always be available to the end user.
 
-		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported). For older browsers, the `b-button excelFlash` button provides similar file creation and save options using the Flash plug-in. The `b-button excel` button can be used to automatically select between this and the `b-button excelFlash` buttons based on the browser's capabilities.
+		The order of selection, in priority order is:
 
-		In addition to this, the [JSZip](https://stuk.github.io/jszip/) library must also be available on the page. This MIT licensed library provides the ability to create a ZIP file in the browser, which is required to build a valid XLSX file.
+		* `b-button excelHtml5`
+		* `b-button excelFlash`
+
+		If the requirements of both buttons are not satisfied, no button will be presented to the end user. For the requirements of each button type, please refer to its own documentation.
+
+		The options available to the HTML5 and Flash buttons are common between them to ensure that no additional logic is required by the developer based on which button type is selected - e.g. if you set the `exportOptions` option, it will be used by the HTML5 and Flash button types.
 	</description>
 
 
@@ -25,12 +29,12 @@
 		The button's display text. The text can be configured using this option (see `b-init buttons.buttons.text`) or the `buttons.copy` option of the DataTables `dt-init language` object.
 	</option>
 
-	<option type="string" name="className" default="buttons-excel buttons-html5">
+	<option type="string" name="className" default="buttons-excel">
 		The button's class name. See `b-init buttons.buttons.className` for details.
 	</option>
 
 	<option type="function" name="action">
-		Create and save a Excel XLSX file.
+		Create and save a Excel file.
 	</option>
 
 	<option type="object" name="exportOptions" default="{}">
@@ -54,16 +58,6 @@
 	</option>
 
 
-	<example title="DataTables initialisation: Use the HTML5 Excel button"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'excelHtml5'
-	]
-} );
-
-]]></example>
-
 	<example title="DataTables initialisation: Use the `b-button excel` button type to automatically select between the Flash and HTML button options."><![CDATA[
 
 $('#myTable').DataTable( {
@@ -79,7 +73,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'excelHtml5',
+			extends: 'excel',
 			text: 'Save current page',
 			exportOptions: {
 				modifier: {

@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button group="core">
 	<name>csvHtml5</name>
-	<summary>Create and save a CSV file that contains the data from the table (HTML5)</summary>
+	<summary>Create and save a CSV file that contains the data from the table</summary>
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _HTML5 export button_ plug-in.
-		* A browser that supports local file saving (IE10+, Chrome, Safari, Firefox, Opera)
+		* Buttons' _Flash export button_ plug-in **and / or**
+		* Buttons' _HTML5 export button_ plug-in
 	</requires>
 
 	<description>
-		This button provides the end user with the ability to save the table's data into a locally created Comma Separated Values (CSV) file. That file can then be used by variety of programs including spreadsheet and data analysis applications.
+		This button type serves as a proxy that will automatically detect if the `b-button csvHtml5` or `b-button csvFlash` buttons can be used based on the browser's capabilities and the libraries available on the page.
 
-		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported). For older browsers, the `b-button csvFlash` button provides similar file creation and save options using the Flash plug-in. The `b-button csv` button can be used to automatically select between this and the `b-button csvFlash` buttons based on the browser's capabilities.
+		This is provided as an option since the HTML5 button type requires a reasonably modern browser which may not always be available to the end user.
+
+		The order of selection, in priority order is:
+
+		* `b-button csvHtml5`
+		* `b-button csvFlash`
+
+		If the requirements of both buttons are not satisfied, no button will be presented to the end user. For the requirements of each button type, please refer to its own documentation.
+
+		The options available to the HTML5 and Flash buttons are common between them to ensure that no additional logic is required by the developer based on which button type is selected - e.g. if you set the `fieldSeparator` option, it will be used by the HTML5 and Flash button types.
 	</description>
 
 
@@ -61,16 +70,6 @@
 
 $('#myTable').DataTable( {
 	buttons: [
-		'csvHtml5'
-	]
-} );
-
-]]></example>
-
-	<example title="DataTables initialisation: Use the `b-button csv` button type to automatically select between the Flash and HTML button options."><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
 		'csv'
 	]
 } );
@@ -82,7 +81,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'csvHtml5',
+			extends: 'csv',
 			text: 'Copy all data',
 			exportOptions: {
 				modifier: {
