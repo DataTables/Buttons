@@ -85,10 +85,12 @@ DataTable.ext.buttons.print = {
 			config.customize( win );
 		}
 
-		if ( config.autoPrint ) {
-			win.print(); // blocking - so close will not
-			win.close(); // execute until this is done
-		}
+		setTimeout( function () {
+			if ( config.autoPrint ) {
+				win.print(); // blocking - so close will not
+				win.close(); // execute until this is done
+			}
+		}, 250 );
 	},
 
 	title: '*',

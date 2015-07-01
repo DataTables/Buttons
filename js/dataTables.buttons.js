@@ -531,7 +531,6 @@ Buttons.prototype = {
 		// Make sure that the button is available based on whatever requirements
 		// it has. For example, Flash buttons require Flash
 		if ( config.available && ! config.available( dt, config ) ) {
-			console.log( 'not available', config );
 			return false;
 		}
 
@@ -1306,7 +1305,7 @@ DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
 // buttons so it is included in the Buttons core library
 DataTable.Api.register( 'buttons.exportData()', function ( options ) {
 	if ( this.context.length ) {
-		return _exportData( new DataTable.Api( this.context[0], options ) );
+		return _exportData( new DataTable.Api( this.context[0] ), options );
 	}
 } );
 
