@@ -702,6 +702,7 @@ Buttons.prototype = {
 	_resolveExtends: function ( conf )
 	{
 		var dt = this.s.dt;
+		var i, ien;
 		var toConfObject = function ( base ) {
 			var loop = 0;
 
@@ -747,6 +748,34 @@ Buttons.prototype = {
 			}
 
 			conf = $.extend( {}, objArray, conf );
+
+			// Buttons to be added to a collection  -gives the ability to define
+			// if buttons should be added to the start or end of a collection
+			var postfixButtons = conf.postfixButtons;
+			if ( postfixButtons ) {
+				if ( ! conf.buttons ) {
+					conf.buttons = [];
+				}
+
+				for ( i=0, ien=postfixButtons.length ; i<ien ; i++ ) {
+					conf.buttons.push( postfixButtons[i] );
+				}
+
+				conf.postfixButtons = null;
+			}
+
+			var prefixButtons = conf.prefixButtons;
+			if ( prefixButtons ) {
+				if ( ! conf.buttons ) {
+					conf.buttons = [];
+				}
+
+				for ( i=0, ien=prefixButtons.length ; i<ien ; i++ ) {
+					conf.buttons.splice( i, 0, prefixButtons[i] );
+				}
+
+				conf.prefixButtons = null;
+			}
 
 			// Although we want the `conf` object to overwrite almost all of
 			// the properties of the object being extended, the `extend`

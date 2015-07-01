@@ -86,6 +86,41 @@ $.extend( DataTable.ext.buttons, {
 		destroy: function ( dt, button, conf ) {
 			dt.off( 'column-visibility.dt'+conf.namespace );
 		}
+	},
+
+
+	colvisRestore: {
+		className: 'buttons-colvisRestore',
+
+		text: function ( dt ) {
+			return dt.i18n( 'buttons.colvisRestore', 'Restore visibility' );
+		},
+
+		init: function ( dt, button, conf ) {
+			conf._visOriginal = dt.columns().indexes().map( function ( idx ) {
+				return dt.column( idx ).visible();
+			} ).toArray();
+		},
+
+		action: function ( e, dt, button, conf ) {
+			dt.columns().every( function ( i ) {
+				this.visible( conf._visOriginal[ i ] );
+			} );
+		}
+	},
+
+
+	colvisGroup: {
+		className: 'buttons-colvisGroup',
+
+		action: function ( e, dt, button, conf ) {
+			dt.columns( conf.show ).visible( true );
+			dt.columns( conf.hide ).visible( false );
+		},
+
+		show: [],
+
+		hide: [],
 	}
 } );
 

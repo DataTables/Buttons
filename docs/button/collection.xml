@@ -34,6 +34,14 @@
 		The buttons to show in the collection. The elements in this array follow the same rules as the `b-init buttons.buttons` array - i.e. it can contain strings, objects and functions that describe buttons.
 	</option>
 
+	<option type="array" name="prefixButtons" default="undefined">
+		A list of buttons that should be prefixed to an existing collection (see the `buttons` option). This provides the ability for the a button that extends a collection to add items to the _start_ of the collection's sub-buttons. Like the `buttons` option the elements in this array follow the same rules as the `b-init buttons.buttons` array.
+	</option>
+
+	<option type="array" name="postfixButtons" default="undefined">
+		A list of buttons that should be postfixed to an existing collection (see the `buttons` option). This provides the ability for the a button that extends a collection to add items to the _end_ of the collection's sub-buttons. Like the `buttons` option the elements in this array follow the same rules as the `b-init buttons.buttons` array.
+	</option>
+
 	<option type="string" name="collectionLayout" default="">
 		Layout options for the buttons shown in the collection. This is a string which can have:
 
