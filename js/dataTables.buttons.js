@@ -970,7 +970,7 @@ Buttons.buttonSelector = function ( insts, selector )
  * @static
  */
 Buttons.defaults = {
-	buttons: [ 'copy', 'csv', 'pdf', 'print' ],
+	buttons: [ 'copy', 'excel', 'csv', 'pdf', 'print' ],
 	name: 'main',
 	tabIndex: 0,
 	dom: {
@@ -1085,7 +1085,7 @@ $.extend( _dtButtons, {
 	},
 	csv: function ( dt, conf ) {
 		// Common option that will use the HTML5 or Flash export buttons
-		if ( _dtButtons.csvHtml5 && _dtButtons.csvFlash.available( dt, conf ) ) {
+		if ( _dtButtons.csvHtml5 && _dtButtons.csvHtml5.available( dt, conf ) ) {
 			return 'csvHtml5';
 		}
 		if ( _dtButtons.csvFlash && _dtButtons.csvFlash.available( dt, conf ) ) {
@@ -1094,7 +1094,7 @@ $.extend( _dtButtons, {
 	},
 	excel: function ( dt, conf ) {
 		// Common option that will use the HTML5 or Flash export buttons
-		if ( _dtButtons.excelHtml5 && _dtButtons.excelFlash.available( dt, conf ) ) {
+		if ( _dtButtons.excelHtml5 && _dtButtons.excelHtml5.available( dt, conf ) ) {
 			return 'excelHtml5';
 		}
 		if ( _dtButtons.excelFlash && _dtButtons.excelFlash.available( dt, conf ) ) {
@@ -1103,7 +1103,7 @@ $.extend( _dtButtons, {
 	},
 	pdf: function ( dt, conf ) {
 		// Common option that will use the HTML5 or Flash export buttons
-		if ( _dtButtons.pdfHtml5 && _dtButtons.pdfFlash.available( dt, conf ) ) {
+		if ( _dtButtons.pdfHtml5 && _dtButtons.pdfHtml5.available( dt, conf ) ) {
 			return 'pdfHtml5';
 		}
 		if ( _dtButtons.pdfFlash && _dtButtons.pdfFlash.available( dt, conf ) ) {
