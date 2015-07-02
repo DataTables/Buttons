@@ -453,8 +453,11 @@ var _glue = function ( flash, node )
  */
 var _filename = function ( config, incExtension )
 {
-	var title = $('title').text();
-	title = config.title.replace( '*', title );
+	var title = config.title;
+
+	if ( title.indexOf( '*' ) !== -1 ) {
+		title = title.replace( '*', $('title').text() );
+	}
 
 	// Strip characters which the OS will object to
 	title = title.replace(/[^a-zA-Z0-9_\u00A1-\uFFFF\.,\-_ !\(\)]/g, "");
@@ -616,7 +619,7 @@ DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 		_setText( flash, data.str ); 
 
 		dt.buttons.info(
-			dt.i18n( 'button.copyTitle', 'Copy to clipboard' ),
+			dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ),
 			dt.i18n( 'buttons.copyInfo', {
 				_: 'Copied %d rows to clipboard',
 				1: 'Copied 1 row to clipboard'
