@@ -31,7 +31,7 @@ The `b-button copyHtml5` button type operates by showing a message to the end us
 
 The message shown to the end user can be customised using the `dt-init language` configuration option of DataTables. Specifically the `buttons.copyTitle` and `buttons.copyKey` options can be set.
 
-This example uses these parameter to set French language strings for the copy message (with apologies to our native language French speaking friends! This is Google translated text - if you have an better translation, please let me know!).
+This example uses these parameters to set French language strings for the copy message (with apologies to our native language French speaking friends! This is Google translated text - if you have an better translation, please let me know!).
 
 ]]></info>
 
