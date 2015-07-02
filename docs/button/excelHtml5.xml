@@ -6,7 +6,7 @@
 
 	<requires>
 		* Buttons' _Flash export button_ plug-in.
-		* A browser that supports local file saving (IE10+, Chrome, Safari, Firefox, Opera)
+		* A browser that supports local file saving (IE10+, Chrome, Firefox, Opera - **not** Safari)
 		* [JSZip](https://stuk.github.io/jszip/)
 	</requires>
 
@@ -18,6 +18,8 @@
 		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported). For older browsers, the `b-button excelFlash` button provides similar file creation and save options using the Flash plug-in. The `b-button excel` button can be used to automatically select between this and the `b-button excelFlash` buttons based on the browser's capabilities.
 
 		In addition to this, the [JSZip](https://stuk.github.io/jszip/) library must also be available on the page. This MIT licensed library provides the ability to create a ZIP file in the browser, which is required to build a valid XLSX file.
+
+		**Note on Safari support**: This button does not support Safari as the browser will not download generated files ([see WebKit bug 102914](https://bugs.webkit.org/show_bug.cgi?id=102914)). This button will not display in Safari and the `b-button excelFlash` button type can be used as a fallback (use `b-button excel` to automatically select).
 	</description>
 
 

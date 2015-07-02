@@ -480,7 +480,15 @@ DataTable.ext.buttons.excelHtml5 = {
 	className: 'buttons-excel buttons-html5',
 
 	available: function () {
-		return window.FileReader !== undefined && window.JSZip !== undefined;
+		// Safari will not download the zip file as it does not support the
+		// download option. Therefore this button has to be disabled in Safari.
+		// See https://bugs.webkit.org/show_bug.cgi?id=102914
+		var safari =
+			navigator.userAgent.indexOf('Safari') !== -1 &&
+			navigator.userAgent.indexOf('Chrome') === -1 &&
+			navigator.userAgent.indexOf('Opera') === -1;
+
+		return window.FileReader !== undefined && window.JSZip !== undefined && ! safari;
 	},
 
 	text: function ( dt ) {

@@ -13,6 +13,8 @@
 		This button provides the end user with the ability to save the table's data into a locally created Comma Separated Values (CSV) file. That file can then be used by variety of programs including spreadsheet and data analysis applications.
 
 		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported). For older browsers, the `b-button csvFlash` button provides similar file creation and save options using the Flash plug-in. The `b-button csv` button can be used to automatically select between this and the `b-button csvFlash` buttons based on the browser's capabilities.
+
+		**Note on Safari support**: Safari will not download generated files ([see WebKit bug 102914](https://bugs.webkit.org/show_bug.cgi?id=102914)), as such, the generated CSV file will be shown in a new tab. End users can use the browser's "Save as" option to download the file.
 	</description>
 
 
