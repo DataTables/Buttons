@@ -15,7 +15,7 @@ $.extend( DataTable.ext.buttons, {
 			text: function ( dt ) {
 				return dt.i18n( 'buttons.colvis', 'Column visibility' );
 			},
-			className: 'buttons-collection buttons-colvis',
+			className: 'buttons-colvis',
 			buttons: [ {
 				extend: 'columnsToggle',
 				columns: conf.columns

@@ -747,9 +747,17 @@ Buttons.prototype = {
 				return objArray;
 			}
 
+			// Stash the current class name
+			var originalClassName = objArray.className;
+
 			conf = $.extend( {}, objArray, conf );
 
-			// xxx className addition?
+			// The extend will have overwritten the original class name if the
+			// `conf` object also assigned a class, but we want to concatenate
+			// them so they are list that is combined from all extended buttons
+			if ( originalClassName && conf.className !== originalClassName ) {
+				conf.className = originalClassName+' '+conf.className;
+			}
 
 			// Buttons to be added to a collection  -gives the ability to define
 			// if buttons should be added to the start or end of a collection
