@@ -15,7 +15,7 @@
 		Please note that this button has a number of restrictions:
 
 		* Adobe Flash must be installed.
-		* The action for this button _cannot_ be activated using the `b-api button().trigger()` method due to the security restrictions of Flash
+		* The action for this button _cannot_ be activated using the `b-api button().trigger()` or key combination methods due to the security restrictions of Flash
 		* The created file save dialogue must be shown and the file cannot be automatically opened.
 		* The XLSX file cannot contain any styling information. Only the raw data from the table is included.
 		

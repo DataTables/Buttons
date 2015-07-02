@@ -749,6 +749,8 @@ Buttons.prototype = {
 
 			conf = $.extend( {}, objArray, conf );
 
+			// xxx className addition?
+
 			// Buttons to be added to a collection  -gives the ability to define
 			// if buttons should be added to the start or end of a collection
 			var postfixButtons = conf.postfixButtons;
@@ -1033,11 +1035,6 @@ Buttons.version = '0.0.1-dev';
 
 
 $.extend( _dtButtons, {
-	text: {
-		text: '',
-		className: 'buttons-text',
-		action: function ( e, dt, button, config ) {}
-	},
 	collection: {
 		text: function ( dt, button, config ) {
 			return dt.i18n( 'buttons.collection', 'Collection' );

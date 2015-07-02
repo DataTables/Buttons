@@ -24,7 +24,7 @@
 
 		[Adobe Flash](https://get.adobe.com/flashplayer/) is required for this button to operate. If Flash is not installed, or disabled, in the end user's browser this button will not appear. For a non-Flash alternative please see the `b-button copyHtml5` button type. Additionally the `b-button copy` will automatically select between this button and `b-button copyHtml5` depending on the features of the browser.
 
-		The action for this button _cannot_ be activated using the `b-api button().trigger()` method due to the security restrictions of Flash.
+		The action for this button _cannot_ be activated using the `b-api button().trigger()` or key combination methods due to the security restrictions of Flash.
 	</description>
 
 

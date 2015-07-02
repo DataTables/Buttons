@@ -15,7 +15,7 @@
 		Please note that this button has a number of restrictions:
 
 		* Adobe Flash must be installed.
-		* The action for this button _cannot_ be activated using the `b-api button().trigger()` method due to the security restrictions of Flash
+		* The action for this button _cannot_ be activated using the `b-api button().trigger()` or key combination methods due to the security restrictions of Flash
 		* The created file save dialogue must be shown and the file cannot be automatically opened.
 		
 		The `b-button csvHtml5` method provides much greater flexibility and thus button is considered to be sunsetted, but is still provided for use with older browsers that do not support the APIs required for the `b-button csvHtml5` button type.
