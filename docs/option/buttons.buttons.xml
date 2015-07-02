@@ -14,7 +14,7 @@
 	<description>
 		The `b-init buttons` array defines the buttons that will appear in the document to the end user. Each element in the array can be one of:
 
-		* `-type string` - The name of a built-in button type or plug-in button type. This is the equivalent of using `{ extends: ... }`.
+		* `-type string` - The name of a built-in button type or plug-in button type. This is the equivalent of using `{ extend: ... }`.
 		* `-type object` - A custom button or a customisation of an existing button type. The `extends` property (see `b-init buttons.buttons.extends`) can be defined to tell Buttons which button type to base the button on, and any of the configuration options you wish to customise. Alternatively, if the `extends` option is not given, use the `text` and `action` options to define a button. Buttons has only a few built in configuration options for each button, but the various button types may provide additional options. Please refer to the documentation for each button type for information on the further options they provide. The built-in options are:
 		  * `b-init buttons.buttons.action` - Function describing the action to take on activation
 		  * `b-init buttons.buttons.className` - Button class name
@@ -41,7 +41,7 @@ $('#myTable').DataTable( {
 	buttons: {
 		buttons: [
 			'copy',
-			{ extends: 'excel', text: 'Save as Excel' }
+			{ extend: 'excel', text: 'Save as Excel' }
 		]
 	}
 } );
@@ -71,7 +71,7 @@ $('#myTable').DataTable( {
 new $.fn.dataTable.Buttons( table, {
 	buttons: [
 		'copy',
-		{ extends: 'excel', text: 'Save as Excel' }
+		{ extend: 'excel', text: 'Save as Excel' }
 	]
 } );
 

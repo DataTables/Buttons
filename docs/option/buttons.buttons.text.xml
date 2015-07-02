@@ -39,7 +39,7 @@
 
 $('#myTable').DataTable( {
 	buttons: [
-		{ extends: 'copy', text: 'Copy to clipboard' }
+		{ extend: 'copy', text: 'Copy to clipboard' }
 	}
 } );
 
@@ -50,7 +50,7 @@ $('#myTable').DataTable( {
 new $.fn.dataTable.Buttons( table, {
 	buttons: [
 		{
-			extends: 'print',
+			extend: 'print',
 			text: '<em>P</em>rint',
 			key: {
 				key: 'p',
@@ -67,7 +67,7 @@ new $.fn.dataTable.Buttons( table, {
 new $.fn.dataTable.Buttons( table, {
 	buttons: [
 		{
-			extends: 'print',
+			extend: 'print',
 			text: function ( dt, button, config ) {
 				return dt.i18n( 'buttons.print', 'Print' );
 			}

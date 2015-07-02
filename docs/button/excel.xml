@@ -73,7 +73,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'excel',
+			extend: 'excel',
 			text: 'Save current page',
 			exportOptions: {
 				modifier: {

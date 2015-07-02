@@ -80,7 +80,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'print',
+			extend: 'print',
 			text: 'Print current page',
 			autoPrint: false
 		}
@@ -94,7 +94,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'print',
+			extend: 'print',
 			text: 'Print current page',
 			exportOptions: {
 				modifier: {

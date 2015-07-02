@@ -81,7 +81,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'csv',
+			extend: 'csv',
 			text: 'Copy all data',
 			exportOptions: {
 				modifier: {

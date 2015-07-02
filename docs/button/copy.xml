@@ -81,7 +81,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'copy',
+			extend: 'copy',
 			preferHtml: true
 		}
 	]
@@ -94,7 +94,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'copy',
+			extend: 'copy',
 			text: 'Copy current page',
 			exportOptions: {
 				modifier: {

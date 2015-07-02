@@ -100,7 +100,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'pdfHtml5',
+			extend: 'pdfHtml5',
 			text: 'Save current page',
 			exportOptions: {
 				modifier: {

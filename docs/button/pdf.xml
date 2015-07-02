@@ -91,7 +91,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'pdf',
+			extend: 'pdf',
 			text: 'Save current page',
 			exportOptions: {
 				modifier: {

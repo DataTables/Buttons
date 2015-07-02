@@ -86,7 +86,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'copyFlash',
+			extend: 'copyFlash',
 			text: 'Copy current page',
 			exportOptions: {
 				modifier: {

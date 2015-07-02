@@ -90,7 +90,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'csvFlash',
+			extend: 'csvFlash',
 			text: 'Copy all data',
 			exportOptions: {
 				modifier: {

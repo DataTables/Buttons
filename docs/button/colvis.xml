@@ -44,7 +44,7 @@ $('#myTable').DataTable( {
 new $.fn.dataTable.Buttons( table, {
 	buttons: [
 		{
-			extends: 'colvis',
+			extend: 'colvis',
 			columns: ':gt(0)'
 		}
 	]

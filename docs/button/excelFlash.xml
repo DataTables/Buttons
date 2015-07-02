@@ -91,7 +91,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'excelFlash',
+			extend: 'excelFlash',
 			text: 'Save current page',
 			exportOptions: {
 				modifier: {

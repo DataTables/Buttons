@@ -30,7 +30,7 @@ $('#myTable').DataTable( {
 	buttons: {
 		buttons: [
 			'copy',
-			{ extends: 'excel', disable: false }
+			{ extend: 'excel', disable: false }
 		]
 	}
 } );
@@ -42,7 +42,7 @@ $('#myTable').DataTable( {
 new $.fn.dataTable.Buttons( table, {
 	buttons: [
 		'copy',
-		{ extends: 'excel', disable: false }
+		{ extend: 'excel', disable: false }
 	]
 } );
 

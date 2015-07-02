@@ -87,7 +87,7 @@ $('#myTable').DataTable( {
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extends: 'copyHtml5',
+			extend: 'copyHtml5',
 			text: 'Copy current page',
 			exportOptions: {
 				modifier: {

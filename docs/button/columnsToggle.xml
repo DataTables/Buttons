@@ -50,7 +50,7 @@ $('#myTable').DataTable( {
 new $.fn.dataTable.Buttons( table, {
 	buttons: [
 		{
-			extends: 'collection',
+			extend: 'collection',
 			buttons: [ 'columnsToggle' ]
 		}
 	]

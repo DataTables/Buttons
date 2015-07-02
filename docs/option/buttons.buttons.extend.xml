@@ -25,7 +25,7 @@ $('#myTable').DataTable( {
 	buttons: {
 		buttons: [
 			'copy',
-			{ extends: 'excel', text: 'Save as Excel' }
+			{ extend: 'excel', text: 'Save as Excel' }
 		]
 	}
 } );
@@ -37,7 +37,7 @@ $('#myTable').DataTable( {
 new $.fn.dataTable.Buttons( table, {
 	buttons: [
 		'copy',
-		{ extends: 'excel', text: 'Save as Excel' }
+		{ extend: 'excel', text: 'Save as Excel' }
 	]
 } );
 
