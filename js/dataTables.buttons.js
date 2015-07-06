@@ -897,18 +897,22 @@ Buttons.buttonSelector = function ( insts, selector )
 		var buttons = [];
 
 		$.each( inst.s.buttons, function (i, v) {
-			buttons.push( {
-				node: v.node[0],
-				name: v.name
-			} );
+			if ( v !== null ) {
+				buttons.push( {
+					node: v.node[0],
+					name: v.name
+				} );
+			}
 		} );
 
 		$.each( inst.s.subButtons, function (i, v) {
 			$.each( v, function (j, w) {
-				buttons.push( {
-					node: w.node[0],
-					name: w.name
-				} );
+				if ( w !== null ) {
+					buttons.push( {
+						node: w.node[0],
+						name: w.name
+					} );
+				}
 			} );
 		} );
 
