@@ -214,15 +214,19 @@ ZeroClipboard_TableTools.Client.prototype = {
 
 	destroy: function() {
 		// destroy control and floater
-		if (this.domElement && this.div) {
-			this.hide();
-			this.div.innerHTML = '';
+		var that = this;
 
-			var body = document.getElementsByTagName('body')[0];
-			try { body.removeChild( this.div ); } catch(e) {}
+		if (this.domElement && this.div) {
+			$(this.div).remove();
 
 			this.domElement = null;
 			this.div = null;
+
+			$.each( ZeroClipboard_TableTools.clients, function ( id, client ) {
+				if ( client === that ) {
+					delete ZeroClipboard_TableTools.clients[ id ];
+				}
+			} );
 		}
 	},
 
@@ -557,6 +561,10 @@ var flashButton = {
 		_glue( flash, button );
 
 		config._flash = flash;
+	},
+
+	destroy: function ( dt, button, config ) {
+		config._flash.destroy();
 	},
 
 	fieldSeparator: ',',
