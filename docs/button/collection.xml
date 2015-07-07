@@ -55,8 +55,8 @@
 		These options can be used with the default DataTables styling, Bootstrap, Foundation and jQuery UI.
 	</option>
 
-	<option type="boolean" name="fade" default="false">
-		Fade the collection in / out (`true`) or immediately display with no animation (`false`).
+	<option type="integer" name="fade" default="400">
+		Animation speed that the collection is faded in and out of the display. This is an integer value that represents the animation duration in milliseconds. For no animation use the value `0`.
 	</option>
 
 

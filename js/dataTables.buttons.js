@@ -810,14 +810,23 @@ Buttons.prototype = {
  * @param  {string} Class to assign to the background
  * @static
  */
-Buttons.background = function ( show, className ) {
+Buttons.background = function ( show, className, fade ) {
+	if ( fade === undefined ) {
+		fade = 400;
+	}
+
 	if ( show ) {
 		$('<div/>')
 			.addClass( className )
-			.appendTo( 'body' );
+			.css( 'display', 'none' )
+			.appendTo( 'body' )
+			.fadeIn( fade );
 	}
 	else {
-		$('body > div.'+className).remove();
+		$('body > div.'+className)
+			.fadeOut( fade, function () {
+				$(this).remove();
+			} );
 	}
 };
 
@@ -1060,7 +1069,9 @@ $.extend( _dtButtons, {
 
 			config._collection
 				.addClass( config.collectionLayout )
-				.appendTo( 'body' );
+				.css( 'display', 'none' )
+				.appendTo( 'body' )
+				.fadeIn( config.fade );
 
 			if ( config._collection.css( 'position' ) === 'absolute' ) {
 				config._collection.css( {
@@ -1085,7 +1096,7 @@ $.extend( _dtButtons, {
 			}
 
 			if ( config.background ) {
-				Buttons.background( true, config.backgroundClassName );
+				Buttons.background( true, config.backgroundClassName, config.fade );
 			}
 
 			// Need to break the 'thread' for the collection button being
@@ -1093,9 +1104,12 @@ $.extend( _dtButtons, {
 			setTimeout( function () {
 				$(document).on( 'click.dtb-collection', function (e) {
 					if ( ! $(e.target).parents().andSelf().filter( config._collection ).length ) {
-						config._collection.detach();
+						config._collection
+							.fadeOut( config.fade, function () {
+								config._collection.detach();
+							} );
 
-						Buttons.background( false, config.backgroundClassName );
+						Buttons.background( false, config.backgroundClassName, config.fade );
 
 						$(document).off( 'click.dtb-collection' );
 					}
@@ -1105,7 +1119,7 @@ $.extend( _dtButtons, {
 		background: true,
 		collectionLayout: '',
 		backgroundClassName: 'dt-button-background',
-		fade: false // xxx
+		fade: 400
 	},
 	copy: function ( dt, conf ) {
 		if ( conf.preferHtml && _dtButtons.copyHtml5 ) {
