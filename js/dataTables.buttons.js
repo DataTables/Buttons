@@ -1396,9 +1396,11 @@ var _exportData = function ( dt, inOpts )
 		return strip( dt.column( idx ).header().innerHTML );
 	} ).toArray();
 
-	var footer = dt.columns( config.columns ).indexes().map( function (idx, i) {
-		return strip( dt.column( idx ).footer().innerHTML );
-	} ).toArray();
+	var footer = dt.table().footer() ?
+		dt.columns( config.columns ).indexes().map( function (idx, i) {
+			return strip( dt.column( idx ).footer().innerHTML );
+		} ).toArray() :
+		null;
 
 	var body = dt.rows( config.rows, config.modifier ).indexes().map( function (rowIdx, i) {
 		return dt.cells( rowIdx, config.columns ).indexes().map( function (cellIdx) {
