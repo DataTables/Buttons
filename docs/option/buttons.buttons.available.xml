@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-option group="core">
+<dt-option group="buttons">
 	<name>buttons.buttons.available</name>
 	<summary>Ensure that any requirements have been satisfied before initialising a button</summary>
 	<since>1.0.0</since>

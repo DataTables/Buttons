@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-api group="core">
+<dt-api group="buttons">
 	<name>buttons().trigger()</name>
 	<summary>Trigger the action of the selected buttons</summary>
 	<since>1.0.0</since>

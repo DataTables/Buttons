@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-button group="core">
-	<name>copyHtml5</name>
+<dt-button group="buttons">
+	<name>copy</name>
 	<summary>Copy table data to clipboard button</summary>
 	<since>1.0.0</since>
 

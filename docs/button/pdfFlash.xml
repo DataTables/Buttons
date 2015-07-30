@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-button group="core">
+<dt-button group="buttons">
 	<name>pdfFlash</name>
 	<summary>Create and save a PDF file that contains the data from the table (Adobe Flash)</summary>
 	<since>1.0.0</since>

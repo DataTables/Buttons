@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-option group="core">
+<dt-option group="buttons">
 	<name>buttons.buttons.action</name>
 	<summary>Action to take when the button is activated</summary>
 	<since>1.0.0</since>

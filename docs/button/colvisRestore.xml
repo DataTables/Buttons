@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-button group="core">
+<dt-button group="buttons">
 	<name>colvisRestore</name>
 	<summary>Restore the visibility of column to their original state</summary>
 	<since>1.0.0</since>

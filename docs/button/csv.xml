@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-button group="core">
-	<name>csvHtml5</name>
+<dt-button group="buttons">
+	<name>csv</name>
 	<summary>Create and save a CSV file that contains the data from the table</summary>
 	<since>1.0.0</since>
 

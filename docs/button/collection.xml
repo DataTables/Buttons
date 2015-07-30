@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-button group="core">
-	<name>text</name>
+<dt-button group="buttons">
+	<name>collection</name>
 	<summary>A button which triggers a drop down with another set of buttons</summary>
 	<since>1.0.0</since>
 

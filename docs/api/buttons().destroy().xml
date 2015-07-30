@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-api group="core">
+<dt-api group="buttons">
 	<name>buttons().destroy()</name>
 	<summary>Destroy one or more button instances and remove from the document</summary>
 	<since>1.0.0</since>

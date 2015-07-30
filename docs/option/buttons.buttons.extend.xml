@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-option group="core">
+<dt-option group="buttons">
 	<name>buttons.buttons.extend</name>
 	<summary>Define which button type the button should be based on</summary>
 	<since>1.0.0</since>
