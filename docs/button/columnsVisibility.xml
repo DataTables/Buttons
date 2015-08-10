@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-button group="buttons">
+<dt-button library="Buttons">
 	<name>columnsVisibility</name>
 	<summary>A set of Buttons to set the visibility of individual columns</summary>
 	<since>1.0.0</since>

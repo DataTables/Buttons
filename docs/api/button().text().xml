@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-api group="buttons">
+<dt-api library="Buttons">
 	<name>button().text()</name>
 	<summary>Get / set the text for the selected button</summary>
 	<since>1.0.0</since>

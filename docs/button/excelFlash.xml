@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-button group="buttons">
+<dt-button library="Buttons">
 	<name>excelFlash</name>
 	<summary>Create and save an Excel XLSX file that contains the data from the table (Adobe Flash)</summary>
 	<since>1.0.0</since>

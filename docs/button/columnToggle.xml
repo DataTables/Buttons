@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-button group="buttons">
+<dt-button library="Buttons">
 	<name>columnToggle</name>
 	<summary>A single button that will toggle the visibility of one or more columns</summary>
 	<since>1.0.0</since>

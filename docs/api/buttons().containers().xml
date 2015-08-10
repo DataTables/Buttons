@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-api group="buttons">
+<dt-api library="Buttons">
 	<name>buttons().containers()</name>
 	<summary>Get the container elements for one or more button instances</summary>
 	<since>1.0.0</since>
