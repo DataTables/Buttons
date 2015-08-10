@@ -1,11 +1,11 @@
 
-@mixin dtb-three-stop-gradient($fromColor, $middleColor, $toColor) {
+@mixin dtb-two-stop-gradient($fromColor, $toColor) {
 	background-color: $toColor; /* Fallback */
-	background-image: -webkit-linear-gradient(top, $fromColor, $middleColor, $toColor); /* Chrome 10+, Saf5.1+, iOS 5+ */
-	background-image:    -moz-linear-gradient(top, $fromColor, $middleColor, $toColor); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top, $fromColor, $middleColor, $toColor); /* IE10 */
-	background-image:      -o-linear-gradient(top, $fromColor, $middleColor, $toColor); /* Opera 11.10+ */
-	background-image:         linear-gradient(top, $fromColor, $middleColor, $toColor);
+	background-image: -webkit-linear-gradient(top, $fromColor 0%, $toColor 100%); /* Chrome 10+, Saf5.1+, iOS 5+ */
+	background-image:    -moz-linear-gradient(top, $fromColor 0%, $toColor 100%); /* FF3.6 */
+	background-image:     -ms-linear-gradient(top, $fromColor 0%, $toColor 100%); /* IE10 */
+	background-image:      -o-linear-gradient(top, $fromColor 0%, $toColor 100%); /* Opera 11.10+ */
+	background-image:         linear-gradient(top, $fromColor 0%, $toColor 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#{nth( $fromColor, 1 )}', EndColorStr='#{nth( $toColor, 1 )}');
 }
 

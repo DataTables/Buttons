@@ -8,38 +8,39 @@ a.dt-button {
 	position: relative;
 	display: inline-block;
 	box-sizing: border-box;
-	margin-right: 5px;
-	padding: 5px 10px;
+	margin-right: 0.333em;
+	padding: 0.5em 1em;
 	border: 1px solid #999;
 	border-radius: 2px;
 	cursor: pointer;
 	font-size: 0.88em;
 	color: black;
-	box-shadow: 1px 1px 3px #ccc;
+	//box-shadow: 1px 1px 3px #ccc;
 	white-space: nowrap;
 	overflow: hidden;
-	@include dtb-three-stop-gradient(#ffffff 0%,#f3f3f3 89%,#f9f9f9 100%);
+	@include dtb-two-stop-gradient(white, #e9e9e9);
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 	text-decoration: none;
+	outline: none;
 
 	&.disabled {
 		color: #999;
 		border: 1px solid #d0d0d0;
 		cursor: default;
-		@include dtb-three-stop-gradient(#ffffff 0%,#f9f9f9 89%,#fafafa 100%);
+		@include dtb-two-stop-gradient(#ffffff, #f9f9f9);
 	}
 
-	&:active,
-	&.active {
-		@include dtb-three-stop-gradient(#f3f3f3 0%,#e2e2e2 89%,#f4f4f4 100%);
+	&:active:not(.disabled),
+	&.active:not(.disabled) {
+		@include dtb-two-stop-gradient(#f3f3f3, #e2e2e2);
 		box-shadow: inset 1px 1px 3px #999999;
 
 		&:hover:not(.disabled) {
 			box-shadow: inset 1px 1px 3px #999999;
-			@include dtb-three-stop-gradient(#eaeaea 0%,#d1d1d1 89%,#e2e2e2 100%);
+			@include dtb-two-stop-gradient(#eaeaea, #cccccc);
 		}
 	}
 
@@ -49,15 +50,14 @@ a.dt-button {
 
 	&:hover:not(.disabled) {
 		border: 1px solid #666;
-		box-shadow: 1px 1px 3px #999;
-		@include dtb-three-stop-gradient(#f3f3f3 0%,#e2e2e2 89%,#f4f4f4 100%);
+		@include dtb-two-stop-gradient(#f9f9f9, #e0e0e0);
 	}
 
 	&:focus:not(.disabled) {
 		border: 1px solid #426c9e;
 		text-shadow: 0 1px 0 #c4def1;
 		outline: none;
-		@include dtb-three-stop-gradient(#a3d0ef 0%, #79ace9 65%, #a3d0ef 100%);
+		@include dtb-two-stop-gradient(#bddef4, #79ace9);
 	}
 }
 
@@ -85,8 +85,7 @@ div.dt-button-collection {
 	padding: 8px 8px 4px 8px;
 	border: 1px solid #ccc;
 	border: 1px solid rgba( 0, 0, 0, 0.4 );
-	background-color: #f3f3f3;
-	background-color: rgba( 255, 255, 255, 0.3 );
+	background-color: white;
 	overflow: hidden;
 	z-index: 2002;
 	border-radius: 5px;
@@ -105,6 +104,12 @@ div.dt-button-collection {
 		float: none;
 		margin-bottom: 4px;
 		margin-right: 0;
+
+		&:active:not(.disabled),
+		&.active:not(.disabled) {
+			@include dtb-two-stop-gradient(#f0f0f0, #dadada);
+			box-shadow: inset 1px 1px 3px #666;
+		}
 	}
 
 	@include dtb-fixed-collection();
