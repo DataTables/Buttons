@@ -643,7 +643,7 @@ Buttons.prototype = {
 					return;
 				}
 
-				if ( conf.key.altkey && ! e.altkey ) {
+				if ( conf.key.altKey && ! e.altKey ) {
 					return;
 				}
 
