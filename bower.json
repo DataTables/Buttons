@@ -7,7 +7,7 @@
 		"js/buttons.flash.js",
 		"js/buttons.html5.js",
 		"js/buttons.print.js",
-		"css/buttons.dataTables.css"
+		"css/buttons.dataTables.scss"
 	],
 	"dependencies": {
 		"jquery": ">=1.7.0",
