@@ -120,7 +120,7 @@ $.extend( DataTable.ext.buttons, {
 
 		show: [],
 
-		hide: [],
+		hide: []
 	}
 } );
 
