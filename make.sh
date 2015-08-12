@@ -22,6 +22,11 @@ rsync -r js $OUT_DIR
 js_compress $OUT_DIR/js/dataTables.buttons.js
 js_frameworks buttons $OUT_DIR/js
 
+js_compress $OUT_DIR/js/buttons.colVis.js
+js_compress $OUT_DIR/js/buttons.html5.js
+js_compress $OUT_DIR/js/buttons.flash.js
+js_compress $OUT_DIR/js/buttons.print.js
+
 # Copy and build examples
 rsync -r examples $OUT_DIR
 examples_process $OUT_DIR/examples
