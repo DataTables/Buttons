@@ -520,7 +520,7 @@ DataTable.ext.buttons.excelHtml5 = {
 			xml += addRow( data.body[i] );
 		}
 
-		if ( config.header ) {
+		if ( config.footer ) {
 			xml += addRow( data.footer );
 		}
 

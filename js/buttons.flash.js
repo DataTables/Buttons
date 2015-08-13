@@ -693,7 +693,7 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 			xml += addRow( data.body[i] );
 		}
 
-		if ( config.header ) {
+		if ( config.footer ) {
 			xml += addRow( data.footer );
 		}
 
