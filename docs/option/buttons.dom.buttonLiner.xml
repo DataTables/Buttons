@@ -20,11 +20,9 @@
 	</type>
 
 	<description>
-	<![CDATA[
 		This option controls the HTML tag that is used as the liner for each button. This can be particularly useful for adding complex styling rules to buttons. It can also be disabled if you wish to have minimal markup in your document.
 
 		Please refer to the `b-init buttons.dom` documentation for an overview of the DOM structure that Buttons will create. In this specific case, this option controls the `<span>...</span>` button liner element that is shown in the example HTML there.
-	]]>
 	</description>
 
 	<example title="DataTables initialisation: Use an `i` tag to line the button element"><![CDATA[
