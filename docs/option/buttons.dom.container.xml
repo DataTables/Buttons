@@ -14,11 +14,9 @@
 	</type>
 
 	<description>
-	<![CDATA[
 		This option controls the HTML tag that is used for the element that contains the buttons that are created for the Buttons control.
 
 		Please refer to the `b-init buttons.dom` documentation for an overview of the DOM structure that Buttons will create. In this specific case, this option controls the `<div class="dt-buttons">...</div>` that is shown in the example HTML there.
-	]]>
 	</description>
 
 	<example title="DataTables initialisation: Use an `aside` tag for the container display"><![CDATA[
