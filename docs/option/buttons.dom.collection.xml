@@ -14,11 +14,9 @@
 	</type>
 
 	<description>
-	<![CDATA[
 		This option controls the HTML tag that is used for the element that is displayed when a collection button is triggered. It in turn contains the sub-buttons of the collection.
 
 		Please refer to the `b-init buttons.dom` documentation for an overview of the DOM structure that Buttons will create. In this specific case, this option controls the `<div class="dt-button-collection">...</div>` tag that is shown in the example HTML there.
-	]]>
 	</description>
 
 	<example title="DataTables initialisation: Use an `aside` tag for the collection display"><![CDATA[
