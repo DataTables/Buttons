@@ -1377,6 +1377,10 @@ var _exportData = function ( dt, inOpts )
 	}, inOpts );
 
 	var strip = function ( str ) {
+		if ( typeof str !== 'string' ) {
+			return str;
+		}
+
 		if ( config.stripHtml ) {
 			str = str.replace( /<.*?>/g, '' );
 		}
