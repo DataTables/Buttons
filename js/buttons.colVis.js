@@ -75,16 +75,25 @@ $.extend( DataTable.ext.buttons, {
 			var that = this;
 			var col = dt.column( conf.columns );
 
-			dt.on( 'column-visibility.dt'+conf.namespace, function (e, settings, column, state) {
-				if ( column === conf.columns ) {
-					that.active( state );
-				}
-			} );
+			dt
+				.on( 'column-visibility.dt'+conf.namespace, function (e, settings, column, state) {
+					if ( column === conf.columns ) {
+						that.active( state );
+					}
+				} )
+				.on( 'column-reorder.dt'+conf.namespace, function (e, settings, details) {
+					var col = dt.column( conf.columns );
+
+					button.text( $(col.header()).text() );
+					that.active( col.visible() );
+				} );
 
 			this.active( col.visible() );
 		},
 		destroy: function ( dt, button, conf ) {
-			dt.off( 'column-visibility.dt'+conf.namespace );
+			dt
+				.off( 'column-visibility.dt'+conf.namespace )
+				.off( 'column-reorder.dt'+conf.namespace );
 		}
 	},
 
