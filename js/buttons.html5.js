@@ -400,6 +400,7 @@ DataTable.ext.buttons.copyHtml5 = {
 
 		// Select the text so when the user activates their system clipboard
 		// it will copy that text
+		message.find('textarea')[0].focus();
 		message.find('textarea')[0].select();
 
 		// Event to hide the message when the user is done
