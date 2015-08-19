@@ -60,7 +60,7 @@ $.extend( DataTable.ext.buttons, {
 	columnVisibility: {
 		columns: null, // column selector
 		text: function ( dt, button, conf ) {
-			return $(dt.column( conf.columns ).header()).text();
+			return conf._columnText( dt, conf.columns );
 		},
 		className: 'buttons-columnVisibility',
 		action: function ( e, dt, button, conf ) {
@@ -84,7 +84,7 @@ $.extend( DataTable.ext.buttons, {
 				.on( 'column-reorder.dt'+conf.namespace, function (e, settings, details) {
 					var col = dt.column( conf.columns );
 
-					button.text( $(col.header()).text() );
+					button.text( conf._columnText( dt, conf.columns ) );
 					that.active( col.visible() );
 				} );
 
@@ -94,6 +94,18 @@ $.extend( DataTable.ext.buttons, {
 			dt
 				.off( 'column-visibility.dt'+conf.namespace )
 				.off( 'column-reorder.dt'+conf.namespace );
+		},
+
+		_columnText: function ( dt, col ) {
+			// Use DataTables' internal data structure until this is presented
+			// is a public API. The other option is to use
+			// `$( column(col).node() ).text()` but the node might not have been
+			// populated when Buttons is constructed.
+			var idx = dt.column( col ).index();
+			return dt.settings()[0].aoColumns[ idx ].sTitle
+				.replace(/\n/g," ")        // remove new lines
+				.replace( /<.*?>/g, "" )   // strip HTML
+				.replace(/^\s+|\s+$/g,""); // trim
 		}
 	},
 
