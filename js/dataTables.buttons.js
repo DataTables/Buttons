@@ -57,7 +57,7 @@ var Buttons = function( dt, config )
 };
 
 
-Buttons.prototype = {
+$.extend( Buttons.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
@@ -795,7 +795,7 @@ Buttons.prototype = {
 
 		return conf;
 	}
-};
+} );
 
 
 
