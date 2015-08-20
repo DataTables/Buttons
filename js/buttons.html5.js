@@ -315,6 +315,20 @@ var _exportData = function ( dt, config )
 	};
 };
 
+/**
+ * Safari's data: support for creating and downloading files is really poor, so
+ * various options need to be disabled in it. See
+ * https://bugs.webkit.org/show_bug.cgi?id=102914
+ * 
+ * @return {Boolean} `true` if Safari
+ */
+var _isSafari = function ()
+{
+	return navigator.userAgent.indexOf('Safari') !== -1 &&
+		navigator.userAgent.indexOf('Chrome') === -1 &&
+		navigator.userAgent.indexOf('Opera') === -1;
+};
+
 
 // Excel - Pre-defined strings to build a minimal XLSX file
 var excelStrings = {
@@ -481,15 +495,7 @@ DataTable.ext.buttons.excelHtml5 = {
 	className: 'buttons-excel buttons-html5',
 
 	available: function () {
-		// Safari will not download the zip file as it does not support the
-		// download option. Therefore this button has to be disabled in Safari.
-		// See https://bugs.webkit.org/show_bug.cgi?id=102914
-		var safari =
-			navigator.userAgent.indexOf('Safari') !== -1 &&
-			navigator.userAgent.indexOf('Chrome') === -1 &&
-			navigator.userAgent.indexOf('Opera') === -1;
-
-		return window.FileReader !== undefined && window.JSZip !== undefined && ! safari;
+		return window.FileReader !== undefined && window.JSZip !== undefined && ! _isSafari();
 	},
 
 	text: function ( dt ) {
@@ -663,11 +669,16 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 		var pdf = window.pdfMake.createPdf( doc );
 
-		pdf.getBuffer( function (buffer) {
-			var blob = new Blob( [buffer], {type:'application/pdf'} );
+		if ( config.download === 'open' && ! _isSafari() ) {
+			pdf.open();
+		}
+		else {
+			pdf.getBuffer( function (buffer) {
+				var blob = new Blob( [buffer], {type:'application/pdf'} );
 
-			_saveAs( blob, _filename( config ) );
-		} );
+				_saveAs( blob, _filename( config ) );
+			} );
+		}
 	},
 
 	title: '*',
@@ -686,7 +697,9 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 	message: null,
 
-	customize: null
+	customize: null,
+
+	download: 'download'
 };
 
 

@@ -52,6 +52,12 @@
 		File name to give the created file (plus the extension defined by the `extension` option). The special character `*` is automatically replaced with the value read from the host document's `-tag title` tag. This still will also appear above the table in the created PDF.
 	</option>
 
+	<option type="string" name="download" default="download">
+		Action to take when the PDF have been created - this can be `-string download` which will cause a file to be downloaded, or `-string open` which will open a new browser window and display the PDF.
+
+		Please note that this option has no effect in Safari which will always display the file, due to a [limitation in Safari](https://bugs.webkit.org/show_bug.cgi?id=102914).
+	</option>
+
 	<option type="string" name="extension" default=".pdf">
 		The extension to give the created file name.
 	</option>

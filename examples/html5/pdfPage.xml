@@ -21,7 +21,7 @@ $(document).ready(function() {
 ]]>
 </js>
 
-<title lib="Buttons">Page size and orientation</title>
+<title lib="Buttons">PDF page size and orientation</title>
 
 <info><![CDATA[
 
