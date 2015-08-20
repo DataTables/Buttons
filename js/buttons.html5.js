@@ -508,7 +508,9 @@ DataTable.ext.buttons.excelHtml5 = {
 		var data = dt.buttons.exportData( config.exportOptions );
 		var addRow = function ( row ) {
 			var cells = [];
-
+			if (row == null){
+			     row = 0;
+			}
 			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
 				cells.push( $.isNumeric( row[i] ) ?
 					'<c t="n"><v>'+row[i]+'</v></c>' :
