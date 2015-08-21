@@ -1402,7 +1402,10 @@ var _exportData = function ( dt, inOpts )
 
 	var footer = dt.table().footer() ?
 		dt.columns( config.columns ).indexes().map( function (idx, i) {
-			return strip( dt.column( idx ).footer().innerHTML );
+			var el = dt.column( idx ).footer();
+			return el ?
+				strip( el.innerHTML ) :
+				'';
 		} ).toArray() :
 		null;
 
