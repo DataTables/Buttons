@@ -41,7 +41,7 @@ $('#myTable').DataTable( {
 		buttons: [
 			{
 				text: 'Enabled only with selected item',
-				init: function ( e, dt, node, config ) {
+				init: function ( dt, node, config ) {
 					var that = this;
 
 					dt.on( 'select.dt.DT deselect.dt.DT', function () {
