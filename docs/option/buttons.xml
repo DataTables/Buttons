@@ -41,7 +41,7 @@
 	</type>
 
 	<description>
-		This option provides the ability to have a Buttons instance created automatically when a new DataTable is created. The button collection can then be inserted into the DataTables controlled DOM by using the `B` option in the `dt-init dom` parameter, or through the `b-api button().container()` API method.
+		This option provides the ability to have a Buttons instance created automatically when a new DataTable is created. The button collection can then be inserted into the DataTables controlled DOM by using the `B` option in the `dt-init dom` parameter, or through the `b-api buttons().container()` API method.
 	</description>
 
 	<example title="Creation of Buttons using defaults and insertion by `dt-init dom`"><![CDATA[
