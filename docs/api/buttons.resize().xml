@@ -13,7 +13,7 @@
 		<description>
 			Resize the Flash movie clips to take account of the current button dimensions.
 		</description>
-		<returns type="DataTable.Api">
+		<returns type="DataTables.Api">
 			Unmodified DataTable API instance for chaining
 		</returns>
 	</type>

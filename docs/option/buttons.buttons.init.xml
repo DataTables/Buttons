@@ -13,7 +13,7 @@
 		<scope>
 			DataTables API instance for the selected button - i.e. `b-api button()` for the button in question
 		</scope>
-		<parameter type="DataTable.Api" name="dt">
+		<parameter type="DataTables.Api" name="dt">
 			A DataTables API instance for the host DataTable
 		</parameter>
 		<parameter type="jQuery" name="node">
