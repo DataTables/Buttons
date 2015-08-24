@@ -15,11 +15,11 @@
 		The `b-init buttons` array defines the buttons that will appear in the document to the end user. Each element in the array can be one of:
 
 		* `-type string` - The name of a built-in button type or plug-in button type. This is the equivalent of using `{ extend: ... }`.
-		* `-type object` - A custom button or a customisation of an existing button type. The `extends` property (see `b-init buttons.buttons.extends`) can be defined to tell Buttons which button type to base the button on, and any of the configuration options you wish to customise. Alternatively, if the `extends` option is not given, use the `text` and `action` options to define a button. Buttons has only a few built in configuration options for each button, but the various button types may provide additional options. Please refer to the documentation for each button type for information on the further options they provide. The built-in options are:
+		* `-type object` - A custom button or a customisation of an existing button type. The `extend` property (see `b-init buttons.buttons.extend`) can be defined to tell Buttons which button type to base the button on, and any of the configuration options you wish to customise. Alternatively, if the `extend` option is not given, use the `text` and `action` options to define a button. Buttons has only a few built in configuration options for each button, but the various button types may provide additional options. Please refer to the documentation for each button type for information on the further options they provide. The built-in options are:
 		  * `b-init buttons.buttons.action` - Function describing the action to take on activation
 		  * `b-init buttons.buttons.className` - Button class name
 		  * `b-init buttons.buttons.enabled` - Initial enabled state
-		  * `b-init buttons.buttons.extends` - Based extends object
+		  * `b-init buttons.buttons.extend` - Based extends object
 		  * `b-init buttons.buttons.init` - Button initialisation callback function
 		  * `b-init buttons.buttons.key` - Key activation configuration
 		  * `b-init buttons.buttons.name` - Button name for use in selectors
