@@ -296,9 +296,21 @@ var _exportData = function ( dt, config )
 	var newLine = _newLine( config );
 	var data = dt.buttons.exportData( config.exportOptions );
 	var join = function ( a ) {
-		return config.fieldBoundary +
-			a.join( config.fieldBoundary + config.fieldSeparator + config.fieldBoundary ) +
-			config.fieldBoundary;
+		var s = '';
+		var boundary = config.fieldBoundary;
+		var separator = config.fieldSeparator;
+
+		// If there is a field boundary, then we might need to escape it in
+		// the source data
+		for ( var i=0, ien=a.length ; i<ien ; i++ ) {
+			if ( i > 0 ) {
+				s += separator;
+			}
+
+			s += boundary + a[i].replace( boundary, '\\'+boundary ) + boundary;
+		}
+
+		return s;
 	};
 
 	var header = config.header ? join( data.header )+newLine : '';
@@ -481,7 +493,7 @@ DataTable.ext.buttons.csvHtml5 = {
 
 	fieldSeparator: ',',
 
-	fieldBoundary: '',
+	fieldBoundary: '"',
 
 	header: true,
 
