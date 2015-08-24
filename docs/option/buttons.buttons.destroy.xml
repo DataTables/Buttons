@@ -9,7 +9,7 @@
 	</default>
 
 	<type type="function">
-		<signature>init( dt, node, config )</signature>
+		<signature>destroy( dt, node, config )</signature>
 		<scope>
 			DataTables API instance for the selected button - i.e. `b-api button()` for the button in question
 		</scope>
