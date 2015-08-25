@@ -15,7 +15,7 @@ $(document).ready(function() {
 ]]>
 </js>
 
-<title lib="Buttons">Basic column visibility</title>
+<title lib="Buttons">Visibility toggle buttons</title>
 
 <info><![CDATA[
 
