@@ -1389,7 +1389,7 @@ var _exportData = function ( dt, inOpts )
 			str = str.replace( /^\s+|\s+$/g, '' );
 		}
 
-		if ( config.trim ) {
+		if ( config.stripNewlines ) {
 			str = str.replace( /\n/g, ' ' );
 		}
 
