@@ -32,7 +32,7 @@ $('#myTable').DataTable( {
 		{
 			extend: 'collection',
 			text: 'Show columns',
-			buttons: [ 'columnsVisibility' ]
+			buttons: [ 'columnsVisibility' ],
 			visibility: true
 		},
 		{
