@@ -163,7 +163,7 @@ $.extend( Buttons.prototype, {
 		for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
 			this.removePrep( i );
 
-			for ( j=0, jen=subButtons[i].length; j<0 ; j++ ) {
+			for ( j=0, jen=subButtons[i].length ; j<jen ; j++ ) {
 				this.removePrep( i+'-'+j );
 			}
 		}
