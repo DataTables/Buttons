@@ -307,7 +307,9 @@ var _exportData = function ( dt, config )
 				s += separator;
 			}
 
-			s += boundary + a[i].replace( boundary, '\\'+boundary ) + boundary;
+			s += boundary ?
+				boundary + a[i].replace( boundary, '\\'+boundary ) + boundary :
+				a[i];
 		}
 
 		return s;
