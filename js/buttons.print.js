@@ -25,7 +25,8 @@ var _relToAbs = function( el ) {
 		linkHost = _link.host;
 
 		// IE doesn't have a trailing slash on the host
-		if ( linkHost.indexOf('/') === -1 ) {
+		// Chrome has it on the pathname
+		if ( linkHost.indexOf('/') === -1 && _link.pathname.indexOf('/') !== 0) {
 			linkHost += '/';
 		}
 
