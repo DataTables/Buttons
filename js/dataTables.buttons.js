@@ -1409,11 +1409,34 @@ var _exportData = function ( dt, inOpts )
 		} ).toArray() :
 		null;
 
+        /*** inefficient functional traversal of the table body, for posterity
 	var body = dt.rows( config.rows, config.modifier ).indexes().map( function (rowIdx, i) {
 		return dt.cells( rowIdx, config.columns ).indexes().map( function (cellIdx) {
 			return strip( dt.cell( cellIdx ).render( config.orthogonal ) );
 		} ).toArray();
 	} ).toArray();
+        ***/
+
+        /*** efficient but ugly unboxed traversal of the table body, for scalability ***/
+        var data_cells = dt.cells(config.rows, config.columns, config.modifier);
+        var raw_data = data_cells.render(config.orthogonal).toArray();
+        var ix = data_cells.indexes();
+        var row_ix = new Array(ix.length);
+        var col_ix = new Array(ix.length);
+        var j, k, r, c; // counters
+        for (j=0; j<ix.length; j++) { // could do this with an array comprehension
+            row_ix[j] = ix[j].row;
+            col_ix[j] = ix[j].column;
+        }
+        var row_n = Math.max.apply(null, row_ix)+1; // min is 0, right?
+        var col_n = Math.max.apply(null, col_ix)+1; // ...riiight....?
+        var body = new Array(row_n);
+        for (j=0; j<row_n; j++) body[j] = new Array(col_n); // preallocate 2D array
+        for (j=0; j<raw_data.length; j++) {
+            c = col_ix[j]; // j % col_n; 
+            r = row_ix[j]; // (j-c) / col_n; 
+            body[r][c] = strip(raw_data[j]);
+        }
 
 	return {
 		header: header,
