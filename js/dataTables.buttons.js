@@ -1409,11 +1409,25 @@ var _exportData = function ( dt, inOpts )
 		} ).toArray() :
 		null;
 
-	var body = dt.rows( config.rows, config.modifier ).indexes().map( function (rowIdx, i) {
-		return dt.cells( rowIdx, config.columns ).indexes().map( function (cellIdx) {
-			return strip( dt.cell( cellIdx ).render( config.orthogonal ) );
-		} ).toArray();
-	} ).toArray();
+	var cells = dt
+		.cells( config.rows, config.columns, config.modifier )
+		.render( config.orthogonal )
+		.toArray();
+	var columns = header.length;
+	var rows = cells.length / columns;
+	var body = new Array( rows );
+	var cellCounter = 0;
+
+	for ( var i=0, ien=rows ; i<ien ; i++ ) {
+		var row = new Array( columns );
+
+		for ( var j=0 ; j<columns ; j++ ) {
+			row[j] = cells[ cellCounter ];
+			cellCounter++;
+		}
+
+		body[i] = row;
+	}
 
 	return {
 		header: header,
