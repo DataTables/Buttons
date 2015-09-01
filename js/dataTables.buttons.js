@@ -1422,7 +1422,7 @@ var _exportData = function ( dt, inOpts )
 		var row = new Array( columns );
 
 		for ( var j=0 ; j<columns ; j++ ) {
-			row[j] = cells[ cellCounter ];
+			row[j] = strip( cells[ cellCounter ] );
 			cellCounter++;
 		}
 
