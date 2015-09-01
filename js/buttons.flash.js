@@ -692,7 +692,9 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
 				cells.push( $.isNumeric( row[i] ) ?
 					'<c t="n"><v>'+row[i]+'</v></c>' :
-					'<c t="inlineStr"><is><t>'+row[i].replace(/&/g, '&amp;')+'</t></is></c>'
+					'<c t="inlineStr"><is><t>'+
+						row[i].replace(/&(?!amp;)/g, '&amp;')+
+					'</t></is></c>'
 				);
 			}
 
