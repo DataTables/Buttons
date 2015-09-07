@@ -1,4 +1,4 @@
-/*! Buttons for DataTables 1.0.3
+/*! Buttons for DataTables 1.0.4-dev
  * ©2015 SpryMedia Ltd - datatables.net/license
  */
 (function(window, document, undefined) {
@@ -1052,7 +1052,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '1.0.3';
+Buttons.version = '1.0.4-dev';
 
 
 $.extend( _dtButtons, {
@@ -1409,8 +1409,9 @@ var _exportData = function ( dt, inOpts )
 		} ).toArray() :
 		null;
 
+	var rowIndexes = dt.rows( config.rows, config.modifier ).indexes().toArray();
 	var cells = dt
-		.cells( config.rows, config.columns, config.modifier )
+		.cells( rowIndexes, config.columns )
 		.render( config.orthogonal )
 		.toArray();
 	var columns = header.length;
