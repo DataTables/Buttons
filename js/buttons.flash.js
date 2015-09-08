@@ -519,10 +519,11 @@ var _exportData = function ( dt, config )
 {
 	var newLine = _newLine( config );
 	var data = dt.buttons.exportData( config.exportOptions );
+	var boundary = config.fieldBoundary;
+	var separator = config.fieldSeparator;
+	var reBoundary = new RegExp( boundary, 'g' );
 	var join = function ( a ) {
 		var s = '';
-		var boundary = config.fieldBoundary;
-		var separator = config.fieldSeparator;
 
 		// If there is a field boundary, then we might need to escape it in
 		// the source data
@@ -532,7 +533,7 @@ var _exportData = function ( dt, config )
 			}
 
 			s += boundary ?
-				boundary + a[i].replace( boundary, '\\'+boundary ) + boundary :
+				boundary + a[i].replace( reBoundary, '\\'+boundary ) + boundary :
 				a[i];
 		}
 
