@@ -1415,7 +1415,7 @@ var _exportData = function ( dt, inOpts )
 		.render( config.orthogonal )
 		.toArray();
 	var columns = header.length;
-	var rows = cells.length / columns;
+	var rows = columns > 0 ? cells.length / columns : 0;
 	var body = new Array( rows );
 	var cellCounter = 0;
 
