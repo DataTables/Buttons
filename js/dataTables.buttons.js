@@ -710,6 +710,10 @@ $.extend( Buttons.prototype, {
 			// array of button configurations (which will be iterated
 			// separately)
 			while ( ! $.isPlainObject(base) && ! $.isArray(base) ) {
+				if ( base === undefined ) {
+					return;
+				}
+
 				if ( typeof base === 'function' ) {
 					base = base( dt, conf );
 
