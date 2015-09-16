@@ -309,7 +309,7 @@ var _exportData = function ( dt, config )
 			}
 
 			s += boundary ?
-				boundary + a[i].replace( reBoundary, '\\'+boundary ) + boundary :
+				boundary + ('' + a[i]).replace( reBoundary, '\\'+boundary ) + boundary :
 				a[i];
 		}
 
