@@ -485,8 +485,8 @@ DataTable.ext.buttons.csvHtml5 = {
 		var ary = [ output ];
 
 		if (config.prefix) {
-			if (config.prefix.forEach) {
-				config.prefix.forEach(function(p) {
+			if (config.prefix.reverse) {
+				config.prefix.reverse().forEach(function(p) {
 					ary.unshift(newLine);
 					ary.unshift(p);
 				});
