@@ -746,6 +746,10 @@ $.extend( Buttons.prototype, {
 		while ( conf && conf.extend ) {
 			// Use `toConfObject` in case the button definition being extended
 			// is itself a string or a function
+			if ( ! _dtButtons[ conf.extend ] ) {
+				throw 'Cannot extend unknown button type: '+conf.extend;
+			}
+
 			var objArray = toConfObject( _dtButtons[ conf.extend ] );
 			if ( $.isArray( objArray ) ) {
 				return objArray;
