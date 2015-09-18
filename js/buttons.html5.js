@@ -482,8 +482,34 @@ DataTable.ext.buttons.csvHtml5 = {
 		var newLine = _newLine( config );
 		var output = _exportData( dt, config ).str;
 
+		var ary = [ output ];
+
+		if (config.prefix) {
+			if (config.prefix.reverse) {
+				config.prefix.reverse().forEach(function(p) {
+					ary.unshift(newLine);
+					ary.unshift(p);
+				});
+			} else {
+				ary.unshift(newLine);
+				ary.unshift(config.prefix);
+			}
+		}
+
+		if (config.suffix) {
+			if (config.suffix.forEach) {
+				config.suffix.forEach(function(s) {
+					ary.push(newLine);
+					ary.push(s);
+				});
+			} else {
+				ary.push(newLine);
+				ary.push(config.suffix);
+			}
+		}
+
 		_saveAs(
-			new Blob( [output], {type : 'text/csv'} ),
+			new Blob( ary, {type : 'text/csv'} ),
 			_filename( config )
 		);
 	},
@@ -500,7 +526,11 @@ DataTable.ext.buttons.csvHtml5 = {
 
 	header: true,
 
-	footer: false
+	footer: false,
+
+	prefix: null,
+
+	suffix: null
 };
 
 //
