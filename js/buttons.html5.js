@@ -320,8 +320,32 @@ var _exportData = function ( dt, config )
 	var footer = config.footer ? newLine+join( data.footer ) : '';
 	var body = [];
 
+	if (config.prefix) {
+		if (config.prefix.reverse) {
+			config.prefix.reverse().forEach(function(p) {
+				body.unshift(newLine);
+				body.unshift(p);
+			});
+		} else {
+			body.unshift(newLine);
+			body.unshift(config.prefix);
+		}
+	}
+
 	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
 		body.push( join( data.body[i] ) );
+	}
+
+	if (config.suffix) {
+		if (config.suffix.forEach) {
+			config.suffix.forEach(function(s) {
+				body.push(newLine);
+				body.push(s);
+			});
+		} else {
+			body.push(newLine);
+			body.push(config.suffix);
+		}
 	}
 
 	return {
@@ -482,34 +506,8 @@ DataTable.ext.buttons.csvHtml5 = {
 		var newLine = _newLine( config );
 		var output = _exportData( dt, config ).str;
 
-		var ary = [ output ];
-
-		if (config.prefix) {
-			if (config.prefix.reverse) {
-				config.prefix.reverse().forEach(function(p) {
-					ary.unshift(newLine);
-					ary.unshift(p);
-				});
-			} else {
-				ary.unshift(newLine);
-				ary.unshift(config.prefix);
-			}
-		}
-
-		if (config.suffix) {
-			if (config.suffix.forEach) {
-				config.suffix.forEach(function(s) {
-					ary.push(newLine);
-					ary.push(s);
-				});
-			} else {
-				ary.push(newLine);
-				ary.push(config.suffix);
-			}
-		}
-
 		_saveAs(
-			new Blob( ary, {type : 'text/csv'} ),
+			new Blob( output, {type : 'text/csv'} ),
 			_filename( config )
 		);
 	},
@@ -566,6 +564,16 @@ DataTable.ext.buttons.excelHtml5 = {
 			return '<row>'+cells.join('')+'</row>';
 		};
 
+                if ( config.prefix ) {
+                        if (config.prefix.reverse) {
+                                config.prefix.forEach(function(p) {
+                                        xml += addRow(p)
+                                });
+                        } else {
+                                xml += addRow(config.prefix);
+                        }
+                }
+
 		if ( config.header ) {
 			xml += addRow( data.header );
 		}
@@ -577,6 +585,16 @@ DataTable.ext.buttons.excelHtml5 = {
 		if ( config.footer ) {
 			xml += addRow( data.footer );
 		}
+
+                if ( config.suffix ) {
+                        if (config.suffix.reverse) {
+                                config.suffix.forEach(function(p) {
+                                        xml += addRow(p);
+                                });
+                        } else {
+                                xml += addRow(config.suffix);
+                        }
+                }
 
 		var zip           = new window.JSZip();
 		var _rels         = zip.folder("_rels");
@@ -709,6 +727,38 @@ DataTable.ext.buttons.pdfHtml5 = {
 				margin: [ 0, 0, 0, 12 ]
 			} );
 		}
+
+                if ( config.prefix ) {
+                        if ( config.prefix.reverse ) {
+                                config.prefix.reverse.forEach( function(p) {
+                                        doc.content.unshift( {
+                                                text: p,
+                                                style: 'message'
+                                        } );
+                                } );
+                        } else {
+                                doc.content.unshift( {
+                                        text: config.prefix,
+                                        style: 'message'
+                                } );
+                        }
+                }
+
+                if ( config.suffix ) {
+                        if ( config.suffix.reverse ) {
+                                config.suffix.forEach( function(s) {
+                                        doc.content.push( {
+                                                text: s,
+                                                style: 'message'
+                                        } );
+                                } );
+                        } else {
+                                doc.content.push( {
+                                        text: config.suffix,
+                                        style: 'message'
+                                } );
+                        }
+                }
 
 		if ( config.customize ) {
 			config.customize( doc );
