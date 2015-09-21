@@ -730,7 +730,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 
                 if ( config.prefix ) {
                         if ( config.prefix.reverse ) {
-                                config.prefix.reverse.forEach( function(p) {
+                                config.prefix.reverse().forEach( function(p) {
                                         doc.content.unshift( {
                                                 text: p,
                                                 style: 'message'
