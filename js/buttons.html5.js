@@ -563,14 +563,16 @@ DataTable.ext.buttons.excelHtml5 = {
 		};
 
                 var addLines = function( value ) {
+                        var lpfx = '<row><c t="inlineStr"><is><t>';
+                        var lsfx = '</t></is></c></row>';
                         if (value) {
                                 if (value.reverse) {
                                         value.forEach( function( v ) {
-                                                xml += '<row><c t="inlineStr"><is><t>' + v + '</t></is></c></row>';
+                                                xml += lpfx + v + lsfx;
                                         } );
                                 }
                         } else {
-                                xml += '<row><c t="inlineStr"><is><t>' + value + '</t></is></c></row>';
+                                xml += lpfx + value + lsfx;
                         }
                 };
 
