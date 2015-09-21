@@ -58,6 +58,10 @@
 		The extension to give the created file name.
 	</option>
 
+	<option type="string" name="charset" default="null">
+		Character set to use in the file export. When `null` is used (default) the document's character set will be read and used (`document.characterSet`). The addition of a character set can be disabled by setting this property to `false`.
+	</option>
+
 
 	<example title="DataTables initialisation: Use the HTML5 CSV button"><![CDATA[
 
