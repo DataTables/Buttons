@@ -255,7 +255,7 @@ var _saveAs = (function(view) {
 var _filename = function ( config, incExtension )
 {
 	// Backwards compatibility
-	var filename = config.filename === '*' && config.title !== '*' ?
+	var filename = config.filename === '*' && config.title !== '*' && config.title !== undefined ?
 		config.title :
 		config.filename;
 

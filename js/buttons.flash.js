@@ -458,20 +458,20 @@ var _glue = function ( flash, node )
 var _filename = function ( config, incExtension )
 {
 	// Backwards compatibility
-	var filename = config.filename === '*' && config.title !== '*' ?
+	var filename = config.filename === '*' && config.title !== '*' && config.title !== undefined ?
 		config.title :
 		config.filename;
 
-	if ( title.indexOf( '*' ) !== -1 ) {
-		title = title.replace( '*', $('title').text() );
+	if ( filename.indexOf( '*' ) !== -1 ) {
+		filename = filename.replace( '*', $('title').text() );
 	}
 
 	// Strip characters which the OS will object to
-	title = title.replace(/[^a-zA-Z0-9_\u00A1-\uFFFF\.,\-_ !\(\)]/g, "");
+	filename = filename.replace(/[^a-zA-Z0-9_\u00A1-\uFFFF\.,\-_ !\(\)]/g, "");
 
 	return incExtension === undefined || incExtension === true ?
-		title+config.extension :
-		title;
+		filename+config.extension :
+		filename;
 };
 
 /**
@@ -592,6 +592,8 @@ var flashButton = {
 	exportOptions: {},
 
 	title: '*',
+
+	filename: '*',
 
 	extension: '.csv',
 
