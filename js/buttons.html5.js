@@ -254,18 +254,21 @@ var _saveAs = (function(view) {
  */
 var _filename = function ( config, incExtension )
 {
-	var title = config.title;
+	// Backwards compatibility
+	var filename = config.filename === '*' && config.title !== '*' ?
+		config.title :
+		config.filename;
 
-	if ( title.indexOf( '*' ) !== -1 ) {
-		title = title.replace( '*', $('title').text() );
+	if ( filename.indexOf( '*' ) !== -1 ) {
+		filename = filename.replace( '*', $('title').text() );
 	}
 
 	// Strip characters which the OS will object to
-	title = title.replace(/[^a-zA-Z0-9_\u00A1-\uFFFF\.,\-_ !\(\)]/g, "");
+	filename = filename.replace(/[^a-zA-Z0-9_\u00A1-\uFFFF\.,\-_ !\(\)]/g, "");
 
 	return incExtension === undefined || incExtension === true ?
-		title+config.extension :
-		title;
+		filename+config.extension :
+		filename;
 };
 
 /**
@@ -488,7 +491,7 @@ DataTable.ext.buttons.csvHtml5 = {
 		);
 	},
 
-	title: '*',
+	filename: '*',
 
 	extension: '.csv',
 
@@ -566,7 +569,7 @@ DataTable.ext.buttons.excelHtml5 = {
 		);
 	},
 
-	title: '*',
+	filename: '*',
 
 	extension: '.xlsx',
 
@@ -699,6 +702,8 @@ DataTable.ext.buttons.pdfHtml5 = {
 	},
 
 	title: '*',
+
+	filename: '*',
 
 	extension: '.pdf',
 

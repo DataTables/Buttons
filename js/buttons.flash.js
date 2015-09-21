@@ -457,7 +457,10 @@ var _glue = function ( flash, node )
  */
 var _filename = function ( config, incExtension )
 {
-	var title = config.title;
+	// Backwards compatibility
+	var filename = config.filename === '*' && config.title !== '*' ?
+		config.title :
+		config.filename;
 
 	if ( title.indexOf( '*' ) !== -1 ) {
 		title = title.replace( '*', $('title').text() );
