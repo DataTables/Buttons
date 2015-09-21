@@ -562,15 +562,19 @@ DataTable.ext.buttons.excelHtml5 = {
 			return '<row>'+cells.join('')+'</row>';
 		};
 
-                if ( config.prefix ) {
-                        if (config.prefix.reverse) {
-                                config.prefix.forEach(function(p) {
-                                        xml += addRow(p)
-                                });
+                var addLines = function( value ) {
+                        if (value) {
+                                if (value.reverse) {
+                                        value.forEach( function( v ) {
+                                                xml += '<c t="inlineStr"><is><t>' + v + '</t></is></c>';
+                                        } );
+                                }
                         } else {
-                                xml += addRow(config.prefix);
+                                xml += '<c t="inlineStr"><is><t>' + value + '</t></is></c>';
                         }
-                }
+                };
+
+                addLines(config.prefix);
 
 		if ( config.header ) {
 			xml += addRow( data.header );
@@ -584,15 +588,7 @@ DataTable.ext.buttons.excelHtml5 = {
 			xml += addRow( data.footer );
 		}
 
-                if ( config.suffix ) {
-                        if (config.suffix.reverse) {
-                                config.suffix.forEach(function(p) {
-                                        xml += addRow(p);
-                                });
-                        } else {
-                                xml += addRow(config.suffix);
-                        }
-                }
+                addLines(config.suffix);
 
 		var zip           = new window.JSZip();
 		var _rels         = zip.folder("_rels");
