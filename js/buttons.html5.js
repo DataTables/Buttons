@@ -566,11 +566,11 @@ DataTable.ext.buttons.excelHtml5 = {
                         if (value) {
                                 if (value.reverse) {
                                         value.forEach( function( v ) {
-                                                xml += '<c t="inlineStr"><is><t>' + v + '</t></is></c>';
+                                                xml += '<row><c t="inlineStr"><is><t>' + v + '</t></is></c></row>';
                                         } );
                                 }
                         } else {
-                                xml += '<c t="inlineStr"><is><t>' + value + '</t></is></c>';
+                                xml += '<row><c t="inlineStr"><is><t>' + value + '</t></is></c></row>';
                         }
                 };
 
