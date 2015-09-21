@@ -484,9 +484,23 @@ DataTable.ext.buttons.csvHtml5 = {
 		// Set the text
 		var newLine = _newLine( config );
 		var output = _exportData( dt, config ).str;
+		var charset = config.charset;
+
+		if ( charset !== false ) {
+			if ( ! charset ) {
+				charset = document.characterSet || document.charset;
+			}
+
+			if ( charset ) {
+				charset = ';charset='+charset;
+			}
+		}
+		else {
+			charset = '';
+		}
 
 		_saveAs(
-			new Blob( [output], {type : 'text/csv'} ),
+			new Blob( [output], {type: 'text/csv'+charset} ),
 			_filename( config )
 		);
 	},
@@ -500,6 +514,8 @@ DataTable.ext.buttons.csvHtml5 = {
 	fieldSeparator: ',',
 
 	fieldBoundary: '"',
+
+	charset: null,
 
 	header: true,
 
