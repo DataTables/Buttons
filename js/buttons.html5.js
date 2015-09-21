@@ -316,19 +316,19 @@ var _exportData = function ( dt, config )
 		return s;
 	};
 
+        var prefix = '';
 	var header = config.header ? join( data.header )+newLine : '';
 	var footer = config.footer ? newLine+join( data.footer ) : '';
+        var suffix = '';
 	var body = [];
 
 	if (config.prefix) {
 		if (config.prefix.reverse) {
-			config.prefix.reverse().forEach(function(p) {
-				body.unshift(newLine);
-				body.unshift(p);
+			config.prefix.forEach(function(p) {
+                                prefix += p + newLine;
 			});
 		} else {
-			body.unshift(newLine);
-			body.unshift(config.prefix);
+                        prefix = config.prefix + newLine;
 		}
 	}
 
@@ -339,17 +339,15 @@ var _exportData = function ( dt, config )
 	if (config.suffix) {
 		if (config.suffix.forEach) {
 			config.suffix.forEach(function(s) {
-				body.push(newLine);
-				body.push(s);
+                                suffix += newLine + s;
 			});
 		} else {
-			body.push(newLine);
-			body.push(config.suffix);
+                        suffix += newLine + config.suffix;
 		}
 	}
 
 	return {
-		str: header + body.join( newLine ) + footer,
+		str: prefix + header + body.join( newLine ) + footer + suffix,
 		rows: body.length
 	};
 };
