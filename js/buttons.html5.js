@@ -565,18 +565,18 @@ DataTable.ext.buttons.excelHtml5 = {
                 var addLines = function( value ) {
                         var lpfx = '<row><c t="inlineStr"><is><t>';
                         var lsfx = '</t></is></c></row>';
-                        if (value) {
-                                if (value.reverse) {
-                                        value.forEach( function( v ) {
-                                                xml += lpfx + v + lsfx;
-                                        } );
-                                }
-                        } else {
-                                xml += lpfx + value + lsfx;
+			if (value) {
+				if (value.reverse) {
+					value.forEach( function( v ) {
+						xml += lpfx + v + lsfx;
+					} );
+				} else {
+				        xml += lpfx + value + lsfx;
+			        }
                         }
-                };
+		};
 
-                addLines(config.prefix);
+		addLines(config.prefix);
 
 		if ( config.header ) {
 			xml += addRow( data.header );
