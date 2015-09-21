@@ -486,7 +486,7 @@ DataTable.ext.buttons.csvHtml5 = {
 		var output = _exportData( dt, config ).str;
 
 		_saveAs(
-			new Blob( [output], {type : 'text/csv'} ),
+			new Blob( [output], {type : 'text/csv;charset=utf-8'} ),
 			_filename( config )
 		);
 	},
