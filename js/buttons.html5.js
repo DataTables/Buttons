@@ -319,7 +319,7 @@ var _exportData = function ( dt, config )
         var prefix = '';
 	var header = config.header ? join( data.header )+newLine : '';
 	var footer = config.footer ? newLine+join( data.footer ) : '';
-        var suffix = '';
+        var postfix = '';
 	var body = [];
 
 	if (config.prefix) {
@@ -336,18 +336,18 @@ var _exportData = function ( dt, config )
 		body.push( join( data.body[i] ) );
 	}
 
-	if (config.suffix) {
-		if (config.suffix.forEach) {
-			config.suffix.forEach(function(s) {
-                                suffix += newLine + s;
+	if (config.postfix) {
+		if (config.postfix.forEach) {
+			config.postfix.forEach(function(s) {
+                                postfix += newLine + s;
 			});
 		} else {
-                        suffix += newLine + config.suffix;
+                        postfix += newLine + config.postfix;
 		}
 	}
 
 	return {
-		str: prefix + header + body.join( newLine ) + footer + suffix,
+		str: prefix + header + body.join( newLine ) + footer + postfix,
 		rows: body.length
 	};
 };
@@ -526,7 +526,7 @@ DataTable.ext.buttons.csvHtml5 = {
 
 	prefix: null,
 
-	suffix: null
+	postfix: null
 };
 
 //
@@ -590,19 +590,19 @@ DataTable.ext.buttons.excelHtml5 = {
 			xml += addRow( data.footer );
 		}
 
-                addLines(config.suffix);
+		addLines(config.postfix);
 
-		var zip           = new window.JSZip();
-		var _rels         = zip.folder("_rels");
-		var xl            = zip.folder("xl");
-		var xl_rels       = zip.folder("xl/_rels");
+		var zip		  = new window.JSZip();
+		var _rels	  = zip.folder("_rels");
+		var xl		  = zip.folder("xl");
+		var xl_rels	  = zip.folder("xl/_rels");
 		var xl_worksheets = zip.folder("xl/worksheets");
 
-		zip.file(           '[Content_Types].xml', excelStrings['[Content_Types].xml'] );
-		_rels.file(         '.rels',               excelStrings['_rels/.rels'] );
-		xl.file(            'workbook.xml',        excelStrings['xl/workbook.xml'] );
-		xl_rels.file(       'workbook.xml.rels',   excelStrings['xl/_rels/workbook.xml.rels'] );
-		xl_worksheets.file( 'sheet1.xml',          excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', xml ) );
+		zip.file(	    '[Content_Types].xml', excelStrings['[Content_Types].xml'] );
+		_rels.file(	    '.rels',		   excelStrings['_rels/.rels'] );
+		xl.file(	    'workbook.xml',	   excelStrings['xl/workbook.xml'] );
+		xl_rels.file(	    'workbook.xml.rels',   excelStrings['xl/_rels/workbook.xml.rels'] );
+		xl_worksheets.file( 'sheet1.xml',	   excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', xml ) );
 
 		_saveAs(
 			zip.generate( {type:"blob"} ),
@@ -724,33 +724,33 @@ DataTable.ext.buttons.pdfHtml5 = {
 			} );
 		}
 
-                if ( config.prefix ) {
-                        if ( config.prefix.reverse ) {
-                                config.prefix.reverse().forEach( function(p) {
-                                        doc.content.unshift( {
-                                                text: p,
-                                                style: 'message'
-                                        } );
-                                } );
-                        } else {
-                                doc.content.unshift( {
-                                        text: config.prefix,
-                                        style: 'message'
-                                } );
-                        }
-                }
+		if ( config.prefix ) {
+			if ( config.prefix.reverse ) {
+				config.prefix.reverse().forEach( function(p) {
+					doc.content.unshift( {
+						text: p,
+						style: 'message'
+					} );
+				} );
+			} else {
+				doc.content.unshift( {
+					text: config.prefix,
+					style: 'message'
+				} );
+			}
+		}
 
-                if ( config.suffix ) {
-                        if ( config.suffix.reverse ) {
-                                config.suffix.forEach( function(s) {
-                                        doc.content.push( {
-                                                text: s,
-                                                style: 'message'
-                                        } );
-                                } );
-                        } else {
-                                doc.content.push( {
-                                        text: config.suffix,
+		if ( config.postfix ) {
+			if ( config.postfix.reverse ) {
+				config.postfix.forEach( function(s) {
+					doc.content.push( {
+						text: s,
+						style: 'message'
+					} );
+				} );
+			} else {
+				doc.content.push( {
+                                        text: config.postfix,
                                         style: 'message'
                                 } );
                         }
