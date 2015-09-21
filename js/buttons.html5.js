@@ -316,16 +316,38 @@ var _exportData = function ( dt, config )
 		return s;
 	};
 
+        var prefix = '';
 	var header = config.header ? join( data.header )+newLine : '';
 	var footer = config.footer ? newLine+join( data.footer ) : '';
+        var postfix = '';
 	var body = [];
+
+	if (config.prefix) {
+		if (config.prefix.reverse) {
+			config.prefix.forEach(function(p) {
+                                prefix += p + newLine;
+			});
+		} else {
+                        prefix = config.prefix + newLine;
+		}
+	}
 
 	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
 		body.push( join( data.body[i] ) );
 	}
 
+	if (config.postfix) {
+		if (config.postfix.forEach) {
+			config.postfix.forEach(function(s) {
+                                postfix += newLine + s;
+			});
+		} else {
+                        postfix += newLine + config.postfix;
+		}
+	}
+
 	return {
-		str: header + body.join( newLine ) + footer,
+		str: prefix + header + body.join( newLine ) + footer + postfix,
 		rows: body.length
 	};
 };
@@ -483,7 +505,7 @@ DataTable.ext.buttons.csvHtml5 = {
 		var output = _exportData( dt, config ).str;
 
 		_saveAs(
-			new Blob( [output], {type : 'text/csv'} ),
+			new Blob( [ output ], {type : 'text/csv'} ),
 			_filename( config )
 		);
 	},
@@ -500,7 +522,11 @@ DataTable.ext.buttons.csvHtml5 = {
 
 	header: true,
 
-	footer: false
+	footer: false,
+
+	prefix: null,
+
+	postfix: null
 };
 
 //
@@ -536,6 +562,22 @@ DataTable.ext.buttons.excelHtml5 = {
 			return '<row>'+cells.join('')+'</row>';
 		};
 
+                var addLines = function( value ) {
+                        var lpfx = '<row><c t="inlineStr"><is><t>';
+                        var lsfx = '</t></is></c></row>';
+			if (value) {
+				if (value.reverse) {
+					value.forEach( function( v ) {
+						xml += lpfx + v + lsfx;
+					} );
+				} else {
+				        xml += lpfx + value + lsfx;
+			        }
+                        }
+		};
+
+		addLines(config.prefix);
+
 		if ( config.header ) {
 			xml += addRow( data.header );
 		}
@@ -548,17 +590,19 @@ DataTable.ext.buttons.excelHtml5 = {
 			xml += addRow( data.footer );
 		}
 
-		var zip           = new window.JSZip();
-		var _rels         = zip.folder("_rels");
-		var xl            = zip.folder("xl");
-		var xl_rels       = zip.folder("xl/_rels");
+		addLines(config.postfix);
+
+		var zip		  = new window.JSZip();
+		var _rels	  = zip.folder("_rels");
+		var xl		  = zip.folder("xl");
+		var xl_rels	  = zip.folder("xl/_rels");
 		var xl_worksheets = zip.folder("xl/worksheets");
 
-		zip.file(           '[Content_Types].xml', excelStrings['[Content_Types].xml'] );
-		_rels.file(         '.rels',               excelStrings['_rels/.rels'] );
-		xl.file(            'workbook.xml',        excelStrings['xl/workbook.xml'] );
-		xl_rels.file(       'workbook.xml.rels',   excelStrings['xl/_rels/workbook.xml.rels'] );
-		xl_worksheets.file( 'sheet1.xml',          excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', xml ) );
+		zip.file(	    '[Content_Types].xml', excelStrings['[Content_Types].xml'] );
+		_rels.file(	    '.rels',		   excelStrings['_rels/.rels'] );
+		xl.file(	    'workbook.xml',	   excelStrings['xl/workbook.xml'] );
+		xl_rels.file(	    'workbook.xml.rels',   excelStrings['xl/_rels/workbook.xml.rels'] );
+		xl_worksheets.file( 'sheet1.xml',	   excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', xml ) );
 
 		_saveAs(
 			zip.generate( {type:"blob"} ),
@@ -679,6 +723,38 @@ DataTable.ext.buttons.pdfHtml5 = {
 				margin: [ 0, 0, 0, 12 ]
 			} );
 		}
+
+		if ( config.prefix ) {
+			if ( config.prefix.reverse ) {
+				config.prefix.reverse().forEach( function(p) {
+					doc.content.unshift( {
+						text: p,
+						style: 'message'
+					} );
+				} );
+			} else {
+				doc.content.unshift( {
+					text: config.prefix,
+					style: 'message'
+				} );
+			}
+		}
+
+		if ( config.postfix ) {
+			if ( config.postfix.reverse ) {
+				config.postfix.forEach( function(s) {
+					doc.content.push( {
+						text: s,
+						style: 'message'
+					} );
+				} );
+			} else {
+				doc.content.push( {
+                                        text: config.postfix,
+                                        style: 'message'
+                                } );
+                        }
+                }
 
 		if ( config.customize ) {
 			config.customize( doc );
