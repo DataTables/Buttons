@@ -1374,6 +1374,7 @@ var _exportData = function ( dt, inOpts )
 	var config = $.extend( true, {}, {
 		rows:          null,
 		columns:       '',
+		columnHeaders: function( header ) { return header; },
 		modifier:      {
 			search: 'applied',
 			order:  'applied'
@@ -1404,9 +1405,9 @@ var _exportData = function ( dt, inOpts )
 		return str;
 	};
 
-	var header = dt.columns( config.columns ).indexes().map( function (idx, i) {
+	var header = config.columnHeaders( dt.columns( config.columns ).indexes().map( function (idx, i) {
 		return strip( dt.column( idx ).header().innerHTML );
-	} ).toArray();
+	} ).toArray() );
 
 	var footer = dt.table().footer() ?
 		dt.columns( config.columns ).indexes().map( function (idx, i) {
