@@ -62,6 +62,10 @@
 		Character set to use in the file export. When `null` is used (default) the document's character set will be read and used (`document.characterSet`). The addition of a character set can be disabled by setting this property to `false`.
 	</option>
 
+	<option type="string" name="escapeChar" default='"'>
+		Character to use as the escape character for CSV data. This will be prefixed to any data found in the fields which matches that set by the `fieldBoundary` option. It is a configurable option as different applications can require different options - however the default matches [RFC4180](https://tools.ietf.org/html/rfc4180).
+	</option>
+
 
 	<example title="DataTables initialisation: Use the HTML5 CSV button"><![CDATA[
 

@@ -301,6 +301,9 @@ var _exportData = function ( dt, config )
 	var boundary = config.fieldBoundary;
 	var separator = config.fieldSeparator;
 	var reBoundary = new RegExp( boundary, 'g' );
+	var escapeChar = config.escapeChar !== undefined ?
+		config.escapeChar :
+		'\\';
 	var join = function ( a ) {
 		var s = '';
 
@@ -312,7 +315,7 @@ var _exportData = function ( dt, config )
 			}
 
 			s += boundary ?
-				boundary + ('' + a[i]).replace( reBoundary, '\\'+boundary ) + boundary :
+				boundary + ('' + a[i]).replace( reBoundary, escapeChar+boundary ) + boundary :
 				a[i];
 		}
 
@@ -514,6 +517,8 @@ DataTable.ext.buttons.csvHtml5 = {
 	fieldSeparator: ',',
 
 	fieldBoundary: '"',
+
+	escapeChar: '"',
 
 	charset: null,
 

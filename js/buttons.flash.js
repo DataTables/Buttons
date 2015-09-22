@@ -525,6 +525,9 @@ var _exportData = function ( dt, config )
 	var boundary = config.fieldBoundary;
 	var separator = config.fieldSeparator;
 	var reBoundary = new RegExp( boundary, 'g' );
+	var escapeChar = config.escapeChar !== undefined ?
+		config.escapeChar :
+		'\\';
 	var join = function ( a ) {
 		var s = '';
 
@@ -536,7 +539,7 @@ var _exportData = function ( dt, config )
 			}
 
 			s += boundary ?
-				boundary + ('' + a[i]).replace( reBoundary, '\\'+boundary ) + boundary :
+				boundary + ('' + a[i]).replace( reBoundary, escapeChar+boundary ) + boundary :
 				a[i];
 		}
 
@@ -676,7 +679,9 @@ DataTable.ext.buttons.csvFlash = $.extend( {}, flashButton, {
 		flash.setAction( 'csv' );
 		flash.setFileName( _filename( config ) );
 		_setText( flash, data.str );
-	}
+	},
+
+	escapeChar: '"',
 } );
 
 // Excel save file - this is really a CSV file using UTF-8 that Excel can read
