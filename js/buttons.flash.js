@@ -681,7 +681,7 @@ DataTable.ext.buttons.csvFlash = $.extend( {}, flashButton, {
 		_setText( flash, data.str );
 	},
 
-	escapeChar: '"',
+	escapeChar: '"'
 } );
 
 // Excel save file - this is really a CSV file using UTF-8 that Excel can read
