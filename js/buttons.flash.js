@@ -704,8 +704,10 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 				cells.push( ! row[i].match(/[^0-9\-\.]/) ?
 					'<c t="n"><v>'+row[i]+'</v></c>' :
 					'<c t="inlineStr"><is><t>'+
-						row[i].replace(/&(?!amp;)/g, '&amp;')+
-					'</t></is></c>'
+						row[i]
+							.replace(/&(?!amp;)/g, '&amp;')
+							.replace(/[\x00-\x1F\x7F-\x9F]/g, '')+ // remove control characters
+					'</t></is></c>'                                // they are not valid in XML
 				);
 			}
 
