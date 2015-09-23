@@ -1405,10 +1405,10 @@ var _exportData = function ( dt, inOpts )
 		return str;
 	};
 
-	var header = config.columnHeaders( dt.columns( config.columns ).indexes().map( function (idx, i) {
+	var header = dt.columns( config.columns ).indexes().map( function (idx, i) {
 		var title = strip( dt.column( idx ).header().innerHTML );
 		return config.columnHeaders( idx, title, dt.column( idx ) ) ;
-	} ).toArray() );
+	} ).toArray();
 
 	var footer = dt.table().footer() ?
 		dt.columns( config.columns ).indexes().map( function (idx, i) {
