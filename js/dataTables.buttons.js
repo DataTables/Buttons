@@ -1,11 +1,26 @@
 /*! Buttons for DataTables 1.0.4-dev
  * ©2015 SpryMedia Ltd - datatables.net/license
  */
-(function(window, document, undefined) {
 
+(function( factory ){
+	if ( typeof define === 'function' && define.amd ) {
+		// AMD
+		define( ['jquery', 'datatables'], factory );
+	}
+	else if ( typeof exports === 'object' ) {
+		// Node / CommonJS
+		module.exports = function ($, dt) {
+			if ( ! $ ) { $ = require('jquery'); }
+			factory( $, dt || $.fn.dataTable || require('datatables') );
+		};
+	}
+	else if ( jQuery ) {
+		// Browser standard
+		factory( jQuery, jQuery.fn.dataTable );
+	}
+}(function( $, DataTable ) {
+'use strict';
 
-var factory = function( $, DataTable ) {
-"use strict";
 
 // Used for namespacing events added to the document by each instance, so they
 // can be removed on destroy
@@ -1485,22 +1500,4 @@ DataTable.ext.feature.push( {
 
 
 return Buttons;
-}; // /factory
-
-
-// Define as an AMD module if possible
-if ( typeof define === 'function' && define.amd ) {
-	define( ['jquery', 'datatables'], factory );
-}
-else if ( typeof exports === 'object' ) {
-    // Node/CommonJS
-    factory( require('jquery'), require('datatables') );
-}
-else if ( jQuery && !jQuery.fn.dataTable.Buttons ) {
-	// Otherwise simply initialise as normal, stopping multiple evaluation
-	factory( jQuery, jQuery.fn.dataTable );
-}
-
-
-})(window, document);
-
+}));

@@ -6,8 +6,24 @@
  * Copyright © 2015 Eli Grey - http://eligrey.com
  */
 
-(function($, DataTable) {
-"use strict";
+(function( factory ){
+	if ( typeof define === 'function' && define.amd ) {
+		// AMD
+		define( ['jquery', 'datatables', 'datatables-buttons'], factory );
+	}
+	else if ( typeof exports === 'object' ) {
+		// Node / CommonJS
+		module.exports = function ($, dt) {
+			if ( ! $ ) { $ = require('jquery'); }
+			factory( $, dt || $.fn.dataTable || require('datatables') );
+		};
+	}
+	else if ( jQuery ) {
+		// Browser standard
+		factory( jQuery, jQuery.fn.dataTable );
+	}
+}(function( $, DataTable ) {
+'use strict';
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -748,4 +764,5 @@ DataTable.ext.buttons.pdfHtml5 = {
 };
 
 
-})(jQuery, jQuery.fn.dataTable);
+return DataTable;
+}));

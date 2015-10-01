@@ -1,7 +1,28 @@
+/*! Foundation integration for DataTables' Buttons
+ * ©2015 SpryMedia Ltd - datatables.net/license
+ */
 
-(function($, DataTables){
+(function( factory ){
+	if ( typeof define === 'function' && define.amd ) {
+		// AMD
+		define( ['jquery', 'datatables', 'datatables-buttons'], factory );
+	}
+	else if ( typeof exports === 'object' ) {
+		// Node / CommonJS
+		module.exports = function ($, dt) {
+			if ( ! $ ) { $ = require('jquery'); }
+			factory( $, dt || $.fn.dataTable || require('datatables') );
+		};
+	}
+	else if ( jQuery ) {
+		// Browser standard
+		factory( jQuery, jQuery.fn.dataTable );
+	}
+}(function( $, DataTable ) {
+'use strict';
 
-$.extend( true, DataTables.Buttons.defaults, {
+
+$.extend( true, DataTable.Buttons.defaults, {
 	dom: {
 		container: {
 			tag: 'ul',
@@ -29,6 +50,8 @@ $.extend( true, DataTables.Buttons.defaults, {
 	}
 } );
 
-DataTables.ext.buttons.collection.className = 'buttons-collection dropdown';
+DataTable.ext.buttons.collection.className = 'buttons-collection dropdown';
 
-})(jQuery, jQuery.fn.dataTable);
+
+return DataTable;
+}));
