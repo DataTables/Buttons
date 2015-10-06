@@ -5,21 +5,25 @@
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {
 		// AMD
-		define( ['jquery', 'datatables', 'datatables-buttons'], factory );
+		define( ['jquery', 'datatables-zf', 'datatables-buttons'], factory );
 	}
 	else if ( typeof exports === 'object' ) {
 		// Node / CommonJS
 		module.exports = function ($, dt) {
 			if ( ! $ ) { $ = require('jquery'); }
-			factory( $, dt || $.fn.dataTable || require('datatables') );
+			if ( ! $.fn.dataTable ) { require('datatables-zf')($); }
+			if ( ! $.fn.dataTable.Buttons ) { require('datatables-buttons')($); }
+
+			factory( $ );
 		};
 	}
-	else if ( jQuery ) {
-		// Browser standard
-		factory( jQuery, jQuery.fn.dataTable );
+	else {
+		// Browser
+		factory( jQuery );
 	}
-}(function( $, DataTable ) {
+}(function( $ ) {
 'use strict';
+var DataTable = $.fn.dataTable;
 
 
 $.extend( true, DataTable.Buttons.defaults, {
@@ -53,5 +57,5 @@ $.extend( true, DataTable.Buttons.defaults, {
 DataTable.ext.buttons.collection.className = 'buttons-collection dropdown';
 
 
-return DataTable;
+return DataTable.Buttons;
 }));

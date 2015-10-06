@@ -8,18 +8,21 @@
 		define( ['jquery', 'datatables'], factory );
 	}
 	else if ( typeof exports === 'object' ) {
-		// Node / CommonJS
-		module.exports = function ($, dt) {
+		// CommonJS
+		module.exports = function ($) {
 			if ( ! $ ) { $ = require('jquery'); }
-			factory( $, dt || $.fn.dataTable || require('datatables') );
+			if ( ! $.fn.dataTable ) { require('datatables')($); }
+
+			factory( $ );
 		};
 	}
-	else if ( jQuery ) {
+	else {
 		// Browser standard
-		factory( jQuery, jQuery.fn.dataTable );
+		factory( jQuery );
 	}
-}(function( $, DataTable ) {
+}(function( $ ) {
 'use strict';
+var DataTable = $.fn.dataTable;
 
 
 // Used for namespacing events added to the document by each instance, so they

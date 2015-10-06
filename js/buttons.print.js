@@ -12,15 +12,19 @@
 		// Node / CommonJS
 		module.exports = function ($, dt) {
 			if ( ! $ ) { $ = require('jquery'); }
-			factory( $, dt || $.fn.dataTable || require('datatables') );
+			if ( ! $.fn.dataTable ) { require('datatables')($); }
+			if ( ! $.fn.dataTable.Buttons ) { require('datatables-buttons')($); }
+
+			factory( $ );
 		};
 	}
-	else if ( jQuery ) {
-		// Browser standard
-		factory( jQuery, jQuery.fn.dataTable );
+	else {
+		// Browser
+		factory( jQuery );
 	}
-}(function( $, DataTable ) {
+}(function( $ ) {
 'use strict';
+var DataTable = $.fn.dataTable;
 
 
 var _link = document.createElement( 'a' );
@@ -141,5 +145,5 @@ DataTable.ext.buttons.print = {
 };
 
 
-return DataTable;
+return DataTable.Buttons;
 }));
