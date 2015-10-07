@@ -5,14 +5,14 @@
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {
 		// AMD
-		define( ['jquery', 'datatables-jqui', 'datatables-buttons'], factory );
+		define( ['jquery', 'datatables.net-jqui', 'datatables.net-buttons'], factory );
 	}
 	else if ( typeof exports === 'object' ) {
 		// Node / CommonJS
 		module.exports = function ($, dt) {
 			if ( ! $ ) { $ = require('jquery'); }
-			if ( ! $.fn.dataTable ) { require('datatables-jqui')($); }
-			if ( ! $.fn.dataTable.Buttons ) { require('datatables-buttons')($); }
+			if ( ! $.fn.dataTable ) { require('datatables.net-jqui')($); }
+			if ( ! $.fn.dataTable.Buttons ) { require('datatables.net-buttons')($); }
 
 			factory( $ );
 		};
