@@ -1494,7 +1494,7 @@ $(document).on( 'init.dt.dtb', function (e, settings, json) {
 DataTable.ext.feature.push( {
 	fnInit: function( settings ) {
 		var api = new DataTable.Api( settings );
-		var opts = api.init().buttons;
+		var opts = api.init().buttons || DataTable.defaults.buttons;
 
 		return new Buttons( api, opts ).container();
 	},
