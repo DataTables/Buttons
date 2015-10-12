@@ -1092,6 +1092,13 @@ $.extend( _dtButtons, {
 			var host = button;
 			var hostOffset = host.offset();
 			var tableContainer = $( dt.table().container() );
+			var multiLevel = false;
+
+			// Remove any old collection
+			if ( $('div.dt-button-background').length ) {
+				multiLevel = $('div.dt-button-collection').offset();
+				$(document).trigger( 'click.dtb-collection' );
+			}
 
 			config._collection
 				.addClass( config.collectionLayout )
@@ -1099,7 +1106,15 @@ $.extend( _dtButtons, {
 				.appendTo( 'body' )
 				.fadeIn( config.fade );
 
-			if ( config._collection.css( 'position' ) === 'absolute' ) {
+			var position = config._collection.css( 'position' );
+
+			if ( multiLevel && position === 'absolute' ) {
+				config._collection.css( {
+					top: multiLevel.top + 5, // magic numbers for a little offset
+					left: multiLevel.left + 5
+				} );
+			}
+			else if ( position === 'absolute' ) {
 				config._collection.css( {
 					top: hostOffset.top + host.outerHeight(),
 					left: hostOffset.left

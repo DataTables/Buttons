@@ -31,7 +31,7 @@
 	</option>
 
 	<option type="array" name="buttons" default="[]">
-		The buttons to show in the collection. The elements in this array follow the same rules as the `b-init buttons.buttons` array - i.e. it can contain strings, objects and functions that describe buttons.
+		The buttons to show in the collection. The elements in this array follow the same rules as the `b-init buttons.buttons` array - i.e. it can contain strings, objects and functions that describe buttons. As of Buttons 1.1 this can also include buttons that trigger other collections to be shown (i.e. nested collections).
 	</option>
 
 	<option type="array" name="prefixButtons" default="undefined">
