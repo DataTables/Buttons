@@ -1387,6 +1387,27 @@ DataTable.Api.register( 'buttons.exportData()', function ( options ) {
 	}
 } );
 
+var _strip = function ( str ) {
+	if ( typeof str !== 'string' ) {
+		return str;
+	}
+
+	if ( config.stripHtml ) {
+		str = str.replace( /<.*?>/g, '' );
+	}
+
+	if ( config.trim ) {
+		str = str.replace( /^\s+|\s+$/g, '' );
+	}
+
+	if ( config.stripNewlines ) {
+		str = str.replace( /\n/g, ' ' );
+	}
+
+	return str;
+};
+
+
 var _exportData = function ( dt, inOpts )
 {
 	var config = $.extend( true, {}, {
@@ -1399,7 +1420,18 @@ var _exportData = function ( dt, inOpts )
 		orthogonal:    'display',
 		stripHtml:     true,
 		stripNewlines: true,
-		trim:          true
+		trim:          true,
+		format:        {
+			header: function ( d ) {
+				return strip( d );
+			},
+			footer: function ( d ) {
+				return strip( d );
+			},
+			body: function ( d ) {
+				return strip( d );
+			}
+		}
 	}, inOpts );
 
 	var strip = function ( str ) {
@@ -1422,16 +1454,15 @@ var _exportData = function ( dt, inOpts )
 		return str;
 	};
 
+
 	var header = dt.columns( config.columns ).indexes().map( function (idx, i) {
-		return strip( dt.column( idx ).header().innerHTML );
+		return config.format.header( dt.column( idx ).header().innerHTML, idx );
 	} ).toArray();
 
 	var footer = dt.table().footer() ?
 		dt.columns( config.columns ).indexes().map( function (idx, i) {
 			var el = dt.column( idx ).footer();
-			return el ?
-				strip( el.innerHTML ) :
-				'';
+			return config.format.footer( el ? el.innerHTML : '', idx );
 		} ).toArray() :
 		null;
 
@@ -1449,7 +1480,7 @@ var _exportData = function ( dt, inOpts )
 		var row = new Array( columns );
 
 		for ( var j=0 ; j<columns ; j++ ) {
-			row[j] = strip( cells[ cellCounter ] );
+			row[j] = config.format.body( cells[ cellCounter ], j, i );
 			cellCounter++;
 		}
 
