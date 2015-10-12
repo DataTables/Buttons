@@ -1392,6 +1392,7 @@ var _exportData = function ( dt, inOpts )
 	var config = $.extend( true, {}, {
 		rows:          null,
 		columns:       '',
+		columnHeaders: function( colnum, title, column ) { return title; },
 		modifier:      {
 			search: 'applied',
 			order:  'applied'
@@ -1423,14 +1424,15 @@ var _exportData = function ( dt, inOpts )
 	};
 
 	var header = dt.columns( config.columns ).indexes().map( function (idx, i) {
-		return strip( dt.column( idx ).header().innerHTML );
+		var title = strip( dt.column( idx ).header().innerHTML );
+		return config.columnHeaders( idx, title, dt.column( idx ) ) ;
 	} ).toArray();
 
 	var footer = dt.table().footer() ?
 		dt.columns( config.columns ).indexes().map( function (idx, i) {
 			var el = dt.column( idx ).footer();
 			return el ?
-				strip( el.innerHTML ) :
+				config.columnHeaders(idx, strip( el.innerHTML ), dt.column( idx ) ) :
 				'';
 		} ).toArray() :
 		null;
