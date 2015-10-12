@@ -267,7 +267,7 @@ var _saveAs = (function(view) {
  */
 
 /**
- * Get the title / file name for an exported file.
+ * Get the file name for an exported file.
  *
  * @param {object}  config       Button configuration
  * @param {boolean} incExtension Include the file name extension
@@ -290,6 +290,20 @@ var _filename = function ( config, incExtension )
 		filename+config.extension :
 		filename;
 };
+
+/**
+ * Get the title for an exported file.
+ *
+ * @param {object}  config  Button configuration
+ */
+var _title = function ( config )
+{
+	var title = config.title;
+
+	return title.indexOf( '*' ) !== -1 ?
+		title.replace( '*', $('title').text() ) :
+		title;
+}
 
 /**
  * Get the newline character(s)
@@ -722,7 +736,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 		if ( config.title ) {
 			doc.content.unshift( {
-				text: _filename( config, false ),
+				text: _title( config, false ),
 				style: 'title',
 				margin: [ 0, 0, 0, 12 ]
 			} );

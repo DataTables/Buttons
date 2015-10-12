@@ -470,7 +470,7 @@ var _glue = function ( flash, node )
 };
 
 /**
- * Get the title / file name for an exported file.
+ * Get the file name for an exported file.
  *
  * @param {object}  config       Button configuration
  * @param {boolean} incExtension Include the file name extension
@@ -493,6 +493,20 @@ var _filename = function ( config, incExtension )
 		filename+config.extension :
 		filename;
 };
+
+/**
+ * Get the title for an exported file.
+ *
+ * @param {object}  config  Button configuration
+ */
+var _title = function ( config )
+{
+	var title = config.title;
+
+	return title.indexOf( '*' ) !== -1 ?
+		title.replace( '*', $('title').text() ) :
+		title;
+}
 
 /**
  * Set the flash text. This has to be broken up into chunks as the Javascript /
@@ -776,7 +790,7 @@ DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
 		} );
 
 		flash.setAction( 'pdf' );
-		flash.setFileName( _filename( config ) );
+		flash.setFileName( _title( config ) );
 
 		_setText( flash, JSON.stringify( {
 			title:       _filename(config, false),
