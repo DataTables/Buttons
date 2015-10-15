@@ -102,6 +102,10 @@ $.extend( DataTable.ext.buttons, {
 					}
 				} )
 				.on( 'column-reorder.dt'+conf.namespace, function (e, settings, details) {
+					if ( typeof conf.columns === 'number' ) {
+						conf.columns = details.mapping[ conf.columns ];
+					}
+
 					var col = dt.column( conf.columns );
 
 					button.text( conf._columnText( dt, conf.columns ) );
