@@ -1143,16 +1143,23 @@ $.extend( _dtButtons, {
 			// Need to break the 'thread' for the collection button being
 			// activated by a click - it would also trigger this event
 			setTimeout( function () {
-				$(document).on( 'click.dtb-collection', function (e) {
+				// This is bonkers, but if we don't have a click listener on the
+				// background element, iOS Safari will ignore the body click
+				// listener below. An empty function here is all that is
+				// required to make it work...
+				$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
+
+				$('body').on( 'click.dtb-collection', function (e) {
 					if ( ! $(e.target).parents().andSelf().filter( config._collection ).length ) {
 						config._collection
 							.fadeOut( config.fade, function () {
 								config._collection.detach();
 							} );
 
+						$('div.dt-button-background').off( 'click.dtb-collection' );
 						Buttons.background( false, config.backgroundClassName, config.fade );
 
-						$(document).off( 'click.dtb-collection' );
+						$('body').off( 'click.dtb-collection' );
 					}
 				} );
 			}, 10 );
