@@ -78,13 +78,13 @@ $.extend( DataTable.ext.buttons, {
 
 	// Single button to set column visibility
 	columnVisibility: {
-		columns: null, // column selector
+		columns: undefined, // column selector
 		text: function ( dt, button, conf ) {
 			return conf._columnText( dt, conf.columns );
 		},
 		className: 'buttons-columnVisibility',
 		action: function ( e, dt, button, conf ) {
-			var col = dt.column( conf.columns );
+			var col = dt.columns( conf.columns );
 
 			col.visible( conf.visibility !== undefined ?
 				conf.visibility :
