@@ -103,6 +103,12 @@ $.extend( DataTable.ext.buttons, {
 					}
 				} )
 				.on( 'column-reorder.dt'+conf.namespace, function (e, settings, details) {
+					// Don't rename buttons based on column name if the button
+					// controls more than one column!
+					if ( dt.columns( conf.columns ).count() !== 1 ) {
+						return;
+					}
+
 					if ( typeof conf.columns === 'number' ) {
 						conf.columns = details.mapping[ conf.columns ];
 					}
