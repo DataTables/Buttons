@@ -583,7 +583,7 @@ DataTable.ext.buttons.excelHtml5 = {
 			var cells = [];
 
 			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
-				cells.push( typeof row[i] === 'number' || (row[i].match && row[i].match(/^[0-9\-\.]+$/)) ?
+				cells.push( typeof row[i] === 'number' || (row[i].match && row[i].match(/^-?[0-9\.]+$/)) ?
 					'<c t="n"><v>'+row[i]+'</v></c>' :
 					'<c t="inlineStr"><is><t>'+(
 						! row[i].replace ?
