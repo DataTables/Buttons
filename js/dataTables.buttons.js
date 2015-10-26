@@ -1409,26 +1409,6 @@ DataTable.Api.register( 'buttons.exportData()', function ( options ) {
 	}
 } );
 
-var _strip = function ( str ) {
-	if ( typeof str !== 'string' ) {
-		return str;
-	}
-
-	if ( config.stripHtml ) {
-		str = str.replace( /<.*?>/g, '' );
-	}
-
-	if ( config.trim ) {
-		str = str.replace( /^\s+|\s+$/g, '' );
-	}
-
-	if ( config.stripNewlines ) {
-		str = str.replace( /\n/g, ' ' );
-	}
-
-	return str;
-};
-
 
 var _exportData = function ( dt, inOpts )
 {
