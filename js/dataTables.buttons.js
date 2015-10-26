@@ -1410,20 +1410,22 @@ DataTable.Api.register( 'buttons.exportData()', function ( options ) {
 } );
 
 
+var _exportTextarea = $('<textarea/>')[0];
 var _exportData = function ( dt, inOpts )
 {
 	var config = $.extend( true, {}, {
-		rows:          null,
-		columns:       '',
-		modifier:      {
+		rows:           null,
+		columns:        '',
+		modifier:       {
 			search: 'applied',
 			order:  'applied'
 		},
-		orthogonal:    'display',
-		stripHtml:     true,
-		stripNewlines: true,
-		trim:          true,
-		format:        {
+		orthogonal:     'display',
+		stripHtml:      true,
+		stripNewlines:  true,
+		decodeEntities: true,
+		trim:           true,
+		format:         {
 			header: function ( d ) {
 				return strip( d );
 			},
@@ -1451,6 +1453,11 @@ var _exportData = function ( dt, inOpts )
 
 		if ( config.stripNewlines ) {
 			str = str.replace( /\n/g, ' ' );
+		}
+
+		if ( config.decodeEntities ) {
+			_exportTextarea.innerHTML = str;
+			str = _exportTextarea.value;
 		}
 
 		return str;
