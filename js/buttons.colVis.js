@@ -115,7 +115,7 @@ $.extend( DataTable.ext.buttons, {
 
 					var col = dt.column( conf.columns );
 
-					button.text( conf._columnText( dt, conf.columns ) );
+					that.text( conf._columnText( dt, conf.columns ) );
 					that.active( col.visible() );
 				} );
 
