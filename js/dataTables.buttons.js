@@ -592,6 +592,10 @@ $.extend( Buttons.prototype, {
 			button.addClass( config.className );
 		}
 
+		if ( config.title ) {
+			button.attr( 'title', config.title );
+		}
+
 		if ( ! config.namespace ) {
 			config.namespace = '.dt-button-'+(_buttonCounter++);
 		}

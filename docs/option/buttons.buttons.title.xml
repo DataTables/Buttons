@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="Buttons">
+	<name>buttons.buttons.title</name>
+	<summary>Button `title` attribute text</summary>
+	<since>1.1.0</since>
+
+	<default value="No default value (i.e. undefined)" />
+
+	<type type="string">
+		<description>
+			A plain text string that will be set as the `title` attribute for the button. Browsers will display this text when the mouse is hovered over the button and screenreaders can use it to improve accessibility.
+		</description>
+	</type>
+
+	<description>
+		This option provides the ability to set the [`title` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/title) for the button. This can be used to provide a detailed description of the button, or a simple text name if you choose to display an icon in the button rather than text (using the `b-init buttons.buttons.text` option).
+
+		Browser's will show the text given in the `title` attribute in a tooltip that will be displayed when the user hovers their mouse over the button, and accessibility software such as screenreaders can use it to better inform users what a button does.
+	</description>
+
+	<example title="Copy button with a Font Awesome icon and title text"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: [
+		{
+			extend: 'copyHtml5',
+			text:   '<i class="fa fa-files-o"></i>',
+			title:  'Copy'
+		}
+	}
+} );
+
+]]></example>
+</dt-option>
