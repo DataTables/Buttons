@@ -327,7 +327,9 @@ $.extend( Buttons.prototype, {
 	text: function ( idx, label )
 	{
 		var button = this._indexToButton( idx );
-		var linerTag = this.c.dom.buttonLiner.tag;
+		var linerTag = typeof idx === 'string' && idx.indexOf( '-' ) ?
+			this.c.dom.collection.buttonLiner.tag :
+			this.c.dom.buttonLiner.tag;
 		var dt = this.s.dt;
 		var text = function ( opt ) {
 			return typeof opt === 'function' ?
