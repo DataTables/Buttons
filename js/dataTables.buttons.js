@@ -776,6 +776,12 @@ $.extend( Buttons.prototype, {
 			if ( $.isArray( objArray ) ) {
 				return objArray;
 			}
+			else if ( ! objArray ) {
+				// This is a little brutal as it might be possible to have a
+				// valid button without the extend, but if there is no extend
+				// then the host button would be acting in an undefined state
+				return false;
+			}
 
 			// Stash the current class name
 			var originalClassName = objArray.className;

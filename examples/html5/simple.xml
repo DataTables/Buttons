@@ -5,17 +5,28 @@
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			'copyHtml5',
-			'excelHtml5',
-			'csvHtml5',
-			'pdfHtml5'
-		]
-	} );
-} );
+// Force a false for availability
+$.fn.DataTable.ext.buttons.excelHtml5.available = function(){return false;};
+$.fn.DataTable.ext.buttons.csvHtml5.available = function(){return false;};
+
+$(function(){
+  $.extend(true, $.fn.DataTable.defaults, {
+    dom:
+		"<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+		"<'row'<'col-sm-12'tr>>" +
+		"<'row'<'col-sm-4'B><'col-sm-4'i><'col-sm-4'p>>"
+  });
+ 
+  // Picks up dom from defaults.
+  $("#example").dataTable({
+    buttons: [
+      {extend: 'csv'},
+      'excel',
+      {extend: 'pdf'},
+      {extend: 'copy'}
+    ]
+  });
+});
 
 ]]>
 </js>
