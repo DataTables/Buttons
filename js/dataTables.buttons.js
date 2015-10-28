@@ -592,8 +592,8 @@ $.extend( Buttons.prototype, {
 			button.addClass( config.className );
 		}
 
-		if ( config.title ) {
-			button.attr( 'title', config.title );
+		if ( config.titleAttr ) {
+			button.attr( 'title', config.titleAttr );
 		}
 
 		if ( ! config.namespace ) {

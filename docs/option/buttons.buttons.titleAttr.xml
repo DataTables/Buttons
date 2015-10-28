@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-option library="Buttons">
-	<name>buttons.buttons.title</name>
+	<name>buttons.buttons.titleAttr</name>
 	<summary>Button `title` attribute text</summary>
 	<since>1.1.0</since>
 
@@ -23,9 +23,9 @@
 $('#myTable').DataTable( {
 	buttons: [
 		{
-			extend: 'copyHtml5',
-			text:   '<i class="fa fa-files-o"></i>',
-			title:  'Copy'
+			extend:    'copyHtml5',
+			text:      '<i class="fa fa-files-o"></i>',
+			titleAttr: 'Copy'
 		}
 	}
 } );
