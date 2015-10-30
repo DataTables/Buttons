@@ -328,7 +328,7 @@ $.extend( Buttons.prototype, {
 	{
 		var button = this._indexToButton( idx );
 		var buttonLiner = this.c.dom.collection.buttonLiner;
-		var linerTag = typeof idx === 'string' && idx.indexOf( '-' ) !== -1 && buttonLiner.tag ?
+		var linerTag = typeof idx === 'string' && idx.indexOf( '-' ) !== -1 && buttonLiner && buttonLiner.tag ?
 			buttonLiner.tag :
 			this.c.dom.buttonLiner.tag;
 		var dt = this.s.dt;
