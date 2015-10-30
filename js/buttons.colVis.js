@@ -156,7 +156,13 @@ $.extend( DataTable.ext.buttons, {
 
 		action: function ( e, dt, button, conf ) {
 			dt.columns().every( function ( i ) {
-				this.visible( conf._visOriginal[ i ] );
+				// Take into account that ColReorder might have disrupted our
+				// indexes
+				var idx = dt.colReorder && dt.colReorder.transpose ?
+					dt.colReorder.transpose( i, 'toOriginal' ) :
+					i;
+
+				this.visible( conf._visOriginal[ idx ] );
 			} );
 		}
 	},
