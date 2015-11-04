@@ -9,23 +9,33 @@
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {
 		// AMD
-		define( ['jquery', 'datatables.net', 'datatables.net-buttons'], factory );
+		define( ['jquery', 'datatables.net', 'datatables.net-buttons'], function ( $ ) {
+			return factory( $, window, document );
+		} );
 	}
 	else if ( typeof exports === 'object' ) {
-		// Node / CommonJS
-		module.exports = function ($, dt) {
-			if ( ! $ ) { $ = require('jquery'); }
-			if ( ! $.fn.dataTable ) { require('datatables.net')($); }
-			if ( ! $.fn.dataTable.Buttons ) { require('datatables.net-buttons')($); }
+		// CommonJS
+		module.exports = function (root, $) {
+			if ( ! root ) {
+				root = window;
+			}
 
-			factory( $ );
+			if ( ! $ || ! $.fn.dataTable ) {
+				$ = require('datatables.net')(root, $).$;
+			}
+
+			if ( ! $.fn.dataTable.Buttons ) {
+				require('datatables.net-buttons')(root, $);
+			}
+
+			return factory( $, root, root.document );
 		};
 	}
 	else {
 		// Browser
-		factory( jQuery );
+		factory( jQuery, window, document );
 	}
-}(function( $ ) {
+}(function( $, window, document, undefined ) {
 'use strict';
 var DataTable = $.fn.dataTable;
 
@@ -506,7 +516,7 @@ var _title = function ( config )
 	return title.indexOf( '*' ) !== -1 ?
 		title.replace( '*', $('title').text() ) :
 		title;
-}
+};
 
 /**
  * Set the flash text. This has to be broken up into chunks as the Javascript /
