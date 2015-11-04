@@ -18,10 +18,10 @@
 
 		This is provided as there is no API in HTML5 that allows a copy to clipboard action when clicking a button. Flash however does provide that option, giving a potentially more desirable interface to the end user.
 
-		The order of selection, in priority order is (note that HTML can be preferred through the `preferHtml` option (described below) or simply not including the Flash export buttons:
+		The order of selection, in priority order is:
 
-		* `b-button copyFlash`
 		* `b-button copyHtml5`
+		* `b-button copyFlash`
 
 		If the requirements of both buttons are not satisfied, no button will be presented to the end user. For the requirements of each button type, please refer to its own documentation.
 
@@ -61,29 +61,12 @@
 		Indicate if the table footer should be included in the exported data or not.
 	</option>
 
-	<option type="boolean" name="preferHtml" default="false">
-		Indicate if the `b-button copyHtml5` button type should be preferred over the Flash button, even if Flash is available in the browser.
-	</option>
-
 
 	<example title="DataTables initialisation: Use the `b-button copy` button type to automatically select between the Flash and HTML button options."><![CDATA[
 
 $('#myTable').DataTable( {
 	buttons: [
 		'copy'
-	]
-} );
-
-]]></example>
-
-	<example title="Prefer the HTML copy button type"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'copy',
-			preferHtml: true
-		}
 	]
 } );
 

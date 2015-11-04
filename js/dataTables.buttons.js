@@ -1183,17 +1183,11 @@ $.extend( _dtButtons, {
 		fade: 400
 	},
 	copy: function ( dt, conf ) {
-		if ( conf.preferHtml && _dtButtons.copyHtml5 ) {
-			return 'copyHtml5';
-		}
-
-		// Common option that will use the HTML5 or Flash export buttons
-		// For copy, the Flash option gets priority since it is one click only
-		if ( _dtButtons.copyFlash && _dtButtons.copyFlash.available( dt, conf ) ) {
-			return 'copyFlash';
-		}
 		if ( _dtButtons.copyHtml5 ) {
 			return 'copyHtml5';
+		}
+		if ( _dtButtons.copyFlash && _dtButtons.copyFlash.available( dt, conf ) ) {
+			return 'copyFlash';
 		}
 	},
 	csv: function ( dt, conf ) {

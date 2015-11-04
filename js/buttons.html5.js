@@ -303,7 +303,7 @@ var _title = function ( config )
 	return title.indexOf( '*' ) !== -1 ?
 		title.replace( '*', $('title').text() ) :
 		title;
-}
+};
 
 /**
  * Get the newline character(s)
@@ -443,34 +443,58 @@ DataTable.ext.buttons.copyHtml5 = {
 	},
 
 	action: function ( e, dt, button, config ) {
-		// This button is slightly sneaky as there is no HTML API to copy text
-		// to a clipboard, so what it does is use the buttons information
-		// element with an also completely hidden textarea that contains the
-		// data to be copied. That is pre-selected so the user just needs to
-		// activate their system clipboard.
-		var newLine = _newLine( config );
-		var output = _exportData( dt, config ).str;
+		var exportData = _exportData( dt, config );
+		var output = exportData.str;
+		var hiddenDiv = $('<div/>')
+			.css( {
+				height: 1,
+				width: 1,
+				overflow: 'hidden',
+				position: 'fixed',
+				top: 0,
+				left: 0
+			} );
+		var textarea = $('<textarea readonly/>')
+			.val( output )
+			.appendTo( hiddenDiv );
+
+		// For browsers that support the copy execCommand, try to use it
+		if ( document.queryCommandSupported('copy') ) {
+			hiddenDiv.appendTo( 'body' );
+			textarea[0].focus();
+			textarea[0].select();
+
+			try {
+				document.execCommand( 'copy' );
+				hiddenDiv.remove();
+
+				dt.buttons.info(
+					dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ),
+					dt.i18n( 'buttons.copySuccess', {
+							1: "Copied one row to clipboard",
+							_: "Copied %d rows to clipboard"
+						}, exportData.rows ),
+					2000
+				);
+
+				return;
+			}
+			catch (t) {}
+		}
+
+		// Otherwise we show the text box and instruct the user to use it
 		var message = $('<span>'+dt.i18n( 'buttons.copyKeys',
 				'Press <i>ctrl</i> or <i>\u2318</i> + <i>C</i> to copy the table data<br>to your system clipboard.<br><br>'+
 				'To cancel, click this message or press escape.' )+'</span>'
 			)
-			.append( $('<div/>')
-				.css( {
-					height: 1,
-					width: 1,
-					overflow: 'hidden'
-				} )
-				.append(
-					$('<textarea readonly/>').val( output )
-				)
-		);
+			.append( hiddenDiv );
 
 		dt.buttons.info( dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ), message, 0 );
 
 		// Select the text so when the user activates their system clipboard
 		// it will copy that text
-		message.find('textarea')[0].focus();
-		message.find('textarea')[0].select();
+		textarea[0].focus();
+		textarea[0].select();
 
 		// Event to hide the message when the user is done
 		var container = $(message).closest('.dt-button-info');
