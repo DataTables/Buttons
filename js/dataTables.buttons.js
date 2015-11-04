@@ -1577,8 +1577,9 @@ $.fn.DataTable.Buttons = Buttons;
 // DataTables creation - check if the buttons have been defined for this table,
 // they will have been if the `B` option was used in `dom`, otherwise we should
 // create the buttons instance here so they can be inserted into the document
-// using the API
-$(document).on( 'init.dt.dtb', function (e, settings, json) {
+// using the API. Listen for `init` for compatibility with pre 1.10.10, but to
+// be removed in future.
+$(document).on( 'init.dt plugin-init.dt', function (e, settings, json) {
 	if ( e.namespace !== 'dt' ) {
 		return;
 	}
