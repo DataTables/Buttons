@@ -1523,10 +1523,17 @@ var _exportData = function ( dt, inOpts )
 		return str;
 	};
 
+	var headCells = dt.table().context[0].aoHeader;
+	var header = new Array( headCells.length );
+	for ( var i=0, ien=headCells.length ; i<ien ; i++ ) {
+		var rowHead = new Array( headCells[i].length );
 
-	var header = dt.columns( config.columns ).indexes().map( function (idx, i) {
-		return config.format.header( dt.column( idx ).header().innerHTML, idx );
-	} ).toArray();
+		for ( var j=0 ; j<headCells[i].length ; j++ ) {
+			rowHead[j] = config.format.header( headCells[i][j].cell.innerText, j, i );
+		}
+
+		header[i] = rowHead;
+	}
 
 	var footer = dt.table().footer() ?
 		dt.columns( config.columns ).indexes().map( function (idx, i) {
@@ -1540,7 +1547,7 @@ var _exportData = function ( dt, inOpts )
 		.cells( rowIndexes, config.columns )
 		.render( config.orthogonal )
 		.toArray();
-	var columns = header.length;
+	var columns = header[0].length;
 	var rows = columns > 0 ? cells.length / columns : 0;
 	var body = new Array( rows );
 	var cellCounter = 0;

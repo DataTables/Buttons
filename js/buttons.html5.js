@@ -366,7 +366,15 @@ var _exportData = function ( dt, config )
 		return s;
 	};
 
-	var header = config.header ? join( data.header )+newLine : '';
+	if (config.header) {
+		var header = [];
+		for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+			header.push( join( data.header[i] ) );
+		}
+		header.join( newLine );
+	} else {
+		var header = '';
+	}
 	var footer = config.footer ? newLine+join( data.footer ) : '';
 	var body = [];
 
@@ -639,7 +647,9 @@ DataTable.ext.buttons.excelHtml5 = {
 		};
 
 		if ( config.header ) {
-			xml += addRow( data.header );
+			for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+				xml += addRow( data.header[i] );
+			}
 		}
 
 		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
@@ -699,12 +709,14 @@ DataTable.ext.buttons.pdfHtml5 = {
 		var rows = [];
 
 		if ( config.header ) {
-			rows.push( $.map( data.header, function ( d ) {
-				return {
-					text: typeof d === 'string' ? d : d+'',
-					style: 'tableHeader'
-				};
-			} ) );
+			for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+				rows.push( $.map( data.header[i], function ( d ) {
+					return {
+						text: typeof d === 'string' ? d : d+'',
+						style: 'tableHeader'
+					};
+				} ) );
+			}
 		}
 
 		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {

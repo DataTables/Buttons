@@ -590,7 +590,15 @@ var _exportData = function ( dt, config )
 		return s;
 	};
 
-	var header = config.header ? join( data.header )+newLine : '';
+	if (config.header) {
+		var header = [];
+		for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+			header.push( join( data.header[i] ) );
+		}
+		header.join( newLine );
+	} else {
+		var header = '';
+	}
 	var footer = config.footer ? newLine+join( data.footer ) : '';
 	var body = [];
 
@@ -765,7 +773,9 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 		};
 
 		if ( config.header ) {
-			xml += addRow( data.header );
+			for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+				xml += addRow( data.header[i] );
+			}
 		}
 
 		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
