@@ -955,7 +955,7 @@ Buttons.buttonSelector = function ( insts, selector )
 			if ( v !== null ) {
 				buttons.push( {
 					node: v.node[0],
-					name: v.name
+					name: v.conf.name
 				} );
 			}
 		} );
@@ -965,7 +965,7 @@ Buttons.buttonSelector = function ( insts, selector )
 				if ( w !== null ) {
 					buttons.push( {
 						node: w.node[0],
-						name: w.name
+						name: w.conf.name
 					} );
 				}
 			} );
