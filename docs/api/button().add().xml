@@ -10,7 +10,7 @@
 			Insert index for the button. Please refer to the `b-type button-selector` documentation for full details of button indexes, including how they apply to collections of sub-buttons.
 		</parameter>
 		<parameter type="object|string|function" name="config">
-			Button configuration. Please refer to `b-init buttons.button` for full details of the configuration options available here.
+			Button configuration. Please refer to `b-init buttons.buttons` for full details of the configuration options available here.
 		</parameter>
 		<returns type="DataTables.Api">
 			New DataTables API instance with the result set containing the newly created button. This means it is possible to immediately using the chaining API to manipulate the button.

@@ -26,7 +26,7 @@
 			No return value is required or expected. No action is taken upon any value that is returned.
 		</returns>
 		<description>
-			The function given here is called when the button is destroyed either by a call to `b-init button().remove()`, when the Buttons instance is destroyed (`b-api buttons().destroy()`) or when the host DataTable is destroyed (`dt-api destroy()`). It is provided to allow authors to removed events from the button preventing memory leaks.
+			The function given here is called when the button is destroyed either by a call to `b-api buttons().remove()`, when the Buttons instance is destroyed (`b-api buttons().destroy()`) or when the host DataTable is destroyed (`dt-api destroy()`). It is provided to allow authors to removed events from the button preventing memory leaks.
 		</description>
 	</type>
 

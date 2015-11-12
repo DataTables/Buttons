@@ -20,8 +20,8 @@
 	<description>
 		This option provides the ability to set the initial enabled state of a button using a boolean value. It is most likely to be of use when using the API methods that can control the button's enabled state after initialisation:
 
-		* `b-api buttons().enabled()` / `b-api button().enabled()`
-		* `b-api buttons().disabled()` / `b-api button().disabled()`
+		* `b-api buttons().enable()` / `b-api button().enable()`
+		* `b-api buttons().disable()` / `b-api button().disable()`
 	</description>
 
 	<example title="DataTables initialisation: Disable a button on initialisation"><![CDATA[
