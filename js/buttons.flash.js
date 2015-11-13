@@ -756,6 +756,8 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 							row[i] :
 							row[i]
 								.replace(/&(?!amp;)/g, '&amp;')
+								.replace(/</g, '&lt;')
+								.replace(/>/g, '&gt;')
 								.replace(/[\x00-\x1F\x7F-\x9F]/g, ''))+ // remove control characters
 					'</t></is></c>'                                    // they are not valid in XML
 				);
