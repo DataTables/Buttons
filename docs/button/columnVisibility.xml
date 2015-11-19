@@ -44,7 +44,7 @@ $('#myTable').DataTable( {
 
 ]]></example>
 
-	<example title="Direct initialisation: Show / hide columns with the class `secondard`"><![CDATA[
+	<example title="Direct initialisation: Show / hide columns with the class `secondary`"><![CDATA[
 
 new $.fn.dataTable.Buttons( table, {
 	buttons: [
