@@ -1244,6 +1244,7 @@ $.extend( _dtButtons, {
 					text: lang[i],
 					action: function ( e, dt, button, conf ) {
 						dt.page.len( val ).draw();
+						$('div.dt-button-background').click();
 					},
 					init: function ( dt, node, conf ) {
 						var that = this;
