@@ -665,7 +665,7 @@ DataTable.ext.buttons.excelHtml5 = {
 		xl_worksheets.file( 'sheet1.xml',          excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', xml ) );
 
 		_saveAs(
-			zip.generate( {type:"blob"} ),
+			zip.generate( {type:"blob", mimeType:'application/vnd.ms-excel'} ),
 			_filename( config )
 		);
 	},
