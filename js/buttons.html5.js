@@ -652,6 +652,17 @@ DataTable.ext.buttons.excelHtml5 = {
 			xml += addRow( data.footer );
 		}
 
+		if (typeof config.sheetName !== 'undefined' && config.sheetName) {
+			var oParser = new DOMParser();
+			var oSerializer = new XMLSerializer();
+
+			var oDOM = oParser.parseFromString(excelStrings['xl/workbook.xml'], "text/xml");
+			var sheet1 = oDOM.getElementsByTagName("sheet")[0];
+			sheet1.setAttribute('name', config.sheetName);
+
+			excelStrings['xl/workbook.xml'] = oSerializer.serializeToString(oDOM);
+		}
+
 		var zip           = new window.JSZip();
 		var _rels         = zip.folder("_rels");
 		var xl            = zip.folder("xl");
