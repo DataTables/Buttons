@@ -111,17 +111,21 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Add an active class to the button to make to look active
+	 * Add an active class to the button to make to look active or get current
+	 * active state.
 	 * @param  {int|string} Button index
-	 * @param  {boolean} [flag=true] Enable / disable flag
-	 * @return {Buttons} Self for chaining
+	 * @param  {boolean} [flag] Enable / disable flag
+	 * @return {Buttons} Self for chaining or boolean for getter
 	 */
 	active: function ( idx, flag ) {
 		var button = this._indexToButton( idx );
-		button.node.toggleClass(
-			this.c.dom.button.active,
-			flag === undefined ? true : flag
-		);
+		var klass = this.c.dom.button.active;
+
+		if ( flag === undefined ) {
+			return button.node.hasClass( klass );
+		}
+
+		button.node.toggleClass( klass, flag === undefined ? true : flag );
 
 		return this;
 	},
@@ -1313,6 +1317,12 @@ DataTable.Api.register( 'button()', function ( group, selector ) {
 
 // Active buttons
 DataTable.Api.register( ['buttons().active()', 'button().active()'], function ( flag ) {
+	if ( flag === undefined ) {
+		return this.map( function ( set ) {
+			 return set.inst.active( set.idx );
+		} );
+	}
+
 	return this.each( function ( set ) {
 		set.inst.active( set.idx, flag );
 	} );

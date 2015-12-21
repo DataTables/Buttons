@@ -4,6 +4,19 @@
 	<summary>Set the active state for the selected buttons</summary>
 	<since>1.0.0</since>
 
+	<type type="function" since="1.1.1">
+		<signature>buttons().active()</signature>
+		<parameter type="boolean" name="state">
+			Get the current active state of the buttons.
+		</parameter>
+		<returns type="DataTables.Api">
+			API instance which contains `true` if currently active, otherwise `false` for each selected button in the result set.
+		</returns>
+		<description>
+			Get the active state for the selected buttons.
+		</description>
+	</type>
+
 	<type type="function">
 		<signature>buttons().active( state )</signature>
 		<parameter type="function" name="state">
