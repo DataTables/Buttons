@@ -1316,7 +1316,7 @@ DataTable.Api.register( 'button()', function ( group, selector ) {
 } );
 
 // Active buttons
-DataTable.Api.register( ['buttons().active()', 'button().active()'], function ( flag ) {
+DataTable.Api.registerPlural( 'buttons().active()', 'button().active()', function ( flag ) {
 	if ( flag === undefined ) {
 		return this.map( function ( set ) {
 			 return set.inst.active( set.idx );
