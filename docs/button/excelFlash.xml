@@ -65,6 +65,10 @@
 		The extension to give the created file name.
 	</option>
 
+	<option type="string" name="sheetName" default="Sheet1">
+		Name for the worksheet in Excel file created. The characters [] \ /: *? : are not allowed and will be removed if present.
+	</option>
+
 
 	<example title="DataTables initialisation: Use the Flash Excel button"><![CDATA[
 

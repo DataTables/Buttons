@@ -38,6 +38,7 @@ package {
 		private var clipText:String = 'blank';
 		private var fileName:String = '';
 		private var action:String = 'copy';
+		private var sheetName:String = 'Sheet1';
 
 		// Excel - Pre-defined strings to build a minimal XLSX file
 		private var excelStrings:Object = {
@@ -68,7 +69,7 @@ package {
 		<workbookView xWindow="0" yWindow="0" windowWidth="25600" windowHeight="19020" tabRatio="500"/>\
 	</bookViews>\
 	<sheets>\
-		<sheet name="Sheet1" sheetId="1" r:id="rId1"/>\
+		<sheet name="__SHEET_NAME__" sheetId="1" r:id="rId1"/>\
 	</sheets>\
 </workbook>',
 
@@ -155,6 +156,11 @@ package {
 			ExternalInterface.addCallback( "setAction", function(t:String):void {
 				action = t;
 			} );
+
+			ExternalInterface.addCallback( "setSheetName", function(t:String):void {
+				sheetName = t;
+			} );
+
 		}
 
 
@@ -180,9 +186,11 @@ package {
 					zip.addFile( file, bytes );
 				};
 
+
+
 				addFile( '[Content_Types].xml',        excelStrings['[Content_Types].xml'] );
 				addFile( '_rels/.rels',                excelStrings['_rels/.rels'] );
-				addFile( 'xl/workbook.xml',            excelStrings['xl/workbook.xml'] );
+				addFile( 'xl/workbook.xml',            excelStrings['xl/workbook.xml'].replace( '__SHEET_NAME__', sheetName ) );
 				addFile( 'xl/_rels/workbook.xml.rels', excelStrings['xl/_rels/workbook.xml.rels'] );
 				addFile( 'xl/worksheets/sheet1.xml',   excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', clipText ) );
 
