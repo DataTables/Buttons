@@ -30,6 +30,9 @@
 		Columns selector that defines the columns to include in the column visibility button set. By default this is `-type undefined` which results in all columns being selected, but any of the `-type column-selector` options can be used to define a custom button set.
 	</option>
 
+	<option type="function" name="label" default="undefined">
+        Callback function to compute the label displayed for each column button.
+	</option>
 
 	<example title="DataTables initialisation: Show the `colvis` button with default options"><![CDATA[
 
