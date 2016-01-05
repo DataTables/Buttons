@@ -151,6 +151,7 @@ ZeroClipboard_TableTools.Client.prototype = {
 	cssEffects: true, // enable CSS mouse effects on dom container
 	handlers: null, // user event handlers
 	sized: false,
+	sheetName: '', // default sheet name for excel export
 
 	glue: function(elem, title) {
 		// glue to DOM element
@@ -303,6 +304,14 @@ ZeroClipboard_TableTools.Client.prototype = {
 		this.fileName = newText;
 		if (this.ready) {
 			this.movie.setFileName(newText);
+		}
+	},
+
+	setSheetName: function(newText) {
+		// set sheet name, for excel
+		this.sheetName = newText;
+		if (this.ready) {
+			this.movie.setSheetName(newText);
 		}
 	},
 
@@ -503,6 +512,23 @@ var _filename = function ( config, incExtension )
 		filename+config.extension :
 		filename;
 };
+
+/**
+ * Get the sheet name for Excel exports.
+ *
+ * @param {object}  config       Button configuration
+ */
+var _sheetname = function ( config )
+{
+
+	var sheetName = 'Sheet1';
+
+	if (typeof config.sheetName !== 'undefined' && config.sheetName) {
+		sheetName = config.sheetName.replace(/[\[\]\*\/\\\?\:]/g, '');
+	}
+
+	return sheetName;	
+}
 
 /**
  * Get the title for an exported file.
@@ -780,7 +806,9 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 
 		flash.setAction( 'excel' );
 		flash.setFileName( _filename( config ) );
+		flash.setSheetName( _sheetname( config ) );
 		_setText( flash, xml );
+		
 	},
 
 	extension: '.xlsx'

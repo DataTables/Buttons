@@ -302,6 +302,22 @@ var _filename = function ( config, incExtension )
 };
 
 /**
+ * Get the sheet name for Excel exports.
+ *
+ * @param {object}  config       Button configuration
+ */
+var _sheetname = function ( config )
+{
+	var sheetName = 'Sheet1';
+
+	if (typeof config.sheetName !== 'undefined' && config.sheetName) {
+		sheetName = config.sheetName.replace(/[\[\]\*\/\\\?\:]/g, '');
+	}
+
+	return sheetName;	
+}
+
+/**
  * Get the title for an exported file.
  *
  * @param {object}  config  Button configuration
@@ -424,7 +440,7 @@ var excelStrings = {
 		<workbookView xWindow="0" yWindow="0" windowWidth="25600" windowHeight="19020" tabRatio="500"/>\
 	</bookViews>\
 	<sheets>\
-		<sheet name="Sheet1" sheetId="1" r:id="rId1"/>\
+		<sheet name="__SHEET_NAME__" sheetId="1" r:id="rId1"/>\
 	</sheets>\
 </workbook>',
 
@@ -660,7 +676,7 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		zip.file(           '[Content_Types].xml', excelStrings['[Content_Types].xml'] );
 		_rels.file(         '.rels',               excelStrings['_rels/.rels'] );
-		xl.file(            'workbook.xml',        excelStrings['xl/workbook.xml'] );
+		xl.file(            'workbook.xml',        excelStrings['xl/workbook.xml'].replace( '__SHEET_NAME__', _sheetname( config ) ) );
 		xl_rels.file(       'workbook.xml.rels',   excelStrings['xl/_rels/workbook.xml.rels'] );
 		xl_worksheets.file( 'sheet1.xml',          excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', xml ) );
 
