@@ -310,12 +310,12 @@ var _sheetname = function ( config )
 {
 	var sheetName = 'Sheet1';
 
-	if (typeof config.sheetName !== 'undefined' && config.sheetName) {
+	if ( config.sheetName ) {
 		sheetName = config.sheetName.replace(/[\[\]\*\/\\\?\:]/g, '');
 	}
 
 	return sheetName;	
-}
+};
 
 /**
  * Get the title for an exported file.
