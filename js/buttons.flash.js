@@ -774,7 +774,7 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 					row[i] = '';
 				}
 
-				cells.push( typeof row[i] === 'number' || (row[i].match && row[i].match(/^-?[0-9\.]+$/) && row[i].charAt(0) !== '0') ?
+				cells.push( typeof row[i] === 'number' || (row[i].match && $.trim(row[i]).match(/^-?\d+(\.\d+)?$/) && row[i].charAt(0) !== '0') ?
 					'<c t="n"><v>'+row[i]+'</v></c>' :
 					'<c t="inlineStr"><is><t>'+(
 						! row[i].replace ?
