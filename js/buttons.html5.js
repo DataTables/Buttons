@@ -1272,6 +1272,9 @@ DataTable.ext.buttons.pdfHtml5 = {
 				{
 					table: {
 						headerRows: 1,
+						widths: $.map( data.header, function ( d ) {
+							return '*';
+						}),
 						body: rows
 					},
 					layout: 'noBorders'
