@@ -501,6 +501,10 @@ var _filename = function ( config, incExtension )
 		config.title :
 		config.filename;
 
+	if ( typeof filename === 'function' ) {
+		filename = filename();
+	}
+
 	if ( filename.indexOf( '*' ) !== -1 ) {
 		filename = filename.replace( '*', $('title').text() );
 	}
@@ -537,6 +541,10 @@ var _sheetname = function ( config )
 var _title = function ( config )
 {
 	var title = config.title;
+
+	if ( typeof title === 'function' ) {
+		title = title();
+	}
 
 	return title.indexOf( '*' ) !== -1 ?
 		title.replace( '*', $('title').text() ) :
