@@ -56,7 +56,7 @@
 		Indicate if the table footer should be included in the exported data or not.
 	</option>
 
-	<option type="string" name="title" default="*">
+	<option type="string|function" name="filename" default="*">
 		File name to give the created file (plus the extension defined by the `extension` option). The special character `*` is automatically replaced with the value read from the host document's `-tag title` tag.
 	</option>
 
