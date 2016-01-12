@@ -619,7 +619,7 @@ $.extend( Buttons.prototype, {
 
 		var buttonContainer = this.c.dom.buttonContainer;
 		var inserter;
-		if ( buttonContainer ) {
+		if ( buttonContainer && buttonContainer.tag ) {
 			inserter = $('<'+buttonContainer.tag+'/>')
 				.addClass( buttonContainer.className )
 				.append( button );

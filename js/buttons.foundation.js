@@ -55,10 +55,13 @@ $.extend( true, DataTable.Buttons.defaults, {
 		},
 		collection: {
 			tag: 'ul',
-			className: 'dt-button-collection f-dropdown open',
+			className: 'dt-button-collection f-dropdown open dropdown-pane is-open',
 			button: {
-				tag: 'a',
+				tag: 'li',
 				className: 'small'
+			},
+			buttonLiner: {
+				tag: 'a'
 			}
 		}
 	}

@@ -2,13 +2,13 @@
 <dt-example table-type="html" order="1" framework="bootstrap">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print buttons-colvis">
 <![CDATA[
 
 $(document).ready(function() {
 	var table = $('#example').DataTable( {
 		lengthChange: false,
-		buttons: true
+		buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
 	} );
 
 	table.buttons().container()
