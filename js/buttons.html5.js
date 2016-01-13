@@ -656,8 +656,8 @@ DataTable.ext.buttons.excelHtml5 = {
 								.replace(/&(?!amp;)/g, '&amp;')
 								.replace(/</g, '&lt;')
 								.replace(/>/g, '&gt;')
-								.replace(/[\x00-\x1F\x7F-\x9F]/g, ''))+ // remove control characters
-					'</t></is></c>'                                    // they are not valid in XML
+								.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, ''))+ // remove control characters
+					'</t></is></c>'                                                      // they are not valid in XML
 				);
 			}
 
