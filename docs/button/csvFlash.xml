@@ -68,6 +68,12 @@
 		Character to use as the escape character for CSV data. This will be prefixed to any data found in the fields which matches that set by the `fieldBoundary` option. It is a configurable option as different applications can require different options - however the default matches [RFC4180](https://tools.ietf.org/html/rfc4180).
 	</option>
 
+	<option type="function" name="customize" default="undefined" since="1.1.1">
+		Function that can be used to modify the contents of the exported data. The function takes two parameters, the data as configured by the button and the button's configuration object. The value that the function returns is the value that will be used for the export.
+
+		This can be particularly useful if you wish to add a company header or footer, description data or any other information to the exported data.
+	</option>
+
 
 	<example title="DataTables initialisation: Use the Flash CSV button"><![CDATA[
 

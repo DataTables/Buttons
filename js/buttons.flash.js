@@ -721,9 +721,12 @@ DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 
 		var flash = config._flash;
 		var data = _exportData( dt, config );
+		var output = config.customize ?
+			config.customize( data.str, config ) :
+			data.str;
 
 		flash.setAction( 'copy' );
-		_setText( flash, data.str ); 
+		_setText( flash, output ); 
 
 		dt.buttons.info(
 			dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ),
@@ -752,10 +755,13 @@ DataTable.ext.buttons.csvFlash = $.extend( {}, flashButton, {
 		// Set the text
 		var flash = config._flash;
 		var data = _exportData( dt, config );
+		var output = config.customize ?
+			config.customize( data.str, config ) :
+			data.str;
 
 		flash.setAction( 'csv' );
 		flash.setFileName( _filename( config ) );
-		_setText( flash, data.str );
+		_setText( flash, output );
 	},
 
 	escapeChar: '"'

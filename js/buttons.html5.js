@@ -488,6 +488,11 @@ DataTable.ext.buttons.copyHtml5 = {
 				top: 0,
 				left: 0
 			} );
+
+		if ( config.customize ) {
+			output = config.customize( output, config );
+		}
+
 		var textarea = $('<textarea readonly/>')
 			.val( output )
 			.appendTo( hiddenDiv );
@@ -580,6 +585,10 @@ DataTable.ext.buttons.csvHtml5 = {
 		var newLine = _newLine( config );
 		var output = _exportData( dt, config ).str;
 		var charset = config.charset;
+
+		if ( config.customize ) {
+			output = config.customize( output, config );
+		}
 
 		if ( charset !== false ) {
 			if ( ! charset ) {
@@ -809,7 +818,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 		}
 
 		if ( config.customize ) {
-			config.customize( doc );
+			config.customize( doc, config );
 		}
 
 		var pdf = window.pdfMake.createPdf( doc );

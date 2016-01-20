@@ -74,6 +74,12 @@
 		Indicate if the table footer should be included in the exported data or not.
 	</option>
 
+	<option type="function" name="customize" default="undefined" since="1.1.1">
+		Function that can be used to modify the contents of the exported data. The function takes two parameters, the data as configured by the button and the button's configuration object. The value that the function returns is the value that will be used for the export.
+
+		This can be particularly useful if you wish to add a company header or footer, description data or any other information to the exported data.
+	</option>
+
 
 	<example title="DataTables initialisation: Use the Flash copy button"><![CDATA[
 
