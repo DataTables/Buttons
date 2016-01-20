@@ -51,3 +51,20 @@ div.dt-button-background {
 		}
 	}
 }
+
+
+// Foundation 6
+div.button-group.stacked.dropdown-pane {
+	margin-top: 2px;
+	padding: 1px;
+	z-index: 89;
+
+	a.button {
+		margin-bottom: 1px;
+		border-right: none;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
