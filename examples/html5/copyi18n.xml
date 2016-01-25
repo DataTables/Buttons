@@ -13,8 +13,8 @@ $(document).ready(function() {
 		],
 		language: {
 			buttons: {
-				copyTitle: 'Copier au clipboard',
-				copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données de table à votre presse-papiers du système. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.'
+				copyTitle: 'Ajouté au presse-papiers',
+				copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.'
 			}
 		}
 	} );
