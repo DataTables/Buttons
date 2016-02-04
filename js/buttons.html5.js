@@ -499,7 +499,7 @@ DataTable.ext.buttons.copyHtml5 = {
 
 		// For browsers that support the copy execCommand, try to use it
 		if ( document.queryCommandSupported('copy') ) {
-			hiddenDiv.appendTo( 'body' );
+			hiddenDiv.appendTo( dt.table().container() );
 			textarea[0].focus();
 			textarea[0].select();
 
