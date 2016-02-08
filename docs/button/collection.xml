@@ -55,6 +55,10 @@
 		These options can be used with the default DataTables styling, Bootstrap, Foundation and jQuery UI.
 	</option>
 
+	<option type="integer" name="autoClose" default="false" since="1.1.2">
+		Automatically close the collection when a button inside the collection is activated.
+	</option>
+
 	<option type="integer" name="fade" default="400">
 		Animation speed that the collection is faded in and out of the display. This is an integer value that represents the animation duration in milliseconds. For no animation use the value `0`.
 	</option>

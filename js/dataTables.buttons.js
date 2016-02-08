@@ -1,4 +1,4 @@
-/*! Buttons for DataTables 1.1.1
+/*! Buttons for DataTables 1.1.2-dev
  * ©2015 SpryMedia Ltd - datatables.net/license
  */
 
@@ -100,6 +100,7 @@ $.extend( Buttons.prototype, {
 	action: function ( idx, action )
 	{
 		var button = this._indexToButton( idx ).conf;
+		var dt = this.s.dt;
 
 		if ( action === undefined ) {
 			return button.action;
@@ -569,6 +570,14 @@ $.extend( Buttons.prototype, {
 			return false;
 		}
 
+		var action = function ( e, dt, button, config ) {
+			config.action.call( dt.button( button ), e, dt, button, config );
+
+			$(dt.table().node()).triggerHandler( 'buttons-action.dt', [
+				dt.button( button ), dt, button, config 
+			] );
+		};
+
 		var button = $('<'+buttonDom.tag+'/>')
 			.addClass( buttonDom.className )
 			.attr( 'tabindex', this.s.dt.settings()[0].iTabIndex )
@@ -577,7 +586,7 @@ $.extend( Buttons.prototype, {
 				e.preventDefault();
 
 				if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
-					config.action.call( dt.button( button ), e, dt, button, config );
+					action( e, dt, button, config );
 				}
 
 				button.blur();
@@ -585,7 +594,7 @@ $.extend( Buttons.prototype, {
 			.on( 'keyup.dtb', function (e) {
 				if ( e.keyCode === 13 ) {
 					if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
-						config.action.call( dt.button( button ), e, dt, button, config );
+						action( e, dt, button, config );
 					}
 				}
 			} );
@@ -1105,7 +1114,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '1.1.1';
+Buttons.version = '1.1.2-dev';
 
 
 $.extend( _dtButtons, {
@@ -1187,13 +1196,21 @@ $.extend( _dtButtons, {
 						Buttons.background( false, config.backgroundClassName, config.fade );
 
 						$('body').off( 'click.dtb-collection' );
+						dt.off( 'buttons-action.b-internal' );
 					}
 				} );
 			}, 10 );
+
+			if ( config.autoClose ) {
+				dt.on( 'buttons-action.b-internal', function () {
+					$('div.dt-button-background').click();
+				} );
+			}
 		},
 		background: true,
 		collectionLayout: '',
 		backgroundClassName: 'dt-button-background',
+		autoClose: false,
 		fade: 400
 	},
 	copy: function ( dt, conf ) {
@@ -1246,12 +1263,12 @@ $.extend( _dtButtons, {
 			extend: 'collection',
 			text: text,
 			className: 'buttons-page-length',
+			autoClose: true,
 			buttons: $.map( vals, function ( val, i ) {
 				return {
 					text: lang[i],
 					action: function ( e, dt, button, conf ) {
 						dt.page.len( val ).draw();
-						$('div.dt-button-background').click();
 					},
 					init: function ( dt, node, conf ) {
 						var that = this;
