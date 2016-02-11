@@ -1,6 +1,5 @@
 {
 	"name": "datatables-buttons",
-	"version": "1.1.0",
 	"license": "MIT",
 	"main": [
 		"js/dataTables.buttons.js",
