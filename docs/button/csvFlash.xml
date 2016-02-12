@@ -48,6 +48,10 @@
 		Select the data to be gathered from the DataTable for export. This includes options for which columns, rows, ordering and search. Please see the `b-api buttons.exportData()` method for full details - the object given by this parameter is passed directly into that action to gather the required data.
 	</option>
 
+	<option type="string" name="newline" default="\n">
+		The character(s) used to separate the lines of data. Please note that on Windows client's the default is `\r\n`. All other platforms have a default or `\n` only.
+	</option>
+
 	<option type="boolean" name="header" default="true">
 		Indicate if the table header should be included in the exported data or not.
 	</option>
