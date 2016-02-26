@@ -79,7 +79,7 @@
 	</option>
 
 	<option type="function" name="customize" default="null">
-		A function that can be used to customise the PDFMake document definition object. The document object is passed in as the first parameter to this function and should be manipulates as required. The second parameter passed in is the button's configuration object. A return value from the `customize` function is not expected or used.
+		A function that can be used to customise the PDFMake document definition object. The document object is passed in as the first parameter to this function and should be manipulated as required. The second parameter passed in is the button's configuration object. A return value from the `customize` function is not expected or used.
 
 		Please refer to the [PDFMake documentation](http://pdfmake.org/#/gettingstarted) for information on how to manipulate this object and the options available for the generated PDF.
 	</option>
