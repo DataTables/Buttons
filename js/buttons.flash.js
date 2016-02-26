@@ -847,7 +847,7 @@ DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
 		} );
 
 		flash.setAction( 'pdf' );
-		flash.setFileName( _title( config ) );
+		flash.setFileName( _filename( config ) );
 
 		_setText( flash, JSON.stringify( {
 			title:       _filename(config, false),

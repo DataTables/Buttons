@@ -11,11 +11,11 @@ $(document).ready(function() {
 		buttons: [
 			{
 				extend: 'excelFlash',
-				title: 'Data export'
+				filename: 'Data export'
 			},
 			{
 				extend: 'pdfFlash',
-				title: 'Data export'
+				filename: 'Data export'
 			}
 		]
 	} );
@@ -28,9 +28,9 @@ $(document).ready(function() {
 
 <info><![CDATA[
 
-By default the name of the file created by the  `b-button excelFlash`, `b-button csvFlash` and `b-button pdfFlash` button types will automatically be taken from the document's `-tag title` element. It is also possible to set the file name to a specific value using the `title` option of these three button types.
+By default the name of the file created by the  `b-button excelFlash`, `b-button csvFlash` and `b-button pdfFlash` button types will automatically be taken from the document's `-tag title` element. It is also possible to set the file name to a specific value using the `filename` option of these three button types.
 
-This example shows the `title` option being set for the `b-button excelFlash` and `b-button pdfFlash` buttons.
+This example shows the `filename` option being set for the `b-button excelFlash` and `b-button pdfFlash` buttons.
 
 ]]></info>
 
