@@ -75,7 +75,12 @@ DataTable.ext.buttons.print = {
 	},
 
 	action: function ( e, dt, button, config ) {
-		var data = dt.buttons.exportData( config.exportOptions );
+		var data = dt.buttons.exportData( config.exportOptions );		
+
+		if ( config.customizeData ) {
+			data = config.customizeData( data, button, config );
+		}
+		
 		var addRow = function ( d, tag ) {
 			var str = '<tr>';
 
