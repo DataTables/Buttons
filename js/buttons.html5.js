@@ -735,7 +735,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 		var rows = [];
 
 		if ( config.customizeData ){
-			data = config.customizeData( data, button, config );
+			data = config.customizeData( data, config, button );
 		}
 
 		if ( config.header ) {
