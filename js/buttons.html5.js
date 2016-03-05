@@ -588,7 +588,7 @@ DataTable.ext.buttons.csvHtml5 = {
 		var charset = config.charset;
 
 		if ( config.customize ) {
-			output = config.customize( output, config, exportdata );
+			output = config.customize( output, config, exportData );
 		}
 
 		if ( charset !== false ) {
