@@ -647,6 +647,11 @@ DataTable.ext.buttons.excelHtml5 = {
 		// Set the text
 		var xml = '';
 		var data = dt.buttons.exportData( config.exportOptions );
+
+		if ( config.customizeData ){
+			data = config.customizeData( data, config, button );
+		}
+
 		var addRow = function ( row ) {
 			var cells = [];
 
