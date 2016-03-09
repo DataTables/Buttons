@@ -722,7 +722,7 @@ DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 		var flash = config._flash;
 		var data = _exportData( dt, config );
 		var output = config.customize ?
-			config.customize( data.str, config ) :
+			config.customize( data.str, config, data ) :
 			data.str;
 
 		flash.setAction( 'copy' );
@@ -756,7 +756,7 @@ DataTable.ext.buttons.csvFlash = $.extend( {}, flashButton, {
 		var flash = config._flash;
 		var data = _exportData( dt, config );
 		var output = config.customize ?
-			config.customize( data.str, config ) :
+			config.customize( data.str, config, data ) :
 			data.str;
 
 		flash.setAction( 'csv' );
@@ -780,6 +780,11 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 		var xml = '';
 		var flash = config._flash;
 		var data = dt.buttons.exportData( config.exportOptions );
+
+		if ( config.customizeData ){
+			data = config.customizeData( data, config, button );
+		}
+
 		var addRow = function ( row ) {
 			var cells = [];
 
@@ -839,6 +844,11 @@ DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
 		// Set the text
 		var flash = config._flash;
 		var data = dt.buttons.exportData( config.exportOptions );
+
+		if ( config.customizeData ){
+			data = config.customizeData( data, config, button );
+		}
+
 		var totalWidth = dt.table().node().offsetWidth;
 
 		// Calculate the column width ratios for layout of the table in the PDF
