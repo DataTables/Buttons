@@ -1156,12 +1156,24 @@ $.extend( _dtButtons, {
 					left: hostOffset.left
 				} );
 
+				var tableBottom = tableContainer.offset().top + tableContainer.height();
+
+				var listBottom = hostOffset.top + host.outerHeight() + config._collection.outerHeight();
+				var listTop = hostOffset.top - config._collection.outerHeight();
+				var tableTop = tableContainer.offset().top;
+
+				var bottomOverflow = listBottom - tableBottom;
+				var topOverflow = tableTop - listTop;
+
+				if (bottomOverflow > topOverflow) {
+					config._collection.css( 'top', hostOffset.top - config._collection.outerHeight() - 5);
+				}
+
 				var listRight = hostOffset.left + config._collection.outerWidth();
 				var tableRight = tableContainer.offset().left + tableContainer.width();
 				if ( listRight > tableRight ) {
 					config._collection.css( 'left', hostOffset.left - ( listRight - tableRight ) );
-				}
-			}
+				}			}
 			else {
 				// Fix position - centre on screen
 				var top = config._collection.height() / 2;
