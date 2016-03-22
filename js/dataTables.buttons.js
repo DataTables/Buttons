@@ -599,6 +599,11 @@ $.extend( Buttons.prototype, {
 				}
 			} );
 
+		// Make `a` tags act like a link
+		if ( buttonDom.tag.toLowerCase() === 'a' ) {
+			button.attr( 'href', '#' );
+		}
+
 		if ( linerDom.tag ) {
 			button.append(
 				$('<'+linerDom.tag+'/>')
