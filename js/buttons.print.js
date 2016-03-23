@@ -126,14 +126,19 @@ DataTable.ext.buttons.print = {
 			head += _relToAbs( this );
 		} );
 
-		$(win.document.head).html( head );
+		//$(win.document.head).html( head );
+		win.document.head.innerHTML = head; // Work around for Edge
 
 		// Inject the table and other surrounding information
-		$(win.document.body).html(
+		win.document.body.innerHTML =
 			'<h1>'+title+'</h1>'+
 			'<div>'+config.message+'</div>'+
-			html
-		);
+			html;
+		// $(win.document.body).html(
+		// 	'<h1>'+title+'</h1>'+
+		// 	'<div>'+config.message+'</div>'+
+		// 	html
+		// );
 
 		if ( config.customize ) {
 			config.customize( win );
