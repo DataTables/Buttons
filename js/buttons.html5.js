@@ -454,6 +454,9 @@ var excelStrings = {
 
 	"xl/worksheets/sheet1.xml": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
 <worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">\
+	<cols>\
+		__COLWIDTH__\
+	</cols>\
 	<sheetData>\
 		__DATA__\
 	</sheetData>\
@@ -673,6 +676,12 @@ DataTable.ext.buttons.excelHtml5 = {
 			return '<row>'+cells.join('')+'</row>';
 		};
 
+		var colWidthsXml = '';
+		for ( var i=0; i<=data.header.length ; i++ ) {
+			var j = i + 1;
+			colWidthsXml += '<col min="' + j + '" max="' + j + '" width="25" customWidth="1"/>';
+		}
+
 		if ( config.header ) {
 			xml += addRow( data.header );
 		}
@@ -695,7 +704,7 @@ DataTable.ext.buttons.excelHtml5 = {
 		_rels.file(         '.rels',               excelStrings['_rels/.rels'] );
 		xl.file(            'workbook.xml',        excelStrings['xl/workbook.xml'].replace( '__SHEET_NAME__', _sheetname( config ) ) );
 		xl_rels.file(       'workbook.xml.rels',   excelStrings['xl/_rels/workbook.xml.rels'] );
-		xl_worksheets.file( 'sheet1.xml',          excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', xml ) );
+		xl_worksheets.file( 'sheet1.xml',          excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', xml ).replace( '__COLWIDTH__', colWidthsXml ) );
 
 		_saveAs(
 			zip.generate( {type:"blob", mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'} ),
