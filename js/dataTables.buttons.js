@@ -1544,7 +1544,7 @@ var _exportData = function ( dt, inOpts )
 		}
 
 		if ( config.stripHtml ) {
-			str = str.replace( /<.*?>/g, '' );
+			str = str.replace( /<[^>]*>/g, '' );
 		}
 
 		if ( config.trim ) {
