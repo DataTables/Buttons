@@ -605,11 +605,15 @@ $.extend( Buttons.prototype, {
 		}
 
 		if ( linerDom.tag ) {
-			button.append(
-				$('<'+linerDom.tag+'/>')
-					.html( text( config.text ) )
-					.addClass( linerDom.className )
-			);
+			var liner = $('<'+linerDom.tag+'/>')
+				.html( text( config.text ) )
+				.addClass( linerDom.className );
+
+			if ( linerDom.tag.toLowerCase() === 'a' ) {
+				liner.attr( 'href', '#' );
+			}
+
+			button.append( liner );
 		}
 		else {
 			button.html( text( config.text ) );
