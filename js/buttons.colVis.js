@@ -182,8 +182,10 @@ $.extend( DataTable.ext.buttons, {
 		className: 'buttons-colvisGroup',
 
 		action: function ( e, dt, button, conf ) {
-			dt.columns( conf.show ).visible( true );
-			dt.columns( conf.hide ).visible( false );
+			dt.columns( conf.show ).visible( true, false );
+			dt.columns( conf.hide ).visible( false, false );
+
+			dt.columns.adjust();
 		},
 
 		show: [],
