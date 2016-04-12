@@ -318,7 +318,7 @@ var _sheetname = function ( config )
 		sheetName = config.sheetName.replace(/[\[\]\*\/\\\?\:]/g, '');
 	}
 
-	return sheetName;	
+return sheetName;
 };
 
 /**
@@ -408,7 +408,7 @@ var _exportData = function ( dt, config )
  * Safari's data: support for creating and downloading files is really poor, so
  * various options need to be disabled in it. See
  * https://bugs.webkit.org/show_bug.cgi?id=102914
- * 
+ *
  * @return {Boolean} `true` if Safari
  */
 var _isSafari = function ()
@@ -644,33 +644,58 @@ DataTable.ext.buttons.excelHtml5 = {
 
 	action: function ( e, dt, button, config ) {
 		// Set the text
-		var xml = '';
+		var rels = $.parseXML( excelStrings['xl/worksheets/sheet1.xml'] ) ; //Parses xml file
 		var data = dt.buttons.exportData( config.exportOptions );
+
 		var addRow = function ( row ) {
-			var cells = [];
+			//Create a row element
+			var rowEle = rels.createElement( "row" );
+			rels.getElementsByTagName( "sheetData" )[0].appendChild( rowEle );
 
 			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
 				if ( row[i] === null || row[i] === undefined ) {
 					row[i] = '';
 				}
-
 				// Don't match numbers with leading zeros or a negative anywhere
 				// but the start
-				cells.push( typeof row[i] === 'number' || (row[i].match && $.trim(row[i]).match(/^-?\d+(\.\d+)?$/) && row[i].charAt(0) !== '0') ?
-					'<c t="n"><v>'+row[i]+'</v></c>' :
-					'<c t="inlineStr"><is><t>'+(
-						! row[i].replace ?
-							row[i] :
-							row[i]
-								.replace(/&(?!amp;)/g, '&amp;')
-								.replace(/</g, '&lt;')
-								.replace(/>/g, '&gt;')
-								.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, ''))+ // remove control characters
-					'</t></is></c>'                                                      // they are not valid in XML
-				);
+				if( typeof row[i] === 'number' || (row[i].match && $.trim(row[i]).match(/^-?\d+(\.\d+)?$/) && row[i].charAt(0) !== '0') ){
+
+			    var ele = rels.createElement( "c" );
+					ele.setAttribute( "t","n" );
+			    var newEle = rels.createElement( "v" );
+					var newText = rels.createTextNode( row[i]) ;
+			    ele.appendChild( newEle );
+			    newEle.appendChild( newText );
+			    rowEle.appendChild( ele );
+
+				}else{
+
+			    ele = rels.createElement( "c" );
+					ele.setAttribute( "t","inlineStr" )
+			    var is = rels.createElement( "is" )
+			    newEle = rels.createElement( "t" )
+					newText = rels.createTextNode(
+			      ! row[i].replace ?
+			        row[i] :
+			        row[i]
+			          .replace(/&(?!amp;)/g, '&amp;')
+			          .replace(/</g, '&lt;')
+			          .replace(/>/g, '&gt;')
+			          .replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '') //Replace non standard characters
+			    );
+			    ele.appendChild( is );
+			    is.appendChild( newEle );
+			    newEle.appendChild( newText );
+			    rowEle.appendChild( ele );
+				}
+
+
+
+
+
 			}
 
-			return '<row>'+cells.join('')+'</row>';
+
 		};
 
 		if ( config.customizeData ) {
@@ -678,16 +703,17 @@ DataTable.ext.buttons.excelHtml5 = {
 		}
 
 		if ( config.header ) {
-			xml += addRow( data.header );
+			addRow( data.header );
 		}
 
 		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-			xml += addRow( data.body[i] );
+			addRow( data.body[i] );
 		}
 
 		if ( config.footer ) {
-			xml += addRow( data.footer );
+			addRow( data.footer );
 		}
+
 
 		var zip           = new window.JSZip();
 		var _rels         = zip.folder("_rels");
@@ -695,11 +721,16 @@ DataTable.ext.buttons.excelHtml5 = {
 		var xl_rels       = zip.folder("xl/_rels");
 		var xl_worksheets = zip.folder("xl/worksheets");
 
+		//Parse the xml document into string form
+		var oSerializer = new XMLSerializer();
+		var sXML = oSerializer.serializeToString( rels );
+
+
 		zip.file(           '[Content_Types].xml', excelStrings['[Content_Types].xml'] );
 		_rels.file(         '.rels',               excelStrings['_rels/.rels'] );
 		xl.file(            'workbook.xml',        excelStrings['xl/workbook.xml'].replace( '__SHEET_NAME__', _sheetname( config ) ) );
 		xl_rels.file(       'workbook.xml.rels',   excelStrings['xl/_rels/workbook.xml.rels'] );
-		xl_worksheets.file( 'sheet1.xml',          excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', xml ) );
+		xl_worksheets.file( 'sheet1.xml',          sXML );
 
 		_saveAs(
 			zip.generate( {type:"blob", mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'} ),
