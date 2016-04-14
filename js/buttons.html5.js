@@ -426,19 +426,15 @@ var excelStrings = {
 	<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>\
 </Relationships>',
 
-	"xl/_rels/workbook.xml.rels": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">\
+	"xl/_rels/workbook.xml.rels": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">\
 	<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>\
-</Relationships>',
+	<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>',
 
-	"[Content_Types].xml": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
-<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">\
-	<Default Extension="xml" ContentType="application/xml"/>\
-	<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>\
-	<Default Extension="jpeg" ContentType="image/jpeg"/>\
-	<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>\
-	<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>\
-</Types>',
+	"[Content_Types].xml": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">\
+		<Default Extension="xml" ContentType="application/xml"/>	<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>\
+		<Default Extension="jpeg" ContentType="image/jpeg"/>	<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>	\
+		<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>\
+		<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>',
 
 	"xl/workbook.xml": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
 <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">\
@@ -457,8 +453,11 @@ var excelStrings = {
 	<sheetData>\
 		__DATA__\
 	</sheetData>\
-</worksheet>'
-};
+</worksheet>',
+
+	 "xl/styles.xml": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
+	 <styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="General"/></numFmts><fonts count="5"><font><sz val="10"/><name val="Arial"/><family val="2"/></font><font><sz val="10"/><name val="Arial"/><family val="0"/></font><font><sz val="10"/><name val="Arial"/><family val="0"/></font><font><sz val="10"/><name val="Arial"/><family val="0"/></font><font><b val="true"/><sz val="10"/><name val="Arial"/><family val="2"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border diagonalUp="false" diagonalDown="false"><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="20"><xf numFmtId="164" fontId="0" fillId="0" borderId="0" applyFont="true" applyBorder="true" applyAlignment="true" applyProtection="true"><alignment horizontal="general" vertical="bottom" textRotation="0" wrapText="false" indent="0" shrinkToFit="false"/><protection locked="true" hidden="false"/></xf><xf numFmtId="0" fontId="1" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="1" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="2" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="43" fontId="1" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="41" fontId="1" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="44" fontId="1" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="42" fontId="1" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf><xf numFmtId="9" fontId="1" fillId="0" borderId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"></xf></cellStyleXfs><cellXfs count="2"><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyFont="false" applyBorder="false" applyAlignment="false" applyProtection="false"><alignment horizontal="general" vertical="bottom" textRotation="0" wrapText="false" indent="0" shrinkToFit="false"/><protection locked="true" hidden="false"/></xf><xf numFmtId="164" fontId="4" fillId="0" borderId="0" xfId="0" applyFont="true" applyBorder="false" applyAlignment="false" applyProtection="false"><alignment horizontal="general" vertical="bottom" textRotation="0" wrapText="false" indent="0" shrinkToFit="false"/><protection locked="true" hidden="false"/></xf></cellXfs><cellStyles count="6"><cellStyle name="Normal" xfId="0" builtinId="0" customBuiltin="false"/><cellStyle name="Comma" xfId="15" builtinId="3" customBuiltin="false"/><cellStyle name="Comma [0]" xfId="16" builtinId="6" customBuiltin="false"/><cellStyle name="Currency" xfId="17" builtinId="4" customBuiltin="false"/><cellStyle name="Currency [0]" xfId="18" builtinId="7" customBuiltin="false"/><cellStyle name="Percent" xfId="19" builtinId="5" customBuiltin="false"/></cellStyles></styleSheet>'
+ };
 
 
 
@@ -643,27 +642,62 @@ DataTable.ext.buttons.excelHtml5 = {
 	},
 
 	action: function ( e, dt, button, config ) {
-		// Set the text
+
 		var rels = $.parseXML( excelStrings['xl/worksheets/sheet1.xml'] ) ; //Parses xml file
 		var data = dt.buttons.exportData( config.exportOptions );
+		var currentRow;
 
 		var addRow = function ( row ) {
+
 			//Create a row element
 			var rowEle = rels.createElement( "row" );
 			rels.getElementsByTagName( "sheetData" )[0].appendChild( rowEle );
+
+			if(arguments[1] !== undefined){  //Make sure that we are passing in a row value, we dont when adding a header row
+				currentRow = arguments[1]+1;
+				rowEle.setAttribute("r",currentRow);  //add r attribute that references the row index
+			}
+
+			//Returns the correct column for the cell as a letter. ie s = A for the first column or s = AA for the 27th etc
+			function createCellPos( n ){
+
+				var ordA = 'A'.charCodeAt(0);
+				var ordZ = 'Z'.charCodeAt(0);
+				var len = ordZ - ordA + 1;
+
+				var s = "";
+				while(n >= 0) {
+						s = String.fromCharCode(n % len + ordA) + s;
+						n = Math.floor(n / len) - 1;
+				}
+				return s;
+			}
+
+
+
+
+
+
 
 			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
 				if ( row[i] === null || row[i] === undefined ) {
 					row[i] = '';
 				}
+
+				var ele;
+				var newEle;
+				var newText;
+				var is;
+				var cellId = createCellPos(i)+""+currentRow; //Concat both the Cell Columns as a letter and the Row of the cell.
 				// Don't match numbers with leading zeros or a negative anywhere
 				// but the start
 				if( typeof row[i] === 'number' || (row[i].match && $.trim(row[i]).match(/^-?\d+(\.\d+)?$/) && row[i].charAt(0) !== '0') ){
 
-			    var ele = rels.createElement( "c" );
+			    ele = rels.createElement( "c" );
 					ele.setAttribute( "t","n" );
-			    var newEle = rels.createElement( "v" );
-					var newText = rels.createTextNode( row[i]) ;
+					ele.setAttribute( "r", cellId ); //Adds cellId attribute into sheet1.xml so the cells can be mapped properly inside spreadsheet applications
+			    newEle = rels.createElement( "v" );
+					newText = rels.createTextNode( row[i]) ;
 			    ele.appendChild( newEle );
 			    newEle.appendChild( newText );
 			    rowEle.appendChild( ele );
@@ -671,9 +705,10 @@ DataTable.ext.buttons.excelHtml5 = {
 				}else{
 
 			    ele = rels.createElement( "c" );
-					ele.setAttribute( "t","inlineStr" )
-			    var is = rels.createElement( "is" )
-			    newEle = rels.createElement( "t" )
+					ele.setAttribute( "t","inlineStr" );
+					ele.setAttribute( "r", cellId );
+			    is = rels.createElement( "is" );
+			    newEle = rels.createElement( "t" );
 					newText = rels.createTextNode(
 			      ! row[i].replace ?
 			        row[i] :
@@ -683,18 +718,14 @@ DataTable.ext.buttons.excelHtml5 = {
 			          .replace(/>/g, '&gt;')
 			          .replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '') //Replace non standard characters
 			    );
+
 			    ele.appendChild( is );
 			    is.appendChild( newEle );
 			    newEle.appendChild( newText );
 			    rowEle.appendChild( ele );
 				}
 
-
-
-
-
 			}
-
 
 		};
 
@@ -703,11 +734,20 @@ DataTable.ext.buttons.excelHtml5 = {
 		}
 
 		if ( config.header ) {
-			addRow( data.header );
+			addRow( data.header, 0 ); //Add header row
+
+			var head = rels.getElementsByTagName( "row" )[0];
+			var row = head.childNodes;
+
+			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
+				if( row[i].nodeName === "c" ){
+					row[i].setAttribute( "s","1" ); //Apply style with id of 1 to each of the cells on the row of the header
+				}
+			}
 		}
 
-		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-			addRow( data.body[i] );
+		for ( var n=0, ie=data.body.length ; n<ie ; n++ ) {
+			addRow( data.body[n], n+1 );
 		}
 
 		if ( config.footer ) {
@@ -721,14 +761,15 @@ DataTable.ext.buttons.excelHtml5 = {
 		var xl_rels       = zip.folder("xl/_rels");
 		var xl_worksheets = zip.folder("xl/worksheets");
 
+
 		//Parse the xml document into string form
 		var oSerializer = new XMLSerializer();
 		var sXML = oSerializer.serializeToString( rels );
 
-
 		zip.file(           '[Content_Types].xml', excelStrings['[Content_Types].xml'] );
 		_rels.file(         '.rels',               excelStrings['_rels/.rels'] );
 		xl.file(            'workbook.xml',        excelStrings['xl/workbook.xml'].replace( '__SHEET_NAME__', _sheetname( config ) ) );
+		xl.file(						'styles.xml',					 excelStrings['xl/styles.xml']);
 		xl_rels.file(       'workbook.xml.rels',   excelStrings['xl/_rels/workbook.xml.rels'] );
 		xl_worksheets.file( 'sheet1.xml',          sXML );
 
