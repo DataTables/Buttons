@@ -666,7 +666,6 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		var data = dt.buttons.exportData( config.exportOptions );
 		var currentRow;
-		console.log(rels);
 		var addRow = function ( row ) {
 
 			//Create a row element
