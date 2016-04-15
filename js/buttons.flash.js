@@ -788,18 +788,28 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 					row[i] = '';
 				}
 
-				cells.push( typeof row[i] === 'number' || (row[i].match && $.trim(row[i]).match(/^-?\d+(\.\d+)?$/) && row[i].charAt(0) !== '0') ?
-					'<c t="n"><v>'+row[i]+'</v></c>' :
-					'<c t="inlineStr"><is><t>'+(
-						! row[i].replace ?
-							row[i] :
-							row[i]
-								.replace(/&(?!amp;)/g, '&amp;')
-								.replace(/</g, '&lt;')
-								.replace(/>/g, '&gt;')
-								.replace(/[\x00-\x1F\x7F-\x9F]/g, ''))+ // remove control characters
-					'</t></is></c>'                                    // they are not valid in XML
-				);
+				// Detect numbers - don't match numbers with a leading zero and
+				// more digits following it but allow for floats <1.
+				if ( typeof row[i] === 'number' || (
+					row[i].match &&
+					$.trim(row[i]).match(/^-?\d+(\.\d+)?$/) &&
+					! $.trim(row[i]).match(/^0\d+/) )
+				) {
+					cells.push( '<c t="n"><v>'+row[i]+'</v></c>' );
+				}
+				else {
+					cells.push(
+						'<c t="inlineStr"><is><t>'+(
+							! row[i].replace ?
+								row[i] :
+								row[i]
+									.replace(/&(?!amp;)/g, '&amp;')
+									.replace(/</g, '&lt;')
+									.replace(/>/g, '&gt;')
+									.replace(/[\x00-\x1F\x7F-\x9F]/g, ''))+ // remove control characters
+						'</t></is></c>'                                     // they are not valid in XML
+					);
+				}
 			}
 
 			return '<row>'+cells.join('')+'</row>';

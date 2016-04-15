@@ -663,16 +663,9 @@ DataTable.ext.buttons.excelHtml5 = {
 		var contentTypes = $.parseXML( excelStrings['[Content_Types].xml']); //xml
 		var workbook_Rels = $.parseXML( excelStrings['xl/_rels/workbook.xml.rels']); //Parses xml
 		var _Rels = $.parseXML( excelStrings['_rels/.rels']); //Parses xml
-
-
-
-
-
-
 		var data = dt.buttons.exportData( config.exportOptions );
 		var currentRow;
-		console.log(rels);
-		console.log(xlsx);
+
 		var addRow = function ( row ) {
 
 			//Create a row element
@@ -781,26 +774,6 @@ DataTable.ext.buttons.excelHtml5 = {
 		var sContenttypes = oSerializer.serializeToString( contentTypes );
 		var sWorkbook_Rels = oSerializer.serializeToString( workbook_Rels );
 		var s_Rels = oSerializer.serializeToString( _Rels );
-
-		xlsx = {
-			_rels: {
-				".rels": rels
-			},
-			xl: {
-				_rels: {
-					"workbook.xml": workbook_Rels
-				},
-				"workbook.xml": workbook,
-				"styles.xml": styles,
-				"worksheets": {
-					"sheet1.xml": rels
-				}
-
-			},
-			"[Content_Types].xml": contentTypes
-		}
-
-		console.log(xlsx);
 
 		zip.file(           '[Content_Types].xml', sContenttypes );
 		_rels.file(         '.rels',               s_Rels );
