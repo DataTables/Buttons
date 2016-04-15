@@ -788,8 +788,8 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 					row[i] = '';
 				}
 
-				// Detect numbers - don't match numbers with a leading zero (and
-				// more digits following it)
+				// Detect numbers - don't match numbers with a leading zero and
+				// more digits following it but allow for floats <1.
 				if ( typeof row[i] === 'number' || (
 					row[i].match &&
 					$.trim(row[i]).match(/^-?\d+(\.\d+)?$/) &&
