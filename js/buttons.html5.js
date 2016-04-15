@@ -686,9 +686,13 @@ DataTable.ext.buttons.excelHtml5 = {
 				var is;
 				var cellId = createCellPos(i) + "" + currentRow; //Concat both the Cell Columns as a letter and the Row of the cell.
 
-				// Don't match numbers with leading zeros or a negative anywhere
-				// but the start
-				if( typeof row[i] === 'number' || (row[i].match && $.trim(row[i]).match(/^-?\d+(\.\d+)?$/) && row[i].charAt(0) !== '0') ){
+				// Detect numbers - don't match numbers with a leading zero and
+				// more digits following it but allow for floats <1.
+				if ( typeof row[i] === 'number' || (
+					row[i].match &&
+					$.trim(row[i]).match(/^-?\d+(\.\d+)?$/) &&
+					! $.trim(row[i]).match(/^0\d+/) )
+				) {
 				    ele = rels.createElement( "c" );
 						ele.setAttribute( "t","n" );
 						ele.setAttribute( "r", cellId ); //Adds cellId attribute into sheet1.xml so the cells can be mapped properly inside spreadsheet applications
