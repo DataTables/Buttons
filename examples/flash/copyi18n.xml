@@ -14,7 +14,7 @@ $(document).ready(function() {
 		language: {
 			buttons: {
 				copyTitle: 'Copier au clipboard',
-				copyInfo: {
+				copySuccess: {
 					_: 'Copiés %d rangs',
 					1: 'Copié 1 rang'
 				}

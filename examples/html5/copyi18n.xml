@@ -14,7 +14,11 @@ $(document).ready(function() {
 		language: {
 			buttons: {
 				copyTitle: 'Ajouté au presse-papiers',
-				copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.'
+				copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
+				copySuccess: {
+					_: 'Copiés %d rangs',
+					1: 'Copié 1 rang'
+				}
 			}
 		}
 	} );
@@ -27,9 +31,13 @@ $(document).ready(function() {
 
 <info><![CDATA[
 
-The `b-button copyHtml5` button type operates by showing a message to the end user inviting them to activate their operating system's copy (or cut) command. This work by copying text from a hidden text area that contains the exported data from the table and is required as there is no API in HTML5 that will allow copy to clipboard with a single click (use the `b-button copyFlash` Flash button if you require that ability).
+The `b-button copyHtml5` button type operates by immediately copying the content's of the DataTable to the user's clipboard via the `execCommand` method. For older browsers that don't support this ability, the table's data is copied to a hidden text area and the user is invited to use their system clipboard to copy the data (i.e. _ctrl/cmd + c_).
 
-The message shown to the end user can be customised using the `dt-init language` configuration option of DataTables. Specifically the `buttons.copyTitle` and `buttons.copyKey` options can be set.
+The messages shown to the end user can be customised using the `dt-init language` configuration option of DataTables. The following options are available:
+
+* `language.buttons.copyTitle` - the title text of the info box
+* `language.buttons.copySuccess` - message to display when the copy is complete
+* `language.buttons.copyKey` - instructions on how to copy to clipboard for older browsers.
 
 This example uses these parameters to set French language strings for the copy message (with apologies to our native language French speaking friends! This is Google translated text - if you have an better translation, please let me know!).
 
