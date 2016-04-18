@@ -431,6 +431,20 @@ function createCellPos( n ){
 	return s;
 }
 
+
+function _addToZip( zip, obj ) {
+	var oSerializer = new XMLSerializer();
+	$.each( obj, function (name, val) {
+		if ( $.isPlainObject( val ) ) {
+			var newDir = zip.folder( name );
+			_addToZip( newDir, val );
+		}
+		else {
+			zip.file( name, oSerializer.serializeToString(val) );
+		}
+	} );
+}
+
 // Excel - Pre-defined strings to build a minimal XLSX file
 var excelStrings = {
 	"_rels/.rels": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
@@ -658,16 +672,28 @@ DataTable.ext.buttons.excelHtml5 = {
 		var rowPos = 0;
 		var rels = $.parseXML( excelStrings['xl/worksheets/sheet1.xml'] ) ; //Parses xml
 		var relsGet = rels.getElementsByTagName( "sheetData" )[0];
-		var styles = $.parseXML( excelStrings['xl/styles.xml']); //Parses xml
-		var workbook = $.parseXML( excelStrings['xl/workbook.xml']); //Parses xml
-		var contentTypes = $.parseXML( excelStrings['[Content_Types].xml']); //xml
-		var workbook_Rels = $.parseXML( excelStrings['xl/_rels/workbook.xml.rels']); //Parses xml
-		var _Rels = $.parseXML( excelStrings['_rels/.rels']); //Parses xml
+
+		var xlsx = {
+			_rels: {
+				".rels": $.parseXML( excelStrings['_rels/.rels'])
+			},
+			xl: {
+				_rels: {
+					"workbook.xml.rels": $.parseXML( excelStrings['xl/_rels/workbook.xml.rels'])
+				},
+				"workbook.xml": $.parseXML( excelStrings['xl/workbook.xml'].replace( '__SHEET_NAME__', _sheetname( config ) )),
+				"styles.xml": $.parseXML( excelStrings['xl/styles.xml']),
+				"worksheets": {
+					"sheet1.xml": rels
+				}
+
+			},
+			"[Content_Types].xml": $.parseXML( excelStrings['[Content_Types].xml'])
+		};
+
 		var data = dt.buttons.exportData( config.exportOptions );
 		var currentRow;
-
 		var addRow = function ( row ) {
-
 			//Create a row element
 			var rowEle = rels.createElement( "row" );
 			relsGet.appendChild( rowEle );
@@ -687,7 +713,11 @@ DataTable.ext.buttons.excelHtml5 = {
 
 				// Don't match numbers with leading zeros or a negative anywhere
 				// but the start
-				if( typeof row[i] === 'number' || (row[i].match && $.trim(row[i]).match(/^-?\d+(\.\d+)?$/) && row[i].charAt(0) !== '0') ){
+				if ( typeof row[i] === 'number' || (
+					row[i].match &&
+					$.trim(row[i]).match(/^-?\d+(\.\d+)?$/) &&
+					! $.trim(row[i]).match(/^0\d+/) )
+				) {
 				    ele = rels.createElement( "c" );
 						ele.setAttribute( "t","n" );
 						ele.setAttribute( "r", cellId ); //Adds cellId attribute into sheet1.xml so the cells can be mapped properly inside spreadsheet applications
@@ -720,13 +750,15 @@ DataTable.ext.buttons.excelHtml5 = {
 			rowPos++;
 		};
 
+		if ( config.customizeData ) {
+			config.customizeData( data );
+		}
 
 
 		if ( config.header ) {
 			addRow( data.header, rowPos ); //Add header row
 			var head = rels.getElementsByTagName( "row" )[0];
 			var row = head.childNodes;
-
 			$('row c', rels).attr( 's', '1' );
 		}
 
@@ -738,50 +770,13 @@ DataTable.ext.buttons.excelHtml5 = {
 			addRow( data.footer, rowPos);
 			$('row:last c', rels).attr( 's', '1' );
 		}
-		if ( config.customizeData ) {
-			var xlsx = {
-				_rels: {
-					".rels": rels
-				},
-				xl: {
-					_rels: {
-						"workbook.xml": workbook_Rels
-					},
-					"workbook.xml": workbook,
-					"styles.xml": styles,
-					"worksheets": {
-						"sheet1.xml": rels
-					}
-
-				},
-				"[Content_Types].xml": contentTypes
-			}
-			config.customizeData( xlsx );
-
+		if ( config.customize ) {
+			config.customize( xlsx );
 		}
 
 		var zip           = new window.JSZip();
-		var _rels         = zip.folder("_rels");
-		var xl            = zip.folder("xl");
-		var xl_rels       = zip.folder("xl/_rels");
-		var xl_worksheets = zip.folder("xl/worksheets");
 
-		//Parse the xml document into string form
-		var oSerializer = new XMLSerializer();
-		var sXML = oSerializer.serializeToString( rels );
-		var sStyles = oSerializer.serializeToString( styles );
-		var sWorkbook = oSerializer.serializeToString( workbook );
-		var sContenttypes = oSerializer.serializeToString( contentTypes );
-		var sWorkbook_Rels = oSerializer.serializeToString( workbook_Rels );
-		var s_Rels = oSerializer.serializeToString( _Rels );
-
-		zip.file(           '[Content_Types].xml', sContenttypes );
-		_rels.file(         '.rels',               s_Rels );
-		xl.file(            'workbook.xml',        sWorkbook.replace( '__SHEET_NAME__', _sheetname( config ) ) );
-		xl.file(						'styles.xml',					 sStyles);
-		xl_rels.file(       'workbook.xml.rels',   sWorkbook_Rels );
-		xl_worksheets.file( 'sheet1.xml',          sXML );
-
+		_addToZip( zip, xlsx );
 		_saveAs(
 			zip.generate( {type:"blob", mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'} ),
 			_filename( config )
