@@ -52,8 +52,8 @@ var _saveAs = (function(view) {
 		return;
 	}
 	var
-		  doc = view.document
-		  // only get URL when necessary in case Blob.js hasn't overridden it yet
+		doc = view.document
+		// only get URL when necessary in case Blob.js hasn't overridden it yet
 		, get_URL = function() {
 			return view.URL || view.webkitURL || view;
 		}
@@ -119,7 +119,7 @@ var _saveAs = (function(view) {
 			blob = auto_bom(blob);
 			// First try a.download, then web filesystem, then object URLs
 			var
-				  filesaver = this
+				filesaver = this
 				, type = blob.type
 				, blob_changed = false
 				, object_url
@@ -279,7 +279,7 @@ var _saveAs = (function(view) {
 /**
  * Get the file name for an exported file.
  *
- * @param {object}  config       Button configuration
+ * @param {object}	config Button configuration
  * @param {boolean} incExtension Include the file name extension
  */
 var _filename = function ( config, incExtension )
@@ -308,7 +308,7 @@ var _filename = function ( config, incExtension )
 /**
  * Get the sheet name for Excel exports.
  *
- * @param {object}  config       Button configuration
+ * @param {object}	config Button configuration
  */
 var _sheetname = function ( config )
 {
@@ -324,7 +324,7 @@ return sheetName;
 /**
  * Get the title for an exported file.
  *
- * @param {object}  config  Button configuration
+ * @param {object} config	Button configuration
  */
 var _title = function ( config )
 {
@@ -342,8 +342,8 @@ var _title = function ( config )
 /**
  * Get the newline character(s)
  *
- * @param {object}  config Button configuration
- * @return {string}        Newline character
+ * @param {object}	config Button configuration
+ * @return {string}				Newline character
  */
 var _newLine = function ( config )
 {
@@ -358,9 +358,9 @@ var _newLine = function ( config )
  * Combine the data from the `buttons.exportData` method into a string that
  * will be used in the export file.
  *
- * @param  {DataTable.Api} dt     DataTables API instance
- * @param  {object}        config Button configuration
- * @return {object}               The data to export
+ * @param	{DataTable.Api} dt		 DataTables API instance
+ * @param	{object}				config Button configuration
+ * @return {object}							 The data to export
  */
 var _exportData = function ( dt, config )
 {
@@ -443,6 +443,26 @@ function _addToZip( zip, obj ) {
 			zip.file( name, oSerializer.serializeToString(val) );
 		}
 	} );
+}
+
+function _createNode(doc, nodeName, opts ){
+	var tempNode = doc.createElement( nodeName );
+	if(opts){
+		if( opts.options ){
+			$.each(opts.options,function ( key, value ){
+					$(tempNode).attr( key, value );
+			});
+		}
+		if(opts.children){
+			$.each(opts.children, function ( key, value ){
+				tempNode.appendChild(value);
+			});
+		}
+		if(opts.text1){
+			tempNode.appendChild(doc.createTextNode( opts.text1 ));
+		}
+		}
+	return tempNode;
 }
 
 // Excel - Pre-defined strings to build a minimal XLSX file
@@ -690,62 +710,65 @@ DataTable.ext.buttons.excelHtml5 = {
 			"[Content_Types].xml": $.parseXML( excelStrings['[Content_Types].xml'])
 		};
 
+
+
+
+
 		var data = dt.buttons.exportData( config.exportOptions );
 		var currentRow;
-		var addRow = function ( row ) {
-			//Create a row element
-			var rowEle = rels.createElement( "row" );
-			relsGet.appendChild( rowEle );
 
+		var addRow = function ( row ) {
 			currentRow = rowPos+1;
-			rowEle.setAttribute("r",currentRow);  //add r attribute that references the row index
+			var thisRow = _createNode( rels,"row",{options:{"r":currentRow}});
 
 			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
-				if ( row[i] === null || row[i] === undefined ) {
-					row[i] = '';
-				}
-				var ele;
-				var newEle;
-				var newText;
-				var is;
-				var cellId = createCellPos(i) + "" + currentRow; //Concat both the Cell Columns as a letter and the Row of the cell.
 
-				// Don't match numbers with leading zeros or a negative anywhere
-				// but the start
-				if ( typeof row[i] === 'number' || (
-					row[i].match &&
-					$.trim(row[i]).match(/^-?\d+(\.\d+)?$/) &&
-					! $.trim(row[i]).match(/^0\d+/) )
-				) {
-				    ele = rels.createElement( "c" );
-						ele.setAttribute( "t","n" );
-						ele.setAttribute( "r", cellId ); //Adds cellId attribute into sheet1.xml so the cells can be mapped properly inside spreadsheet applications
-				    newEle = rels.createElement( "v" );
-						newText = rels.createTextNode( row[i]) ;
-				    ele.appendChild( newEle );
-				    newEle.appendChild( newText );
-				    rowEle.appendChild( ele );
-				}else{
-				    ele = rels.createElement( "c" );
-						ele.setAttribute( "t","inlineStr" );
-						ele.setAttribute( "r", cellId );
-				    is = rels.createElement( "is" );
-				    newEle = rels.createElement( "t" );
-						newText = rels.createTextNode(
-				      ! row[i].replace ?
-				        row[i] :
-				        row[i]
-				          .replace(/&(?!amp;)/g, '&amp;')
-				          .replace(/</g, '&lt;')
-				          .replace(/>/g, '&gt;')
-				          .replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '') //Replace non standard characters
-			    );
-			    ele.appendChild( is );
-			    is.appendChild( newEle );
-			    newEle.appendChild( newText );
-			    rowEle.appendChild( ele );
+				if ( row[i] === null || row[i] === undefined ) {
+						row[i] = '';
 				}
+				// Concat both the Cell Columns as a letter and the Row of the cell.
+				var cellId = createCellPos(i) + '' + currentRow;
+				// Detect numbers - don't match numbers with leading zeros or a negative
+				// anywhere but the start
+				if ( typeof row[i] === 'number' || (
+						row[i].match &&
+						$.trim(row[i]).match(/^-?\d+(\.\d+)?$/) &&
+						! $.trim(row[i]).match(/^0\d+/) )
+				){
+					var dataCell = row[i];
+					var cell = _createNode(rels,"c",{ options:{t:"n",r:cellId}, children: [_createNode(rels,"v",{text1:row[i]})] })
+				}
+				else
+				{
+					// Replace non standard characters for text output
+					var text = ! row[i].replace ?
+							row[i] :
+							row[i]
+									.replace(/&(?!amp;)/g, '&amp;')
+									.replace(/</g, '&lt;')
+									.replace(/>/g, '&gt;')
+									.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
+				 var cell = _createNode(rels,"c",{
+						options:{
+							t:"inlineStr", r: cellId
+						},
+						children:{
+							"row": _createNode(rels,"is",
+							{
+							children:{
+								row: _createNode(rels,"t",
+							{
+								text1: text
+							})
+							}
+							})
+						}
+					}
+					);
+				}
+				thisRow.appendChild( cell );
 			}
+			relsGet.appendChild(thisRow);
 			rowPos++;
 		};
 
@@ -753,11 +776,8 @@ DataTable.ext.buttons.excelHtml5 = {
 			config.customizeData( data );
 		}
 
-
 		if ( config.header ) {
 			addRow( data.header, rowPos ); //Add header row
-			var head = rels.getElementsByTagName( "row" )[0];
-			var row = head.childNodes;
 			$('row c', rels).attr( 's', '1' );
 		}
 
@@ -766,6 +786,7 @@ DataTable.ext.buttons.excelHtml5 = {
 		}
 
 		if ( config.footer ) {
+
 			addRow( data.footer, rowPos);
 			$('row:last c', rels).attr( 's', '1' );
 		}
@@ -773,7 +794,7 @@ DataTable.ext.buttons.excelHtml5 = {
 			config.customize( xlsx );
 		}
 
-		var zip           = new window.JSZip();
+		var zip					 = new window.JSZip();
 
 		_addToZip( zip, xlsx );
 		_saveAs(
