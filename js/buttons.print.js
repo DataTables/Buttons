@@ -99,7 +99,7 @@ DataTable.ext.buttons.print = {
 		}
 		html += '</tbody>';
 
-		if ( config.footer ) {
+		if ( config.footer && data.footer ) {
 			html += '<tfoot>'+ addRow( data.footer, 'th' ) +'</tfoot>';
 		}
 

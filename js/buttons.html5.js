@@ -785,7 +785,7 @@ DataTable.ext.buttons.excelHtml5 = {
 			addRow( data.body[n], rowPos );
 		}
 
-		if ( config.footer ) {
+		if ( config.footer && data.footer ) {
 
 			addRow( data.footer, rowPos);
 			$('row:last c', rels).attr( 's', '1' );
@@ -851,7 +851,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 			} ) );
 		}
 
-		if ( config.footer ) {
+		if ( config.footer && data.footer) {
 			rows.push( $.map( data.footer, function ( d ) {
 				return {
 					text: typeof d === 'string' ? d : d+'',
