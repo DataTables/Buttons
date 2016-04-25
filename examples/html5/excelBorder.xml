@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="11">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
+<![CDATA[
+
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons:
+				[
+          {
+            extend: 'excelHtml5',
+						customize: function ( xlsx ){
+							$("row c[r*='10']", xlsx.xl.worksheets["sheet1.xml"]).attr( 's', '13' );
+							}
+          }
+        ]
+    } );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Excel Export Customize- Borders</title>
+
+<info><![CDATA[
+
+The Excel export button saves to an XLSX file and the data can be customised before exporting the file.
+
+This example demonstrates how to manipulate the file by passing in the xlsx object and giving a border to the 10th row.
+
+More built in styles can be seen by accessing the styles.xml file.
+
+Please note that the `b-button excel` button types may also use the HTML5 button types noted here, providing a Flash fallback for older browsers (IE9-).
+
+]]></info>
+
+</dt-example>
