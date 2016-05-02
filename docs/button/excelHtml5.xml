@@ -19,7 +19,7 @@
 
 		In addition to this, the [JSZip](https://stuk.github.io/jszip/) library must also be available on the page. This MIT licensed library provides the ability to create a ZIP file in the browser, which is required to build a valid XLSX file.
 
-		**Note on Safari support**: This button does not support Safari as the browser will not download generated files ([see WebKit bug 102914](https://bugs.webkit.org/show_bug.cgi?id=102914)). This button will not display in Safari and the `b-button excelFlash` button type can be used as a fallback (use `b-button excel` to automatically select).
+		**Note on Safari support**: This button does not support Safari as the browser will not download generated files ([see WebKit bug 156056](https://bugs.webkit.org/show_bug.cgi?id=156056)). This button will not display in Safari and the `b-button excelFlash` button type can be used as a fallback (use `b-button excel` to automatically select).
 	</description>
 
 
