@@ -15,7 +15,7 @@
 	}
 	else if ( typeof exports === 'object' ) {
 		// CommonJS
-		module.exports = function (root, $) {
+		module.exports = function (root, $, jszip, pdfmake) {
 			if ( ! root ) {
 				root = window;
 			}
@@ -28,16 +28,25 @@
 				require('datatables.net-buttons')(root, $);
 			}
 
-			return factory( $, root, root.document );
+			return factory( $, root, root.document, jszip, pdfmake );
 		};
 	}
 	else {
 		// Browser
 		factory( jQuery, window, document );
 	}
-}(function( $, window, document, undefined ) {
+}(function( $, window, document, jsZip, pdfMake, undefined ) {
 'use strict';
 var DataTable = $.fn.dataTable;
+
+// Allow the constructor to pass in JSZip and PDFMake from external requires.
+// Otherwise, use globally defined variables, if they are available.
+if ( jsZip === undefined ) {
+	jsZip = window.JSZip;
+}
+if ( pdfMake === undefined ) {
+	pdfMake = window.pdfMake;
+}
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -712,7 +721,7 @@ DataTable.ext.buttons.excelHtml5 = {
 	className: 'buttons-excel buttons-html5',
 
 	available: function () {
-		return window.FileReader !== undefined && window.JSZip !== undefined && ! _isSafari();
+		return window.FileReader !== undefined && jsZip !== undefined && ! _isSafari();
 	},
 
 	text: function ( dt ) {
@@ -818,19 +827,22 @@ DataTable.ext.buttons.excelHtml5 = {
 		}
 
 		if ( config.footer && data.footer ) {
-
 			addRow( data.footer, rowPos);
 			$('row:last c', rels).attr( 's', '1' );
 		}
+
 		if ( config.customize ) {
 			config.customize( xlsx );
 		}
 
-		var zip					 = new window.JSZip();
+		var zip = new jsZip();
 
 		_addToZip( zip, xlsx );
 		_saveAs(
-			zip.generate( {type:"blob", mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'} ),
+			zip.generate( {
+				type: 'blob',
+				mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+			} ),
 			_filename( config )
 		);
 	},
@@ -853,7 +865,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 	className: 'buttons-pdf buttons-html5',
 
 	available: function () {
-		return window.FileReader !== undefined && window.pdfMake;
+		return window.FileReader !== undefined && pdfMake;
 	},
 
 	text: function ( dt ) {
@@ -953,7 +965,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 			config.customize( doc, config );
 		}
 
-		var pdf = window.pdfMake.createPdf( doc );
+		var pdf = pdfMake.createPdf( doc );
 
 		if ( config.download === 'open' && ! _isSafari() ) {
 			pdf.open();
