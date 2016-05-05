@@ -6,8 +6,12 @@
 
 	<type type="function">
 		<signature>button().add( index, config )</signature>
-		<parameter type="string" name="index">
-			Insert index for the button. Please refer to the `b-type button-selector` documentation for full details of button indexes, including how they apply to collections of sub-buttons.
+		<parameter type="int|string|null" name="index">
+			Insert index for the button. This option can be one of:
+
+			* An integer value if the value is to be inserted into the main buttons collection,
+			* A string with a dash (`-`) separator if the button is to be inserted into a collection (please refer to the `b-type button-selector` documentation for full details of button indexes, including how they apply to collections of sub-buttons),
+			* `null` to insert a button at the end of the main buttons collection.
 		</parameter>
 		<parameter type="object|string|function" name="config">
 			Button configuration. Please refer to `b-init buttons.buttons` for full details of the configuration options available here.
