@@ -2,7 +2,7 @@
 <dt-example table-type="html" order="7">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons colvis">
+<js lib="jquery datatables buttons buttons-colvis">
 <![CDATA[
 
 $(document).ready(function() {
