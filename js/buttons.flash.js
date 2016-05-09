@@ -547,7 +547,7 @@ var _title = function ( config )
 	}
 
 	return title.indexOf( '*' ) !== -1 ?
-		title.replace( '*', $('title').text() ) :
+		title.replace( '*', $('title').text() || 'Exported data' ) :
 		title;
 };
 
