@@ -107,9 +107,9 @@ $.extend( DataTable.ext.buttons, {
 			var col = dt.column( conf.columns );
 
 			dt
-				.on( 'column-visibility.dt'+conf.namespace, function (e, settings, column, state) {
-					if ( ! settings.bDestroying && column === conf.columns ) {
-						that.active( state );
+				.on( 'column-visibility.dt'+conf.namespace, function (e, settings) {
+					if ( ! settings.bDestroying ) {
+						that.active( col.visible() );
 					}
 				} )
 				.on( 'column-reorder.dt'+conf.namespace, function (e, settings, details) {
