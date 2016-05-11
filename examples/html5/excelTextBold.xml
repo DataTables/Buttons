@@ -2,39 +2,35 @@
 <dt-example table-type="html" order="11">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
+<js lib="jquery datatables buttons jszip buttons-html5">
 <![CDATA[
 
+$(document).ready( function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [ {
+			extend: 'excelHtml5',
+			customize: function( xlsx ) {
+				var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-$(document).ready(function() {
-    $('#example').DataTable( {
-        dom: 'Bfrtip',
-        buttons:
-				[
-          {
-            extend: 'excelHtml5',
-						customize: function ( xlsx ){
-							$("row c[r^='C']", xlsx.xl.worksheets["sheet1.xml"]).attr( 's', '1' );
-							}
-          }
-        ]
-    } );
+				$('row c[r^="C"]', sheet).attr( 's', '1' );
+			}
+		} ]
+	} );
 } );
 
 ]]>
 </js>
 
-<title lib="Buttons">Excel Export Customize- Text Bold</title>
+<title lib="Buttons">Excel - Customize bold text</title>
 
 <info><![CDATA[
 
-The Excel export button saves to an XLSX file and the data can be customised before exporting the file.
+The Excel export button saves to an XLSX file and the data can be customised before exporting the file using the `customize` method of the `b-button excelHtml5` button type.
 
-This example demonstrates how to manipulate the file by passing in the xlsx object and making the text inside the office column bold.
+This example demonstrates how to manipulate the generated file by making the text in the third column (_C_) bold using the styling options that are built into the created spreadsheet. jQuery is used to select the required cells (XSLX files are just a collection of XML files after all!) and then add a styling attribute.
 
-More built in styles can be seen by accessing the styles.xml file.
-
-Please note that the `b-button excel` button types may also use the HTML5 button types noted here, providing a Flash fallback for older browsers (IE9-).
+The style added (index `1`) is defined by the default styles included by Buttons. The full list of styles available and further information about the `customize` method are detailed in the `b-button excelHtml5` documentation.
 
 ]]></info>
 
