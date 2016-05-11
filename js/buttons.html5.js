@@ -463,50 +463,76 @@ var _isSafari = function ()
 		navigator.userAgent.indexOf('Opera') === -1;
 };
 
-//Returns the correct column for the cell as a letter. ie s = A for the first column or s = AA for the 27th etc
+/**
+ * Convert from numeric position to letter for column names in Excel
+ * @param  {int} n Column number
+ * @return {string} Column letter(s) name
+ */
 function createCellPos( n ){
 	var ordA = 'A'.charCodeAt(0);
 	var ordZ = 'Z'.charCodeAt(0);
 	var len = ordZ - ordA + 1;
 	var s = "";
-	while(n >= 0) {
+
+	while( n >= 0 ) {
 		s = String.fromCharCode(n % len + ordA) + s;
 		n = Math.floor(n / len) - 1;
 	}
+
 	return s;
 }
 
-
+/**
+ * Recursively add XML files from an object's structure to a ZIP file. This
+ * allows the XSLX file to be easily defined with an object's structure matching
+ * the files structure.
+ *
+ * @param {JSZip} zip ZIP package
+ * @param {object} obj Object to add (recursive)
+ */
 function _addToZip( zip, obj ) {
-	var oSerializer = new XMLSerializer();
-	$.each( obj, function (name, val) {
+	var serializer = new XMLSerializer();
+
+	$.each( obj, function ( name, val ) {
 		if ( $.isPlainObject( val ) ) {
 			var newDir = zip.folder( name );
 			_addToZip( newDir, val );
 		}
 		else {
-			zip.file( name, oSerializer.serializeToString(val) );
+			zip.file( name, serializer.serializeToString(val) );
 		}
 	} );
 }
 
-function _createNode(doc, nodeName, opts ){
+/**
+ * Create an XML node and add any children, attributes, etc without needing to
+ * be verbose in the DOM.
+ *
+ * @param  {object} doc      XML document
+ * @param  {string} nodeName Node name
+ * @param  {object} opts     Options - can be `attr` (attributes), `children`
+ *   (child nodes) and `text` (text content)
+ * @return {node}            Created node
+ */
+function _createNode( doc, nodeName, opts ){
 	var tempNode = doc.createElement( nodeName );
-	if(opts){
-		if( opts.options ){
-			$.each(opts.options,function ( key, value ){
-					$(tempNode).attr( key, value );
+
+	if ( opts ) {
+		if ( opts.attr ) {
+			$(tempNode).attr( opts.attr );
+		}
+
+		if( opts.children ) {
+			$.each( opts.children, function ( key, value ) {
+				tempNode.appendChild( value );
 			});
 		}
-		if(opts.children){
-			$.each(opts.children, function ( key, value ){
-				tempNode.appendChild(value);
-			});
+
+		if( opts.text ) {
+			tempNode.appendChild( doc.createTextNode( opts.text ) );
 		}
-		if(opts.text1){
-			tempNode.appendChild(doc.createTextNode( opts.text1 ));
-		}
-		}
+	}
+
 	return tempNode;
 }
 
@@ -815,7 +841,6 @@ DataTable.ext.buttons.csvHtml5 = {
 
 	action: function ( e, dt, button, config ) {
 		// Set the text
-		var newLine = _newLine( config );
 		var output = _exportData( dt, config ).str;
 		var charset = config.charset;
 
@@ -898,65 +923,68 @@ DataTable.ext.buttons.excelHtml5 = {
 			"[Content_Types].xml": $.parseXML( excelStrings['[Content_Types].xml'])
 		};
 
-
-
-
-
 		var data = dt.buttons.exportData( config.exportOptions );
-		var currentRow;
-
+		var currentRow, rowNode;
 		var addRow = function ( row ) {
 			currentRow = rowPos+1;
-			var thisRow = _createNode( rels,"row",{options:{"r":currentRow}});
+			rowNode = _createNode( rels, "row", { attr: {r:currentRow} } );
 
 			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
-
-				if ( row[i] === null || row[i] === undefined ) {
-						row[i] = '';
-				}
 				// Concat both the Cell Columns as a letter and the Row of the cell.
 				var cellId = createCellPos(i) + '' + currentRow;
+				var cell;
+
+				if ( row[i] === null || row[i] === undefined ) {
+					row[i] = '';
+				}
+
 				// Detect numbers - don't match numbers with leading zeros or a negative
 				// anywhere but the start
 				if ( typeof row[i] === 'number' || (
 						row[i].match &&
 						$.trim(row[i]).match(/^-?\d+(\.\d+)?$/) &&
 						! $.trim(row[i]).match(/^0\d+/) )
-				){
-					var dataCell = row[i];
-					var cell = _createNode(rels,"c",{ options:{t:"n",r:cellId}, children: [_createNode(rels,"v",{text1:row[i]})] })
+				) {
+					cell = _createNode( rels, 'c', {
+						attr: {
+							t: 'n',
+							r: cellId
+						},
+						children: [
+							_createNode( rels, 'v', { text: row[i] } )
+						]
+					} );
 				}
-				else
-				{
+				else {
 					// Replace non standard characters for text output
 					var text = ! row[i].replace ?
-							row[i] :
-							row[i]
-									.replace(/&(?!amp;)/g, '&amp;')
-									.replace(/</g, '&lt;')
-									.replace(/>/g, '&gt;')
-									.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
-				 var cell = _createNode(rels,"c",{
-						options:{
-							t:"inlineStr", r: cellId
+						row[i] :
+						row[i]
+							.replace(/&(?!amp;)/g, '&amp;')
+							.replace(/</g, '&lt;')
+							.replace(/>/g, '&gt;')
+							.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
+
+					cell = _createNode( rels, 'c', {
+						attr: {
+							t: 'inlineStr',
+							r: cellId
 						},
 						children:{
-							"row": _createNode(rels,"is",
-							{
-							children:{
-								row: _createNode(rels,"t",
-							{
-								text1: text
-							})
-							}
-							})
+							row: _createNode( rels, 'is', {
+								children: {
+									row: _createNode( rels, 't', {
+										text: text
+									} )
+								}
+							} )
 						}
-					}
-					);
+					} );
 				}
-				thisRow.appendChild( cell );
+
+				rowNode.appendChild( cell );
 			}
-			relsGet.appendChild(thisRow);
+			relsGet.appendChild(rowNode);
 			rowPos++;
 		};
 
@@ -966,7 +994,7 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		if ( config.header ) {
 			addRow( data.header, rowPos );
-			$('row c', rels).attr( 's', '2' );
+			$('row c', rels).attr( 's', '2' ); // bold
 		}
 
 		for ( var n=0, ie=data.body.length ; n<ie ; n++ ) {
@@ -975,9 +1003,10 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		if ( config.footer && data.footer ) {
 			addRow( data.footer, rowPos);
-			$('row:last c', rels).attr( 's', '2' );
+			$('row:last c', rels).attr( 's', '2' ); // bold
 		}
 
+		// Let the developer customise the document if they want to
 		if ( config.customize ) {
 			config.customize( xlsx );
 		}
