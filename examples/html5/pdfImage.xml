@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" order="7">
+<dt-example table-type="html" order="13">
 
 <css lib="datatables buttons"/>
 <js lib="jquery datatables buttons pdfmake vfsfonts buttons-html5">
@@ -26,7 +26,7 @@ $(document).ready(function() {
 ]]>
 </js>
 
-<title lib="Buttons">PDF with image</title>
+<title lib="Buttons">PDF - image</title>
 
 <info><![CDATA[
 
