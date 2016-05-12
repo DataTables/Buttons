@@ -571,16 +571,14 @@ var excelStrings = {
 				'<workbookView xWindow="0" yWindow="0" windowWidth="25600" windowHeight="19020" tabRatio="500"/>'+
 			'</bookViews>'+
 			'<sheets>'+
-				'<sheet name="__SHEET_NAME__" sheetId="1" r:id="rId1"/>'+
+				'<sheet name="" sheetId="1" r:id="rId1"/>'+
 			'</sheets>'+
 		'</workbook>',
 
 	"xl/worksheets/sheet1.xml":
 		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
 		'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">'+
-			'<sheetData>'+
-				'__DATA__'+
-			'</sheetData>'+
+			'<sheetData/>'+
 		'</worksheet>',
 
 	"xl/styles.xml": 
@@ -907,14 +905,14 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		var xlsx = {
 			_rels: {
-				".rels": $.parseXML( excelStrings['_rels/.rels'])
+				".rels": $.parseXML( excelStrings['_rels/.rels'] )
 			},
 			xl: {
 				_rels: {
-					"workbook.xml.rels": $.parseXML( excelStrings['xl/_rels/workbook.xml.rels'])
+					"workbook.xml.rels": $.parseXML( excelStrings['xl/_rels/workbook.xml.rels'] )
 				},
-				"workbook.xml": $.parseXML( excelStrings['xl/workbook.xml'].replace( '__SHEET_NAME__', _sheetname( config ) )),
-				"styles.xml": $.parseXML( excelStrings['xl/styles.xml']),
+				"workbook.xml": $.parseXML( excelStrings['xl/workbook.xml'] ),
+				"styles.xml": $.parseXML( excelStrings['xl/styles.xml'] ),
 				"worksheets": {
 					"sheet1.xml": rels
 				}
@@ -987,6 +985,8 @@ DataTable.ext.buttons.excelHtml5 = {
 			relsGet.appendChild(rowNode);
 			rowPos++;
 		};
+
+		$( 'sheets sheet', xlsx.xl['workbook.xml'] ).attr( 'name', _sheetname( config ) );
 
 		if ( config.customizeData ) {
 			config.customizeData( data );
