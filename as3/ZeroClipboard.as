@@ -38,49 +38,7 @@ package {
 		private var clipText:String = 'blank';
 		private var fileName:String = '';
 		private var action:String = 'copy';
-		private var sheetName:String = 'Sheet1';
-
-		// Excel - Pre-defined strings to build a minimal XLSX file
-		private var excelStrings:Object = {
-	"_rels/.rels": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">\
-	<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>\
-</Relationships>',
-
-	"xl/_rels/workbook.xml.rels": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">\
-	<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>\
-</Relationships>',
-
-	"[Content_Types].xml": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
-<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">\
-	<Default Extension="xml" ContentType="application/xml"/>\
-	<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>\
-	<Default Extension="jpeg" ContentType="image/jpeg"/>\
-	<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>\
-	<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>\
-</Types>',
-
-	"xl/workbook.xml": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
-<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">\
-	<fileVersion appName="xl" lastEdited="5" lowestEdited="5" rupBuild="24816"/>\
-	<workbookPr showInkAnnotation="0" autoCompressPictures="0"/>\
-	<bookViews>\
-		<workbookView xWindow="0" yWindow="0" windowWidth="25600" windowHeight="19020" tabRatio="500"/>\
-	</bookViews>\
-	<sheets>\
-		<sheet name="__SHEET_NAME__" sheetId="1" r:id="rId1"/>\
-	</sheets>\
-</workbook>',
-
-	"xl/worksheets/sheet1.xml": '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\
-<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">\
-	<sheetData>\
-		__DATA__\
-	</sheetData>\
-</worksheet>'
-		};
-
+		private var sheetData:Object = {};
 
 
 		public function ZeroClipboard() {
@@ -129,6 +87,11 @@ package {
 			// signal to the browser that we are ready
 			ExternalInterface.call( 'ZeroClipboard_TableTools.dispatch', domId, 'load', null );
 		}
+
+		public function log ( str:String ):void
+		{
+			ExternalInterface.call( 'ZeroClipboard_TableTools.log', str, null );
+		}
 		
 
 		public function addCallbacks (evt:Event = null):void
@@ -157,12 +120,29 @@ package {
 				action = t;
 			} );
 
-			ExternalInterface.addCallback( "setSheetName", function(t:String):void {
-				sheetName = t;
+			ExternalInterface.addCallback( "setSheetData", function(t:String):void {
+				sheetData = JSON.parse( t );
 			} );
 
 		}
 
+		private function addToZip( zip:FZip, dir:String, obj:Object ):void {
+			for ( var s:String in obj ) {
+				if ( typeof obj[s] === 'string' ) {
+					addFile( zip, dir+s, obj[s] );
+				}
+				else {
+					addToZip( zip, dir+s+'/', obj[s] );
+				}
+			}
+		}
+
+		private function addFile( zip:FZip, filePath:String, str:String ):void {
+			var bytes:ByteArray = new ByteArray();
+			bytes.writeUTFBytes( str );
+
+			zip.addFile( filePath, bytes );
+		}
 
 		private function clickHandler(event:Event):void
 		{
@@ -179,20 +159,8 @@ package {
 			else if ( action == "excel" ) {
 				// Create an XLSX file using FZip and a set of predefined strings
 				var zip:FZip = new FZip();
-				var addFile:Function = function( file:String, str:String ):void {
-					var bytes:ByteArray = new ByteArray();
-					bytes.writeUTFBytes( str );
 
-					zip.addFile( file, bytes );
-				};
-
-
-
-				addFile( '[Content_Types].xml',        excelStrings['[Content_Types].xml'] );
-				addFile( '_rels/.rels',                excelStrings['_rels/.rels'] );
-				addFile( 'xl/workbook.xml',            excelStrings['xl/workbook.xml'].replace( '__SHEET_NAME__', sheetName ) );
-				addFile( 'xl/_rels/workbook.xml.rels', excelStrings['xl/_rels/workbook.xml.rels'] );
-				addFile( 'xl/worksheets/sheet1.xml',   excelStrings['xl/worksheets/sheet1.xml'].replace( '__DATA__', clipText ) );
+				addToZip( zip, '', sheetData );
 
 				var out:ByteArray = new ByteArray();
 				zip.serialize( out );

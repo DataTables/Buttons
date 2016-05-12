@@ -5,7 +5,7 @@
 <js lib="jquery datatables buttons buttons-flash">
 <![CDATA[
 
-$.fn.dataTable.Buttons.swfPath = '//cdn.datatables.net/buttons/1.0.0/swf/flashExport.swf';
+$.fn.dataTable.Buttons.swfPath = '../../swf/flashExport.swf';
 
 $(document).ready(function() {
 	$('#example').DataTable( {
