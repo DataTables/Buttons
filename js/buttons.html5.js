@@ -1012,15 +1012,28 @@ DataTable.ext.buttons.excelHtml5 = {
 		}
 
 		var zip = new jsZip();
+		var zipConfig = {
+			type: 'blob',
+			mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+		};
 
 		_addToZip( zip, xlsx );
-		_saveAs(
-			zip.generate( {
-				type: 'blob',
-				mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-			} ),
-			_filename( config )
-		);
+
+		if ( zip.generateAsync ) {
+			// JSZip 3+
+			zip
+				.generateAsync( zipConfig )
+				.then( function ( blob ) {
+					_saveAs( blob, _filename( config ) );
+				} );
+		}
+		else {
+			// JSZip 2.5
+			_saveAs(
+				zip.generate( zipConfig ),
+				_filename( config )
+			);
+		}
 	},
 
 	filename: '*',
