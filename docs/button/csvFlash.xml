@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-button library="Buttons">
 	<name>csvFlash</name>
-	<summary>Create and save a CSV file that contains the data from the table (Adobe Flash)</summary>
+	<summary>Create and save a CSV file that contains the data from the table (Adobe Flash - deprecated)</summary>
 	<since>1.0.0</since>
 
 	<requires>
 		* Buttons' _Flash export button_ plug-in.
 		* Adobe Flash
 	</requires>
+	
+	<deprecated>
+		<version>1.2.0</version>
+		<description>
+			As Flash is now [being expunged](http://arstechnica.co.uk/information-technology/2016/05/chrome-flash-click-to-play-html5-by-default/) from all browsers, the Flash buttons are only suitable for use in old browsers. As such, they will no longer see new features developed for them after Buttons 1.2.0. They will be removed from the distribution in the next major release.
+		</description>
+	</deprecated>
 
 	<description>
 		This button provides the end user with the ability to save the table's data into a locally created Comma Separated Values (CSV) file. That file can then be used by variety of programs including spreadsheet and data analysis applications.
