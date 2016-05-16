@@ -5,10 +5,10 @@
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _Flash export button_ plug-in.
-		* A browser that supports local file saving (IE10+, Chrome, Safari, Firefox, Opera)
+		* Buttons' _HTML5 export button_ plug-in.
 		* [PDFMake](http://pdfmake.org/)
 		* A Font file - [PDFMake provides Roboto in `vfs_fonts.js`](http://pdfmake.org/#/gettingstarted) or a [custom font](https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side) can be used.
+		* A browser that supports local file saving (IE10+, Chrome, Safari, Firefox, Opera)
 	</requires>
 
 	<description>
@@ -20,7 +20,17 @@
 
 		The use of PDFMake with this button provides the ability to easily modify the PDF file that is generated to include text, images and other information. This is done through the `customize` function (see below, and the [PDFMake documentation](http://pdfmake.org/#/gettingstarted)).
 
-		**Note on Safari support**: Safari will not download generated files ([see WebKit bug 102914](https://bugs.webkit.org/show_bug.cgi?id=102914)), as such, the generated PDF file will be shown in a new tab. End users can use the browser's "Save as" option to download the file.
+
+		## Browser support
+
+		The API methods used by this button are supported in the following browsers. If the browser being used does not support the requirements for this button, it simply will not be displayed.
+
+		* Internet Explorer 10+
+		  * IE9 and older are not supported as they do not support the `FileReader` API available in newer browsers.
+		* Edge: Yes
+		* Chrome: Yes
+		* Opera: Yes
+		* Safari: Yes
 	</description>
 
 

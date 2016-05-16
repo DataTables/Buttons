@@ -5,9 +5,9 @@
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _Flash export button_ plug-in.
-		* A browser that supports local file saving (IE10+, Chrome, Firefox, Opera - **not** Safari)
+		* Buttons' _HTML5 export button_ plug-in.
 		* [JSZip](https://stuk.github.io/jszip/)
+		* A browser that supports local file saving (IE10+, Chrome, Firefox, Opera)
 	</requires>
 
 	<description>
@@ -23,7 +23,15 @@
 
 		## Browser support
 
-		**Note on Safari support**: This button does not support Safari as the browser will not download generated files ([see WebKit bug 156056](https://bugs.webkit.org/show_bug.cgi?id=156056)). This button will not display in Safari and the `b-button excelFlash` button type can be used as a fallback (use `b-button excel` to automatically select).
+		The API methods used by this button are supported in the following browsers. If the browser being used does not support the requirements for this button, it simply will not be displayed.
+
+		* Internet Explorer 10+
+		  * IE9 and older are not supported as they do not support the `FileReader` or XML parsing APIs available in newer browsers.
+		* Edge: Yes
+		* Chrome: Yes
+		* Opera: Yes
+		* Safari: No
+		  * Safari does not currently support the ability to download generated files ([see WebKit bug 156056](https://bugs.webkit.org/show_bug.cgi?id=156056)). As soon as this has been addressed in Safari it will be released here.
 
 
 		## Customisation

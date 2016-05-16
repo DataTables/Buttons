@@ -6,7 +6,7 @@
 
 	<requires>
 		* Buttons' _HTML5 export button_ plug-in.
-		* A browser that supports local file saving (IE10+, Chrome, Safari, Firefox, Opera)
+		* A browser that supports local file saving (IE10+, Chrome, Firefox, Opera)
 	</requires>
 
 	<description>
@@ -14,7 +14,18 @@
 
 		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported). For older browsers, the `b-button csvFlash` button provides similar file creation and save options using the Flash plug-in. The `b-button csv` button can be used to automatically select between this and the `b-button csvFlash` buttons based on the browser's capabilities.
 
-		**Note on Safari support**: Safari will not download generated files ([see WebKit bug 102914](https://bugs.webkit.org/show_bug.cgi?id=102914)), as such, the generated CSV file will be shown in a new tab. End users can use the browser's "Save as" option to download the file.
+
+		## Browser support
+
+		The API methods used by this button are supported in the following browsers. If the browser being used does not support the requirements for this button, it simply will not be displayed.
+
+		* Internet Explorer 10+
+		  * IE9 and older are not supported as they do not support the `FileReader` API available in newer browsers.
+		* Edge: Yes
+		* Chrome: Yes
+		* Opera: Yes
+		* Safari: No
+		  * Safari does not currently support the ability to download generated files ([see WebKit bug 156056](https://bugs.webkit.org/show_bug.cgi?id=156056)). As soon as this has been addressed in Safari it will be released here.
 	</description>
 
 
