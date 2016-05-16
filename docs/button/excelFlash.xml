@@ -29,6 +29,13 @@
 		The `b-button excelHtml5` method provides much greater flexibility and thus button is considered to be sunsetted, but is still provided for use with older browsers that do not support the APIs required for the `b-button excelHtml5` button type.
 
 		[Adobe Flash](https://get.adobe.com/flashplayer/) is required for this button to operate. If Flash is not installed, or disabled, in the end user's browser this button will not appear. For a non-Flash alternative please see the `b-button excelHtml5` button type. Additionally the `b-button excel` will automatically select between this button and `b-button excelHtml5` depending on the features of the browser.
+
+
+		## Customisation
+
+		The Excel file that Buttons creates is intentionally quite simple, but you may wish to add additional information or formatting to the document to suit your output requirements. This ability is provided by the `customize` option of this button type.
+
+		Full details of the `customize` method are available in the `b-button excelHtml5` documentation. The `customize` method for both button types are identical and a function developed for one can be used for the other (or both if you use the grouping `b-button excel` button type, which will automatically select HTML5 or Flash as required for the browser).
 	</description>
 
 
@@ -78,6 +85,10 @@
 
 	<option type="function" name="customizeData" default="undefined" since="1.1.3">
 		A function that can be used to customise the data that will be saved to the Excel spreadsheet. A single parameter is passed in, an object with `header`, `footer` and `body` parameters, each of which contains the data to be exported. The data in this object should be modified as required - no return values is expected, or used, from this callback.
+	</option>
+
+	<option type="function" name="customize" default="undefined" since="1.2.0">
+		This method can be used to modify the XSLX file that is created by Buttons. A single parameter is passed, an object that contains the XML files and the object structure matches the file system paths for those files in an XSLX file. Customisation of the XSLX file is a complex topic - please refer to the _Customisation_ section in the `b-button excelHtml5` button documentation for full details.
 	</option>
 
 
