@@ -339,7 +339,7 @@ var _filename = function ( config, incExtension )
 	}
 
 	if ( filename.indexOf( '*' ) !== -1 ) {
-		filename = filename.replace( '*', $('title').text() );
+		filename = $.trim( filename.replace( '*', $('title').text() ) );
 	}
 
 	// Strip characters which the OS will object to
