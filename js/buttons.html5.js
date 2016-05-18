@@ -555,8 +555,10 @@ function _addToZip( zip, obj ) {
 			}
 
 			// Both IE and Edge will put empty name space attributes onto the
-			// rows making them useless
-			str = str.replace( /<row xmlns="" /g, '<row ' );
+			// rows and columns making them useless
+			str = str
+				.replace( /<row xmlns="" /g, '<row ' )
+				.replace( /<cols xmlns="">/g, '<cols>' );
 
 			zip.file( name, str );
 		}
