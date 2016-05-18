@@ -40,7 +40,12 @@
 		< 
 		< It is important to note that Buttons does not provide any kind of abstraction for the XSLX XML! If you want to modify the output Excel file you need to understand the [XML used for the spreadsheet](https://msdn.microsoft.com/en-us/library/aa140066(office.10).aspx). If you require an abstraction layer, consider creating a custom button that uses [js-xslx](https://github.com/SheetJS/js-xlsx).
 
-		The Excel file that Buttons creates is intentionally quite simple, but you may wish to add additional information or formatting to the document to suit your output requirements. This ability is provided by the `customize` option of this button type.
+		The Excel file that Buttons creates is intentionally quite simple - the default styling is:
+
+		* Header and footer are bold
+		* Column widths are auto sized to fit their contents (min: _5_, max: _40_)
+
+		However, you may wish to add additional information or formatting to the document to suit your output requirements. This ability is provided by the `customize` option of this button type.
 
 		The `customize` method is passed a single parameter - an object with the following structure (note that `xml` is simply a place holder to represent an XML document - each XML document is of course different):
 
