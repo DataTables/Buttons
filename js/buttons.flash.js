@@ -738,6 +738,37 @@ function _createNode( doc, nodeName, opts ){
 }
 
 /**
+ * Get the width for an Excel column based on the contents of that column
+ * @param  {object} data Data for export
+ * @param  {int}    col  Column index
+ * @return {int}         Column width
+ */
+function _excelColWidth( data, col ) {
+	var max = data.header[col].length;
+	var len;
+
+	if ( data.footer && data.footer[col].length > max ) {
+		max = data.footer[col].length;
+	}
+
+	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
+		len = data.body[i][col].toString().length;
+
+		if ( len > max ) {
+			max = len;
+		}
+
+		// Max width rather than having potentially massive column widths
+		if ( max > 40 ) {
+			break;
+		}
+	}
+
+	// And a min width
+	return max > 5 ? max : 5;
+}
+
+/**
  * Convert XML documents in an object to strings
  * @param  {object} obj XLSX document object
  */
@@ -1125,12 +1156,15 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 			config.customizeData( data );
 		}
 
+		console.log( rels );
+
 		if ( config.header ) {
 			addRow( data.header, rowPos );
 			$('row c', rels).attr( 's', '2' ); // bold
 		}
 
 		for ( var n=0, ie=data.body.length ; n<ie ; n++ ) {
+			console.log( data.body[n] );
 			addRow( data.body[n], rowPos );
 		}
 
@@ -1139,10 +1173,27 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 			$('row:last c', rels).attr( 's', '2' ); // bold
 		}
 
+		// Set column widths
+		var cols = _createNode( rels, 'cols' );
+		$('worksheet', rels).prepend( cols );
+
+		for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+			cols.appendChild( _createNode( rels, 'col', {
+				attr: {
+					min: i+1,
+					max: i+1,
+					width: _excelColWidth( data, i ),
+					customWidth: 1
+				}
+			} ) );
+		}
+
 		// Let the developer customise the document if they want to
 		if ( config.customize ) {
 			config.customize( xlsx );
 		}
+
+		console.log( rels );
 
 		_xlsxToStrings( xlsx );
 

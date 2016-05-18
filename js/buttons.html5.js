@@ -573,7 +573,7 @@ function _addToZip( zip, obj ) {
  *   (child nodes) and `text` (text content)
  * @return {node}            Created node
  */
-function _createNode( doc, nodeName, opts ){
+function _createNode( doc, nodeName, opts ) {
 	var tempNode = doc.createElement( nodeName );
 
 	if ( opts ) {
@@ -593,6 +593,37 @@ function _createNode( doc, nodeName, opts ){
 	}
 
 	return tempNode;
+}
+
+/**
+ * Get the width for an Excel column based on the contents of that column
+ * @param  {object} data Data for export
+ * @param  {int}    col  Column index
+ * @return {int}         Column width
+ */
+function _excelColWidth( data, col ) {
+	var max = data.header[col].length;
+	var len;
+
+	if ( data.footer && data.footer[col].length > max ) {
+		max = data.footer[col].length;
+	}
+
+	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
+		len = data.body[i][col].toString().length;
+
+		if ( len > max ) {
+			max = len;
+		}
+
+		// Max width rather than having potentially massive column widths
+		if ( max > 40 ) {
+			break;
+		}
+	}
+
+	// And a min width
+	return max > 5 ? max : 5;
 }
 
 // Excel - Pre-defined strings to build a basic XLSX file
@@ -1071,6 +1102,21 @@ DataTable.ext.buttons.excelHtml5 = {
 		if ( config.footer && data.footer ) {
 			addRow( data.footer, rowPos);
 			$('row:last c', rels).attr( 's', '2' ); // bold
+		}
+
+		// Set column widths
+		var cols = _createNode( rels, 'cols' );
+		$('worksheet', rels).prepend( cols );
+
+		for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+			cols.appendChild( _createNode( rels, 'col', {
+				attr: {
+					min: i+1,
+					max: i+1,
+					width: _excelColWidth( data, i ),
+					customWidth: 1
+				}
+			} ) );
 		}
 
 		// Let the developer customise the document if they want to
