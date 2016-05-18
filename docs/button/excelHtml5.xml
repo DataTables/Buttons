@@ -42,6 +42,7 @@
 
 		The Excel file that Buttons creates is intentionally quite simple - the default styling is:
 
+		* _Calibri_ font, size 11 (matching Excel default)
 		* Header and footer are bold
 		* Column widths are auto sized to fit their contents (min: _5_, max: _40_)
 
