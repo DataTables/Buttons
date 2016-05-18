@@ -1156,15 +1156,12 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 			config.customizeData( data );
 		}
 
-		console.log( rels );
-
 		if ( config.header ) {
 			addRow( data.header, rowPos );
 			$('row c', rels).attr( 's', '2' ); // bold
 		}
 
 		for ( var n=0, ie=data.body.length ; n<ie ; n++ ) {
-			console.log( data.body[n] );
 			addRow( data.body[n], rowPos );
 		}
 
@@ -1192,8 +1189,6 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 		if ( config.customize ) {
 			config.customize( xlsx );
 		}
-
-		console.log( rels );
 
 		_xlsxToStrings( xlsx );
 
