@@ -1,6 +1,6 @@
 /*!
  * Column visibility buttons for Buttons and DataTables.
- * 2015 SpryMedia Ltd - datatables.net/license
+ * 2016 SpryMedia Ltd - datatables.net/license
  */
 
 (function( factory ){
