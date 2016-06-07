@@ -73,6 +73,10 @@
 		The extension to give the created file name.
 	</option>
 
+	<option type="boolean" name="bom" default="false" since="1.2.2">
+		Option to include UTF-8 Byte Order Mark (`true`) or not (`false`). This is disabled by default as the [Unicode Standard states](http://utf8everywhere.org/#faq.boms) that the use of a BOM is neither required nor recommended for UTF-8.
+	</option>
+
 	<option type="string" name="charset" default="null">
 		Character set to use in the file export. When `null` is used (default) the document's character set will be read and used (`document.characterSet`). The addition of a character set can be disabled by setting this property to `false`.
 	</option>

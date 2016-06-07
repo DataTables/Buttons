@@ -931,6 +931,8 @@ DataTable.ext.buttons.copyHtml5 = {
 // CSV export
 //
 DataTable.ext.buttons.csvHtml5 = {
+	bom: false,
+
 	className: 'buttons-csv buttons-html5',
 
 	available: function () {
@@ -963,9 +965,14 @@ DataTable.ext.buttons.csvHtml5 = {
 			charset = '';
 		}
 
+		if ( config.bom ) {
+			output = '\ufeff' + output;
+		}
+
 		_saveAs(
 			new Blob( [output], {type: 'text/csv'+charset} ),
-			_filename( config )
+			_filename( config ),
+			true
 		);
 	},
 
