@@ -865,19 +865,20 @@ DataTable.ext.buttons.copyHtml5 = {
 			textarea[0].select();
 
 			try {
-				document.execCommand( 'copy' );
+				var successful = document.execCommand( 'copy' );
 				hiddenDiv.remove();
 
-				dt.buttons.info(
-					dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ),
-					dt.i18n( 'buttons.copySuccess', {
-							1: "Copied one row to clipboard",
-							_: "Copied %d rows to clipboard"
+				if (successful) {
+					dt.buttons.info(
+						dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ),
+						dt.i18n( 'buttons.copySuccess', {
+							1: 'Copied one row to clipboard',
+							_: 'Copied %d rows to clipboard'
 						}, exportData.rows ),
-					2000
-				);
-
-				return;
+						2000
+					);
+					return;
+				}
 			}
 			catch (t) {}
 		}
