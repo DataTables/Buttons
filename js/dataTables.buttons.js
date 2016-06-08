@@ -879,7 +879,9 @@ Buttons.background = function ( show, className, fade ) {
 	else {
 		$('body > div.'+className)
 			.fadeOut( fade, function () {
-				$(this).remove();
+				$(this)
+					.removeClass( className )
+					.remove();
 			} );
 	}
 };
