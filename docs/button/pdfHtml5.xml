@@ -85,7 +85,7 @@
 	</option>
 
 	<option type="string" name="message" default="">
-		Optional description message that will be shown above the table in the created PDF. Also allows a function to be passed in for extended functionality.
+		Optional description message that will be shown above the table in the created PDF.
 	</option>
 
 	<option type="function" name="customize" default="null">
@@ -153,19 +153,6 @@ $(document).ready(function() {
 			}
 		} ]
 	} );
-} );
-
-]]></example>
-
-<example title="DataTables initialisation: Pass in a function into the `message` option"><![CDATA[
-
-$(document).ready(function() {
-$('#example').DataTable( {
-	dom: 'Bfrtip',
-	message: function(){
-		return "This message was created using a function";
-	}
-} );
 } );
 
 ]]></example>
