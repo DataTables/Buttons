@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="11">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons pdfmake vfsfonts buttons-html5">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			{
+				extend: 'pdfHtml5',
+				message: function(){
+          return "This message was created using a function";
+        }
+			}
+		]
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">PDF - message function</title>
+
+<info><![CDATA[
+Sometimes you want to pass in a message other than a static string.
+
+In the example here a function is used that returns the data that will be used for a message. This allows more complex messages to be created.
+
+]]></info>
+
+</dt-example>
