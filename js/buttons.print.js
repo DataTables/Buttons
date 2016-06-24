@@ -136,13 +136,13 @@ DataTable.ext.buttons.print = {
 		// Inject the table and other surrounding information
 		win.document.body.innerHTML =
 			'<h1>'+title+'</h1>'+
-			'<div>'+config.message+'</div>'+
+			'<div>'+
+				(typeof config.message === 'function' ?
+					config.message( dt, button, config ) :
+					config.message
+				)+
+			'</div>'+
 			html;
-		// $(win.document.body).html(
-		// 	'<h1>'+title+'</h1>'+
-		// 	'<div>'+config.message+'</div>'+
-		// 	html
-		// );
 
 		if ( config.customize ) {
 			config.customize( win );
