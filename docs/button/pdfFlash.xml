@@ -76,11 +76,9 @@
 	<option type="string" name="pageSize" default="A4">
 		Paper size for the created PDF. This can be `-string A3`, `-string A4`, `-string A5`, `-string LEGAL`, `-string LETTER` or `-string TABLOID`.
 	</option>
-
-	<option type="string" name="message" default="">
-		Optional description message that will be shown above the table in the created PDF.
-	</option>
+	
 	<option type="string|function" name="message" default="">`
+		Optional description message that will be shown above the table in the created PDF.
 		Allows a function to be passed into the message option. `function(dt, button, config)`
 	</option>
 
