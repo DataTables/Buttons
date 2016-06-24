@@ -673,7 +673,7 @@ var excelStrings = {
 			'<sheetData/>'+
 		'</worksheet>',
 
-	"xl/styles.xml": 
+	"xl/styles.xml":
 		'<?xml version="1.0" encoding="UTF-8"?>'+
 		'<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">'+
 			'<fonts count="5" x14ac:knownFonts="1">'+
@@ -1269,11 +1269,11 @@ DataTable.ext.buttons.pdfHtml5 = {
 		};
 
 		if ( config.message ) {
-			doc.content.unshift( {
-				text: config.message,
-				style: 'message',
-				margin: [ 0, 0, 0, 12 ]
-			} );
+      doc.content.unshift( {
+        text: typeof config.message == 'function' ? config.message(dt, button, config) : config.message,
+        style: 'message',
+        margin: [ 0, 0, 0, 12 ]
+      } );
 		}
 
 		if ( config.title ) {

@@ -3,7 +3,7 @@
 	<name>pdfFlash</name>
 	<summary>Create and save a PDF file that contains the data from the table (Adobe Flash - deprecated)</summary>
 	<since>1.0.0</since>
-	
+
 	<deprecated>
 		<version>1.2.0</version>
 		<description>
@@ -74,13 +74,15 @@
 	</option>
 
 	<option type="string" name="pageSize" default="A4">
-		Paper size for the created PDF. This can be `-string A3`, `-string A4`, `-string A5`, `-string LEGAL`, `-string LETTER` or `-string TABLOID`. 
+		Paper size for the created PDF. This can be `-string A3`, `-string A4`, `-string A5`, `-string LEGAL`, `-string LETTER` or `-string TABLOID`.
 	</option>
 
 	<option type="string" name="message" default="">
 		Optional description message that will be shown above the table in the created PDF.
 	</option>
-
+	<option type="string|function" name="message" default="">`
+		Allows a function to be passed into the message option. `function(dt, button, config)`
+	</option>
 
 	<example title="DataTables initialisation: Use the Flash PDF button"><![CDATA[
 
