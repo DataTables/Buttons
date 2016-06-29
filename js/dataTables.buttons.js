@@ -1000,10 +1000,18 @@ Buttons.buttonSelector = function ( insts, selector )
 
 		if ( selector === null || selector === undefined || selector === '*' ) {
 			// Select all
-			for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+			if ( buttons.length ) {
+				for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+					ret.push( {
+						inst: inst,
+						node: buttons[i].node
+					} );
+				}
+			}
+			else {
 				ret.push( {
 					inst: inst,
-					node: buttons[i].node
+					node: null
 				} );
 			}
 		}
