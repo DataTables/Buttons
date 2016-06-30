@@ -1562,13 +1562,14 @@ var _exportData = function ( dt, inOpts )
 
 
 	var header = dt.columns( config.columns ).indexes().map( function (idx) {
-		return config.format.header( dt.column( idx ).header().innerHTML, idx );
+		var el = dt.column( idx ).header();
+		return config.format.header( el.innerHTML, idx, el );
 	} ).toArray();
 
 	var footer = dt.table().footer() ?
 		dt.columns( config.columns ).indexes().map( function (idx) {
 			var el = dt.column( idx ).footer();
-			return config.format.footer( el ? el.innerHTML : '', idx );
+			return config.format.footer( el ? el.innerHTML : '', idx, el );
 		} ).toArray() :
 		null;
 
@@ -1577,6 +1578,11 @@ var _exportData = function ( dt, inOpts )
 		.cells( rowIndexes, config.columns )
 		.render( config.orthogonal )
 		.toArray();
+	var cellNodes = dt
+		.cells( rowIndexes, config.columns )
+		.nodes()
+		.toArray();
+
 	var columns = header.length;
 	var rows = columns > 0 ? cells.length / columns : 0;
 	var body = new Array( rows );
@@ -1586,7 +1592,7 @@ var _exportData = function ( dt, inOpts )
 		var row = new Array( columns );
 
 		for ( var j=0 ; j<columns ; j++ ) {
-			row[j] = config.format.body( cells[ cellCounter ], j, i );
+			row[j] = config.format.body( cells[ cellCounter ], j, i, cellNodes[ cellCounter ] );
 			cellCounter++;
 		}
 
