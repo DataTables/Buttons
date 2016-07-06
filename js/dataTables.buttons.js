@@ -1000,18 +1000,10 @@ Buttons.buttonSelector = function ( insts, selector )
 
 		if ( selector === null || selector === undefined || selector === '*' ) {
 			// Select all
-			if ( buttons.length ) {
-				for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
-					ret.push( {
-						inst: inst,
-						node: buttons[i].node
-					} );
-				}
-			}
-			else {
+			for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
 				ret.push( {
 					inst: inst,
-					node: null
+					node: buttons[i].node
 				} );
 			}
 		}
@@ -1324,7 +1316,9 @@ DataTable.Api.register( 'buttons()', function ( group, selector ) {
 		group = undefined;
 	}
 
-	return this.iterator( true, 'table', function ( ctx ) {
+	this.selector.buttonGroup = group;
+
+	var res = this.iterator( true, 'table', function ( ctx ) {
 		if ( ctx._buttons ) {
 			return Buttons.buttonSelector(
 				Buttons.instanceSelector( group, ctx._buttons ),
@@ -1332,6 +1326,9 @@ DataTable.Api.register( 'buttons()', function ( group, selector ) {
 			);
 		}
 	}, true );
+
+	res._groupSelector = group;
+	return res;
 } );
 
 // Individual button selector
@@ -1421,22 +1418,35 @@ DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', funct
 // Get the container elements for the button sets selected
 DataTable.Api.registerPlural( 'buttons().containers()', 'buttons().container()', function () {
 	var jq = $();
+	var groupSelector = this._groupSelector;
 
-	// jQuery will automatically reduce duplicates to a single entry
-	$( this.each( function ( set ) {
-		jq = jq.add( set.inst.container() );
-	} ) );
+	this.iterator( true, 'table', function ( ctx ) {
+		if ( ctx._buttons ) {
+			var insts = Buttons.instanceSelector( groupSelector, ctx._buttons );
+
+			for ( var i=0, ien=insts.length ; i<ien ; i++ ) {
+				jq = jq.add( insts[i].container() );
+			}
+		}
+	} );
 
 	return jq;
 } );
 
 // Add a new button
 DataTable.Api.register( 'button().add()', function ( idx, conf ) {
-	if ( this.length === 1 ) {
-		this[0].inst.add( conf, idx );
+	var ctx = this.context;
+
+	// Don't use `this` as it could be empty - select the instances directly
+	if ( ctx.length ) {
+		var inst = Buttons.instanceSelector( this._groupSelector, ctx[0]._buttons );
+
+		if ( inst.length ) {
+			inst[0].add( conf, idx );
+		}
 	}
 
-	return this.button( idx );
+	return this.button( this._groupSelector, idx );
 } );
 
 // Destroy the button sets selected
