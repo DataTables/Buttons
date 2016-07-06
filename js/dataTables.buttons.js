@@ -1415,11 +1415,13 @@ DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', funct
 	} );
 } );
 
-// Get the container elements for the button sets selected
+// Get the container elements
 DataTable.Api.registerPlural( 'buttons().containers()', 'buttons().container()', function () {
 	var jq = $();
 	var groupSelector = this._groupSelector;
 
+	// We need to use the group selector directly, since if there are no buttons
+	// the result set will be empty
 	this.iterator( true, 'table', function ( ctx ) {
 		if ( ctx._buttons ) {
 			var insts = Buttons.instanceSelector( groupSelector, ctx._buttons );
