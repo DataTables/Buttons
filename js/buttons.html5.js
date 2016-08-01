@@ -35,17 +35,17 @@
 		// Browser
 		factory( jQuery, window, document );
 	}
-}(function( $, window, document, jsZip, pdfMake, undefined ) {
+}(function( $, window, document, jszip, pdfmake, undefined ) {
 'use strict';
 var DataTable = $.fn.dataTable;
 
 // Allow the constructor to pass in JSZip and PDFMake from external requires.
 // Otherwise, use globally defined variables, if they are available.
-if ( jsZip === undefined ) {
-	jsZip = window.JSZip;
+function _jsZip () {
+	return jszip || window.JSZip;
 }
-if ( pdfMake === undefined ) {
-	pdfMake = window.pdfMake;
+function _pdfMake () {
+	return pdfmake || window.pdfMake;
 }
 
 
@@ -1003,7 +1003,7 @@ DataTable.ext.buttons.excelHtml5 = {
 	className: 'buttons-excel buttons-html5',
 
 	available: function () {
-		return window.FileReader !== undefined && jsZip !== undefined && ! _isSafari() && _serialiser;
+		return window.FileReader !== undefined && _jsZip() !== undefined && ! _isSafari() && _serialiser;
 	},
 
 	text: function ( dt ) {
@@ -1141,7 +1141,8 @@ DataTable.ext.buttons.excelHtml5 = {
 			config.customize( xlsx );
 		}
 
-		var zip = new jsZip();
+		var jszip = _jsZip();
+		var zip = new jszip();
 		var zipConfig = {
 			type: 'blob',
 			mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -1184,7 +1185,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 	className: 'buttons-pdf buttons-html5',
 
 	available: function () {
-		return window.FileReader !== undefined && pdfMake;
+		return window.FileReader !== undefined && _pdfMake();
 	},
 
 	text: function ( dt ) {
@@ -1284,7 +1285,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 			config.customize( doc, config );
 		}
 
-		var pdf = pdfMake.createPdf( doc );
+		var pdf = _pdfMake().createPdf( doc );
 
 		if ( config.download === 'open' && ! _isSafari() ) {
 			pdf.open();
