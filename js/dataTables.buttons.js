@@ -1588,13 +1588,11 @@ var _exportData = function ( dt, inOpts )
 		} ).toArray() :
 		null;
 
-	var rowIndexes = dt.rows( config.rows, config.modifier ).indexes().toArray();
-	var cells = dt
-		.cells( rowIndexes, config.columns )
+	var selectedCells = dt.cells( config.rows, config.columns, config.modifier );
+	var cells = selectedCells
 		.render( config.orthogonal )
 		.toArray();
-	var cellNodes = dt
-		.cells( rowIndexes, config.columns )
+	var cellNodes = selectedCells
 		.nodes()
 		.toArray();
 
