@@ -603,16 +603,25 @@ function _createNode( doc, nodeName, opts ) {
  * @param  {int}    col  Column index
  * @return {int}         Column width
  */
-function _excelColWidth( data, col ) {
+function _excelColWidth( data, col, config ) {
 	var max = data.header[col].length;
 	var len;
+	var newLine = ( _newLine( config ) == '\r\n' ? 'win' : 'other' );
+	var cellData, testNL, splitCell;
 
 	if ( data.footer && data.footer[col].length > max ) {
 		max = data.footer[col].length;
 	}
 
 	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-		len = data.body[i][col].toString().length;
+		cellData = data.body[i][col].toString();
+		testNL = ( newLine == 'win' ? cellData.match(/[\r\n]/g) : cellData.match(/[\n]/g) );
+		if ( testNL ) {
+			splitCell = ( (testNL && newLine == 'win') ? cellData.split(/[\r\n]/g) : cellData.split(/[\n]/g) );
+			len = Math.max.apply(Math, $.map(splitCell, function (el) { return el.length })) * 1.2;
+		} else {
+			len = (cellData.length * 1.2);
+		}
 
 		if ( len > max ) {
 			max = len;
@@ -625,7 +634,7 @@ function _excelColWidth( data, col ) {
 	}
 
 	// And a min width
-	return max > 5 ? max : 5;
+	return max > 8 ? max : 8;
 }
 
 // Excel - Pre-defined strings to build a basic XLSX file
@@ -1148,7 +1157,8 @@ DataTable.ext.buttons.excelHtml5 = {
 				attr: {
 					min: i+1,
 					max: i+1,
-					width: _excelColWidth( data, i ),
+					width: _excelColWidth( data, i, config ),
+					bestFit: 1,
 					customWidth: 1
 				}
 			} ) );
