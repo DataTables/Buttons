@@ -764,8 +764,10 @@ function _excelColWidth( data, col ) {
 		}
 	}
 
+	max *= 1.3;
+
 	// And a min width
-	return max > 5 ? max : 5;
+	return max > 6 ? max : 6;
 }
 
 try {
@@ -894,6 +896,11 @@ var excelStrings = {
 	"xl/styles.xml":
 		'<?xml version="1.0" encoding="UTF-8"?>'+
 		'<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">'+
+			'<numFmts count="3">'+
+				'<numFmt numFmtId="164" formatCode="#,##0.00_-\ [$$-45C]"/>'+
+				'<numFmt numFmtId="165" formatCode="&quot;£&quot;#,##0.00"/>'+
+				'<numFmt numFmtId="166" formatCode="[$€-2]\ #,##0.00"/>'+
+			'</numFmts>'+
 			'<fonts count="5" x14ac:knownFonts="1">'+
 				'<font>'+
 					'<sz val="11" />'+
@@ -977,7 +984,7 @@ var excelStrings = {
 			'<cellStyleXfs count="1">'+
 				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" />'+
 			'</cellStyleXfs>'+
-			'<cellXfs count="56">'+
+			'<cellXfs count="60">'+
 				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
 				'<xf numFmtId="0" fontId="1" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
 				'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
@@ -1046,7 +1053,10 @@ var excelStrings = {
 				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
 					'<alignment wrapText="1"/>'+
 				'</xf>'+
-				'<xf numFmtId="9" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" applyNumberFormat="1"/>'+
+				'<xf numFmtId="9"   fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+				'<xf numFmtId="164" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+				'<xf numFmtId="165" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+				'<xf numFmtId="166" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
 			'</cellXfs>'+
 			'<cellStyles count="1">'+
 				'<cellStyle name="Normal" xfId="0" builtinId="0" />'+
@@ -1057,6 +1067,15 @@ var excelStrings = {
 };
 // Note we could use 3 `for` loops for the styles, but when gzipped there is
 // virtually no difference in size, since the above can be easily compressed
+
+// Pattern matching for special number formats. Perhaps this should be exposed
+// via an API in future?
+var _excelSpecials = [
+	{ match: /^\d+.?\d*%$/,     style: 56, fmt: function (d) { return d/100; } },
+	{ match: /^\$[\d,]+.?\d*$/, style: 57 },
+	{ match: /^£[\d,]+.?\d*$/,  style: 58 },
+	{ match: /^€[\d,]+.?\d*$/,  style: 59 },
+];
 
 
 
@@ -1185,67 +1204,82 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 			for ( var i=0, ien=row.length ; i<ien ; i++ ) {
 				// Concat both the Cell Columns as a letter and the Row of the cell.
 				var cellId = createCellPos(i) + '' + currentRow;
-				var cell;
+				var cell = null;
 
 				if ( row[i] === null || row[i] === undefined ) {
 					row[i] = '';
 				}
 
-				if ( row[i].match && row[i].match(/^\d+.?\d*%$/) ) {
-					// Percentage values
-					var val = parseFloat( row[i] ) / 100;
-					cell = _createNode( rels, 'c', {
-						attr: {
-							r: cellId,
-							s: 56
-						},
-						children: [
-							_createNode( rels, 'v', { text: val } )
-						]
-					} );
-				}
-				else if ( typeof row[i] === 'number' || (
-					row[i].match &&
-					$.trim(row[i]).match(/^-?\d+(\.\d+)?$/) &&
-					! $.trim(row[i]).match(/^0\d+/) )
-				) {
-					// Detect numbers - don't match numbers with leading zeros
-					// or a negative anywhere but the start
-					cell = _createNode( rels, 'c', {
-						attr: {
-							t: 'n',
-							r: cellId
-						},
-						children: [
-							_createNode( rels, 'v', { text: row[i] } )
-						]
-					} );
-				}
-				else {
-					// Replace non standard characters for text output
-					var text = ! row[i].replace ?
-						row[i] :
-						row[i].replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
+				row[i] = $.trim( row[i] );
 
-					cell = _createNode( rels, 'c', {
-						attr: {
-							t: 'inlineStr',
-							r: cellId
-						},
-						children:{
-							row: _createNode( rels, 'is', {
-								children: {
-									row: _createNode( rels, 't', {
-										text: text
-									} )
-								}
-							} )
+				// Special number formatting options
+				for ( var j=0, jen=_excelSpecials.length ; j<jen ; j++ ) {
+					var special = _excelSpecials[j];
+
+					if ( row[i].match && row[i].match( special.match ) ) {
+						var val = row[i].replace(/[^\d\.\-]/g, '');
+
+						if ( special.fmt ) {
+							val = special.fmt( val );
 						}
-					} );
+
+						cell = _createNode( rels, 'c', {
+							attr: {
+								r: cellId,
+								s: special.style
+							},
+							children: [
+								_createNode( rels, 'v', { text: val } )
+							]
+						} );
+					}
+				}
+
+				if ( ! cell ) {
+					if ( typeof row[i] === 'number' || (
+						row[i].match &&
+						row[i].match(/^-?\d+(\.\d+)?$/) &&
+						! row[i].match(/^0\d+/) )
+					) {
+						// Detect numbers - don't match numbers with leading zeros
+						// or a negative anywhere but the start
+						cell = _createNode( rels, 'c', {
+							attr: {
+								t: 'n',
+								r: cellId
+							},
+							children: [
+								_createNode( rels, 'v', { text: row[i] } )
+							]
+						} );
+					}
+					else {
+						// String output - replace non standard characters for text output
+						var text = ! row[i].replace ?
+							row[i] :
+							row[i].replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
+
+						cell = _createNode( rels, 'c', {
+							attr: {
+								t: 'inlineStr',
+								r: cellId
+							},
+							children:{
+								row: _createNode( rels, 'is', {
+									children: {
+										row: _createNode( rels, 't', {
+											text: text
+										} )
+									}
+								} )
+							}
+						} );
+					}
 				}
 
 				rowNode.appendChild( cell );
 			}
+
 			relsGet.appendChild(rowNode);
 			rowPos++;
 		};
