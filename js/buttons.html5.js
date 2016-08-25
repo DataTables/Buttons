@@ -759,7 +759,7 @@ var excelStrings = {
 			'<cellStyleXfs count="1">'+
 				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" />'+
 			'</cellStyleXfs>'+
-			'<cellXfs count="56">'+
+			'<cellXfs count="57">'+
 				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
 				'<xf numFmtId="0" fontId="1" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
 				'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
@@ -828,6 +828,7 @@ var excelStrings = {
 				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
 					'<alignment wrapText="1"/>'+
 				'</xf>'+
+				'<xf numFmtId="9" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" applyNumberFormat="1"/>'+
 			'</cellXfs>'+
 			'<cellStyles count="1">'+
 				'<cellStyle name="Normal" xfId="0" builtinId="0" />'+
@@ -1073,13 +1074,26 @@ DataTable.ext.buttons.excelHtml5 = {
 					row[i] = '';
 				}
 
-				// Detect numbers - don't match numbers with leading zeros or a negative
-				// anywhere but the start
-				if ( typeof row[i] === 'number' || (
-						row[i].match &&
-						$.trim(row[i]).match(/^-?\d+(\.\d+)?$/) &&
-						! $.trim(row[i]).match(/^0\d+/) )
+				if ( row[i].match && row[i].match(/^\d+.?\d*%$/) ) {
+					// Percentage values
+					var val = parseFloat( row[i] ) / 100;
+					cell = _createNode( rels, 'c', {
+						attr: {
+							r: cellId,
+							s: 56
+						},
+						children: [
+							_createNode( rels, 'v', { text: val } )
+						]
+					} );
+				}
+				else if ( typeof row[i] === 'number' || (
+					row[i].match &&
+					$.trim(row[i]).match(/^-?\d+(\.\d+)?$/) &&
+					! $.trim(row[i]).match(/^0\d+/) )
 				) {
+					// Detect numbers - don't match numbers with leading zeros
+					// or a negative anywhere but the start
 					cell = _createNode( rels, 'c', {
 						attr: {
 							t: 'n',
@@ -1115,6 +1129,7 @@ DataTable.ext.buttons.excelHtml5 = {
 
 				rowNode.appendChild( cell );
 			}
+
 			relsGet.appendChild(rowNode);
 			rowPos++;
 		};

@@ -144,11 +144,12 @@
 		* `48` - Italic, blue background, thin black border
 		* `49` - Underline, blue background, thin black border
 		* `50` - Left aligned text (since 1.2.2)
-		* `51` - Centred text
-		* `52` - Right aligned text
-		* `53` - Justified text
-		* `54` - Text rotated 90°
-		* `55` - Wrapped text
+		* `51` - Centred text (since 1.2.2)
+		* `52` - Right aligned text (since 1.2.2)
+		* `53` - Justified text (since 1.2.2)
+		* `54` - Text rotated 90° (since 1.2.2)
+		* `55` - Wrapped text (since 1.2.2)
+		* `56` - Percentage number value (automatically detected and used by buttons - since 1.2.3)
 
 		Notes:
 
