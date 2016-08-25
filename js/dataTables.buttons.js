@@ -1273,6 +1273,7 @@ $.extend( _dtButtons, {
 			buttons: $.map( vals, function ( val, i ) {
 				return {
 					text: lang[i],
+					className: 'button-page-length',
 					action: function ( e, dt ) {
 						dt.page.len( val ).draw();
 					},
