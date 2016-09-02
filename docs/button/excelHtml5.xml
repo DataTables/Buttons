@@ -149,10 +149,11 @@
 		* `53` - Justified text (since 1.2.2)
 		* `54` - Text rotated 90° (since 1.2.2)
 		* `55` - Wrapped text (since 1.2.2)
-		* `56` - Percentage number value (automatically detected and used by buttons - since 1.2.3)
+		* `56` - Percentage integer value (automatically detected and used by buttons - since 1.2.3)
 		* `57` - Dollar currency values (automatically detected and used by buttons - since 1.2.3)
 		* `58` - Pound currency values (automatically detected and used by buttons - since 1.2.3)
 		* `59` - Euro currency values (automatically detected and used by buttons - since 1.2.3)
+		* `60` - Percentage with 1 decimal place (automatically detected and used by buttons - since 1.2.3)
 
 		Notes:
 

@@ -678,10 +678,11 @@ var excelStrings = {
 	"xl/styles.xml":
 		'<?xml version="1.0" encoding="UTF-8"?>'+
 		'<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">'+
-			'<numFmts count="3">'+
+			'<numFmts count="4">'+
 				'<numFmt numFmtId="164" formatCode="#,##0.00_-\ [$$-45C]"/>'+
 				'<numFmt numFmtId="165" formatCode="&quot;£&quot;#,##0.00"/>'+
 				'<numFmt numFmtId="166" formatCode="[$€-2]\ #,##0.00"/>'+
+				'<numFmt numFmtId="167" formatCode="0.0%"/>'+
 			'</numFmts>'+
 			'<fonts count="5" x14ac:knownFonts="1">'+
 				'<font>'+
@@ -766,7 +767,7 @@ var excelStrings = {
 			'<cellStyleXfs count="1">'+
 				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" />'+
 			'</cellStyleXfs>'+
-			'<cellXfs count="60">'+
+			'<cellXfs count="61">'+
 				'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
 				'<xf numFmtId="0" fontId="1" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
 				'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1"/>'+
@@ -839,6 +840,7 @@ var excelStrings = {
 				'<xf numFmtId="164" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
 				'<xf numFmtId="165" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
 				'<xf numFmtId="166" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+				'<xf numFmtId="167" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
 			'</cellXfs>'+
 			'<cellStyles count="1">'+
 				'<cellStyle name="Normal" xfId="0" builtinId="0" />'+
@@ -853,7 +855,8 @@ var excelStrings = {
 // Pattern matching for special number formats. Perhaps this should be exposed
 // via an API in future?
 var _excelSpecials = [
-	{ match: /^\d+.?\d*%$/,     style: 56, fmt: function (d) { return d/100; } },
+	{ match: /^\d+\.\d%$/,      style: 60, fmt: function (d) { return d/100; } },
+	{ match: /^\d+\.?\d*%$/,    style: 56, fmt: function (d) { return d/100; } },
 	{ match: /^\$[\d,]+.?\d*$/, style: 57 },
 	{ match: /^£[\d,]+.?\d*$/,  style: 58 },
 	{ match: /^€[\d,]+.?\d*$/,  style: 59 },
@@ -1115,6 +1118,8 @@ DataTable.ext.buttons.excelHtml5 = {
 								_createNode( rels, 'v', { text: val } )
 							]
 						} );
+
+						break;
 					}
 				}
 
