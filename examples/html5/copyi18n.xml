@@ -16,8 +16,8 @@ $(document).ready(function() {
 				copyTitle: 'Ajouté au presse-papiers',
 				copyKeys: 'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
 				copySuccess: {
-					_: 'Copiés %d rangs',
-					1: 'Copié 1 rang'
+					_: '%d lignes copiées',
+					1: '1 ligne copiée'
 				}
 			}
 		}
