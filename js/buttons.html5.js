@@ -605,14 +605,28 @@ function _createNode( doc, nodeName, opts ) {
  */
 function _excelColWidth( data, col ) {
 	var max = data.header[col].length;
-	var len;
+	var len, lineSplit, str;
 
 	if ( data.footer && data.footer[col].length > max ) {
 		max = data.footer[col].length;
 	}
 
 	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-		len = data.body[i][col].toString().length;
+		str = data.body[i][col].toString();
+
+		// If there is a newline character, workout the width of the column
+		// based on the longest line in the string
+		if ( str.indexOf('\n') !== -1 ) {
+			lineSplit = str.split('\n');
+			lineSplit.sort( function (a, b) {
+				return b.length - a.length;
+			} );
+
+			len = lineSplit[0].length;
+		}
+		else {
+			len = str.length;
+		}
 
 		if ( len > max ) {
 			max = len;
