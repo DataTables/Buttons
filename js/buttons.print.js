@@ -144,6 +144,8 @@ DataTable.ext.buttons.print = {
 			'</div>'+
 			html;
 
+		$(win.document.body).addClass('dt-print-view');
+
 		if ( config.customize ) {
 			config.customize( win );
 		}
