@@ -1107,7 +1107,7 @@ DataTable.ext.buttons.excelHtml5 = {
 				var cell = null;
 
 				// For null, undefined of blank cell, continue so it doesn't create the _createNode
-				if ( row[i] === null || row[i] === undefined || row[i] == '' ) {
+				if ( row[i] === null || row[i] === undefined || row[i] === '' ) {
 					continue;
 				}
 
