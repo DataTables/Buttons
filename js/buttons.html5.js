@@ -58,7 +58,7 @@ function _pdfMake () {
 var _saveAs = (function(view) {
 	"use strict";
 	// IE <10 is explicitly unsupported
-	if (typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
+	if (typeof view === "undefined" || typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
 		return;
 	}
 	var
@@ -73,16 +73,14 @@ var _saveAs = (function(view) {
 			var event = new MouseEvent("click");
 			node.dispatchEvent(event);
 		}
-		, is_safari = /Version\/[\d\.]+.*Safari/.test(navigator.userAgent)
-		, webkit_req_fs = view.webkitRequestFileSystem
-		, req_fs = view.requestFileSystem || webkit_req_fs || view.mozRequestFileSystem
+		, is_safari = /constructor/i.test(view.HTMLElement) || view.safari
+		, is_chrome_ios =/CriOS\/[\d]+/.test(navigator.userAgent)
 		, throw_outside = function(ex) {
 			(view.setImmediate || view.setTimeout)(function() {
 				throw ex;
 			}, 0);
 		}
 		, force_saveable_type = "application/octet-stream"
-		, fs_min_size = 0
 		// the Blob API is fundamentally broken as there is no "downloadfinished" event to subscribe to
 		, arbitrary_revoke_timeout = 1000 * 40 // in ms
 		, revoke = function(file) {
@@ -93,22 +91,6 @@ var _saveAs = (function(view) {
 					file.remove();
 				}
 			};
-			/* // Take note W3C:
-			var
-			  uri = typeof file === "string" ? file : file.toURL()
-			, revoker = function(evt) {
-				// idealy DownloadFinishedEvent.data would be the URL requested
-				if (evt.data === uri) {
-					if (typeof file === "string") { // file is an object URL
-						get_URL().revokeObjectURL(file);
-					} else { // file is a File
-						file.remove();
-					}
-				}
-			}
-			;
-			view.addEventListener("downloadfinished", revoker);
-			*/
 			setTimeout(revoker, arbitrary_revoke_timeout);
 		}
 		, dispatch = function(filesaver, event_types, event) {
@@ -127,8 +109,9 @@ var _saveAs = (function(view) {
 		}
 		, auto_bom = function(blob) {
 			// prepend BOM for UTF-8 XML and text/* types (including HTML)
+			// note: your browser will automatically convert UTF-16 U+FEFF to EF BB BF
 			if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
-				return new Blob(["\ufeff", blob], {type: blob.type});
+				return new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
 			}
 			return blob;
 		}
@@ -140,20 +123,21 @@ var _saveAs = (function(view) {
 			var
 				  filesaver = this
 				, type = blob.type
-				, blob_changed = false
+				, force = type === force_saveable_type
 				, object_url
-				, target_view
 				, dispatch_all = function() {
 					dispatch(filesaver, "writestart progress write writeend".split(" "));
 				}
 				// on any filesys errors revert to saving with object URLs
 				, fs_error = function() {
-					if (target_view && is_safari && typeof FileReader !== "undefined") {
+					if ((is_chrome_ios || (force && is_safari)) && view.FileReader) {
 						// Safari doesn't allow downloading of blob urls
 						var reader = new FileReader();
 						reader.onloadend = function() {
-							var base64Data = reader.result;
-							target_view.location.href = "data:attachment/file" + base64Data.slice(base64Data.search(/[,;]/));
+							var url = is_chrome_ios ? reader.result : reader.result.replace(/^data:[^;]*;/, 'data:attachment/file;');
+							var popup = view.open(url, '_blank');
+							if(!popup) view.location.href = url;
+							url=undefined; // release reference before dispatching
 							filesaver.readyState = filesaver.DONE;
 							dispatch_all();
 						};
@@ -162,36 +146,25 @@ var _saveAs = (function(view) {
 						return;
 					}
 					// don't create more object URLs than needed
-					if (blob_changed || !object_url) {
+					if (!object_url) {
 						object_url = get_URL().createObjectURL(blob);
 					}
-					if (target_view) {
-						target_view.location.href = object_url;
+					if (force) {
+						view.location.href = object_url;
 					} else {
-						var new_tab = view.open(object_url, "_blank");
-						if (new_tab === undefined && is_safari) {
-							//Apple do not allow window.open, see http://bit.ly/1kZffRI
-							view.location.href = object_url
+						var opened = view.open(object_url, "_blank");
+						if (!opened) {
+							// Apple does not allow window.open, see https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/WorkingwithWindowsandTabs/WorkingwithWindowsandTabs.html
+							view.location.href = object_url;
 						}
 					}
 					filesaver.readyState = filesaver.DONE;
 					dispatch_all();
 					revoke(object_url);
 				}
-				, abortable = function(func) {
-					return function() {
-						if (filesaver.readyState !== filesaver.DONE) {
-							return func.apply(this, arguments);
-						}
-					};
-				}
-				, create_if_not_found = {create: true, exclusive: false}
-				, slice
 			;
 			filesaver.readyState = filesaver.INIT;
-			if (!name) {
-				name = "download";
-			}
+
 			if (can_use_save_link) {
 				object_url = get_URL().createObjectURL(blob);
 				setTimeout(function() {
@@ -204,93 +177,27 @@ var _saveAs = (function(view) {
 				});
 				return;
 			}
-			// Object and web filesystem URLs have a problem saving in Google Chrome when
-			// viewed in a tab, so I force save with application/octet-stream
-			// http://code.google.com/p/chromium/issues/detail?id=91158
-			// Update: Google errantly closed 91158, I submitted it again:
-			// https://code.google.com/p/chromium/issues/detail?id=389642
-			if (view.chrome && type && type !== force_saveable_type) {
-				slice = blob.slice || blob.webkitSlice;
-				blob = slice.call(blob, 0, blob.size, force_saveable_type);
-				blob_changed = true;
-			}
-			// Since I can't be sure that the guessed media type will trigger a download
-			// in WebKit, I append .download to the filename.
-			// https://bugs.webkit.org/show_bug.cgi?id=65440
-			if (webkit_req_fs && name !== "download") {
-				name += ".download";
-			}
-			if (type === force_saveable_type || webkit_req_fs) {
-				target_view = view;
-			}
-			if (!req_fs) {
-				fs_error();
-				return;
-			}
-			fs_min_size += blob.size;
-			req_fs(view.TEMPORARY, fs_min_size, abortable(function(fs) {
-				fs.root.getDirectory("saved", create_if_not_found, abortable(function(dir) {
-					var save = function() {
-						dir.getFile(name, create_if_not_found, abortable(function(file) {
-							file.createWriter(abortable(function(writer) {
-								writer.onwriteend = function(event) {
-									target_view.location.href = file.toURL();
-									filesaver.readyState = filesaver.DONE;
-									dispatch(filesaver, "writeend", event);
-									revoke(file);
-								};
-								writer.onerror = function() {
-									var error = writer.error;
-									if (error.code !== error.ABORT_ERR) {
-										fs_error();
-									}
-								};
-								"writestart progress write abort".split(" ").forEach(function(event) {
-									writer["on" + event] = filesaver["on" + event];
-								});
-								writer.write(blob);
-								filesaver.abort = function() {
-									writer.abort();
-									filesaver.readyState = filesaver.DONE;
-								};
-								filesaver.readyState = filesaver.WRITING;
-							}), fs_error);
-						}), fs_error);
-					};
-					dir.getFile(name, {create: false}, abortable(function(file) {
-						// delete file if it already exists
-						file.remove();
-						save();
-					}), abortable(function(ex) {
-						if (ex.code === ex.NOT_FOUND_ERR) {
-							save();
-						} else {
-							fs_error();
-						}
-					}));
-				}), fs_error);
-			}), fs_error);
+
+			fs_error();
 		}
 		, FS_proto = FileSaver.prototype
 		, saveAs = function(blob, name, no_auto_bom) {
-			return new FileSaver(blob, name, no_auto_bom);
+			return new FileSaver(blob, name || blob.name || "download", no_auto_bom);
 		}
 	;
 	// IE 10+ (native saveAs)
 	if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
 		return function(blob, name, no_auto_bom) {
+			name = name || blob.name || "download";
+
 			if (!no_auto_bom) {
 				blob = auto_bom(blob);
 			}
-			return navigator.msSaveOrOpenBlob(blob, name || "download");
+			return navigator.msSaveOrOpenBlob(blob, name);
 		};
 	}
 
-	FS_proto.abort = function() {
-		var filesaver = this;
-		filesaver.readyState = filesaver.DONE;
-		dispatch(filesaver, "abort");
-	};
+	FS_proto.abort = function(){};
 	FS_proto.readyState = FS_proto.INIT = 0;
 	FS_proto.WRITING = 1;
 	FS_proto.DONE = 2;
@@ -450,17 +357,27 @@ var _exportData = function ( dt, config )
 };
 
 /**
- * Safari's data: support for creating and downloading files is really poor, so
- * various options need to be disabled in it. See
- * https://bugs.webkit.org/show_bug.cgi?id=102914
+ * Older versions of Safari (prior to tech preview 18) don't support the
+ * download option required.
  *
- * @return {Boolean} `true` if Safari
+ * @return {Boolean} `true` if old Safari
  */
-var _isSafari = function ()
+var _isDuffSafari = function ()
 {
-	return navigator.userAgent.indexOf('Safari') !== -1 &&
+	var safari = navigator.userAgent.indexOf('Safari') !== -1 &&
 		navigator.userAgent.indexOf('Chrome') === -1 &&
 		navigator.userAgent.indexOf('Opera') === -1;
+
+	if ( ! safari ) {
+		return false;
+	}
+
+	var version = navigator.userAgent.match( /AppleWebKit\/(\d+\.\d+)/ );
+	if ( version && version.length > 1 && version[1]*1 < 603.1 ) {
+		return true;
+	}
+
+	return false;
 };
 
 /**
@@ -1056,7 +973,7 @@ DataTable.ext.buttons.excelHtml5 = {
 	className: 'buttons-excel buttons-html5',
 
 	available: function () {
-		return window.FileReader !== undefined && _jsZip() !== undefined && ! _isSafari() && _serialiser;
+		return window.FileReader !== undefined && _jsZip() !== undefined && ! _isDuffSafari() && _serialiser;
 	},
 
 	text: function ( dt ) {
@@ -1371,7 +1288,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 		var pdf = _pdfMake().createPdf( doc );
 
-		if ( config.download === 'open' && ! _isSafari() ) {
+		if ( config.download === 'open' && ! _isDuffSafari() ) {
 			pdf.open();
 		}
 		else {

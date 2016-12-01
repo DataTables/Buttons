@@ -30,8 +30,7 @@
 		* Edge: Yes
 		* Chrome: Yes
 		* Opera: Yes
-		* Safari: No
-		  * Safari does not currently support the ability to download generated files ([see WebKit bug 156056](https://bugs.webkit.org/show_bug.cgi?id=156056)). As soon as this has been addressed in Safari it will be released here.
+		* Safari: Yes (tech preview 18+) Safari 10.0.1 and earlier are _not_ supported.
 
 
 		## Customisation
