@@ -153,6 +153,10 @@
 		* `58` - Pound currency values (automatically detected and used by buttons - since 1.2.3)
 		* `59` - Euro currency values (automatically detected and used by buttons - since 1.2.3)
 		* `60` - Percentage with 1 decimal place (automatically detected and used by buttons - since 1.2.3)
+		* `61` - Negative numbers indicated by brackets (automatically detected and used by buttons - since 1.2.3)
+		* `62` - Negative numbers indicated by brackets - 2 decimal places (automatically detected and used by buttons - since 1.2.3)
+		* `63` - Numbers with thousand separators (automatically detected and used by buttons - since 1.2.3)
+		* `64` - Numbers with thousand separators - 2 decimal places (automatically detected and used by buttons - since 1.2.3)
 
 		Notes:
 
