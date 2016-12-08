@@ -1589,7 +1589,8 @@ var _exportData = function ( dt, inOpts )
 		} ).toArray() :
 		null;
 
-	var selectedCells = dt.cells( config.rows, config.columns, config.modifier );
+	var rowIndexes = dt.rows( config.rows, config.modifier ).indexes().toArray();
+	var selectedCells = dt.cells( rowIndexes, config.columns );
 	var cells = selectedCells
 		.render( config.orthogonal )
 		.toArray();
