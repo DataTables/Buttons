@@ -1109,7 +1109,7 @@ var _excelSpecials = [
  */
 
 // Set the default SWF path
-DataTable.Buttons.swfPath = '//cdn.datatables.net/buttons/1.2.0/swf/flashExport.swf';
+DataTable.Buttons.swfPath = '//cdn.datatables.net/buttons/1.2.4/swf/flashExport.swf';
 
 // Method to allow Flash buttons to be resized when made visible - as they are
 // of zero height and width if initialised hidden
