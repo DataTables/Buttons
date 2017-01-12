@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 <info><![CDATA[
 
-When working with column visibility you may which to present a control to the end use that provides the ability to set various columns to both show and hide at the same time - allowing grouping to occur. The `b-button colvisGroup` button type provides this ability for Buttons. The `show` and `hide` parameters of this button are both `dt-type column-selector` types defining the columns in the table that should be shown or hidden respectively. If a column is not defined in either, its visibility is not altered.
+When working with column visibility you may wish to present a control to the end user that provides the ability to set various columns to both show and hide at the same time - allowing grouping to occur. The `b-button colvisGroup` button type provides this ability for Buttons. The `show` and `hide` parameters of this button are both `dt-type column-selector` types defining the columns in the table that should be shown or hidden respectively. If a column is not defined in either, its visibility is not altered.
 
 This example shows three uses of the `b-button colvisGroup` button type:
 
