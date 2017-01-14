@@ -527,7 +527,10 @@ function _excelColWidth( data, col ) {
 	}
 
 	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-		str = data.body[i][col].toString();
+		var point = data.body[i][col];
+		str = point !== null && point !== undefined ?
+			point.toString() :
+			'';
 
 		// If there is a newline character, workout the width of the column
 		// based on the longest line in the string
