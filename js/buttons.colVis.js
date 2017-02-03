@@ -48,7 +48,8 @@ $.extend( DataTable.ext.buttons, {
 			className: 'buttons-colvis',
 			buttons: [ {
 				extend: 'columnsToggle',
-				columns: conf.columns
+				columns: conf.columns,
+				labelFormatter: conf.label
 			} ]
 		};
 	},
@@ -58,7 +59,8 @@ $.extend( DataTable.ext.buttons, {
 		var columns = dt.columns( conf.columns ).indexes().map( function ( idx ) {
 			return {
 				extend: 'columnToggle',
-				columns: idx
+				columns: idx,
+				labelFormatter: conf.labelFormatter
 			};
 		} ).toArray();
 
@@ -69,7 +71,8 @@ $.extend( DataTable.ext.buttons, {
 	columnToggle: function ( dt, conf ) {
 		return {
 			extend: 'columnVisibility',
-			columns: conf.columns
+			columns: conf.columns,
+			labelFormatter: conf.labelFormatter
 		};
 	},
 
@@ -79,7 +82,8 @@ $.extend( DataTable.ext.buttons, {
 			return {
 				extend: 'columnVisibility',
 				columns: idx,
-				visibility: conf.visibility
+				visibility: conf.visibility,
+				labelFormatter: conf.labelFormatter
 			};
 		} ).toArray();
 
@@ -90,7 +94,12 @@ $.extend( DataTable.ext.buttons, {
 	columnVisibility: {
 		columns: undefined, // column selector
 		text: function ( dt, button, conf ) {
-			return conf._columnText( dt, conf.columns );
+			var columnLabel = conf._columnText( dt, conf.columns );
+			if (typeof(conf.labelFormatter) !== 'undefined') {
+				 var idx = dt.column( conf.columns ).index();
+				 columnLabel = conf.labelFormatter(idx, columnLabel);
+			}
+			return columnLabel;
 		},
 		className: 'buttons-columnVisibility',
 		action: function ( e, dt, button, conf ) {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="5">
+
+<css lib="datatables buttons" />
+<js lib="jquery datatables buttons buttons-colvis">
+<![CDATA[
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			{
+				extend: 'colvis',
+				label: function ( index, title ) {
+					return (index+1) +'. '+ title;
+				}
+			}
+		]
+	} );
+} );
+]]>
+</js>
+
+<title lib="Buttons">Select column labels</title>
+
+<info><![CDATA[
+
+The `b-button colvis` button type provides a `label` option to allow you to change the name of each column label in the column visibility control list. This option is a callback taking the column index and default title as parameters and returning the label to use..
+
+]]></info>
+
+</dt-example>
