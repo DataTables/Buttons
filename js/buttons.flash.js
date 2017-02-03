@@ -856,7 +856,7 @@ function _xlsxToStrings( obj ) {
 
 			// Safari, IE and Edge will put empty name space attributes onto
 			// various elements making them useless. This strips them out
-			str = str.replace( /<(.*?) xmlns=""(.*?)>/g, '<$1 $2>' );
+			str = str.replace( /<([^<>]*?) xmlns=""([^<>]*?)>/g, '<$1 $2>' );
 
 			obj[ name ] = str;
 		}
