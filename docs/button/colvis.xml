@@ -30,6 +30,18 @@
 		Columns selector that defines the columns to include in the column visibility button set. By default this is `-type undefined` which results in all columns being selected, but any of the `-type column-selector` options can be used to define a custom button set.
 	</option>
 
+	<option type="function" name="columnText" default="undefined" since="1.3.0">
+		Callback function that provides the ability to modify or replace the text used for each button in the list. This function is executed once for each button.
+
+		It accepts three parameters:
+
+		* `-type DataTable.Api`: DataTable API instance
+		* `-type integer`: Column data index for the button being created
+		* `-type string`: The title for the button created by Buttons (derived from the column title)
+
+		The return value is a `-type string` that will be used for the button's text.
+	</option>
+
 
 	<example title="DataTables initialisation: Show the `colvis` button with default options"><![CDATA[
 
@@ -51,4 +63,20 @@ new $.fn.dataTable.Buttons( table, {
 } );
 
 ]]></example>
+
+	<example title="Customisation of the button text for the individual columns"><![CDATA[
+
+$('#myTable').DataTable( {
+	dom: 'Bfrtip',
+	buttons: [ {
+		extend: 'colvis',
+		columnText: function ( dt, idx, title ) {
+			return (idx+1)+': '+title;
+		}
+	} ]
+} );
+
+]]></example>
+
+
 </dt-button>

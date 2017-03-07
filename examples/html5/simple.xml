@@ -9,7 +9,12 @@ $(document).ready(function() {
 	$('#example').DataTable( {
 		dom: 'Bfrtip',
 		buttons: [
-			'copyHtml5',
+			{
+				extend: 'copyHtml5',
+                exportOptions: {
+                 columns: ':contains("Office")'
+                }
+            },
 			'excelHtml5',
 			'csvHtml5',
 			'pdfHtml5'
