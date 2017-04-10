@@ -50,7 +50,7 @@ var Buttons = function( dt, config )
 {
 	// If there is no config set it to an empty array
 	if ( typeof( config ) === 'undefined' ) {
-		config = [];	
+		config = {};	
 	}
 	
 	// Allow a boolean true for defaults
