@@ -787,11 +787,19 @@ function _excelColWidth( data, col ) {
 	return max > 6 ? max : 6;
 }
 
-try {
-	var _serialiser = new XMLSerializer();
-	var _ieExcel;
-}
-catch (t) {}
+  var _serialiser = "";
+    if (typeof window.XMLSerializer === 'undefined') {
+        _serialiser = new function () {
+            this.serializeToString = function (input) {
+                return input.xml
+            }
+        };
+    } else {
+        _serialiser =  new XMLSerializer();
+    }
+
+    var _ieExcel;
+
 
 /**
  * Convert XML documents in an object to strings
