@@ -1562,6 +1562,9 @@ var _exportData = function ( dt, inOpts )
 			return str;
 		}
 
+		// Always remove script tags
+		str = str.replace( /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '' );
+
 		if ( config.stripHtml ) {
 			str = str.replace( /<[^>]*>/g, '' );
 		}
