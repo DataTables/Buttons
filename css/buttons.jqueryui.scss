@@ -90,3 +90,9 @@ div.dt-button-background {
 		text-align: center;
 	}
 }
+
+button.dt-button.processing,
+div.dt-button.processing,
+a.dt-button.processing {
+	@include dtb-processing();
+}
