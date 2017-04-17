@@ -1151,6 +1151,8 @@ DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 			return;
 		}
 
+		this.processing( true );
+
 		var flash = config._flash;
 		var data = _exportData( dt, config );
 		var output = config.customize ?
@@ -1159,6 +1161,8 @@ DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 
 		flash.setAction( 'copy' );
 		_setText( flash, output );
+
+		this.processing( false );
 
 		dt.buttons.info(
 			dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ),
@@ -1208,6 +1212,8 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 	},
 
 	action: function ( e, dt, button, config ) {
+		this.processing( true );
+
 		var flash = config._flash;
 		var rowPos = 0;
 		var rels = $.parseXML( excelStrings['xl/worksheets/sheet1.xml'] ) ; //Parses xml
@@ -1372,6 +1378,8 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 		flash.setFileName( _filename( config ) );
 		flash.setSheetData( xlsx );
 		_setText( flash, '' );
+
+		this.processing( false );
 	},
 
 	extension: '.xlsx'
@@ -1388,6 +1396,8 @@ DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
 	},
 
 	action: function ( e, dt, button, config ) {
+		this.processing( true );
+
 		// Set the text
 		var flash = config._flash;
 		var data = dt.buttons.exportData( config.exportOptions );
@@ -1411,6 +1421,8 @@ DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
 			footer:      config.footer ? data.footer : null,
 			body:        data.body
 		} ) );
+
+		this.processing( false );
 	},
 
 	extension: '.pdf',

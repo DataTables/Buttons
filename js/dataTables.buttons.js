@@ -259,6 +259,24 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
+	 * Set / get a processing class on the selected button
+	 * @param  {boolean} flag true to add, false to remove, undefined to get
+	 * @return {boolean|Buttons} Getter value or this if a setter.
+	 */
+	processing: function ( node, flag )
+	{
+		var button = this._nodeToButton( node );
+
+		if ( flag === undefined ) {
+			return $(button.node).hasClass( 'processing' );
+		}
+
+		$(button.node).toggleClass( 'processing', flag );
+
+		return this;
+	},
+
+	/**
 	 * Remove a button.
 	 * @param  {node} node Button node
 	 * @return {Buttons} Self for chaining
@@ -1403,6 +1421,19 @@ DataTable.Api.registerPlural( 'buttons().nodes()', 'button().node()', function (
 	} ) );
 
 	return jq;
+} );
+
+// Get / set button processing state
+DataTable.Api.registerPlural( 'buttons().processing()', 'button().processing()', function ( flag ) {
+	if ( flag === undefined ) {
+		return this.map( function ( set ) {
+			return set.inst.processing( set.node );
+		} );
+	}
+
+	return this.each( function ( set ) {
+		set.inst.processing( set.node, flag );
+	} );
 } );
 
 // Get / set button text (i.e. the button labels)
