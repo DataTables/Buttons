@@ -11,7 +11,6 @@
 	</type>
 
 	<description>
-	<![CDATA[
 		The markup that is created by Buttons is quite flexible in that you can control the tags used and the class names. You can also optionally control the structure of the markup for the buttons.
 
 		By default the Buttons instance will create DOM of the following structure:
@@ -58,7 +57,6 @@
 		  * `b-init buttons.dom.collection`
 
 		All options are given as strings, and are generally self explanatory, however, please refer to the documentation for each option for full details.
-	]]>
 	</description>
 
 	<example title="DataTables initialisation: Use a button tag for buttons with no liner"><![CDATA[
