@@ -552,7 +552,7 @@ function _excelColWidth( data, col ) {
 
 		// Max width rather than having potentially massive column widths
 		if ( max > 40 ) {
-			break;
+			return 52; // 40 * 1.3
 		}
 	}
 
@@ -827,6 +827,9 @@ DataTable.ext.buttons.copyHtml5 = {
 	},
 
 	action: function ( e, dt, button, config ) {
+		this.processing( true );
+
+		var that = this;
 		var exportData = _exportData( dt, config );
 		var output = exportData.str;
 		var hiddenDiv = $('<div/>')
@@ -866,6 +869,8 @@ DataTable.ext.buttons.copyHtml5 = {
 						}, exportData.rows ),
 						2000
 					);
+
+					this.processing( false );
 					return;
 				}
 			}
@@ -899,10 +904,12 @@ DataTable.ext.buttons.copyHtml5 = {
 			.on( 'keydown.buttons-copy', function (e) {
 				if ( e.keyCode === 27 ) { // esc
 					close();
+					that.processing( false );
 				}
 			} )
 			.on( 'copy.buttons-copy cut.buttons-copy', function () {
 				close();
+				that.processing( false );
 			} );
 	},
 
@@ -934,6 +941,8 @@ DataTable.ext.buttons.csvHtml5 = {
 	},
 
 	action: function ( e, dt, button, config ) {
+		this.processing( true );
+
 		// Set the text
 		var output = _exportData( dt, config ).str;
 		var charset = config.charset;
@@ -964,6 +973,8 @@ DataTable.ext.buttons.csvHtml5 = {
 			_filename( config ),
 			true
 		);
+
+		this.processing( false );
 	},
 
 	filename: '*',
@@ -1000,6 +1011,9 @@ DataTable.ext.buttons.excelHtml5 = {
 	},
 
 	action: function ( e, dt, button, config ) {
+		this.processing( true );
+
+		var that = this;
 		var rowPos = 0;
 		var getXml = function ( type ) {
 			var str = excelStrings[ type ];
@@ -1051,7 +1065,10 @@ DataTable.ext.buttons.excelHtml5 = {
 				for ( var j=0, jen=_excelSpecials.length ; j<jen ; j++ ) {
 					var special = _excelSpecials[j];
 
-					if ( row[i].match && row[i].match( special.match ) ) {
+					// TODO Need to provide the ability for the specials to say
+					// if they are returning a string, since at the moment it is
+					// assumed to be a number
+					if ( row[i].match && ! row[i].match(/^0\d+/) && row[i].match( special.match ) ) {
 						var val = row[i].replace(/[^\d\.\-]/g, '');
 
 						if ( special.fmt ) {
@@ -1176,6 +1193,7 @@ DataTable.ext.buttons.excelHtml5 = {
 				.generateAsync( zipConfig )
 				.then( function ( blob ) {
 					_saveAs( blob, _filename( config ) );
+					that.processing( false );
 				} );
 		}
 		else {
@@ -1184,6 +1202,7 @@ DataTable.ext.buttons.excelHtml5 = {
 				zip.generate( zipConfig ),
 				_filename( config )
 			);
+			this.processing( false );
 		}
 	},
 
@@ -1213,7 +1232,9 @@ DataTable.ext.buttons.pdfHtml5 = {
 	},
 
 	action: function ( e, dt, button, config ) {
-		var newLine = _newLine( config );
+		this.processing( true );
+
+		var that = this;
 		var data = dt.buttons.exportData( config.exportOptions );
 		var rows = [];
 
@@ -1286,11 +1307,11 @@ DataTable.ext.buttons.pdfHtml5 = {
 		};
 
 		if ( config.message ) {
-      doc.content.unshift( {
-        text: typeof config.message == 'function' ? config.message(dt, button, config) : config.message,
-        style: 'message',
-        margin: [ 0, 0, 0, 12 ]
-      } );
+			doc.content.unshift( {
+				text: typeof config.message == 'function' ? config.message(dt, button, config) : config.message,
+				style: 'message',
+				margin: [ 0, 0, 0, 12 ]
+			} );
 		}
 
 		if ( config.title ) {
@@ -1309,12 +1330,14 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 		if ( config.download === 'open' && ! _isDuffSafari() ) {
 			pdf.open();
+			this.processing( false );
 		}
 		else {
 			pdf.getBuffer( function (buffer) {
 				var blob = new Blob( [buffer], {type:'application/pdf'} );
 
 				_saveAs( blob, _filename( config ) );
+				that.processing( false );
 			} );
 		}
 	},

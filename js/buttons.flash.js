@@ -777,7 +777,7 @@ function _excelColWidth( data, col ) {
 
 		// Max width rather than having potentially massive column widths
 		if ( max > 40 ) {
-			break;
+			return 52; // 40 * 1.3
 		}
 	}
 
@@ -787,11 +787,19 @@ function _excelColWidth( data, col ) {
 	return max > 6 ? max : 6;
 }
 
-try {
-	var _serialiser = new XMLSerializer();
-	var _ieExcel;
-}
-catch (t) {}
+  var _serialiser = "";
+    if (typeof window.XMLSerializer === 'undefined') {
+        _serialiser = new function () {
+            this.serializeToString = function (input) {
+                return input.xml
+            }
+        };
+    } else {
+        _serialiser =  new XMLSerializer();
+    }
+
+    var _ieExcel;
+
 
 /**
  * Convert XML documents in an object to strings
@@ -1143,6 +1151,8 @@ DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 			return;
 		}
 
+		this.processing( true );
+
 		var flash = config._flash;
 		var data = _exportData( dt, config );
 		var output = config.customize ?
@@ -1151,6 +1161,8 @@ DataTable.ext.buttons.copyFlash = $.extend( {}, flashButton, {
 
 		flash.setAction( 'copy' );
 		_setText( flash, output );
+
+		this.processing( false );
 
 		dt.buttons.info(
 			dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ),
@@ -1200,6 +1212,8 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 	},
 
 	action: function ( e, dt, button, config ) {
+		this.processing( true );
+
 		var flash = config._flash;
 		var rowPos = 0;
 		var rels = $.parseXML( excelStrings['xl/worksheets/sheet1.xml'] ) ; //Parses xml
@@ -1245,7 +1259,10 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 				for ( var j=0, jen=_excelSpecials.length ; j<jen ; j++ ) {
 					var special = _excelSpecials[j];
 
-					if ( row[i].match && row[i].match( special.match ) ) {
+					// TODO Need to provide the ability for the specials to say
+					// if they are returning a string, since at the moment it is
+					// assumed to be a number
+					if ( row[i].match && ! row[i].match(/^0\d+/) && row[i].match( special.match ) ) {
 						var val = row[i].replace(/[^\d\.\-]/g, '');
 
 						if ( special.fmt ) {
@@ -1361,6 +1378,8 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 		flash.setFileName( _filename( config ) );
 		flash.setSheetData( xlsx );
 		_setText( flash, '' );
+
+		this.processing( false );
 	},
 
 	extension: '.xlsx'
@@ -1377,6 +1396,8 @@ DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
 	},
 
 	action: function ( e, dt, button, config ) {
+		this.processing( true );
+
 		// Set the text
 		var flash = config._flash;
 		var data = dt.buttons.exportData( config.exportOptions );
@@ -1400,6 +1421,8 @@ DataTable.ext.buttons.pdfFlash = $.extend( {}, flashButton, {
 			footer:      config.footer ? data.footer : null,
 			body:        data.body
 		} ) );
+
+		this.processing( false );
 	},
 
 	extension: '.pdf',

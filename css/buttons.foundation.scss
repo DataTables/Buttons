@@ -68,3 +68,15 @@ div.button-group.stacked.dropdown-pane {
 		}
 	}
 }
+
+div.dt-buttons {
+	button.button.processing,
+	div.button.processing,
+	a.button.processing {
+		@include dtb-processing();
+
+		color: rgba( 255, 255, 255, 0.2 );
+		border-top-color: white;
+		border-bottom-color: white;
+	}
+}

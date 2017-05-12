@@ -43,7 +43,7 @@
 
 		* _Calibri_ font, size 11 (matching Excel default)
 		* Header and footer are bold
-		* Column widths are auto sized to fit their contents (min: _5_, max: _40_)
+		* Column widths are auto sized to fit their contents (min: _5_, max: _52_)
 
 		However, you may wish to add additional information or formatting to the document to suit your output requirements. This ability is provided by the `customize` option of this button type.
 

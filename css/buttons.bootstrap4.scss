@@ -43,3 +43,11 @@ div.dt-button-background {
 		}
 	}
 }
+
+div.dt-buttons {
+	button.btn.processing,
+	div.btn.processing,
+	a.btn.processing {
+		@include dtb-processing();
+	}
+}
