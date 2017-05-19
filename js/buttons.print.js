@@ -102,7 +102,26 @@ DataTable.ext.buttons.print = {
 		var html = '<table class="'+dt.table().node().className+'">';
 
 		if ( config.header ) {
-			html += '<thead>'+ addRow( data.header, 'th' ) +'</thead>';
+			// Get table header from table API
+			var thead = $( dt.table().header() );
+			// Construct new thead element
+			var new_thead = $( '<thead>' );
+			// map tr from datatable header, append to new_thead
+			thead.find( 'tr' ).map( function () {
+				// Construct new tr element
+				var new_tr = $( '<tr>' );
+				// map th from datatable header, append to new_tr
+				$( this ).find( 'th' ).map( function () {
+					// construct new th element then set rowspan and colspan from existing
+					var $th = $( this );
+					return $( '<th>' ).attr( {
+						'colspan': $th.attr( 'colspan' ),
+						'rowspan': $th.attr( 'rowspan' )
+					} ).text( $th.text() )[0];
+				} ).appendTo( new_tr );
+				return new_tr[0];
+			} ).appendTo( new_thead );
+			html += '<thead>' + new_thead.html() + '</thead>';
 		}
 
 		html += '<tbody>';
