@@ -40,7 +40,7 @@
 $('#myTable').DataTable( {
 	buttons: [
 		{ extend: 'copy', text: 'Copy to clipboard' }
-	}
+	]
 } );
 
 ]]></example>
@@ -57,7 +57,7 @@ new $.fn.dataTable.Buttons( table, {
 				altkey: true
 			}
 		}
-	}
+	]
 } );
 
 ]]></example>
@@ -72,7 +72,7 @@ new $.fn.dataTable.Buttons( table, {
 				return dt.i18n( 'buttons.print', 'Print' );
 			}
 		}
-	}
+	]
 } );
 
 ]]></example>
