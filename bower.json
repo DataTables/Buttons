@@ -11,6 +11,8 @@
 	],
 	"dependencies": {
 		"jquery": ">=1.7.0",
-		"datatables": ">=1.10.8"
+		"datatables": ">=1.10.8",
+		"pdfmake": "^0.1.20",
+		"jszip": "Stuk/jszip#v2.6.0"
 	}
 }
