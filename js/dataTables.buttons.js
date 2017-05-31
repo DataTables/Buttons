@@ -1539,7 +1539,7 @@ DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
 		.html( title )
 		.append( $('<div/>')[ typeof message === 'string' ? 'html' : 'append' ]( message ) )
 		.css( 'display', 'none' )
-		.appendTo( 'body' )
+		.appendTo( 'table.dataTable' )
 		.fadeIn();
 
 	if ( time !== undefined && time !== 0 ) {
