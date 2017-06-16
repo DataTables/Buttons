@@ -61,7 +61,7 @@ $('#myTable').DataTable( {
 		buttons: {
 			pageLength: {
 				_: "Afficher %d éléments",
-				-1: "Tout afficher"
+				'-1': "Tout afficher"
 			}
 		}
 	},
