@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="1">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
+<![CDATA[
+
+$(document).ready(function() {
+	var printCounter = 1;
+
+	// Append a caption to the table before the DataTables initialisation
+	$('#example').append('<caption style="caption-side: bottom">A fictional company\'s staff table.</caption>');
+
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			'copy',
+			{
+				extend: 'excel',
+				messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+			},
+			{
+				extend: 'pdf',
+				messageBottom: null
+			},
+			{
+				extend: 'print',
+				messageTop: function () {
+					printCounter++;
+
+					if ( printCounter === 1 ) {
+						return 'This is the first time you have printed this document.';
+					}
+					else {
+						return 'You have printed this document '+printCounter+' times';
+					}
+				},
+				messageBottom: null
+			}
+		]
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Export titles and messages</title>
+
+<info><![CDATA[
+
+**NOTE - STILL IN DEVELOPMENT. Only Excel export works as it should thus far**
+
+The export button types have the ability to include information in addition to that shown in the DataTable - specifically they can show the page title, table captions or custom messages. The following options are supported for `-button copy`, `-button excel`, `-button pdf` and `-button print`:
+
+* `title` - Shown at the very top of the exported document
+  * `*` (default) - Use the HTML page's `-tag title` value.
+  * `-type null` - Do not show a title in the output
+  * `-type string` - Static string that should be used
+  * `-type function` - Resolve the function and use the returned value
+* `messageTop` - Shown between the title and the table in the exported document
+  * `*` (default) - Use the value of the table's `-tag caption` tag if there is one _and_ it is set to be `caption-side: top`.
+  * `-type null` - Do not show the top message in the output
+  * `-type string` - Static string that should be used
+  * `-type function` - Resolve the function and use the returned value
+* `messageBottom` - Shown below the exported table
+  * `*` (default) - Use the value of the table's `-tag caption` tag if there is one _and_ it is set to be `caption-side: bottom`.
+  * `-type null` - Do not show the bottom message in the output
+  * `-type string` - Static string that should be used
+  * `-type function` - Resolve the function and use the returned value
+
+Please note that the CSV export button types do not support these options! Including this type of meta information in a CSV file would make it unreadable to a CSV viewer.
+
+This example demonstrates the use of these options in various configurations:
+
+* `-button copy` uses all of the default (title and caption bottom in this case)
+* `-button excel` shows a top message in addition to the title and caption
+* `-button pdf` shows only the title and not the caption
+* `-button print` shows a top message with a function to derive the text to display, but not the caption.
+
+]]></info>
+
+</dt-example>
+

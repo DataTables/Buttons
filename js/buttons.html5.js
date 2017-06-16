@@ -270,7 +270,7 @@ var _sheetname = function ( config )
 		sheetName = config.sheetName.replace(/[\[\]\*\/\\\?\:]/g, '');
 	}
 
-return sheetName;
+	return sheetName;
 };
 
 /**
@@ -280,15 +280,51 @@ return sheetName;
  */
 var _title = function ( config )
 {
-	var title = config.title;
+	var title = _stringOrFunction( config.title );
 
-	if ( typeof title === 'function' ) {
-		title = title();
+	return title === null ?
+		null : title.indexOf( '*' ) !== -1 ?
+			title.replace( '*', $('title').text() || 'Exported data' ) :
+			title;
+};
+
+var _message = function ( dt, option, position )
+{
+	var message = _stringOrFunction( option );
+	if ( message === null ) {
+		return null;
 	}
 
-	return title.indexOf( '*' ) !== -1 ?
-		title.replace( '*', $('title').text() || 'Exported data' ) :
-		title;
+	var caption = $('caption', dt.table().container()).eq(0);
+	if ( message === '*' ) {
+		var side = caption.css( 'caption-side' );
+		if ( side !== position ) {
+			return null;
+		}
+
+		return caption.length ?
+			caption.text() :
+			'';
+	}
+
+	return message;
+};
+
+/**
+ * Simply utility method to allow parameters to be given as a function
+ *
+ * @param {undefined|string|function} option Option
+ * @return {null|string} Resolved value
+ */
+var _stringOrFunction = function ( option )
+{
+	if ( option === null || option === undefined ) {
+		return null;
+	}
+	else if ( typeof option === 'function' ) {
+		return option();
+	}
+	return option;
 };
 
 /**
@@ -605,6 +641,7 @@ var excelStrings = {
 		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
 		'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">'+
 			'<sheetData/>'+
+			'<mergeCells count="0"/>'+
 		'</worksheet>',
 
 	"xl/styles.xml":
@@ -1144,9 +1181,31 @@ DataTable.ext.buttons.excelHtml5 = {
 			config.customizeData( data );
 		}
 
+		var mergeCells = function ( row, colspan ) {
+			var mergeCells = $('mergeCells', rels);
+
+			mergeCells.append( '<mergeCell ref="A'+row+':'+createCellPos(colspan)+row+'" />' );
+			mergeCells.attr( 'count', mergeCells.attr( 'count' )+1 );
+			$('row:eq('+(row-1)+') c', rels).attr( 's', '51' ); // centre
+		};
+
+		// Title and top messages
+		var title = _title( config );
+		if ( title ) {
+			addRow( [title], rowPos );
+			mergeCells( rowPos, data.header.length-1 );
+		}
+
+		var messageTop = _message( dt, config.messageTop, 'top' );
+		if ( messageTop ) {
+			addRow( [messageTop], rowPos );
+			mergeCells( rowPos, data.header.length-1 );
+		}
+
+		// Table itself
 		if ( config.header ) {
 			addRow( data.header, rowPos );
-			$('row c', rels).attr( 's', '2' ); // bold
+			$('row:last c', rels).attr( 's', '2' ); // bold
 		}
 
 		for ( var n=0, ie=data.body.length ; n<ie ; n++ ) {
@@ -1156,6 +1215,13 @@ DataTable.ext.buttons.excelHtml5 = {
 		if ( config.footer && data.footer ) {
 			addRow( data.footer, rowPos);
 			$('row:last c', rels).attr( 's', '2' ); // bold
+		}
+
+		// Below the table
+		var messageBottom = _message( dt, config.messageBottom, 'bottom' );
+		if ( messageBottom ) {
+			addRow( [messageBottom], rowPos );
+			mergeCells( rowPos, data.header.length-1 );
 		}
 
 		// Set column widths
@@ -1214,7 +1280,13 @@ DataTable.ext.buttons.excelHtml5 = {
 
 	header: true,
 
-	footer: false
+	footer: false,
+
+	title: '*',
+
+	messageTop: '*',
+
+	messageButton: '*'
 };
 
 //
