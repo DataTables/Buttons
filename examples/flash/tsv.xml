@@ -11,6 +11,7 @@ $(document).ready(function() {
 		buttons: [
 			'copyFlash',
 			{
+				text: 'TSV',
 				extend: 'csvFlash',
 				fieldSeparator: '\t',
 				extension: '.tsv'

@@ -11,6 +11,7 @@ $(document).ready(function() {
 		buttons: [
 			'copyHtml5',
 			{
+				text: 'TSV',
 				extend: 'csvHtml5',
 				fieldSeparator: '\t',
 				extension: '.tsv'
