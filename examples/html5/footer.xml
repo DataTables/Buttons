@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="2">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			{ extend: 'copyHtml5', footer: true },
+			{ extend: 'excelHtml5', footer: true },
+			{ extend: 'csvHtml5', footer: true },
+			{ extend: 'pdfHtml5', footer: true }
+		]
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Include footer in export</title>
+
+<info><![CDATA[
+
+By default the data export buttons do not include the table footer (if present) in the output. That behaviour can be altered using the `footer` option that is present for each of the export buttons, as shown in this example.
+
+]]></info>
+
+</dt-example>
+
