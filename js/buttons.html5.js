@@ -498,13 +498,13 @@ function _createNode( doc, nodeName, opts ) {
 			$(tempNode).attr( opts.attr );
 		}
 
-		if( opts.children ) {
+		if ( opts.children ) {
 			$.each( opts.children, function ( key, value ) {
 				tempNode.appendChild( value );
-			});
+			} );
 		}
 
-		if( opts.text ) {
+		if ( opts.text !== null && opts.text !== undefined ) {
 			tempNode.appendChild( doc.createTextNode( opts.text ) );
 		}
 	}
