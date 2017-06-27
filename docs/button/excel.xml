@@ -70,6 +70,18 @@
 		This method can be used to modify the XSLX file that is created by Buttons. A single parameter is passed, an object that contains the XML files and the object structure matches the file system paths for those files in an XSLX file. Customisation of the XSLX file is a complex topic - please refer to the _Customisation_ section in the `b-button excelHtml5` button documentation for full details.
 	</option>
 
+	<option type="string|function" name="title" default="*" since="1.4.0">
+		Title of the table that will be included in the exported data. Please see `-api buttons.exportInfo()` for all options relating to this parameter.
+	</option>
+
+	<option type="string|function" name="messageTop" default="*" since="1.4.0">
+		Message to be shown at the top of the table, or the `-tag caption` tag if displayed at the top of the table.
+	</option>
+
+	<option type="string|function" name="messageBottom" default="*" since="1.4.0">
+		Message to be shown at the bottom of the table, or the `-tag caption` tag if displayed at the bottom of the table.
+	</option>
+
 
 	<example title="DataTables initialisation: Use the `b-button excel` button type to automatically select between the Flash and HTML button options."><![CDATA[
 

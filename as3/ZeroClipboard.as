@@ -211,8 +211,8 @@ package {
 			}
 			
 			pdf.setFont( new CoreFont(FontFamily.HELVETICA), 11 );
-			if ( json.message != "" ) {
-				pdf.writeText(11, json.message+"\n");
+			if ( json.messageTop != "" ) {
+				pdf.writeText(11, json.messageTop+"\n");
 			}
 
 			for ( var i:int=0, ien:int=json.header.length ; i<ien ; i++ ) {
@@ -238,6 +238,12 @@ package {
 			);
 			
 			pdf.addGrid( grid, 0, 0 );
+
+			pdf.setFont( new CoreFont(FontFamily.HELVETICA), 11 );
+			if ( json.messageBottom != "" ) {
+				pdf.writeText(11, json.messageBottom+"\n");
+			}
+
 			return pdf;
 		}
 	}

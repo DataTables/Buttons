@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="Buttons">
+	<name>buttons.exportInfo()</name>
+	<summary>Get export meta information that is common to many different button types</summary>
+	<since>1.4.0</since>
+
+	<type type="function">
+		<signature>buttons.exportInfo( [ options ] )</signature>
+		<parameter type="object" name="options" default="undefined">
+			<![CDATA[
+			This option is typically a button configuration object - i.e. the object that is used to define the button's behaviour allowing the various button types to use a common set of options that provide the same abilities for consistency.
+
+			The properties that are used from this object are:
+
+			* `extension` - File name extension that should be appended to the `filename` option if an external file is created by the button.
+			  * `-type string` - Static string that should be used
+			  * `-type function` - Resolve the function and use the returned value
+			* `filename` - Name to give the file if an external file is created.
+			  * `*` (default) - Use the HTML page's `-tag title` element's value
+			  * `-type string` - Static string that should be used
+			  * `-type function` - Resolve the function and use the returned value
+			* `messageBottom` - Shown below the exported table
+			  * `*` (default) - Use the value of the table's `-tag caption` tag if there is one _and_ it is set to be `caption-side: bottom`.
+			  * `-type null` - Do not show the bottom message in the output
+			  * `-type string` - Static string that should be used
+			  * `-type function` - Resolve the function and use the returned value
+			* `messageTop` - Shown between the title and the table in the exported document
+			  * `*` (default) - Use the value of the table's `-tag caption` tag if there is one _and_ it is set to be `caption-side: top`.
+			  * `-type null` - Do not show the top message in the output
+			  * `-type string` - Static string that should be used
+			  * `-type function` - Resolve the function and use the returned value
+			* `title` - Shown at the very top of the exported document
+			  * `*` (default) - Use the HTML page's `-tag title` value.
+			  * `-type null` - Do not show a title in the output
+			  * `-type string` - Static string that should be used
+			  * `-type function` - Resolve the function and use the returned value
+			  ]]>
+		</parameter>
+		<description>
+			
+		</description>
+		<returns type="object">
+			An object which has the following parameters:
+
+			* `filename` - File name that should be used for any file that is created by the button
+			* `messageTop` - Message to be shown at the top of the exported data's content (after the `title`)
+			* `messageBottom` - Message to be shown at the end of the exported data's content
+			* `title` - Title to show in the exported data.
+		</returns>
+	</type>
+
+	<description>
+		The most commonly used feature of Buttons is its ability to display buttons that export the data from the table - copy to clipboard, print or locally created data file. Each of the button types that provide this functionality has its own range of options (for example the CSV button type can have the field separator character modified to be a TSV export) in addition to options which are common to each of them. This method provides those common options, ensuring consistency in the API as well as code reuse.
+
+		Generally it is unlikely you would want to use this method outside of an export button, but it is publicly available for customised buttons.
+	</description>
+
+	<example title="Get export information in a custom button"><![CDATA[
+
+var table = $('#myTable').DataTable( {
+	buttons: [
+		{
+			text: 'My button',
+			action: function ( e, dt, button, config ) {
+				var info = dt.buttons.exportInfo();
+				// Do something with the 'info' variable when creating custom export
+			}
+		}
+	]
+} );
+
+
+]]></example>
+</dt-api>

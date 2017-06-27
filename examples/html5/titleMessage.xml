@@ -6,7 +6,7 @@
 <![CDATA[
 
 $(document).ready(function() {
-	var printCounter = 1;
+	var printCounter = 0;
 
 	// Append a caption to the table before the DataTables initialisation
 	$('#example').append('<caption style="caption-side: bottom">A fictional company\'s staff table.</caption>');
@@ -50,23 +50,11 @@ $(document).ready(function() {
 
 **NOTE - STILL IN DEVELOPMENT. Only Excel export works as it should thus far**
 
-The export button types have the ability to include information in addition to that shown in the DataTable - specifically they can show the page title, table captions or custom messages. The following options are supported for `-button copy`, `-button excel`, `-button pdf` and `-button print`:
+The export button types have the ability to include information in addition to that shown in the DataTable - specifically they can show the page title, table captions or custom messages. The following options are supported for `-button copy`, `-button excel`, `-button pdf` and `-button print` (for the full reference of how these parameters can be used, please see the `-api buttons.exportInfo()` documentation):
 
 * `title` - Shown at the very top of the exported document
-  * `*` (default) - Use the HTML page's `-tag title` value.
-  * `-type null` - Do not show a title in the output
-  * `-type string` - Static string that should be used
-  * `-type function` - Resolve the function and use the returned value
 * `messageTop` - Shown between the title and the table in the exported document
-  * `*` (default) - Use the value of the table's `-tag caption` tag if there is one _and_ it is set to be `caption-side: top`.
-  * `-type null` - Do not show the top message in the output
-  * `-type string` - Static string that should be used
-  * `-type function` - Resolve the function and use the returned value
 * `messageBottom` - Shown below the exported table
-  * `*` (default) - Use the value of the table's `-tag caption` tag if there is one _and_ it is set to be `caption-side: bottom`.
-  * `-type null` - Do not show the bottom message in the output
-  * `-type string` - Static string that should be used
-  * `-type function` - Resolve the function and use the returned value
 
 Please note that the CSV export button types do not support these options! Including this type of meta information in a CSV file would make it unreadable to a CSV viewer.
 

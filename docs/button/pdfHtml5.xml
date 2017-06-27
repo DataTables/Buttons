@@ -84,14 +84,16 @@
 		Paper size for the created PDF. This can be `-string A3`, `-string A4`, `-string A5`, `-string LEGAL`, `-string LETTER` or `-string TABLOID`. Other options are available [see the PDFMake documentation](http://pdfmake.org/#/gettingstarted) - although this subset is fully compatible with the options for the `b-button pdfFlash` button.
 	</option>
 
-	<option type="string|function" name="message" default="">
-		Optional description message that will be shown above the table in the created PDF.
+	<option type="string|function" name="message" default="">`
+		Optional description message that will be shown above the table in the created PDF. Please note that this option is now deprecated in favour of the `messageTop` option.
+	</option>
 
-		As well as a string value, a function may also be assigned to the `message` property. This function will be executed when the button needs to display the message and the returned value from the function will be used. The function is passed in three parameters:
+	<option type="string|function" name="messageTop" default="*" since="1.4.0">
+		Message to be shown at the top of the table, or the `-tag caption` tag if displayed at the top of the table.
+	</option>
 
-		* `-type DataTables.Api` - The DataTable API instance
-		* `-type jQuery` - jQuery object for the button node
-		* `-type object` - Configuration object for the button.
+	<option type="string|function" name="messageBottom" default="*" since="1.4.0">
+		Message to be shown at the bottom of the table, or the `-tag caption` tag if displayed at the bottom of the table.
 	</option>
 
 	<option type="function" name="customize" default="null">

@@ -71,6 +71,18 @@
 		This can be particularly useful if you wish to add a company header or footer, description data or any other information to the exported data.
 	</option>
 
+	<option type="string|function" name="title" default="*" since="1.4.0">
+		Title of the table that will be included in the exported data. Please see `-api buttons.exportInfo()` for all options relating to this parameter.
+	</option>
+
+	<option type="string|function" name="messageTop" default="*" since="1.4.0">
+		Message to be shown at the top of the table, or the `-tag caption` tag if displayed at the top of the table.
+	</option>
+
+	<option type="string|function" name="messageBottom" default="*" since="1.4.0">
+		Message to be shown at the bottom of the table, or the `-tag caption` tag if displayed at the bottom of the table.
+	</option>
+
 
 	<example title="DataTables initialisation: Use the `b-button copy` button type to automatically select between the Flash and HTML button options."><![CDATA[
 

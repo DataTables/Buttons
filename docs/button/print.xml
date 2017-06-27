@@ -29,10 +29,6 @@
 		Show the print view
 	</option>
 
-	<option type="string" name="title" default="*">
-		The title to be shown for the print view document. This is shown in an H1 tag. If given as the value `*`, that value is automatically replaced with the value read from the host document's `-tag title` tag.
-	</option>
-
 	<option type="string|function" name="message" default="">
 		Description message that can be shown in the print view document. This can include HTML.
 
@@ -68,6 +64,18 @@
 		1. `-type object` `window` - The window object for the new window. As such the document body can be accessed using `window.document.body` and manipulated using jQuery / DOM methods as any element can be.
 
 		No return value is expected or acted upon.
+	</option>
+
+	<option type="string|function" name="title" default="*">
+		Title of the table that will be included in the exported data. Please see `-api buttons.exportInfo()` for all options relating to this parameter.
+	</option>
+
+	<option type="string|function" name="messageTop" default="*" since="1.4.0">
+		Message to be shown at the top of the table, or the `-tag caption` tag if displayed at the top of the table.
+	</option>
+
+	<option type="string|function" name="messageBottom" default="*" since="1.4.0">
+		Message to be shown at the bottom of the table, or the `-tag caption` tag if displayed at the bottom of the table.
 	</option>
 
 
