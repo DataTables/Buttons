@@ -154,12 +154,13 @@ DataTable.ext.buttons.print = {
 			config.customize( win );
 		}
 
+		// Allow stylesheets time to load
 		setTimeout( function () {
 			if ( config.autoPrint ) {
 				win.print(); // blocking - so close will not
 				win.close(); // execute until this is done
 			}
-		}, 250 );
+		}, 1000 );
 	},
 
 	title: '*',
