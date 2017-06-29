@@ -48,7 +48,9 @@ $.extend( true, DataTable.Buttons.defaults, {
 			className: 'dt-button-collection dropdown-menu',
 			button: {
 				tag: 'a',
-				className: 'dt-button dropdown-item'
+				className: 'dt-button dropdown-item',
+				active: 'active',
+				disabled: 'disabled'
 			}
 		}
 	}
