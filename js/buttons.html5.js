@@ -919,7 +919,7 @@ DataTable.ext.buttons.csvHtml5 = {
 
 		// Set the text
 		var output = _exportData( dt, config ).str;
-		var info = dt.buttons.exportInfo();
+		var info = dt.buttons.exportInfo(config);
 		var charset = config.charset;
 
 		if ( config.customize ) {
