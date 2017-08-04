@@ -38,7 +38,7 @@ $(document).ready(function() {
 
 <info><![CDATA[
 
-The `b-button collection` button provides the ability to show a list of buttons when activated. The buttons it will display in the sub-list are defined by its `buttons` property which can take all of the same button options as the `b-init buttons.buttons` array (which the exception of another collection - collections cannot be nested).
+The `b-button collection` button provides the ability to show a list of buttons when activated. The buttons it will display in the sub-list are defined by its `buttons` property which can take all of the same button options as the `b-init buttons.buttons` array (with the exception of another collection - collections cannot be nested).
 
 Button collections can be useful for grouping functionality of button types - for example one collection could provide file export options, another table editing and a third column visibility controls.
 
