@@ -14,6 +14,8 @@
 		The constructed table does not retain the full information from the original table (table row and cell classes are not copied across for example), but the stylesheets from the original document are copied to the print document so the basic styling of the table can be retained.
 
 		Customisation of the printed view is available through the `title` and `message` options for simple description strings and through the `customize` option for complete control over the generated document (allowing, for example images to be added, etc).
+
+		Please note that the print button will set the `decodeEntities` option of `-api buttons.exportData()` to `false` to prevent XSS attacks.
 	</description>
 
 

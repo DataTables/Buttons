@@ -87,8 +87,11 @@ DataTable.ext.buttons.print = {
 	},
 
 	action: function ( e, dt, button, config ) {
-		var data = dt.buttons.exportData( config.exportOptions );
+		var data = dt.buttons.exportData(
+			$.extend( {decodeEntities: false}, config.exportOptions ) // XSS protection
+		);
 		var exportInfo = dt.buttons.exportInfo( config );
+
 		var addRow = function ( d, tag ) {
 			var str = '<tr>';
 
