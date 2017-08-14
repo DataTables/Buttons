@@ -48,8 +48,6 @@ $(document).ready(function() {
 
 <info><![CDATA[
 
-**NOTE - STILL IN DEVELOPMENT. Only Excel export works as it should thus far**
-
 The export button types have the ability to include information in addition to that shown in the DataTable - specifically they can show the page title, table captions or custom messages. The following options are supported for `-button copy`, `-button excel`, `-button pdf` and `-button print` (for the full reference of how these parameters can be used, please see the `-api buttons.exportInfo()` documentation):
 
 * `title` - Shown at the very top of the exported document
