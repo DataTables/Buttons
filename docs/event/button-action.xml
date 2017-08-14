@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-event library="BUttons">
+<dt-event library="Buttons">
 	<name>button-action</name>
 	<summary>A button's action method has been triggered</summary>
 	<since>1.1.2</since>
