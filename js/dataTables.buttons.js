@@ -1183,6 +1183,21 @@ $.extend( _dtButtons, {
 					left: hostOffset.left
 				} );
 
+				// calculate overflow when positioned beneath
+				var tableBottom = tableContainer.offset().top + tableContainer.height();
+				var listBottom = hostOffset.top + host.outerHeight() + config._collection.outerHeight();
+				var bottomOverflow = listBottom - tableBottom;
+				
+				// calculate overflow when positioned above
+				var listTop = hostOffset.top - config._collection.outerHeight();
+				var tableTop = tableContainer.offset().top;
+				var topOverflow = tableTop - listTop;
+				
+				// if bottom overflow is larger, move to the top because it fits better
+				if (bottomOverflow > topOverflow) {
+					config._collection.css( 'top', hostOffset.top - config._collection.outerHeight() - 5);
+				}
+
 				var listRight = hostOffset.left + config._collection.outerWidth();
 				var tableRight = tableContainer.offset().left + tableContainer.width();
 				if ( listRight > tableRight ) {
