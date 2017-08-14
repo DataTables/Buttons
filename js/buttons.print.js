@@ -3,6 +3,13 @@
  * 2016 SpryMedia Ltd - datatables.net/license
  */
 
+entityMap={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"};
+function escapeHtml(string) {
+    return String(string).replace(/[&<>"']/g, function (s) {
+        return entityMap[s];
+    });
+}
+
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {
 		// AMD
@@ -93,7 +100,7 @@ DataTable.ext.buttons.print = {
 			var str = '<tr>';
 
 			for ( var i=0, ien=d.length ; i<ien ; i++ ) {
-				str += '<'+tag+'>'+d[i]+'</'+tag+'>';
+				str += '<'+tag+'>'+escapeHtml(d[i])+'</'+tag+'>';
 			}
 
 			return str + '</tr>';
