@@ -91,7 +91,7 @@ new $.fn.dataTable.Buttons( table, {
 				tag: null
 			}
 		}
-	]
+	}
 } );
 
 ]]></example>
