@@ -66,7 +66,7 @@
 $('#myTable').DataTable( {
 	buttons: {
 		dom: {
-			buttons: {
+			button: {
 				tag: 'button'
 			},
 			buttonLiner: {
@@ -83,7 +83,7 @@ $('#myTable').DataTable( {
 new $.fn.dataTable.Buttons( table, {
 	buttons: {
 		dom: {
-			buttons: {
+			button: {
 				tag: 'input',
 				className: 'table-button'
 			},
