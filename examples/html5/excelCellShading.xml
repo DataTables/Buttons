@@ -13,10 +13,10 @@ $(document).ready(function() {
 			customize: function(xlsx) {
 				var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-				// Loop over the cells in column `F`
-				$('row c[r^="F"]', sheet).each( function () {
-					// Get the value and strip the non numeric characters
-					if ( $('is t', this).text().replace(/[^\d]/g, '') * 1 >= 500000 ) {
+				// Loop over the cells in column `C`
+				$('row c[r^="C"]', sheet).each( function () {
+					// Get the value
+					if ( $('is t', this).text() == 'New York' ) {
 						$(this).attr( 's', '20' );
 					}
 				});
@@ -34,7 +34,7 @@ $(document).ready(function() {
 
 The Excel export button saves to an XLSX file and the data can be customised before exporting the file using the `customize` method of the `b-button excelHtml5` button type.
 
-This example demonstrates how the created file can be customised by giving any cell in the _Salary_ column that has a value greater than $500,000 a blue background.
+This example demonstrates how the created file can be customised by giving any cell in the _Office_ column that has a value of 'New York' a blue background.
 
 The style added (index `20` in this case) is defined by the default styles included by Buttons. The full list of styles available and further information about the `customize` method are detailed in the `b-button excelHtml5` documentation.
 
