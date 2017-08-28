@@ -1122,7 +1122,11 @@ DataTable.ext.buttons.excelHtml5 = {
 		var mergeCells = function ( row, colspan ) {
 			var mergeCells = $('mergeCells', rels);
 
-			mergeCells.append( '<mergeCell ref="A'+row+':'+createCellPos(colspan)+row+'" />' );
+			mergeCells[0].appendChild( _createNode( rels, 'mergeCell', {
+				attr: {
+					ref: 'A'+row+':'+createCellPos(colspan)+row
+				}
+			} ) );
 			mergeCells.attr( 'count', mergeCells.attr( 'count' )+1 );
 			$('row:eq('+(row-1)+') c', rels).attr( 's', '51' ); // centre
 		};
