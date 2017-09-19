@@ -1184,6 +1184,11 @@ DataTable.ext.buttons.excelHtml5 = {
 			config.customize( xlsx );
 		}
 
+		// Excel doesn't like an empty mergeCells tag
+		if ( $('mergeCells', rels).children().length === 0 ) {
+			$('mergeCells', rels).remove();
+		}
+
 		var jszip = _jsZip();
 		var zip = new jszip();
 		var zipConfig = {
