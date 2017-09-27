@@ -31,7 +31,7 @@ The Flash export buttons plug-in for Buttons provides four export buttons:
 * `b-button excelFlash` - Save to XLSX file
 * `b-button pdfFlash` - Save to PDF file
 
-This example demonstrates these four button types with their default options. The other examples in this section demonstrate some of the options available.
+This example demonstrates these four button types with their default options. The other examples in this section demonstrate some of the options available. By default Buttons will automatically use a Flash file from [the DataTables CDN](//cdn.datatables.net). If you would like to use the file locally instead, please refer [to the SWF file location example](swfPath.html).
 
 Please note that the HTML5 button types are preferred over the Flash buttons as they do not require Adobe Flash and are generally more configurable, however, not all browsers provide the functionality required for those buttons.
 
