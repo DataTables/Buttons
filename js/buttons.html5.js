@@ -1354,6 +1354,10 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 		var pdf = _pdfMake().createPdf( doc );
 
+		if ( config.ignoreDownload ) {
+        		this.processing( false );
+      		}
+      		else
 		if ( config.download === 'open' && ! _isDuffSafari() ) {
 			pdf.open();
 			this.processing( false );
@@ -1390,7 +1394,9 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 	customize: null,
 
-	download: 'download'
+	download: 'download',
+	
+	ignoreDownload: false
 };
 
 
