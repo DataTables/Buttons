@@ -1601,13 +1601,15 @@ DataTable.Api.register( 'buttons.exportInfo()', function ( conf ) {
 var _filename = function ( config )
 {
 	// Backwards compatibility
-	var filename = config.filename === '*' && config.title !== '*' && config.title !== undefined ?
+	var filename = config.filename === '*' && config.title !== '*' && config.title !== undefined && config.title !== null && config.title !== '' ?
 		config.title :
 		config.filename;
 
 	if ( typeof filename === 'function' ) {
 		filename = filename();
 	}
+	
+		console.log( filename );
 
 	if ( filename === undefined || filename === null ) {
 		return null;
@@ -1624,6 +1626,8 @@ var _filename = function ( config )
 	if ( ! extension ) {
 		extension = '';
 	}
+
+	console.log( filename, extension );
 
 	return filename + extension;
 };
