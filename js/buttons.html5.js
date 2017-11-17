@@ -1129,7 +1129,7 @@ DataTable.ext.buttons.excelHtml5 = {
 					ref: 'A'+row+':'+createCellPos(colspan)+row
 				}
 			} ) );
-			mergeCells.attr( 'count', mergeCells.attr( 'count' )+1 );
+			mergeCells.attr( 'count', parseFloat(mergeCells.attr( 'count' ))+1 );
 			$('row:eq('+(row-1)+') c', rels).attr( 's', '51' ); // centre
 		};
 
