@@ -86,6 +86,11 @@
 		     -o-column-count: 4;
 		column-count: 4;
 	}
+
+	// Chrome fix - 531528
+	.dt-button {
+		border-radius: 0;
+	}
 }
 
 
