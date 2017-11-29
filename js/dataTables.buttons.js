@@ -1684,10 +1684,6 @@ var _message = function ( dt, option, position )
 
 
 
-
-
-
-
 var _exportTextarea = $('<textarea/>')[0];
 var _exportData = function ( dt, inOpts )
 {
@@ -1744,18 +1740,23 @@ var _exportData = function ( dt, inOpts )
 		return str;
 	};
 
+	var header = [];
+	$( 'tr', dt.table().header() ).each( function () {
+		var row = $(this).children( 'th, td' ).map( function (i) {
+			return config.format.header( this.innerHTML, i, this );
+		} ).toArray();
 
-	var header = dt.columns( config.columns ).indexes().map( function (idx) {
-		var el = dt.column( idx ).header();
-		return config.format.header( el.innerHTML, idx, el );
-	} ).toArray();
+		header.push( row );
+	} );
 
-	var footer = dt.table().footer() ?
-		dt.columns( config.columns ).indexes().map( function (idx) {
-			var el = dt.column( idx ).footer();
-			return config.format.footer( el ? el.innerHTML : '', idx, el );
-		} ).toArray() :
-		null;
+	var footer = [];
+	$( 'tr', dt.table().footer() ).each( function () {
+		var row = $(this).children( 'th, td' ).map( function (i) {
+			return config.format.footer( this.innerHTML, i, this );
+		} ).toArray();
+
+		footer.push( row );
+	} );
 
 	var rowIndexes = dt.rows( config.rows, config.modifier ).indexes().toArray();
 	var selectedCells = dt.cells( rowIndexes, config.columns );
@@ -1766,7 +1767,7 @@ var _exportData = function ( dt, inOpts )
 		.nodes()
 		.toArray();
 
-	var columns = header.length;
+	var columns = header[0].length;
 	var rows = columns > 0 ? cells.length / columns : 0;
 	var body = new Array( rows );
 	var cellCounter = 0;

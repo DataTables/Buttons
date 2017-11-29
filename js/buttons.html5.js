@@ -295,17 +295,27 @@ var _exportData = function ( dt, config )
 		return s;
 	};
 
-	var header = config.header ? join( data.header )+newLine : '';
-	var footer = config.footer && data.footer ? newLine+join( data.footer ) : '';
-	var body = [];
+	var rows = [];
+
+	if ( config.header ) {
+		for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+			rows.push( join( data.header[i] ) );
+		}
+	}
 
 	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
-		body.push( join( data.body[i] ) );
+		rows.push( join( data.body[i] ) );
+	}
+
+	if ( config.footer ) {
+		for ( var i=0, ien=data.footer.length ; i<ien ; i++ ) {
+			rows.push( join( data.footer[i] ) );
+		}
 	}
 
 	return {
-		str: header + body.join( newLine ) + footer,
-		rows: body.length
+		str: rows.join( newLine ),
+		rows: data.body.length
 	};
 };
 
@@ -472,11 +482,11 @@ function _createNode( doc, nodeName, opts ) {
  * @return {int}         Column width
  */
 function _excelColWidth( data, col ) {
-	var max = data.header[col].length;
+	var max = data.header[0][col].length;
 	var len, lineSplit, str;
 
-	if ( data.footer && data.footer[col].length > max ) {
-		max = data.footer[col].length;
+	if ( data.footer && data.footer[0][col].length > max ) {
+		max = data.footer[0][col].length;
 	}
 
 	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
@@ -1137,40 +1147,44 @@ DataTable.ext.buttons.excelHtml5 = {
 		var exportInfo = dt.buttons.exportInfo( config );
 		if ( exportInfo.title ) {
 			addRow( [exportInfo.title], rowPos );
-			mergeCells( rowPos, data.header.length-1 );
+			mergeCells( rowPos, data.header[0].length-1 );
 		}
 
 		if ( exportInfo.messageTop ) {
 			addRow( [exportInfo.messageTop], rowPos );
-			mergeCells( rowPos, data.header.length-1 );
+			mergeCells( rowPos, data.header[0].length-1 );
 		}
 
 		// Table itself
 		if ( config.header ) {
-			addRow( data.header, rowPos );
-			$('row:last c', rels).attr( 's', '2' ); // bold
+			for ( var n=0, ie=data.header.length ; n<ie ; n++ ) {
+				addRow( data.header[n], rowPos );
+				$('row:last c', rels).attr( 's', '2' ); // bold
+			}
 		}
 
 		for ( var n=0, ie=data.body.length ; n<ie ; n++ ) {
 			addRow( data.body[n], rowPos );
 		}
 
-		if ( config.footer && data.footer ) {
-			addRow( data.footer, rowPos);
-			$('row:last c', rels).attr( 's', '2' ); // bold
+		if ( config.footer ) {
+			for ( var n=0, ie=data.footer.length ; n<ie ; n++ ) {
+				addRow( data.footer[n], rowPos );
+				$('row:last c', rels).attr( 's', '2' ); // bold
+			}
 		}
 
 		// Below the table
 		if ( exportInfo.messageBottom ) {
 			addRow( [exportInfo.messageBottom], rowPos );
-			mergeCells( rowPos, data.header.length-1 );
+			mergeCells( rowPos, data.header[0].length-1 );
 		}
 
 		// Set column widths
 		var cols = _createNode( rels, 'cols' );
 		$('worksheet', rels).prepend( cols );
 
-		for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+		for ( var i=0, ien=data.header[0].length ; i<ien ; i++ ) {
 			cols.appendChild( _createNode( rels, 'col', {
 				attr: {
 					min: i+1,
@@ -1259,12 +1273,14 @@ DataTable.ext.buttons.pdfHtml5 = {
 		var rows = [];
 
 		if ( config.header ) {
-			rows.push( $.map( data.header, function ( d ) {
-				return {
-					text: typeof d === 'string' ? d : d+'',
-					style: 'tableHeader'
-				};
-			} ) );
+			for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+				rows.push( $.map( data.header[i], function ( d ) {
+					return {
+						text: typeof d === 'string' ? d : d+'',
+						style: 'tableHeader'
+					};
+				} ) );
+			}
 		}
 
 		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
@@ -1276,13 +1292,15 @@ DataTable.ext.buttons.pdfHtml5 = {
 			} ) );
 		}
 
-		if ( config.footer && data.footer) {
-			rows.push( $.map( data.footer, function ( d ) {
-				return {
-					text: typeof d === 'string' ? d : d+'',
-					style: 'tableFooter'
-				};
-			} ) );
+		if ( config.footer ) {
+			for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+				rows.push( $.map( data.footer[i], function ( d ) {
+					return {
+						text: typeof d === 'string' ? d : d+'',
+						style: 'tableFooter'
+					};
+				} ) );
+			}
 		}
 
 		var doc = {
@@ -1291,8 +1309,9 @@ DataTable.ext.buttons.pdfHtml5 = {
 			content: [
 				{
 					table: {
-						headerRows: 1,
-						body: rows
+						headerRows: data.header.length,
+						body: rows,
+						footerRows: data.footer.length,
 					},
 					layout: 'noBorders'
 				}

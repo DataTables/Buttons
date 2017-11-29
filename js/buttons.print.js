@@ -106,7 +106,11 @@ DataTable.ext.buttons.print = {
 		var html = '<table class="'+dt.table().node().className+'">';
 
 		if ( config.header ) {
-			html += '<thead>'+ addRow( data.header, 'th' ) +'</thead>';
+			html += '<thead>';
+			for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+				html += addRow( data.header[i], 'th' );
+			 }
+			 html += '</thead>';
 		}
 
 		html += '<tbody>';
@@ -115,8 +119,12 @@ DataTable.ext.buttons.print = {
 		}
 		html += '</tbody>';
 
-		if ( config.footer && data.footer ) {
-			html += '<tfoot>'+ addRow( data.footer, 'th' ) +'</tfoot>';
+		if ( config.footer ) {
+			html += '<tfoot>';
+			for ( var i=0, ien=data.footer.length ; i<ien ; i++ ) {
+				html += addRow( data.footer[i], 'th' );
+			 }
+			 html += '</tfoot>';
 		}
 		html += '</table>';
 
