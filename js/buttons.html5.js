@@ -485,7 +485,7 @@ function _excelColWidth( data, col ) {
 	var max = data.header[0][col].length;
 	var len, lineSplit, str;
 
-	if ( data.footer && data.footer[0][col].length > max ) {
+	if ( data.footer.length && data.footer[0][col] && data.footer[0][col].length > max ) {
 		max = data.footer[0][col].length;
 	}
 
