@@ -1293,7 +1293,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 		}
 
 		if ( config.footer ) {
-			for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+			for ( var i=0, ien=data.footer.length ; i<ien ; i++ ) {
 				rows.push( $.map( data.footer[i], function ( d ) {
 					return {
 						text: typeof d === 'string' ? d : d+'',
