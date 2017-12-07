@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="13">
+
+<css lib="datatables buttons select"/>
+<js lib="jquery datatables buttons buttons-flash jszip pdfmake vfsfonts buttons-html5 buttons-print select">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			'copy',
+            'csv',
+            'excel',
+            'pdf',
+            {
+                extend: 'print',
+                text: 'Print all (not just selected)',
+                exportOptions: {
+                    modifier: {
+                        selected: false
+                    }
+                }
+            }
+		],
+        select: true
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Select integration - export selected rows</title>
+
+<info><![CDATA[
+
+Button's data export can interface with the [Select extension](https://datatables.net/extensions/select) for DataTables, and will automatically export only the selected rows, if any rows are selected. If no rows are selected in the table, all rows will be exported.
+
+If this behaviour is not what you desire, set the `selected` option of the `exportOptions.modifier` in the button you wish disable this action for to be `false`. It will then include all rows in the export, regardless of any rows being selected (the _Print_ button in this example demonstrates this). Equally, if you want to force the export to include only exported rows, even if no rows are selected (i.e. none would be exported), set this parameter to be `true`.
+
+]]></info>
+
+</dt-example>
+

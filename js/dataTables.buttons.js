@@ -1756,8 +1756,18 @@ var _exportData = function ( dt, inOpts )
 			return config.format.footer( el ? el.innerHTML : '', idx, el );
 		} ).toArray() :
 		null;
+	
+	// If Select is available on this table, and any rows are selected, limit the export
+	// to the selected rows. If no rows are selected, all rows will be exported. Specify
+	// a `selected` modifier to control directly.
+	var modifier = $.extend( {}, config.modifier );
+	if ( dt.select && typeof dt.select.info === 'function' && modifier.selected === undefined ) {
+		if ( dt.rows( config.rows, $.extend( { selected: true }, modifier ) ).any() ) {
+			$.extend( modifier, { selected: true } )
+		}
+	}
 
-	var rowIndexes = dt.rows( config.rows, config.modifier ).indexes().toArray();
+	var rowIndexes = dt.rows( config.rows, modifier ).indexes().toArray();
 	var selectedCells = dt.cells( rowIndexes, config.columns );
 	var cells = selectedCells
 		.render( config.orthogonal )
@@ -1768,11 +1778,11 @@ var _exportData = function ( dt, inOpts )
 
 	var columns = header.length;
 	var rows = columns > 0 ? cells.length / columns : 0;
-	var body = new Array( rows );
+	var body = [ rows ];
 	var cellCounter = 0;
 
 	for ( var i=0, ien=rows ; i<ien ; i++ ) {
-		var row = new Array( columns );
+		var row = [ columns ];
 
 		for ( var j=0 ; j<columns ; j++ ) {
 			row[j] = config.format.body( cells[ cellCounter ], i, j, cellNodes[ cellCounter ] );
