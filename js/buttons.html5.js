@@ -1361,12 +1361,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 			this.processing( false );
 		}
 		else {
-			pdf.getBuffer( function (buffer) {
-				var blob = new Blob( [buffer], {type:'application/pdf'} );
-
-				_saveAs( blob, info.filename );
-				that.processing( false );
-			} );
+			pdf.download( info.filename );
 		}
 	},
 
