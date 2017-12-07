@@ -83,6 +83,10 @@
 		Name for the worksheet in Excel file created. The characters [] \ /: *? : are not allowed and will be removed if present.
 	</option>
 
+	<option type="boolean" name="createEmptyCells" default="false" since="1.5.0">
+		Option to instruct the Excel export to create empty cells. By default if a cell contains `null` or empty data, it will not be created in the exported spreadsheet. You may however wish for it to do so, based on styling requirements.
+	</option>
+
 	<option type="function" name="customizeData" default="undefined" since="1.1.3">
 		A function that can be used to customise the data that will be saved to the Excel spreadsheet. A single parameter is passed in, an object with `header`, `footer` and `body` parameters, each of which contains the data to be exported. The data in this object should be modified as required - no return values is expected, or used, from this callback.
 	</option>

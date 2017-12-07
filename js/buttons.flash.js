@@ -1226,7 +1226,12 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 
 				// For null, undefined of blank cell, continue so it doesn't create the _createNode
 				if ( row[i] === null || row[i] === undefined || row[i] === '' ) {
-					continue;
+					if ( config.createEmptyCells === true ) {
+						row[i] = true;
+					}
+					else {
+						continue;
+					}
 				}
 
 				row[i] = $.trim( row[i] );
@@ -1389,7 +1394,9 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 		this.processing( false );
 	},
 
-	extension: '.xlsx'
+	extension: '.xlsx',
+	
+	createEmptyCells: false
 } );
 
 
