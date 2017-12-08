@@ -693,12 +693,18 @@ $.extend( Buttons.prototype, {
 	 */
 	_keypress: function ( character, e )
 	{
+		// Check if this button press already activated on another instance of Buttons
+		if ( e._buttonsHandled ) {
+			return;
+		}
+
 		var run = function ( conf, node ) {
 			if ( ! conf.key ) {
 				return;
 			}
 
 			if ( conf.key === character ) {
+				e._buttonsHandled = true;
 				$(node).click();
 			}
 			else if ( $.isPlainObject( conf.key ) ) {
@@ -723,6 +729,7 @@ $.extend( Buttons.prototype, {
 				}
 
 				// Made it this far - it is good
+				e._buttonsHandled = true;
 				$(node).click();
 			}
 		};
