@@ -1165,21 +1165,25 @@ $.extend( _dtButtons, {
 		className: 'buttons-collection',
 		action: function ( e, dt, button, config ) {
 			var host = button;
-			var hostOffset = host.offset();
+			var collectionParent = $(button).parents('div.dt-button-collection');
+			var hostPosition = host.position();
 			var tableContainer = $( dt.table().container() );
 			var multiLevel = false;
+			var insertPoint = host;
 
 			// Remove any old collection
-			if ( $('div.dt-button-background').length ) {
-				multiLevel = $('.dt-button-collection').offset();
+			if ( collectionParent.length ) {
+				multiLevel = $('.dt-button-collection').position();
+				insertPoint = collectionParent;
 				$('body').trigger( 'click.dtb-collection' );
 			}
 
 			config._collection
 				.addClass( config.collectionLayout )
 				.css( 'display', 'none' )
-				.appendTo( 'body' )
+				.insertAfter( insertPoint )
 				.fadeIn( config.fade );
+			
 
 			var position = config._collection.css( 'position' );
 
@@ -1191,29 +1195,29 @@ $.extend( _dtButtons, {
 			}
 			else if ( position === 'absolute' ) {
 				config._collection.css( {
-					top: hostOffset.top + host.outerHeight(),
-					left: hostOffset.left
+					top: hostPosition.top + host.outerHeight(),
+					left: hostPosition.left
 				} );
 
 				// calculate overflow when positioned beneath
 				var tableBottom = tableContainer.offset().top + tableContainer.height();
-				var listBottom = hostOffset.top + host.outerHeight() + config._collection.outerHeight();
+				var listBottom = hostPosition.top + host.outerHeight() + config._collection.outerHeight();
 				var bottomOverflow = listBottom - tableBottom;
 				
 				// calculate overflow when positioned above
-				var listTop = hostOffset.top - config._collection.outerHeight();
+				var listTop = hostPosition.top - config._collection.outerHeight();
 				var tableTop = tableContainer.offset().top;
 				var topOverflow = tableTop - listTop;
 				
 				// if bottom overflow is larger, move to the top because it fits better
 				if (bottomOverflow > topOverflow) {
-					config._collection.css( 'top', hostOffset.top - config._collection.outerHeight() - 5);
+					config._collection.css( 'top', hostPosition.top - config._collection.outerHeight() - 5);
 				}
 
-				var listRight = hostOffset.left + config._collection.outerWidth();
+				var listRight = hostPosition.left + config._collection.outerWidth();
 				var tableRight = tableContainer.offset().left + tableContainer.width();
 				if ( listRight > tableRight ) {
-					config._collection.css( 'left', hostOffset.left - ( listRight - tableRight ) );
+					config._collection.css( 'left', hostPosition.left - ( listRight - tableRight ) );
 				}
 			}
 			else {
