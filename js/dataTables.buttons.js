@@ -598,7 +598,7 @@ $.extend( Buttons.prototype, {
 		}
 
 		if ( config.attr ) {
-			button.attr( attr );
+			button.attr( config.attr );
 		}
 
 		if ( ! config.namespace ) {
@@ -1272,7 +1272,10 @@ $.extend( _dtButtons, {
 		collectionLayout: '',
 		backgroundClassName: 'dt-button-background',
 		autoClose: false,
-		fade: 400
+		fade: 400,
+		attr: {
+			'aria-haspopup': true
+		}
 	},
 	copy: function ( dt, conf ) {
 		if ( _dtButtons.copyHtml5 ) {
