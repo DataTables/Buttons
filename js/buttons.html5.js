@@ -1365,11 +1365,12 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 		if ( config.download === 'open' && ! _isDuffSafari() ) {
 			pdf.open();
-			this.processing( false );
 		}
 		else {
 			pdf.download( info.filename );
 		}
+
+		this.processing( false );
 	},
 
 	title: '*',
