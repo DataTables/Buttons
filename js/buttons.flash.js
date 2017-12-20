@@ -1227,7 +1227,7 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 				// For null, undefined of blank cell, continue so it doesn't create the _createNode
 				if ( row[i] === null || row[i] === undefined || row[i] === '' ) {
 					if ( config.createEmptyCells === true ) {
-						row[i] = true;
+						row[i] = '';
 					}
 					else {
 						continue;
