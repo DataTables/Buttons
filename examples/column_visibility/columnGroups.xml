@@ -40,7 +40,7 @@ When working with column visibility you may wish to present a control to the end
 This example shows three uses of the `b-button colvisGroup` button type:
 
 * Grouping - show columns 0, 1, 2 and hide the others
-* Grouping - show columns 0, 2, 3, 4 and hide the others
+* Grouping - show columns 0, 3, 4, 5 and hide the others
 * Show all
 
 ]]></info>
