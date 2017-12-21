@@ -2,15 +2,15 @@
 <dt-example table-type="html" order="4">
 
 <css lib="datatables buttons">
-	a.dt-button.red {
+	.dt-button.red {
 		color: red;
 	}
 
-	a.dt-button.orange {
+	.dt-button.orange {
 		color: orange;
 	}
 
-	a.dt-button.green {
+	.dt-button.green {
 		color: green;
 	}
 </css>
