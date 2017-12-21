@@ -17,9 +17,9 @@ $(document).ready(function() {
 				}
 			},
 			{
-				text: 'Button <u><i>alt</i> 2</u>',
+				text: 'Button <u><i>shift</i> 2</u>',
 				key: {
-					altKey: true,
+					shiftKey: true,
 					key: '2'
 				},
 				action: function ( e, dt, node, config ) {
@@ -43,7 +43,7 @@ The key binding can be given as a single character if you wish to listen for an 
 
 Only when there is no element on the page that has focus will Buttons act on a key press. This means that if you search for (for example) 1 in the DataTables search box, it will not activate _Button 1_ in this example. Having said that, adding a modifier key, such as shift or alt can often be useful to prevent accidental triggering of a button.
 
-This example shows two buttons; the first will be activated if `1` is pressed on the keyboard. The second requires `alt + 2` to be pressed.
+This example shows two buttons; the first will be activated if `1` is pressed on the keyboard. The second requires `shift + 2` to be pressed.
 
 ]]></info>
 
