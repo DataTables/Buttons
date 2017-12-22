@@ -1603,7 +1603,7 @@ DataTable.Api.register( 'buttons.exportInfo()', function ( conf ) {
 	return {
 		filename: _filename( conf ),
 		title: _title( conf ),
-		messageTop: _message(this, conf.messageTop || conf.message, 'top'),
+		messageTop: _message(this, conf.message || conf.messageTop, 'top'),
 		messageBottom: _message(this, conf.messageBottom, 'bottom')
 	};
 } );

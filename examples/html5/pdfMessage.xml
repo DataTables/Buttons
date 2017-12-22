@@ -11,7 +11,7 @@ $(document).ready(function() {
 		buttons: [
 			{
 				extend: 'pdfHtml5',
-				message: 'PDF created by PDFMake with Buttons for DataTables.'
+				messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
 			}
 		]
 	} );
