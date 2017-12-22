@@ -24,9 +24,9 @@ $(document).ready(function() {
 
 <info><![CDATA[
 
+The `-button pdfHtml5` button can be configured to have the PDF automatically opened in a new window / tab (depending on the browser's configuration settings) instead of automatically downloading the file (which is the default action).
 
-
-Please refer to the [PDFMaker documentation](http://pdfmake.org/#/gettingstarted) for full details of how the PDF can be customised.
+This option is controlled by the `download` option for the button, which can be set to be `-string open` as shown in this example.
 
 ]]></info>
 
