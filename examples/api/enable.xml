@@ -30,7 +30,7 @@ $(document).ready(function() {
 		]
 	} );
 
-	table.on( 'select', function () {
+	table.on( 'select deselect', function () {
 		var selectedRows = table.rows( { selected: true } ).count();
 
 		table.button( 0 ).enable( selectedRows === 1 );
