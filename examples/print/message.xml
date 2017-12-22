@@ -11,7 +11,7 @@ $(document).ready(function() {
 		buttons: [
 			{
 				extend: 'print',
-				message: 'This print was produced using the Print button for DataTables'
+				messageTop: 'This print was produced using the Print button for DataTables'
 			}
 		]
 	} );
