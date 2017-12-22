@@ -39,7 +39,7 @@ $(document).ready(function() {
 
 <info><![CDATA[
 
-All of the data export buttons have a `exportOptions` option which can be used to specify information about what data should be exported and how. The options given for this parameter are passed directly to the `b-api buttons.exportData()` method to obtain the required data.
+All of the data export buttons have an `exportOptions` option which can be used to specify information about what data should be exported and how. The options given for this parameter are passed directly to the `b-api buttons.exportData()` method to obtain the required data.
 
 One of the most commonly used is the `columns` option which defines the columns that should be used as part of the export. This is given as a `dt-type column-selector`, making it simple to tell it if you want only visible columns, or a mix of the columns available.
 
