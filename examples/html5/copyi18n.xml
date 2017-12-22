@@ -37,7 +37,7 @@ The messages shown to the end user can be customised using the `dt-init language
 
 * `language.buttons.copyTitle` - the title text of the info box
 * `language.buttons.copySuccess` - message to display when the copy is complete
-* `language.buttons.copyKey` - instructions on how to copy to clipboard for older browsers.
+* `language.buttons.copyKeys` - instructions on how to copy to clipboard for older browsers.
 
 This example uses these parameters to set French language strings for the copy message (with apologies to our native language French speaking friends! This is Google translated text - if you have an better translation, please let me know!).
 
