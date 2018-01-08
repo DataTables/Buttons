@@ -35,7 +35,7 @@ $('#myTable').DataTable( {
 
 ]]></example>
 
-	<example title="Instance initialisation: Disable a button on initialisation"><![CDATA[
+	<example title="Instance initialisation: Set class name"><![CDATA[
 
 new $.fn.dataTable.Buttons( table, {
 	buttons: [
