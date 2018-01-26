@@ -158,7 +158,7 @@ DataTable.ext.buttons.print = {
 		}
 
 		// Allow stylesheets time to load
-		setTimeout( function () {
+		win.setTimeout( function () {
 			if ( config.autoPrint ) {
 				win.print(); // blocking - so close will not
 				win.close(); // execute until this is done
