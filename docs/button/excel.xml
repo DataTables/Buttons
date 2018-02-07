@@ -62,6 +62,10 @@
 		The extension to give the created file name.
 	</option>
 
+	<option type="string" name="sheetName" default="Sheet1">
+		Name for the worksheet in Excel file created. The characters [] \ /: *? : are not allowed and will be removed if present.
+	</option>
+
 	<option type="boolean" name="createEmptyCells" default="false" since="1.5.0">
 		Option to instruct the Excel export to create empty cells. By default if a cell contains `null` or empty data, it will not be created in the exported spreadsheet. You may however wish for it to do so, based on styling requirements.
 	</option>
