@@ -104,7 +104,7 @@ table
 
 ## array
 
-As an array, the button group selector and select one or more button instances allowing you to operate on multiple selected instances with a single API call. If the same instance is selected multiple times using this method, it will automatically be reduced to a single selection.
+As an array, the button group selector can select one or more button instances. This allows you to operate on multiple selected instances with a single API call. If the same instance is selected multiple times using this method, it will automatically be reduced to a single selection.
 
 ###### Same as the comma string selector example above, but using an array of strings
 
