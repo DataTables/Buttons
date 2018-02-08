@@ -97,9 +97,15 @@
 	</option>
 
 	<option type="function" name="customize" default="null">
-		A function that can be used to customise the PDFMake document definition object. The document object is passed in as the first parameter to this function and should be manipulated as required. The second parameter passed in is the button's configuration object. A return value from the `customize` function is not expected or used.
+		A function that can be used to customise the PDFMake document definition object for the `b-button pdfHtml5` button. The document object is passed in as the first parameter to this function and should be manipulated as required. A return value is not expected or used.
 
 		Please refer to the [PDFMake documentation](http://pdfmake.org/#/gettingstarted) for information on how to manipulate this object and the options available for the generated PDF.
+
+		As of Buttons 1.5.2 this function is passed three parameters:
+
+		1. An object containing the PDFMake document structure.
+		2. The button configuration object
+		3. A DataTables API instance for the table the button belongs to.
 	</option>
 
 

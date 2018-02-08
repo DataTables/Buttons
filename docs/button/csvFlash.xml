@@ -83,6 +83,12 @@
 		Function that can be used to modify the contents of the exported data. The function takes two parameters, the data as configured by the button and the button's configuration object. The value that the function returns is the value that will be used for the export.
 
 		This can be particularly useful if you wish to add a company header or footer, description data or any other information to the exported data.
+
+		As of Buttons 1.5.2 this function is passed three parameters:
+
+		1. The CSV data as a string
+		2. The button configuration object
+		3. A DataTables API instance for the table the button belongs to.
 	</option>
 
 

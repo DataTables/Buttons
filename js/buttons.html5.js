@@ -813,7 +813,7 @@ DataTable.ext.buttons.copyHtml5 = {
 		}
 
 		if ( config.customize ) {
-			output = config.customize( output, config );
+			output = config.customize( output, config, dt );
 		}
 
 		var textarea = $('<textarea readonly/>')
@@ -925,7 +925,7 @@ DataTable.ext.buttons.csvHtml5 = {
 		var charset = config.charset;
 
 		if ( config.customize ) {
-			output = config.customize( output, config );
+			output = config.customize( output, config, dt );
 		}
 
 		if ( charset !== false ) {
@@ -1188,7 +1188,7 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		// Let the developer customise the document if they want to
 		if ( config.customize ) {
-			config.customize( xlsx );
+			config.customize( xlsx, config, dt );
 		}
 
 		// Excel doesn't like an empty mergeCells tag

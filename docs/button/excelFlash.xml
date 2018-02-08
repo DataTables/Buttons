@@ -92,7 +92,13 @@
 	</option>
 
 	<option type="function" name="customize" default="undefined" since="1.2.0">
-		This method can be used to modify the XSLX file that is created by Buttons. A single parameter is passed, an object that contains the XML files and the object structure matches the file system paths for those files in an XSLX file. Customisation of the XSLX file is a complex topic - please refer to the _Customisation_ section in the `b-button excelHtml5` button documentation for full details.
+		This method can be used to modify the XSLX file that is created by Buttons. The first parameter that is passed in is an object that contains the XML files and the object structure matches the file system paths for those files in an XSLX file. Customisation of the XSLX file is a complex topic - please refer to the _Customisation_ section in the `b-button excelHtml5` button documentation for full details.
+
+		As of Buttons 1.5.2 this function is passed three parameters:
+
+		1. An object that contains the XML files in the ZIP file structure used by Excel
+		2. The button configuration object
+		3. A DataTables API instance for the table the button belongs to.
 	</option>
 
 	<option type="string|function" name="title" default="*" since="1.4.0">

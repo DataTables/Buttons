@@ -154,7 +154,7 @@ DataTable.ext.buttons.print = {
 		} );
 
 		if ( config.customize ) {
-			config.customize( win );
+			config.customize( win, config, dt );
 		}
 
 		// Allow stylesheets time to load
