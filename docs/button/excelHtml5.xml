@@ -35,9 +35,9 @@
 
 		## Customisation
 
-		< ## XSLX file format
+		< ## XLSX file format
 		< 
-		< It is important to note that Buttons does not provide any kind of abstraction for the XSLX XML! If you want to modify the output Excel file you need to understand the [XML used for the spreadsheet](https://msdn.microsoft.com/en-us/library/aa140066(office.10).aspx). If you require an abstraction layer, consider creating a custom button that uses [js-xslx](https://github.com/SheetJS/js-xlsx).
+		< It is important to note that Buttons does not provide any kind of abstraction for the XLSX XML! If you want to modify the output Excel file you need to understand the [XML used for the spreadsheet](https://msdn.microsoft.com/en-us/library/aa140066(office.10).aspx). If you require an abstraction layer, consider creating a custom button that uses [js-xlsx](https://github.com/SheetJS/js-xlsx).
 
 		The Excel file that Buttons creates is intentionally quite simple - the default styling is:
 
@@ -69,12 +69,12 @@
 		}
 		```
 
-		If you've developed with XSLX files before you will notice that this object's structure mimics the file structure of the XSLX file. When zipped this file structure will create an XSLX file - which is exactly what this button type does. The `customize` method provides you with the ability to modify any of the XML documents inside it, and even to add extra files (these are automatically detected in the structure and will be included in the zip).
+		If you've developed with XLSX files before you will notice that this object's structure mimics the file structure of the XLSX file. When zipped this file structure will create an XLSX file - which is exactly what this button type does. The `customize` method provides you with the ability to modify any of the XML documents inside it, and even to add extra files (these are automatically detected in the structure and will be included in the zip).
 
 		As an example, let's modify the text shown in cell _A1_:
 
 		```js
-		customize: function ( xslx ) {
+		customize: function ( xlsx ) {
 			var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
 			$('c[r=A1] t', sheet).text( 'Custom text' );
@@ -83,14 +83,14 @@
 
 		On line two we get the XML document used for the spreadsheet's data. Then on line four a little bit of jQuery is used to select the correct cell's text node (the `r` attribute of the `-tag c` element is where the cell will be shown and the `-tag t` element is the text node). Then set the text for the cell. You could just as readily use DOM methods if you prefer.
 
-		We can use the a similar method to customize the styling of the cells in the document. This is done by adding the `s` attribute to the `-tag c` element(s), where the attribute value is the style index you wish to use. The XSLX file created by Buttons has a number of built in styles which are documented below.
+		We can use the a similar method to customize the styling of the cells in the document. This is done by adding the `s` attribute to the `-tag c` element(s), where the attribute value is the style index you wish to use. The XLSX file created by Buttons has a number of built in styles which are documented below.
 
-		This is only a brief summary of how to customise the XSLX files. Full details of the XSLX file format and its features are outside the scope of this documentation. Please refer to the [Microsoft](https://msdn.microsoft.com/en-us/library/aa140066(office.10).aspx) and [Office Open XML](http://officeopenxml.com/SSstyles.php) documentation for details.
+		This is only a brief summary of how to customise the XLSX files. Full details of the XLSX file format and its features are outside the scope of this documentation. Please refer to the [Microsoft](https://msdn.microsoft.com/en-us/library/aa140066(office.10).aspx) and [Office Open XML](http://officeopenxml.com/SSstyles.php) documentation for details.
 
 
 		### Built in styles
 
-		The following indexes are available form the styles that are predefined in the Editor XSLX style file. These indexes can be applied to any cells in the generated spreadsheet, altering their appearance.
+		The following indexes are available form the styles that are predefined in the Editor XLSX style file. These indexes can be applied to any cells in the generated spreadsheet, altering their appearance.
 
 		* `0` - Normal text
 		* `1` - White text
@@ -215,7 +215,7 @@
 	</option>
 
 	<option type="function" name="customize" default="undefined" since="1.2.0">
-		This method can be used to modify the XSLX file that is created by Buttons. The first parameter that is passed in is an object that contains the XML files and the object structure matches the file system paths for those files in an XSLX file. Customisation of the XSLX file is a complex topic - please refer to the _Customisation_ section in the `b-button excelHtml5` button documentation for full details.
+		This method can be used to modify the XLSX file that is created by Buttons. The first parameter that is passed in is an object that contains the XML files and the object structure matches the file system paths for those files in an XLSX file. Customisation of the XLSX file is a complex topic - please refer to the _Customisation_ section in the `b-button excelHtml5` button documentation for full details.
 
 		As of Buttons 1.5.2 this function is passed three parameters:
 
