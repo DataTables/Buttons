@@ -1234,6 +1234,19 @@ $.extend( _dtButtons, {
 				Buttons.background( true, config.backgroundClassName, config.fade );
 			}
 
+			var close = function () {
+				config._collection
+				.fadeOut( config.fade, function () {
+					config._collection.detach();
+				} );
+
+				$('div.dt-button-background').off( 'click.dtb-collection' );
+				Buttons.background( false, config.backgroundClassName, config.fade );
+
+				$('body').off( 'click.dtb-collection' );
+				dt.off( 'buttons-action.b-internal' );
+			};
+
 			// Need to break the 'thread' for the collection button being
 			// activated by a click - it would also trigger this event
 			setTimeout( function () {
@@ -1248,25 +1261,16 @@ $.extend( _dtButtons, {
 					var back = $.fn.addBack ? 'addBack' : 'andSelf';
 
 					if ( ! $(e.target).parents()[back]().filter( config._collection ).length ) {
-						config._collection
-							.fadeOut( config.fade, function () {
-								config._collection.detach();
-							} );
-
-						$('div.dt-button-background').off( 'click.dtb-collection' );
-						Buttons.background( false, config.backgroundClassName, config.fade );
-
-						$('body').off( 'click.dtb-collection' );
-						dt.off( 'buttons-action.b-internal' );
+						close();
 					}
 				} );
-			}, 10 );
 
-			if ( config.autoClose ) {
-				dt.on( 'buttons-action.b-internal', function () {
-					$('div.dt-button-background').click();
-				} );
-			}
+				if ( config.autoClose ) {
+					dt.on( 'buttons-action.b-internal', function () {
+						close();
+					} );
+				}
+			}, 10 );
 		},
 		background: true,
 		collectionLayout: '',
