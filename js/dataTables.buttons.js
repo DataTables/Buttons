@@ -1214,10 +1214,17 @@ $.extend( _dtButtons, {
 					config._collection.css( 'top', hostPosition.top - config._collection.outerHeight() - 5);
 				}
 
+				// Right alignment in table container
 				var listRight = hostPosition.left + config._collection.outerWidth();
 				var tableRight = tableContainer.offset().left + tableContainer.width();
 				if ( listRight > tableRight ) {
 					config._collection.css( 'left', hostPosition.left - ( listRight - tableRight ) );
+				}
+
+				// Right alignment to window
+				var listOffsetRight = host.offset().left + config._collection.outerWidth();
+				if ( listRight > $(window).width() ) {
+					config._collection.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
 				}
 			}
 			else {
