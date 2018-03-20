@@ -1167,12 +1167,13 @@ DataTable.ext.buttons.csvFlash = $.extend( {}, flashButton, {
 		// Set the text
 		var flash = config._flash;
 		var data = _exportData( dt, config );
+		var info = dt.buttons.exportInfo( config );
 		var output = config.customize ?
 			config.customize( data.str, config, dt ) :
 			data.str;
 
 		flash.setAction( 'csv' );
-		flash.setFileName( _filename( config ) );
+		flash.setFileName( info.filename );
 		_setText( flash, output );
 	},
 
