@@ -1209,8 +1209,8 @@ $.extend( _dtButtons, {
 				var tableTop = tableContainer.offset().top;
 				var topOverflow = tableTop - listTop;
 				
-				// if bottom overflow is larger, move to the top because it fits better
-				if (bottomOverflow > topOverflow) {
+				// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
+				if (bottomOverflow > topOverflow || config.dropup) {
 					config._collection.css( 'top', hostPosition.top - config._collection.outerHeight() - 5);
 				}
 
