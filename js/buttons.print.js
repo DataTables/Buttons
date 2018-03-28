@@ -157,13 +157,22 @@ DataTable.ext.buttons.print = {
 			config.customize( win, config, dt );
 		}
 
-		// Allow stylesheets time to load
-		win.setTimeout( function () {
-			if ( config.autoPrint ) {
-				win.print(); // blocking - so close will not
-				win.close(); // execute until this is done
+		// autoPrint calls the print dialog when the new window is ready and fully rendered
+		if ( config.autoPrint ) {
+			// This function is to be injected within the new window
+			function doPrint() {
+				// Allow stylesheets time to load
+				setTimeout( function () {
+					window.print(); // blocking - so close will not
+					window.close(); // execute until this is done
+				}, 1000 );
 			}
-		}, 1000 );
+			// include the script directly in the new window's body.onload event
+			// This way, it will be run within the newly created window instead of the current window
+			var script = win.document.createElement('script');
+			script.innerHTML = 'document.body.onload = ' + doPrint.toString();
+			win.document.body.appendChild(script);
+	    	}
 	},
 
 	title: '*',
