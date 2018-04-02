@@ -1223,7 +1223,7 @@ $.extend( _dtButtons, {
 
 				// Right alignment to window
 				var listOffsetRight = host.offset().left + config._collection.outerWidth();
-				if ( listRight > $(window).width() ) {
+				if ( listOffsetRight > $(window).width() ) {
 					config._collection.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
 				}
 			}
