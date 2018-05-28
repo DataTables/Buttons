@@ -1180,6 +1180,10 @@ $.extend( _dtButtons, {
 				$('body').trigger( 'click.dtb-collection' );
 			}
 
+			if ( insertPoint.parents('body')[0] !== document.body ) {
+				insertPoint = document.body.lastChild;
+			}
+
 			config._collection
 				.addClass( config.collectionLayout )
 				.css( 'display', 'none' )
