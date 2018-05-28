@@ -547,7 +547,7 @@ $.extend( Buttons.prototype, {
 		};
 
 		var tag = config.tag || buttonDom.tag;
-		var button = $('<'+tag'/>')
+		var button = $('<'+tag+'/>')
 			.addClass( buttonDom.className )
 			.attr( 'tabindex', this.s.dt.settings()[0].iTabIndex )
 			.attr( 'aria-controls', this.s.dt.table().node().id )
