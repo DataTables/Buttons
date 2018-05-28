@@ -22,7 +22,7 @@
 $('#myTable').DataTable( {
 	buttons: [
 		{ extend: 'copy', name: 'copy' }
-	}
+	]
 } );
 
 ]]></example>
@@ -35,7 +35,7 @@ new $.fn.dataTable.Buttons( table, {
 			extend: 'print',
 			name: 'printButton'
 		}
-	}
+	]
 } );
 
 ]]></example>
