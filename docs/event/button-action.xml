@@ -29,7 +29,7 @@
 
 		Note that the event is triggered _after_ the action event. There is no ability to modify the action through this event.
 
-		Please note that, as with all DataTables emitted events, this event is triggered with the `dt` namespace. As such, to listen for this event, you must also use the `dt` namespace by simply appending `.dt` to your event name, as shown in the example below.
+		Please note that, as with all DataTables emitted events, this event is triggered with the `dt` namespace. As such, if you use jQuery directly to listen for this event, you must also use the `dt` namespace by simply appending `.dt` to your event name. This is done automatically if you use the DataTables `-api on()` method.
 	</description>
 
 	<example title="Show a message with the button name that was activated"><![CDATA[
