@@ -1,4 +1,4 @@
-/*! Buttons for DataTables 1.5.1
+/*! Buttons for DataTables 1.5.2-dev
  * ©2016-2017 SpryMedia Ltd - datatables.net/license
  */
 
@@ -379,8 +379,10 @@ $.extend( Buttons.prototype, {
 			this.add( buttons[i] );
 		}
 
-		dt.on( 'destroy', function () {
-			that.destroy();
+		dt.on( 'destroy', function ( e, settings ) {
+			if ( settings === dtSettings ) {
+				that.destroy();
+			}
 		} );
 
 		// Global key event binding to listen for button keys
@@ -1154,7 +1156,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '1.5.1';
+Buttons.version = '1.5.2-dev';
 
 
 $.extend( _dtButtons, {
@@ -1176,6 +1178,10 @@ $.extend( _dtButtons, {
 				multiLevel = $('.dt-button-collection').position();
 				insertPoint = collectionParent;
 				$('body').trigger( 'click.dtb-collection' );
+			}
+
+			if ( insertPoint.parents('body')[0] !== document.body ) {
+				insertPoint = document.body.lastChild;
 			}
 
 			config._collection
@@ -1209,15 +1215,22 @@ $.extend( _dtButtons, {
 				var tableTop = tableContainer.offset().top;
 				var topOverflow = tableTop - listTop;
 				
-				// if bottom overflow is larger, move to the top because it fits better
-				if (bottomOverflow > topOverflow) {
+				// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
+				if (bottomOverflow > topOverflow || config.dropup) {
 					config._collection.css( 'top', hostPosition.top - config._collection.outerHeight() - 5);
 				}
 
+				// Right alignment in table container
 				var listRight = hostPosition.left + config._collection.outerWidth();
 				var tableRight = tableContainer.offset().left + tableContainer.width();
 				if ( listRight > tableRight ) {
 					config._collection.css( 'left', hostPosition.left - ( listRight - tableRight ) );
+				}
+
+				// Right alignment to window
+				var listOffsetRight = host.offset().left + config._collection.outerWidth();
+				if ( listOffsetRight > $(window).width() ) {
+					config._collection.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
 				}
 			}
 			else {
@@ -1234,6 +1247,19 @@ $.extend( _dtButtons, {
 				Buttons.background( true, config.backgroundClassName, config.fade );
 			}
 
+			var close = function () {
+				config._collection
+				.fadeOut( config.fade, function () {
+					config._collection.detach();
+				} );
+
+				$('div.dt-button-background').off( 'click.dtb-collection' );
+				Buttons.background( false, config.backgroundClassName, config.fade );
+
+				$('body').off( 'click.dtb-collection' );
+				dt.off( 'buttons-action.b-internal' );
+			};
+
 			// Need to break the 'thread' for the collection button being
 			// activated by a click - it would also trigger this event
 			setTimeout( function () {
@@ -1248,25 +1274,16 @@ $.extend( _dtButtons, {
 					var back = $.fn.addBack ? 'addBack' : 'andSelf';
 
 					if ( ! $(e.target).parents()[back]().filter( config._collection ).length ) {
-						config._collection
-							.fadeOut( config.fade, function () {
-								config._collection.detach();
-							} );
-
-						$('div.dt-button-background').off( 'click.dtb-collection' );
-						Buttons.background( false, config.backgroundClassName, config.fade );
-
-						$('body').off( 'click.dtb-collection' );
-						dt.off( 'buttons-action.b-internal' );
+						close();
 					}
 				} );
-			}, 10 );
 
-			if ( config.autoClose ) {
-				dt.on( 'buttons-action.b-internal', function () {
-					$('div.dt-button-background').click();
-				} );
-			}
+				if ( config.autoClose ) {
+					dt.on( 'buttons-action.b-internal', function () {
+						close();
+					} );
+				}
+			}, 10 );
 		},
 		background: true,
 		collectionLayout: '',
@@ -1796,7 +1813,7 @@ var _exportData = function ( dt, inOpts )
 
 	var columns = header.length;
 	var rows = columns > 0 ? cells.length / columns : 0;
-	var body = [ rows ];
+	var body = [];
 	var cellCounter = 0;
 
 	for ( var i=0, ien=rows ; i<ien ; i++ ) {

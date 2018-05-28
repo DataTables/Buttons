@@ -1358,7 +1358,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 		}
 
 		if ( config.customize ) {
-			config.customize( doc, config );
+			config.customize( doc, config, dt );
 		}
 
 		var pdf = _pdfMake().createPdf( doc );

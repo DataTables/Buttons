@@ -62,6 +62,10 @@
 	<option type="integer" name="fade" default="400">
 		Animation speed that the collection is faded in and out of the display. This is an integer value that represents the animation duration in milliseconds. For no animation use the value `0`.
 	</option>
+	
+	<option type="boolean" name="dropup" default="false">
+		When `true`, the dropdown collection always drops up. When `false`, the collection drops down or up depending on the available overflow.
+	</option>
 
 
 	<example title="DataTables initialisation: Create an export collection"><![CDATA[
