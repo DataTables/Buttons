@@ -546,7 +546,8 @@ $.extend( Buttons.prototype, {
 			] );
 		};
 
-		var button = $('<'+buttonDom.tag+'/>')
+		var tag = config.tag || buttonDom.tag;
+		var button = $('<'+tag'/>')
 			.addClass( buttonDom.className )
 			.attr( 'tabindex', this.s.dt.settings()[0].iTabIndex )
 			.attr( 'aria-controls', this.s.dt.table().node().id )
@@ -568,7 +569,7 @@ $.extend( Buttons.prototype, {
 			} );
 
 		// Make `a` tags act like a link
-		if ( buttonDom.tag.toLowerCase() === 'a' ) {
+		if ( tag.toLowerCase() === 'a' ) {
 			button.attr( 'href', '#' );
 		}
 
