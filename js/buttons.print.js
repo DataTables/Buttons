@@ -91,6 +91,9 @@ DataTable.ext.buttons.print = {
 			$.extend( {decodeEntities: false}, config.exportOptions ) // XSS protection
 		);
 		var exportInfo = dt.buttons.exportInfo( config );
+		var columnClasses = $.map( dt.settings()[0].aoColumns, function (col, key) {
+			return col.sClass;
+		} );
 
 		var addRow = function ( d, tag ) {
 			var str = '<tr>';
@@ -100,8 +103,11 @@ DataTable.ext.buttons.print = {
 				var dataOut = d[i] === null || d[i] === undefined ?
 					'' :
 					d[i];
+				var classAttr = columnClasses[i] ?
+					'class="'+columnClasses[i]+'"' :
+					'';
 
-				str += '<'+tag+'>'+dataOut+'</'+tag+'>';
+				str += '<'+tag+' '+classAttr+'>'+dataOut+'</'+tag+'>';
 			}
 
 			return str + '</tr>';
