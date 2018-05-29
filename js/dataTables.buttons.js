@@ -573,6 +573,11 @@ $.extend( Buttons.prototype, {
 			button.attr( 'href', '#' );
 		}
 
+		// Button tags should have `type=button` so they don't have any default behaviour
+		if ( tag.toLowerCase() === 'button' ) {
+			button.attr( 'type', 'button' );
+		}
+
 		if ( linerDom.tag ) {
 			var liner = $('<'+linerDom.tag+'/>')
 				.html( text( config.text ) )
