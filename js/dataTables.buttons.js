@@ -1257,7 +1257,7 @@ $.extend( _dtButtons, {
 				$('div.dt-button-background').off( 'click.dtb-collection' );
 				Buttons.background( false, config.backgroundClassName, config.fade );
 
-				$('body').off( 'click.dtb-collection' );
+				$('body').off( '.dtb-collection' );
 				dt.off( 'buttons-action.b-internal' );
 			};
 
@@ -1270,14 +1270,20 @@ $.extend( _dtButtons, {
 				// required to make it work...
 				$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
 
-				$('body').on( 'click.dtb-collection', function (e) {
-					// andSelf is deprecated in jQ1.8, but we want 1.7 compat
-					var back = $.fn.addBack ? 'addBack' : 'andSelf';
+				$('body')
+					.on( 'click.dtb-collection', function (e) {
+						// andSelf is deprecated in jQ1.8, but we want 1.7 compat
+						var back = $.fn.addBack ? 'addBack' : 'andSelf';
 
-					if ( ! $(e.target).parents()[back]().filter( config._collection ).length ) {
-						close();
-					}
-				} );
+						if ( ! $(e.target).parents()[back]().filter( config._collection ).length ) {
+							close();
+						}
+					} )
+					.on( 'keyup.dtb-collection', function (e) {
+						if ( e.keyCode === 27 ) {
+							close();
+						}
+					} );
 
 				if ( config.autoClose ) {
 					dt.on( 'buttons-action.b-internal', function () {
