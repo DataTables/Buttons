@@ -122,14 +122,8 @@ $.extend( DataTable.ext.buttons, {
 						return;
 					}
 
-					if ( typeof conf.columns === 'number' ) {
-						conf.columns = details.mapping[ conf.columns ];
-					}
-
-					var col = dt.column( conf.columns );
-
 					that.text( conf._columnText( dt, conf ) );
-					that.active( col.visible() );
+					that.active( dt.column( conf.columns ).visible() );
 				} );
 
 			this.active( dt.column( conf.columns ).visible() );
