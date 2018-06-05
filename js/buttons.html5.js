@@ -1041,6 +1041,7 @@ DataTable.ext.buttons.excelHtml5 = {
 					}
 				}
 
+				var originalContent = row[i];
 				row[i] = $.trim( row[i] );
 
 				// Special number formatting options
@@ -1091,9 +1092,9 @@ DataTable.ext.buttons.excelHtml5 = {
 					}
 					else {
 						// String output - replace non standard characters for text output
-						var text = ! row[i].replace ?
-							row[i] :
-							row[i].replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
+						var text = ! originalContent.replace ?
+							originalContent :
+							originalContent.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
 
 						cell = _createNode( rels, 'c', {
 							attr: {
@@ -1104,7 +1105,10 @@ DataTable.ext.buttons.excelHtml5 = {
 								row: _createNode( rels, 'is', {
 									children: {
 										row: _createNode( rels, 't', {
-											text: text
+											text: text,
+											attr: {
+												'xml:space': 'preserve'
+											}
 										} )
 									}
 								} )
