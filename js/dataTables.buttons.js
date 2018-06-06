@@ -1760,7 +1760,8 @@ var _exportData = function ( dt, inOpts )
 			body: function ( d ) {
 				return strip( d );
 			}
-		}
+		},
+		customizeData: null
 	}, inOpts );
 
 	var strip = function ( str ) {
@@ -1839,11 +1840,17 @@ var _exportData = function ( dt, inOpts )
 		body[i] = row;
 	}
 
-	return {
+	var data = {
 		header: header,
 		footer: footer,
 		body:   body
 	};
+
+	if ( config.customizeData ) {
+		config.customizeData( data );
+	}
+
+	return data;
 };
 
 

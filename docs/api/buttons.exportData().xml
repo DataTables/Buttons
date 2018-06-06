@@ -35,6 +35,11 @@
 			    2. Cell's row index
 			    3. Cell's column index
 			    4. The cell node (since Buttons 1.2.2)
+			  * `-type function` `customizeData` (since Buttons 1.5.2) - Function that can be used to modify the data used for the export, after all of it has been gathered and pre-processed by the above formatting options. A single argument is passed in and no return parameter is expected (mutate the object passed in to alter the data):
+			    1. Data for export. This is an object with the following properties:
+				  * `header` - Array of data for the header
+				  * `footer` - Array of data for the footer
+				  * `body` - 2D array of data for the body.
 			  ]]>
 		</parameter>
 		<description>
