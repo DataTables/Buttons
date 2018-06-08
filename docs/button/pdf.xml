@@ -5,8 +5,10 @@
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _Flash export button_ plug-in **and / or**
-		* Buttons' _HTML5 export button_ plug-in
+		* Buttons' _HTML5 export button_ plug-in (`-button pdfHtml5`) **and / or**
+		* Buttons' _Flash export button_ plug-in (`-button pdfFlash`).
+
+		To ensure that all files required for PDF export are included, the [DataTables download builder](/download) is recommend.
 	</requires>
 
 	<description>

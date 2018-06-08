@@ -7,7 +7,9 @@
 	<requires>
 		* Buttons' _HTML5 export button_ plug-in.
 		* [JSZip](https://stuk.github.io/jszip/)
-		* A browser that supports local file saving (IE10+, Chrome, Firefox, Opera)
+		* A browser that supports local file saving (IE10+, Chrome, Firefox, Opera).
+
+		To ensure that all files required for Excel HTML5 export are included, the [DataTables download builder](/download) is recommend - select the _HTML5 export_ and _JSZip_ options.
 	</requires>
 
 	<description>

@@ -7,6 +7,8 @@
 	<requires>
 		* Buttons' _Flash export button_ plug-in.
 		* Adobe Flash
+
+		To ensure that all files required for Excel Flash export are included, the [DataTables download builder](/download) is recommend - select the _Flash export_ options.
 	</requires>
 	
 	<deprecated>

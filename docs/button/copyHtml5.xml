@@ -6,6 +6,8 @@
 
 	<requires>
 		* Buttons' _HTML5 export button_ plug-in.
+
+		To ensure that all files required for Copy HTML5 export are included, the [DataTables download builder](/download) is recommend - select the _HTML5 export_ option.
 	</requires>
 
 	<description>
