@@ -91,8 +91,8 @@ DataTable.ext.buttons.print = {
 			$.extend( {decodeEntities: false}, config.exportOptions ) // XSS protection
 		);
 		var exportInfo = dt.buttons.exportInfo( config );
-		var columnClasses = $.map( dt.settings()[0].aoColumns, function (col, key) {
-			return col.sClass;
+		var columnClasses = dt.columns( config.exportOptions.columns ).indexes().map( function () {
+			return dt.settings()[0].aoColumns.sClass;
 		} );
 
 		var addRow = function ( d, tag ) {
