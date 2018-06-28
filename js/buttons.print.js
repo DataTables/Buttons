@@ -91,9 +91,13 @@ DataTable.ext.buttons.print = {
 			$.extend( {decodeEntities: false}, config.exportOptions ) // XSS protection
 		);
 		var exportInfo = dt.buttons.exportInfo( config );
-		var columnClasses = dt.columns( config.exportOptions.columns ).every( function () {
-			return dt.settings()[0].aoColumns[this.index()].sClass;
-		} );
+		var columnClasses = dt
+			.columns( config.exportOptions.columns )
+			.flatten()
+			.map( function (idx) {
+				return dt.settings()[0].aoColumns[dt.column(idx).index()].sClass;
+			} )
+			.toArray();
 
 		var addRow = function ( d, tag ) {
 			var str = '<tr>';
