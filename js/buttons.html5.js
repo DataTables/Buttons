@@ -422,6 +422,9 @@ function _addToZip( zip, obj ) {
 
 				// Return namespace attributes to being as such
 				str = str.replace( /_dt_b_namespace_token_/g, ':' );
+
+				// Remove testing name space that IE puts into the space preserve attr
+				str = str.replace( /xmlns:NS[\d]+="" NS[\d]+:/g, '' );
 			}
 
 			// Safari, IE and Edge will put empty name space attributes onto
