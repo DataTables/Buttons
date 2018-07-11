@@ -120,9 +120,24 @@ DataTable.ext.buttons.print = {
 		// Construct a table for printing
 		var html = '<table class="'+dt.table().node().className+'">';
 
-		if ( config.header ) {
-			html += '<thead>'+ addRow( data.header, 'th' ) +'</thead>';
+		html += '<thead>';
+		
+		// Adding logo to the page (repeats for every page while print)
+		if(config.repeatingHead.logo) {
+			var logoPosition = (['left','right','center'].indexOf(config.repeatingHead.logoPosition) > 0) ? config.repeatingHead.logoPosition : 'right';
+			html += '<tr><th colspan="'+data.header.length+'" style="padding: 0;margin: 0;text-align: '+logoPosition+';"><img style="'+config.repeatingHead.logoStyle+'" src="'+config.repeatingHead.logo+'"/></th></tr>';
 		}
+		
+		// Adding title (repeats for every page while print)
+		if(config.repeatingHead.title) {
+			html += '<tr><th colspan="'+data.header.length+'">'+config.repeatingHead.title+'</th></tr>';
+		}
+		
+		if ( config.header ) {
+			html += addRow( data.header, 'th' );
+		}
+		
+		html += '</thead>';
 
 		html += '<tbody>';
 		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
@@ -193,6 +208,8 @@ DataTable.ext.buttons.print = {
 	messageTop: '*',
 
 	messageBottom: '*',
+	
+	repeatingHead: {},
 
 	exportOptions: {},
 
