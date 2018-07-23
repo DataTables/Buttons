@@ -1283,6 +1283,9 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
 			rows.push( $.map( data.body[i], function ( d ) {
+				if ( d === null || d === undefined ) {
+					d = '';
+				}
 				return {
 					text: typeof d === 'string' ? d : d+'',
 					style: i % 2 ? 'tableBodyEven' : 'tableBodyOdd'
