@@ -908,20 +908,23 @@ $.extend( Buttons.prototype, {
  * @param  {string} Class to assign to the background
  * @static
  */
-Buttons.background = function ( show, className, fade ) {
+Buttons.background = function ( show, className, fade, insertPoint ) {
 	if ( fade === undefined ) {
 		fade = 400;
+	}
+	if ( ! insertPoint ) {
+		insertPoint = document.body;
 	}
 
 	if ( show ) {
 		$('<div/>')
 			.addClass( className )
 			.css( 'display', 'none' )
-			.appendTo( 'body' )
+			.insertAfter( insertPoint )
 			.fadeIn( fade );
 	}
 	else {
-		$('body > div.'+className)
+		$('div.'+className)
 			.fadeOut( fade, function () {
 				$(this)
 					.removeClass( className )
@@ -1250,7 +1253,7 @@ $.extend( _dtButtons, {
 			}
 
 			if ( config.background ) {
-				Buttons.background( true, config.backgroundClassName, config.fade );
+				Buttons.background( true, config.backgroundClassName, config.fade, insertPoint );
 			}
 
 			var close = function () {
@@ -1260,7 +1263,7 @@ $.extend( _dtButtons, {
 				} );
 
 				$('div.dt-button-background').off( 'click.dtb-collection' );
-				Buttons.background( false, config.backgroundClassName, config.fade );
+				Buttons.background( false, config.backgroundClassName, config.fade, insertPoint );
 
 				$('body').off( '.dtb-collection' );
 				dt.off( 'buttons-action.b-internal' );
