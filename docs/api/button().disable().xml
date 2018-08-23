@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-api library="Buttons">
 	<name>button().disable()</name>
-	<summary>Disable the selected buttons</summary>
+	<summary>Disable the selected button</summary>
 	<since>1.0.0</since>
 
 	<type type="function">
-		<signature>buttons().disable()</signature>
+		<signature>buttons).disable()</signature>
 		<returns type="DataTables.Api">
 			DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
 		</returns>
 		<description>
-			Disable the selected buttons.
+			Disable the selected button.
 		</description>
 	</type>
 
