@@ -23,7 +23,7 @@
 	</option>
 
 	<option type="boolean" name="background" default="true">
-		Show (`true`) a background element, which can be styling using CSS to visually highlight the collection by fading out the rest of the page, or not (`false`).
+		Show (`true`) a background element, which can be styled using CSS to visually highlight the collection by fading out the rest of the page, or not (`false`).
 	</option>
 
 	<option type="string" name="backgroundClassName" default="dt-button-background">
@@ -35,11 +35,11 @@
 	</option>
 
 	<option type="array" name="prefixButtons" default="undefined">
-		A list of buttons that should be prefixed to an existing collection (see the `buttons` option). This provides the ability for the a button that extends a collection to add items to the _start_ of the collection's sub-buttons. Like the `buttons` option the elements in this array follow the same rules as the `b-init buttons.buttons` array.
+		A list of buttons that should be prefixed to an existing collection (see the `buttons` option). This provides the ability for a button that extends a collection to add items to the _start_ of the collection's sub-buttons. Like the `buttons` option the elements in this array follow the same rules as the `b-init buttons.buttons` array.
 	</option>
 
 	<option type="array" name="postfixButtons" default="undefined">
-		A list of buttons that should be postfixed to an existing collection (see the `buttons` option). This provides the ability for the a button that extends a collection to add items to the _end_ of the collection's sub-buttons. Like the `buttons` option the elements in this array follow the same rules as the `b-init buttons.buttons` array.
+		A list of buttons that should be postfixed to an existing collection (see the `buttons` option). This provides the ability for a button that extends a collection to add items to the _end_ of the collection's sub-buttons. Like the `buttons` option the elements in this array follow the same rules as the `b-init buttons.buttons` array.
 	</option>
 
 	<option type="string" name="collectionLayout" default="">
