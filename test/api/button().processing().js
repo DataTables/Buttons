@@ -1,84 +1,100 @@
-describe( "button().processing()", function() {
+describe('buttons - button().processing()', function() {
 	var table;
 
-	dt.libs( {
-		js:  [ 'jquery', 'datatables', 'buttons' ],
-		css: [ 'datatables', 'buttons' ]
-	} );
+	dt.libs({
+		js: ['jquery', 'datatables', 'buttons'],
+		css: ['datatables', 'buttons']
+	});
 
-	dt.html( 'basic' );
+	describe('Check the defaults', function() {
+		var table;
+		dt.html('basic');
+		it('Ensure its a function', function() {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [{ text: 'first' }]
+			});
+			expect(
+				typeof $('#example')
+					.DataTable()
+					.button().processing
+			).toBe('function');
+		});
+		it('Returns an API instance', function() {
+			expect(typeof table.button(0).processing()).toBe('boolean');
+		});
+	});
 
-	it( 'Simple table with 4 custom buttons', function () {
-		table = $('#example').DataTable( {
-			dom: "Bfrtip",
-			buttons: [
-				{ text: '1' },
-				{ text: '2' },
-				{ text: '3' },
-				{ text: '4' }
-			]
-		} );
+	describe('Functional Tests', function() {
+		dt.html('basic');
 
-		expect( table.buttons().count() ).toBe( 4 );
-	} );
+		it('Simple table with 4 custom buttons', function() {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [{ text: '1' }, { text: '2' }, { text: '3' }, { text: '4' }]
+			});
 
-	it( 'Processing state of the buttons is disabled', function () {
-		expect( table.button(0).processing() ).toBe( false );
-		expect( table.button(1).processing() ).toBe( false );
-		expect( table.button(2).processing() ).toBe( false );
-		expect( table.button(3).processing() ).toBe( false );
-	} );
+			expect(table.buttons().count()).toBe(4);
+		});
 
-	it( 'Enable processing for second button', function () {
-		table.button( 1 ).processing( true );
+		it('Processing state of the buttons is disabled', function() {
+			expect(table.button(0).processing()).toBe(false);
+			expect(table.button(1).processing()).toBe(false);
+			expect(table.button(2).processing()).toBe(false);
+			expect(table.button(3).processing()).toBe(false);
+		});
 
-		expect( table.button(0).processing() ).toBe( false );
-		expect( table.button(1).processing() ).toBe( true );
-		expect( table.button(2).processing() ).toBe( false );
-		expect( table.button(3).processing() ).toBe( false );
-	} );
+		it('Enable processing for second button', function() {
+			table.button(1).processing(true);
 
-	it( 'Button has class on it', function () {
-		expect( $(table.button(1).node()).hasClass('processing') ).toBe( true );
-	} );
+			expect(table.button(0).processing()).toBe(false);
+			expect(table.button(1).processing()).toBe(true);
+			expect(table.button(2).processing()).toBe(false);
+			expect(table.button(3).processing()).toBe(false);
+		});
 
-	it( 'Disable processing for second button', function () {
-		table.button( 1 ).processing( false );
+		it('Button has class on it', function() {
+			expect($(table.button(1).node()).hasClass('processing')).toBe(true);
+		});
 
-		expect( table.button(0).processing() ).toBe( false );
-		expect( table.button(1).processing() ).toBe( false );
-		expect( table.button(2).processing() ).toBe( false );
-		expect( table.button(3).processing() ).toBe( false );
-	} );
+		it('Disable processing for second button', function() {
+			table.button(1).processing(false);
 
-	it( 'Class was removed', function () {
-		expect( $(table.button(1).node()).hasClass('processing') ).toBe( false );
-	} );
+			expect(table.button(0).processing()).toBe(false);
+			expect(table.button(1).processing()).toBe(false);
+			expect(table.button(2).processing()).toBe(false);
+			expect(table.button(3).processing()).toBe(false);
+		});
 
-	it( 'Enable processing for all buttons', function () {
-		table.buttons().processing( true );
+		it('Class was removed', function() {
+			expect($(table.button(1).node()).hasClass('processing')).toBe(false);
+		});
 
-		expect( table.button(0).processing() ).toBe( true );
-		expect( table.button(1).processing() ).toBe( true );
-		expect( table.button(2).processing() ).toBe( true );
-		expect( table.button(3).processing() ).toBe( true );
-	} );
+		it('Enable processing for all buttons', function() {
+			table.buttons().processing(true);
 
-	it( 'Disable for index 0', function () {
-		table.button( 0 ).processing( false );
+			expect(table.button(0).processing()).toBe(true);
+			expect(table.button(1).processing()).toBe(true);
+			expect(table.button(2).processing()).toBe(true);
+			expect(table.button(3).processing()).toBe(true);
+		});
 
-		expect( table.button(0).processing() ).toBe( false );
-		expect( table.button(1).processing() ).toBe( true );
-		expect( table.button(2).processing() ).toBe( true );
-		expect( table.button(3).processing() ).toBe( true );
-	} );
+		it('Disable for index 0', function() {
+			table.button(0).processing(false);
 
-	it( 'Disable for all', function () {
-		table.buttons().processing( false );
+			expect(table.button(0).processing()).toBe(false);
+			expect(table.button(1).processing()).toBe(true);
+			expect(table.button(2).processing()).toBe(true);
+			expect(table.button(3).processing()).toBe(true);
+		});
 
-		expect( table.button(0).processing() ).toBe( false );
-		expect( table.button(1).processing() ).toBe( false );
-		expect( table.button(2).processing() ).toBe( false );
-		expect( table.button(3).processing() ).toBe( false );
-	} );
-} );
+		it('Disable for all', function() {
+			table.buttons().processing(false);
+
+			expect(table.button(0).processing()).toBe(false);
+			expect(table.button(1).processing()).toBe(false);
+			expect(table.button(2).processing()).toBe(false);
+			expect(table.button(3).processing()).toBe(false);
+		});
+	});
+});
