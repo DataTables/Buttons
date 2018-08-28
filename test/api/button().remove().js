@@ -172,7 +172,7 @@ describe('buttons - button().remove()', function() {
 			expect(table.button('first', 0).text()).toBe('first');
 
 			expect(table.buttons('second', null).count()).toBe(2);
-			expect(table.button('second', 0).text()).toBe('two');			
+			expect(table.button('second', 0).text()).toBe('two');
 		});
 		it('Remove a button from the first group', function() {
 			table.button('first', 0).remove();
@@ -181,7 +181,11 @@ describe('buttons - button().remove()', function() {
 			expect(table.button('first', 0).text()).toBe('second');
 
 			expect(table.buttons('second', null).count()).toBe(2);
-			expect(table.button('second', 0).text()).toBe('two');			
+			expect(table.button('second', 0).text()).toBe('two');
+		});
+
+		it('Destroy the table so that the defaults will be reset', function() {
+			table.destroy();
 		});
 	});
 });

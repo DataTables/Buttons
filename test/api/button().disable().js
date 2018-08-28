@@ -209,5 +209,9 @@ describe('buttons - button().disable()', function() {
 			expect($('button.disabled').length).toBe(2);
 			expect($('button.disabled:first').text()).toBe('second');
 		});
+
+		it('Destroy the table so that the defaults will be reset', function() {
+			table.destroy();
+		});	
 	});
 });

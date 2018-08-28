@@ -154,5 +154,9 @@ describe('buttons - button().add()', function() {
 			expect($('.dt-button:first').text()).toBe('2');
 			expect($('.dt-button:last').text()).toBe('1');
 		});
+		
+		it('Destroy the table so that the defaults will be reset', function() {
+			table.destroy();
+		});		
 	});
 });
