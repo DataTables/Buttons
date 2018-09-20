@@ -60,11 +60,13 @@ div.button-group.stacked.dropdown-pane {
 	z-index: 89;
 
 	a.button {
+		display: block;
 		margin-bottom: 1px;
 		border-right: none;
 
 		&:last-child {
 			margin-bottom: 0;
+			margin-right: 1px;
 		}
 	}
 }

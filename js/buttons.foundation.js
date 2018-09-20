@@ -70,7 +70,8 @@ $.extend( true, DataTable.Buttons.defaults, {
 		},
 		button: {
 			tag: 'a',
-			className: 'button small'
+			className: 'button small',
+			active: 'secondary'
 		},
 		buttonLiner: {
 			tag: null
