@@ -234,6 +234,11 @@
 		Message to be shown at the bottom of the table, or the `-tag caption` tag if displayed at the bottom of the table.
 	</option>
 
+	<option type="boolean" name="autoFilter" default="false" since="1.5.4">
+		Enable Excel's auto filter feature for the header cells in the table allowing the user to quickly filter and sort the exported spreadsheet in Excel. Note that this does not operate in LibreOffice (although the spreadsheet is still readable).
+	</option>
+
+
 
 	<example title="DataTables initialisation: Use the HTML5 Excel button"><![CDATA[
 
@@ -267,6 +272,19 @@ $('#myTable').DataTable( {
 					page: 'current'
 				}
 			}
+		}
+	]
+} );
+
+]]></example>
+
+	<example title="Enable the auto filter option in Excel"><![CDATA[
+
+$('#myTable').DataTable( {
+	buttons: [
+		{
+			extend: 'excelHtml5',
+			autoFilter: true
 		}
 	]
 } );

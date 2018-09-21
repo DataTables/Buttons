@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="8">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons jszip buttons-html5">
+<![CDATA[
+
+$(document).ready( function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [ {
+			extend: 'excelHtml5',
+			autoFilter: true,
+			sheetName: 'Exported data'
+		} ]
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Excel - auto filter</title>
+
+<info><![CDATA[
+
+Excel has an [AutoFilter](https://support.office.com/en-us/article/use-autofilter-to-filter-your-data-7d87d63e-ebd0-424b-8106-e2ab61133d92) feature which lets the end user quickly filter and sort data in the exported spreadsheet. To enable this feature on the header cells of the exported table, use the `autoFilter` option of the `-button excelHtml5` button type. Please note that the AutoFilter feature does no operate in LibreOffice, but the spreadsheet is still readable - this is a feature specific to Excel.
+
+This example also shows the use of the `sheetName` option which allows the sheet in the exported workbook to be given a defined name.
+
+]]></info>
+
+</dt-example>
