@@ -57,6 +57,7 @@ $.extend( true, DataTable.Buttons.defaults, {
 } );
 
 DataTable.ext.buttons.collection.className += ' dropdown-toggle';
+DataTable.ext.buttons.collection.rightAlignClassName = 'dropdown-menu-right';
 
 return DataTable.Buttons;
 }));

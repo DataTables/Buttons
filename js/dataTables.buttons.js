@@ -1229,6 +1229,12 @@ $.extend( _dtButtons, {
 					config._collection.css( 'top', hostPosition.top - config._collection.outerHeight() - 5);
 				}
 
+				// Right alignment is enabled on a class, e.g. bootstrap:
+				// $.fn.dataTable.Buttons.defaults.dom.collection.className += " dropdown-menu-right"; 
+				if ( config._collection.hasClass( config.rightAlignClassName ) ) {
+					config._collection.css( 'left', hostPosition.left + host.outerWidth() - config._collection.outerWidth() );
+				}
+
 				// Right alignment in table container
 				var listRight = hostPosition.left + config._collection.outerWidth();
 				var tableRight = tableContainer.offset().left + tableContainer.width();
@@ -1303,6 +1309,7 @@ $.extend( _dtButtons, {
 		background: true,
 		collectionLayout: '',
 		backgroundClassName: 'dt-button-background',
+		rightAlignClassName: 'dt-button-right',
 		autoClose: false,
 		fade: 400,
 		attr: {
