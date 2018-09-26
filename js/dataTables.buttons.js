@@ -489,7 +489,7 @@ $.extend( Buttons.prototype, {
 				var collectionDom = this.c.dom.collection;
 				built.collection = $('<'+collectionDom.tag+'/>')
 					.addClass( collectionDom.className )
-					.attr( 'role', 'menu') ;
+					.attr( 'role', 'menu' ) ;
 				built.conf._collection = built.collection;
 
 				this._expandButton( built.buttons, built.conf.buttons, true, attachPoint );
@@ -1193,12 +1193,14 @@ $.extend( _dtButtons, {
 				insertPoint = document.body.lastChild;
 			}
 
+			config._collection.find('.dt-button-collection-title').remove();
+			config._collection.prepend('<div class="dt-button-collection-title">'+config.collectionTitle+'</div>');
+
 			config._collection
 				.addClass( config.collectionLayout )
 				.css( 'display', 'none' )
 				.insertAfter( insertPoint )
 				.fadeIn( config.fade );
-			
 
 			var position = config._collection.css( 'position' );
 
@@ -1308,6 +1310,7 @@ $.extend( _dtButtons, {
 		},
 		background: true,
 		collectionLayout: '',
+		collectionTitle: '',
 		backgroundClassName: 'dt-button-background',
 		rightAlignClassName: 'dt-button-right',
 		autoClose: false,

@@ -25,7 +25,10 @@ $(document).ready(function() {
 							dt.column( -1 ).visible( ! dt.column( -1 ).visible() );
 						}
 					},
-					'colvis'
+					{
+						collectionTitle: 'Visibility control',
+						extend: 'colvis'
+					}
 				]
 			}
 		]
