@@ -2,14 +2,14 @@
 @import 'mixins.scss';
 @import 'common.scss';
 
-ul.dt-button-collection.dropdown-menu {
+div.dt-button-collection.dropdown-menu {
 	display: block;
 	z-index: 2002;
 
 	@include dtb-fixed-collection();
 }
 
-ul.dt-button-collection {
+div.dt-button-collection {
 	@include dtb-fixed-collection();
 
 	&.fixed {
