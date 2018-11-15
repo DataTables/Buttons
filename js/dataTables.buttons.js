@@ -1189,7 +1189,7 @@ $.extend( _dtButtons, {
 							collection.detach();
 						} );
 
-						$(this).attr( 'aria-expanded', '' );
+						$(this).removeAttr( 'aria-expanded' );
 					}
 				});
 
