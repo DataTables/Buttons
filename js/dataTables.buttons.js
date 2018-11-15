@@ -923,10 +923,12 @@ Buttons.background = function ( show, className, fade, insertPoint ) {
 			.addClass( className )
 			.css( 'display', 'none' )
 			.insertAfter( insertPoint )
+			.stop()
 			.fadeIn( fade );
 	}
 	else {
 		$('div.'+className)
+			.stop()
 			.fadeOut( fade, function () {
 				$(this)
 					.removeClass( className )
@@ -1185,12 +1187,12 @@ $.extend( _dtButtons, {
 					var collection = $(this).siblings('.dt-button-collection');
 
 					if ( collection.length ) {
-						collection.fadeOut( config.fade, function () {
+						collection.stop().fadeOut( config.fade, function () {
 							collection.detach();
 						} );
-
-						$(this).removeAttr( 'aria-expanded' );
 					}
+
+					$(this).removeAttr( 'aria-expanded' );
 				});
 
 				$('div.dt-button-background').off( 'click.dtb-collection' );
@@ -1232,6 +1234,7 @@ $.extend( _dtButtons, {
 					.addClass( config.collectionLayout )
 					.css( 'display', 'none' )
 					.insertAfter( insertPoint )
+					.stop()
 					.fadeIn( config.fade );
 
 				var position = config._collection.css( 'position' );
