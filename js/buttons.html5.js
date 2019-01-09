@@ -1212,19 +1212,19 @@ DataTable.ext.buttons.excelHtml5 = {
 			} ) );
 		}
 
-		// Auto filter for columns
-		$('mergeCells', rels).before( _createNode( rels, 'autoFilter', {
-			attr: {
-				ref: 'A'+dataStartRow+':'+createCellPos(data.header.length-1)+dataEndRow
-			}
-		} ) );
-
 		// Workbook modifications
 		var workbook = xlsx.xl['workbook.xml'];
 
 		$( 'sheets sheet', workbook ).attr( 'name', _sheetname( config ) );
 
+		// Auto filter for columns
 		if ( config.autoFilter ) {
+			$('mergeCells', rels).before( _createNode( rels, 'autoFilter', {
+				attr: {
+					ref: 'A'+dataStartRow+':'+createCellPos(data.header.length-1)+dataEndRow
+				}
+			} ) );
+
 			$('definedNames', workbook).append( _createNode( workbook, 'definedName', {
 				attr: {
 					name: '_xlnm._FilterDatabase',
