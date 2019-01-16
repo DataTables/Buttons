@@ -34,6 +34,7 @@ describe('buttons - button().action()', function() {
 		it('Clicking button changes the length', function() {
 			$('div.dt-button-collection button.button-page-length:eq(1)').click();
 			expect($('tbody tr').length).toBe(25);
+			checkOptions(1, 'Show 25 rows');
 		});
 	});
 
@@ -56,6 +57,7 @@ describe('buttons - button().action()', function() {
 		it('Clicking button changes the length', function() {
 			$('div.dt-button-collection button.button-page-length:eq(1)').click();
 			expect($('tbody tr').length).toBe(4);
+			checkOptions(1, 'Show 4 rows');
 		});
 
 		dt.html('basic');
@@ -76,6 +78,7 @@ describe('buttons - button().action()', function() {
 		it('Clicking button changes the length', function() {
 			$('div.dt-button-collection button.button-page-length:eq(1)').click();
 			expect($('tbody tr').length).toBe(4);
+			checkOptions(1, 'Show 4 rows');
 		});
 
 		dt.html('basic');
@@ -100,6 +103,7 @@ describe('buttons - button().action()', function() {
 		it('Clicking button changes the length', function() {
 			$('div.dt-button-collection button.button-page-length:eq(1)').click();
 			expect($('tbody tr').length).toBe(25);
+			checkOptions(1, 'Test Text');
 		});
 	});
 });
