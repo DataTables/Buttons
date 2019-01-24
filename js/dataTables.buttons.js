@@ -48,6 +48,15 @@ var _dtButtons = DataTable.ext.buttons;
  */
 var Buttons = function( dt, config )
 {
+	// If not created with a `new` keyword then we return a wrapper function that
+	// will take the settings object for a DT. This allows easy use of new instances
+	// with the `layout` option - e.g. `topLeft: $.fn.dataTable.Buttons( ... )`.
+	if ( !(this instanceof Buttons) ) {
+		return function (settings) {
+			return new Buttons( settings, dt ).container();
+		};
+	}
+
 	// If there is no config set it to an empty object
 	if ( typeof( config ) === 'undefined' ) {
 		config = {};	
@@ -248,12 +257,16 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
-	 * Get a button's node
-	 * @param  {node} node Button node
-	 * @return {jQuery} Button element
+	 * Get a button's node of the buttons container if no button is given
+	 * @param  {node} [node] Button node
+	 * @return {jQuery} Button element, or container
 	 */
 	node: function ( node )
 	{
+		if ( ! node ) {
+			return this.dom.container;
+		}
+
 		var button = this._nodeToButton( node );
 		return $(button.node);
 	},
@@ -1902,16 +1915,23 @@ $(document).on( 'init.dt plugin-init.dt', function (e, settings) {
 	}
 } );
 
+function _init ( settings ) {
+	var api = new DataTable.Api( settings );
+	var opts = api.init().buttons || DataTable.defaults.buttons;
+
+	return new Buttons( api, opts ).container();
+}
+
 // DataTables `dom` feature option
 DataTable.ext.feature.push( {
-	fnInit: function( settings ) {
-		var api = new DataTable.Api( settings );
-		var opts = api.init().buttons || DataTable.defaults.buttons;
-
-		return new Buttons( api, opts ).container();
-	},
+	fnInit: _init,
 	cFeature: "B"
 } );
+
+// DataTables 2 layout feature
+if ( DataTable.ext.features ) {
+	DataTable.ext.features.register( 'buttons', _init );
+}
 
 
 return Buttons;
