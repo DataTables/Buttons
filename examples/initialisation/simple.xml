@@ -9,7 +9,7 @@ $(document).ready(function() {
 	$('#example').DataTable( {
 		dom: 'Bfrtip',
 		buttons: [
-			{ extend:'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf', 'print'
+			'copy', 'csv', 'excel', 'pdf', 'print'
 		]
 	} );
 } );
