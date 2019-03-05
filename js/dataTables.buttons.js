@@ -1201,6 +1201,9 @@ $.extend( _dtButtons, {
 			return dt.i18n( 'buttons.collection', 'Collection' );
 		},
 		className: 'buttons-collection',
+		init: function ( dt, button, config ) {
+			button.attr( 'aria-expanded', false );
+		},
 		action: function ( e, dt, button, config ) {
 			var close = function () {
 				dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes().each( function() {
@@ -1212,7 +1215,7 @@ $.extend( _dtButtons, {
 						} );
 					}
 
-					$(this).removeAttr( 'aria-expanded' );
+					$(this).attr( 'aria-expanded', 'false' );
 				});
 
 				$('div.dt-button-background').off( 'click.dtb-collection' );
@@ -1222,7 +1225,7 @@ $.extend( _dtButtons, {
 				dt.off( 'buttons-action.b-internal' );
 			};
 
-			var wasExpanded = ( button.attr( 'aria-expanded' ) === 'true' );
+			var wasExpanded = button.attr( 'aria-expanded' ) === 'true';
 
 			close();
 
