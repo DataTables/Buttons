@@ -59,9 +59,9 @@
 
 		In essence this method will return an object that contains header, footer and body information from the table. It is then up to the caller to decide how to export that data - for example with a CSV file you would join the items for each row using commas and then join the rows with new lines.
 
-		As of Buttons 1.5.0 the exported data from this method will automatically attempt to determine if any rows in the table are selected. If they are, the export will be restricted to this those rows. If no rows are selected, the full data set will be exported.
+		As of Buttons 1.5.0 the exported data from this method will automatically attempt to determine if any rows in the table are selected. If they are, the export will be restricted to those rows. If no rows are selected, the full data set will be exported.
 
-		If this behaviour is not what you desire, set the `selected` option of the `modifier` object to be `false`. It will then include all rows in the export, regardless of any rows being selected. Equally, if you want to force the export to include only exported rows, even if no rows are selected (i.e. none would be exported), set this parameter to be `true`.
+		If this behaviour is not what you desire, set the `selected` option of the `modifier` object to be `null`. It will then include all rows in the export, regardless of any rows being selected. Equally, if you want to force the export to include only exported rows, even if no rows are selected (i.e. none would be exported), set this parameter to be `true`.
 	</description>
 
 	<example title="Get all data in the table for export"><![CDATA[

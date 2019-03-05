@@ -1,4 +1,4 @@
-describe('buttons - button().action()', function() {
+describe('buttons - pageLength', function() {
 	dt.libs({
 		js: ['jquery', 'datatables', 'buttons'],
 		css: ['datatables', 'buttons']
