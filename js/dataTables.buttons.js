@@ -641,6 +641,13 @@ $.extend( Buttons.prototype, {
 
 		this._addKey( config );
 
+		// Style integration callback for DOM manipulation
+		// Note that this is _not_ documented. It is currently
+		// for style integration only
+		if( this.c.buttonCreated ) {
+			inserter = this.c.buttonCreated( config, inserter );
+		}
+
 		return {
 			conf:         config,
 			node:         button.get(0),
