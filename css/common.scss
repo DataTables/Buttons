@@ -31,3 +31,7 @@ div.dt-button-collection-title {
 	padding: 0.3em 0 0.5em;
 	font-size: 0.9em;
 }
+
+div.dt-button-collection-title:empty {
+	display: none;
+}
