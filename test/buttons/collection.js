@@ -238,16 +238,19 @@ describe('buttons - collection', function() {
 			$('button.dt-button').click();
 			expect($('div.dt-button-collection.three-column').length).toBe(1);
 		});
-		it('collectionLayout - three-column - horizontal position', function() {
-			let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
-			let secondColumn = $('div.dt-button-collection button:eq(1)').offset();
-			expect($('div.dt-button-collection button:eq(2)').offset().left).toBe(secondColumn.left);
-			let thirdColumn = $('div.dt-button-collection button:eq(3)').offset();
 
-			expect(firstColumn.left).toBeLessThan(secondColumn.left);
-			expect(secondColumn.left).toBeLessThan(thirdColumn.left);
-			expect(secondColumn.left - firstColumn.left).toBe(thirdColumn.left - secondColumn.left);
-		});
+		// Disabled because of DD-826
+		// it('collectionLayout - three-column - horizontal position', function() {
+		// 	let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
+		// 	let secondColumn = $('div.dt-button-collection button:eq(1)').offset();
+		// 	expect($('div.dt-button-collection button:eq(2)').offset().left).toBe(secondColumn.left);
+		// 	let thirdColumn = $('div.dt-button-collection button:eq(3)').offset();
+
+		// 	expect(firstColumn.left).toBeLessThan(secondColumn.left);
+		// 	expect(secondColumn.left).toBeLessThan(thirdColumn.left);
+		// 	expect(secondColumn.left - firstColumn.left).toBe(thirdColumn.left - secondColumn.left);
+		// });
+
 		// disabled because of DD-825
 		// it('collectionLayout - two-column - vertical position', function() {
 		// 	let firstRow = $('div.dt-button-collection button:eq(0)').offset();
