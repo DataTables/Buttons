@@ -19,17 +19,16 @@ describe('buttons - pageLength', function() {
 	describe('Check the defaults', function() {
 		dt.html('basic');
 		it('Ensure looks as expected', function() {
+			$.fx.off = true; // disables lightbox animation
 			$('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: ['pageLength']
 			});
 			checkOptions(1, 'Show 10 rows');
 		});
-		it('Contains the expected pages', async function(done) {
+		it('Contains the expected pages', function() {
 			$('.buttons-page-length').click();
-			dt.sleep(1000);
 			checkOptions(5, 'Show 10 rows', ['10', '25', '50', '100']);
-			done();
 		});
 		it('Clicking button changes the length', function() {
 			$('div.dt-button-collection button.button-page-length:eq(1)').click();
@@ -48,11 +47,9 @@ describe('buttons - pageLength', function() {
 			});
 			checkOptions(1, 'Show 2 rows');
 		});
-		it('Contains the expected pages', async function(done) {
+		it('Contains the expected pages', function() {
 			$('.buttons-page-length').click();
-			dt.sleep(1000);
 			checkOptions(4, 'Show 2 rows', ['2', '4', '8']);
-			done();
 		});
 		it('Clicking button changes the length', function() {
 			$('div.dt-button-collection button.button-page-length:eq(1)').click();
@@ -69,11 +66,9 @@ describe('buttons - pageLength', function() {
 			});
 			checkOptions(1, 'Show 2 rows');
 		});
-		it('Contains the expected pages', async function(done) {
+		it('Contains the expected pages', function() {
 			$('.buttons-page-length').click();
-			dt.sleep(1000);
 			checkOptions(4, 'Show 2 rows', ['Couple', 'A few', 'More']);
-			done();
 		});
 		it('Clicking button changes the length', function() {
 			$('div.dt-button-collection button.button-page-length:eq(1)').click();
@@ -94,11 +89,9 @@ describe('buttons - pageLength', function() {
 			});
 			checkOptions(1, 'Test Text');
 		});
-		it('Contains the expected pages', async function(done) {
+		it('Contains the expected pages',  function() {
 			$('.buttons-page-length').click();
-			dt.sleep(1000);
 			checkOptions(5, 'Test Text', ['10', '25', '50', '100']);
-			done();
 		});
 		it('Clicking button changes the length', function() {
 			$('div.dt-button-collection button.button-page-length:eq(1)').click();

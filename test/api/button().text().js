@@ -4,19 +4,16 @@ describe('buttons - button().node()', function() {
 		css: ['datatables', 'buttons']
 	});
 
+	let table;
+
 	describe('Check the defaults', function() {
-		var table;
 		dt.html('basic');
 		it('Ensure its a function', function() {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [{ text: 'first' }]
 			});
-			expect(
-				typeof $('#example')
-					.DataTable()
-					.button().text
-			).toBe('function');
+			expect(typeof table.button().text).toBe('function');
 		});
 		it('Getter returns a string', function() {
 			expect(typeof table.button(0).text()).toBe('string');
@@ -27,7 +24,6 @@ describe('buttons - button().node()', function() {
 	});
 
 	describe('Functional tests', function() {
-		var table;
 		dt.html('basic');
 		it('Returns text two button', function() {
 			table = $('#example').DataTable({

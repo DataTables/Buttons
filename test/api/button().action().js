@@ -4,19 +4,16 @@ describe('buttons - button().action()', function() {
 		css: ['datatables', 'buttons']
 	});
 
+	let table;
+
 	describe('Check the defaults', function() {
-		var table;
 		dt.html('basic');
 		it('Ensure its a function', function() {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [{ text: 'first' }]
 			});
-			expect(
-				typeof $('#example')
-					.DataTable()
-					.button().action
-			).toBe('function');
+			expect(typeof table.button().action).toBe('function');
 		});
 		it('Returns an API instance', function() {
 			expect(table.button(0).action(function test() {}) instanceof $.fn.dataTable.Api).toBe(true);
@@ -49,7 +46,6 @@ describe('buttons - button().action()', function() {
 	});
 
 	describe('Functional tests', function() {
-		var table;
 		var count = 0;
 		dt.html('basic');
 		it('Returns undefined if no action', function() {
