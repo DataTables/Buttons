@@ -1,4 +1,4 @@
-describe('buttons - columnToggle', function() {
+describe('buttons - colvisRestore', function() {
 	dt.libs({
 		js: ['jquery', 'datatables', 'buttons', 'buttons-colVis'],
 		css: ['datatables', 'buttons']
