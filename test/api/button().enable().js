@@ -12,11 +12,7 @@ describe('buttons - button().enable()', function() {
 				dom: 'Bfrtip',
 				buttons: [{ text: 'first' }]
 			});
-			expect(
-				typeof $('#example')
-					.DataTable()
-					.button().enable
-			).toBe('function');
+			expect(typeof table.button().enable).toBe('function');
 		});
 		it('Returns an API instance', function() {
 			table.button().disable(null, {
@@ -37,8 +33,7 @@ describe('buttons - button().enable()', function() {
 
 			expect($('button.disabled').length).toBe(0);
 		});
-		it('Use enable to disable', function() {			
-
+		it('Use enable to disable', function() {
 			table.button(0).enable(false);
 
 			expect($('button.disabled').length).toBe(1);
@@ -49,17 +44,16 @@ describe('buttons - button().enable()', function() {
 
 			expect($('button.disabled').length).toBe(0);
 		});
-		it('Disable again', function() {			
-
+		it('Disable again', function() {
 			table.button(0).enable(false);
 
 			expect($('button.disabled').length).toBe(1);
 			expect($('button.disabled').text()).toBe('first');
-		});		
+		});
 		it('Use enable to enable with default setting', function() {
 			table.button(0).enable();
 
 			expect($('button.disabled').length).toBe(0);
-		});		
+		});
 	});
 });

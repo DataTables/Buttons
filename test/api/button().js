@@ -13,10 +13,10 @@ describe('buttons - button()', function() {
 				dom: 'Bfrtip',
 				buttons: ['colvis']
 			});
-			expect(typeof $('#example').DataTable().button).toBe('function');
+			expect(typeof table.button).toBe('function');
 		});
 		it('Returns an API instance', function() {
-			expect(table.button().active(true) instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.button() instanceof $.fn.dataTable.Api).toBe(true);
 		});
 	});
 

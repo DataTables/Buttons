@@ -12,11 +12,7 @@ describe('buttons - button().add()', function() {
 				dom: 'Bfrtip',
 				buttons: []
 			});
-			expect(
-				typeof $('#example')
-					.DataTable()
-					.button().add
-			).toBe('function');
+			expect(typeof table.button().add).toBe('function');
 		});
 		it('Returns an API instance', function() {
 			expect(
@@ -154,9 +150,9 @@ describe('buttons - button().add()', function() {
 			expect($('.dt-button:first').text()).toBe('2');
 			expect($('.dt-button:last').text()).toBe('1');
 		});
-		
+
 		it('Destroy the table so that the defaults will be reset', function() {
 			table.destroy();
-		});		
+		});
 	});
 });

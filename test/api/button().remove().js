@@ -12,11 +12,7 @@ describe('buttons - button().remove()', function() {
 				dom: 'Bfrtip',
 				buttons: []
 			});
-			expect(
-				typeof $('#example')
-					.DataTable()
-					.button().remove
-			).toBe('function');
+			expect(typeof table.button().remove).toBe('function');
 		});
 		it('Returns an API instance', function() {
 			table.button().add(null, {

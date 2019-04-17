@@ -12,11 +12,7 @@ describe('buttons - button().node()', function() {
 				dom: 'Bfrtip',
 				buttons: [{ text: 'first' }]
 			});
-			expect(
-				typeof $('#example')
-					.DataTable()
-					.button().node
-			).toBe('function');
+			expect(typeof table.button().node).toBe('function');
 		});
 		it('Returns an API instance', function() {
 			expect(table.button(0).node() instanceof $).toBe(true);

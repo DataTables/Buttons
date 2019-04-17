@@ -12,11 +12,7 @@ describe('buttons - button().disable()', function() {
 				dom: 'Bfrtip',
 				buttons: [{ text: 'first' }]
 			});
-			expect(
-				typeof $('#example')
-					.DataTable()
-					.button().disable
-			).toBe('function');
+			expect(typeof table.button().disable).toBe('function');
 		});
 		it('Returns an API instance', function() {
 			expect(table.button(0).disable() instanceof $.fn.dataTable.Api).toBe(true);
@@ -212,6 +208,6 @@ describe('buttons - button().disable()', function() {
 
 		it('Destroy the table so that the defaults will be reset', function() {
 			table.destroy();
-		});	
+		});
 	});
 });
