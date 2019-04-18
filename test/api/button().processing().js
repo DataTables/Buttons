@@ -14,11 +14,7 @@ describe('buttons - button().processing()', function() {
 				dom: 'Bfrtip',
 				buttons: [{ text: 'first' }]
 			});
-			expect(
-				typeof $('#example')
-					.DataTable()
-					.button().processing
-			).toBe('function');
+			expect(typeof table.button().processing).toBe('function');
 		});
 		it('Returns an API instance', function() {
 			expect(typeof table.button(0).processing()).toBe('boolean');

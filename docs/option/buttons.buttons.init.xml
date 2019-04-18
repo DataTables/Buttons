@@ -17,7 +17,7 @@
 			A DataTables API instance for the host DataTable
 		</parameter>
 		<parameter type="jQuery" name="node">
-			jQuery instance for the button node that was clicked on
+			jQuery instance for the button node being initialised
 		</parameter>
 		<parameter type="object" name="config">
 			The button's configuration object
@@ -31,7 +31,7 @@
 	</type>
 
 	<description>
-		This function provides the ability to button plug-in authors to run custom code when a button is initialised. This can be useful for attaching event handlers to the host DataTable that will update the button. For example, the buttons provided by the _Select_ extension for DataTables make use of this to create buttons types which are only active when there is one or more item in the DataTable selected.
+		This function provides the ability to button plug-in authors to run custom code when a button is initialised. This can be useful for attaching event handlers to the host DataTable that will update the button. For example, the buttons provided by the _Select_ extension for DataTables make use of this to create buttons types which are only active when there is one or more items selected in the DataTable.
 	</description>
 
 	<example title="Enable / disable based on there being selected rows (from the _Select_ extension)"><![CDATA[
