@@ -72,4 +72,34 @@ describe('buttons - buttons-action', function() {
 			expect(secondAction).toBe(0);
 		});
 	});
+
+	describe('Fuctional test', function() {
+		dt.html('basic');
+		it('Set stuff up', function() {
+			$.fx.off = true; // disables lightbox animation
+
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: ['colvis']
+			});
+
+			table.on('buttons-action', function() {
+				params = arguments;
+				actionCopy = action;
+				count++;
+			});
+
+			count = 0;
+		});
+		it('Get notified for a collection', function() {
+			$('button.dt-button').click();
+			expect(params[1].text()).toBe('Column visibility');
+			expect(count).toBe(1);
+		});
+		it('... and for its children', function() {
+			$('div.dt-button-collection button.dt-button:eq(1)').click();
+			expect(params[1].text()).toBe('Position');
+			expect(count).toBe(2);
+		});
+	});
 });
