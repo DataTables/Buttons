@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-api library="Buttons">
 	<name>buttons.info()</name>
-	<summary>Display and hide an information for the end user in a modal box</summary>
+	<summary>Display and hide information for the end user in a modal box</summary>
 	<since>1.0.0</since>
 
 	<type type="function">
