@@ -36,7 +36,7 @@ describe('Buttons - options - buttons.attr', function() {
 		it('Setting overrides titleAttr', function() {
 			expect($('button.dt-button:eq(1)').attr('title')).toBe('title2');
 		});
-		it('Can use ID', function() {
+		it('Can use the ID', function() {
 			expect($('#id1').text()).toBe('first');
 		});
 	});
