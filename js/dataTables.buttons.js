@@ -166,7 +166,7 @@ $.extend( Buttons.prototype, {
 			idx = split[ split.length-1 ]*1;
 		}
 
-		this._expandButton( buttons, config, false, idx );
+		this._expandButton( buttons, config, base !== undefined, idx );
 		this._draw();
 
 		return this;
