@@ -1277,35 +1277,38 @@ $.extend( _dtButtons, {
 					} );
 
 					// calculate overflow when positioned beneath
+					var collectionHeight = config._collection.outerHeight();
+					var collectionWidth = config._collection.outerWidth();
 					var tableBottom = tableContainer.offset().top + tableContainer.height();
-					var listBottom = hostPosition.top + host.outerHeight() + config._collection.outerHeight();
+					var listBottom = hostPosition.top + host.outerHeight() + collectionHeight;
 					var bottomOverflow = listBottom - tableBottom;
 
 					// calculate overflow when positioned above
-					var listTop = hostPosition.top - config._collection.outerHeight();
+					var listTop = hostPosition.top - collectionHeight;
 					var tableTop = tableContainer.offset().top;
 					var topOverflow = tableTop - listTop;
 
 					// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
-					if (bottomOverflow > topOverflow || config.dropup) {
-						config._collection.css( 'top', hostPosition.top - config._collection.outerHeight() - 5);
+					var moveTop = hostPosition.top - collectionHeight - 5;
+					if ( (bottomOverflow > topOverflow || config.dropup) && -moveTop < tableTop ) {
+						config._collection.css( 'top', moveTop);
 					}
 
 					// Right alignment is enabled on a class, e.g. bootstrap:
 					// $.fn.dataTable.Buttons.defaults.dom.collection.className += " dropdown-menu-right"; 
 					if ( config._collection.hasClass( config.rightAlignClassName ) ) {
-						config._collection.css( 'left', hostPosition.left + host.outerWidth() - config._collection.outerWidth() );
+						config._collection.css( 'left', hostPosition.left + host.outerWidth() - collectionWidth );
 					}
 
 					// Right alignment in table container
-					var listRight = hostPosition.left + config._collection.outerWidth();
+					var listRight = hostPosition.left + collectionWidth;
 					var tableRight = tableContainer.offset().left + tableContainer.width();
 					if ( listRight > tableRight ) {
 						config._collection.css( 'left', hostPosition.left - ( listRight - tableRight ) );
 					}
 
 					// Right alignment to window
-					var listOffsetRight = host.offset().left + config._collection.outerWidth();
+					var listOffsetRight = host.offset().left + collectionWidth;
 					if ( listOffsetRight > $(window).width() ) {
 						config._collection.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
 					}

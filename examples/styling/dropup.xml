@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="6">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons buttons-colvis">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			{
+                extend: 'collection',
+                text: 'Pop up collection',
+				buttons: [
+                    { text: 1 },
+                    { text: 2 },
+                    { text: 3 },
+                    { text: 4 },
+                    { text: 5 }
+                ],
+				dropup: true
+			}
+		]
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Dropup collection</title>
+
+<info><![CDATA[
+
+This example simply shows the `dropup` option for a collection button being used.
+
+]]></info>
+
+</dt-example>
+
