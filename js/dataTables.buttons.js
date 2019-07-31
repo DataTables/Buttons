@@ -1205,6 +1205,8 @@ $.extend( _dtButtons, {
 			button.attr( 'aria-expanded', false );
 		},
 		action: function ( e, dt, button, config ) {
+			e.stopPropagation();
+
 			var close = function () {
 				dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes().each( function() {
 					var collection = $(this).siblings('.dt-button-collection');
@@ -1322,36 +1324,35 @@ $.extend( _dtButtons, {
 					Buttons.background( true, config.backgroundClassName, config.fade, insertPoint );
 				}
 
-				// Need to break the 'thread' for the collection button being
-				// activated by a click - it would also trigger this event
-				setTimeout( function () {
-					// This is bonkers, but if we don't have a click listener on the
-					// background element, iOS Safari will ignore the body click
-					// listener below. An empty function here is all that is
-					// required to make it work...
-					$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
+				// This is bonkers, but if we don't have a click listener on the
+				// background element, iOS Safari will ignore the body click
+				// listener below. An empty function here is all that is
+				// required to make it work...
+				$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
 
-					$('body')
-						.on( 'click.dtb-collection', function (e) {
-							// andSelf is deprecated in jQ1.8, but we want 1.7 compat
-							var back = $.fn.addBack ? 'addBack' : 'andSelf';
+				$('body')
+					.on( 'click.dtb-collection', function (e) {
+						// andSelf is deprecated in jQ1.8, but we want 1.7 compat
+						var back = $.fn.addBack ? 'addBack' : 'andSelf';
 
-							if ( ! $(e.target).parents()[back]().filter( config._collection ).length ) {
-								close();
-							}
-						} )
-						.on( 'keyup.dtb-collection', function (e) {
-							if ( e.keyCode === 27 ) {
-								close();
-							}
-						} );
-
-					if ( config.autoClose ) {
-						dt.on( 'buttons-action.b-internal', function () {
+						if ( ! $(e.target).parents()[back]().filter( config._collection ).length ) {
 							close();
-						} );
-					}
-				}, 10 );
+						}
+					} )
+					.on( 'keyup.dtb-collection', function (e) {
+						if ( e.keyCode === 27 ) {
+							close();
+						}
+					} );
+
+				if ( config.autoClose ) {
+					dt.on( 'buttons-action.b-internal', function (e, btn, dt, node) {
+						if ( node[0] === button[0] ) {
+							return;
+						}
+						close();
+					} );
+				}
 			}
 		},
 		background: true,
