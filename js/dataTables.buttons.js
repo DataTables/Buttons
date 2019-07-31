@@ -1579,7 +1579,7 @@ DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', funct
 } );
 
 // Get the container elements
-DataTable.Api.registerPlural( 'buttons().containers()', 'buttons().container()', function () {
+DataTable.Api.register( 'buttons().containers()', function () {
 	var jq = $();
 	var groupSelector = this._groupSelector;
 
@@ -1596,6 +1596,11 @@ DataTable.Api.registerPlural( 'buttons().containers()', 'buttons().container()',
 	} );
 
 	return jq;
+} );
+
+DataTable.Api.register( 'buttons().container()', function () {
+	// API level of nesting is `buttons()` so we can zip into the containers method
+	return this.containers().eq(0);
 } );
 
 // Add a new button
