@@ -87,26 +87,21 @@ describe('buttons - buttons()', function() {
 			expect(table.buttons().length).toBe(9);
 		});
 		it('integer - first group', function() {
-			// DD-866 doing odd things when integer group selectors
 			var buttons = table.buttons(0, 0);
-			expect(buttons.length).toBe(2);
+			expect(buttons.length).toBe(1);
 			expect(buttons.text()[0]).toBe('Column visibility');
-			expect(buttons.text()[1]).toBe('button1');
 		});
 		it('integer - second group', function() {
-			// DD-866 doing odd things when integer group selectors
 			var buttons = table.buttons(1, 0);
 			expect(buttons.length).toBe(1);
 			expect(buttons.text()[0]).toBe('button1');
 		});
 		it('string - first group', function() {
-			// DD-866 doing odd things when integer group selectors
 			var buttons = table.buttons('test_colvis', null);
 			expect(buttons.length).toBe(7);
 			expect(buttons.text()[0]).toBe('Column visibility');
 		});
 		it('string - second group', function() {
-			// DD-866 doing odd things when integer group selectors
 			var buttons = table.buttons('test_custom', null);
 			expect(buttons.length).toBe(2);
 			expect(buttons.text()[0]).toBe('button1');

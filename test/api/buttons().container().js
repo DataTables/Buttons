@@ -72,9 +72,7 @@ describe('buttons - buttons().container()', function() {
 				.container()
 				.addClass('two');
 
-			// DD-865 - buttons().container() returning multile containers
-			// expect($('div.two').length).toBe(1);
-			expect($('div.two').length).toBe(2);
+			expect($('div.two').length).toBe(1);
 		});
 	});
 });
