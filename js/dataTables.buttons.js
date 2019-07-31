@@ -451,7 +451,7 @@ $.extend( Buttons.prototype, {
 			container.append( ' ' );
 
 			if ( buttons[i].buttons && buttons[i].buttons.length ) {
-				this._draw( buttons[i].collection, buttons[i].buttons );
+				this._draw( buttons[i].collection.find('div.dt-button-collection-liner'), buttons[i].buttons );
 			}
 		}
 	},
@@ -502,7 +502,8 @@ $.extend( Buttons.prototype, {
 				var collectionDom = this.c.dom.collection;
 				built.collection = $('<'+collectionDom.tag+'/>')
 					.addClass( collectionDom.className )
-					.attr( 'role', 'menu' ) ;
+					.attr( 'role', 'menu' )
+					.append('<div class="dt-button-collection-liner"/>');
 				built.conf._collection = built.collection;
 
 				this._expandButton( built.buttons, built.conf.buttons, true, attachPoint );
@@ -1236,6 +1237,7 @@ $.extend( _dtButtons, {
 				var tableContainer = $( dt.table().container() );
 				var multiLevel = false;
 				var insertPoint = host;
+				var liner = config._collection.children();
 
 				button.attr( 'aria-expanded', 'true' );
 
