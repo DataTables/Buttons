@@ -1643,6 +1643,7 @@ DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
 	var that = this;
 
 	if ( title === false ) {
+		this.off('destroy.btn-info');
 		$('#datatables_buttons_info').fadeOut( function () {
 			$(this).remove();
 		} );
@@ -1674,6 +1675,10 @@ DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
 			that.buttons.info( false );
 		}, time );
 	}
+
+	this.on('destroy.btn-info', function () {
+		that.buttons.info(false);
+	});
 
 	return this;
 } );
