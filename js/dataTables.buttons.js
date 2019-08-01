@@ -1214,17 +1214,12 @@ $.extend( _dtButtons, {
 			e.stopPropagation();
 
 			var close = function () {
-				dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes().each( function() {
-					var collection = $(this).siblings('.dt-button-collection');
+				$('.dt-button-collection').stop().fadeOut( config.fade, function () {
+					$(this).detach();
+				} );
 
-					if ( collection.length ) {
-						collection.stop().fadeOut( config.fade, function () {
-							collection.detach();
-						} );
-					}
-
-					$(this).attr( 'aria-expanded', 'false' );
-				});
+				$(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes())
+					.attr('aria-expanded', 'false');
 
 				$('div.dt-button-background').off( 'click.dtb-collection' );
 				Buttons.background( false, config.backgroundClassName, config.fade, insertPoint );
