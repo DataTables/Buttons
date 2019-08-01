@@ -1,4 +1,4 @@
-/*! Buttons for DataTables 1.5.6
+/*! Buttons for DataTables 1.5.7-dev
  * ©2016-2019 SpryMedia Ltd - datatables.net/license
  */
 
@@ -1198,7 +1198,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '1.5.6';
+Buttons.version = '1.5.7-dev';
 
 
 $.extend( _dtButtons, {
