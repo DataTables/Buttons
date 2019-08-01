@@ -273,11 +273,13 @@ $.extend( Buttons.prototype, {
 
 	/**
 	 * Set / get a processing class on the selected button
+	 * @param {element} node Triggering button node
 	 * @param  {boolean} flag true to add, false to remove, undefined to get
 	 * @return {boolean|Buttons} Getter value or this if a setter.
 	 */
 	processing: function ( node, flag )
 	{
+		var dt = this.s.dt;
 		var button = this._nodeToButton( node );
 
 		if ( flag === undefined ) {
@@ -285,6 +287,10 @@ $.extend( Buttons.prototype, {
 		}
 
 		$(button.node).toggleClass( 'processing', flag );
+
+		$(dt.table().node()).triggerHandler( 'buttons-processing.dt', [
+			flag, dt.button( node ), dt, node, button.conf
+		] );
 
 		return this;
 	},

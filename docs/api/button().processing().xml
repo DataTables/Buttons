@@ -55,4 +55,6 @@ table
 	} );
 
 ]]></example>
+
+    <related>-event buttons-processing</related>
 </dt-api>

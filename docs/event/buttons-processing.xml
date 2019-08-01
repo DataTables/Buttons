@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-event library="Buttons">
+	<name>buttons-processing</name>
+	<summary>A button's processing state has changed</summary>
+	<since>1.5.7</since>
+
+	<type type="function">
+		<signature>function( e, indicator, buttonApi, dataTable, node, config )</signature>
+		<parameter type="object" name="e">
+			jQuery event object
+		</parameter>
+		<parameter type="boolean" name="indicator">
+			`true` if processing state is enabled. `false` otherwise.
+		</parameter>
+		<parameter type="DataTables.Api" name="buttonApi">
+			DataTables API instance for the selected button - i.e. `b-api button()` for the button in question
+		</parameter>
+		<parameter type="DataTables.Api" name="dt">
+			A DataTables API instance for the host DataTable
+		</parameter>
+		<parameter type="jQuery" name="node">
+			jQuery instance for the button node that was clicked on
+		</parameter>
+		<parameter type="object" name="config">
+			The button's configuration object
+		</parameter>
+		<scope>HTML table element</scope>
+	</type>
+
+	<description>
+		This event is triggered whenever a button's processing state is changed (`-api button().processing()`), allowing you to show information on screen when a button is taking whatever action it needs to - e.g. a modal might be shown or a `-tag div` could be floated over the page to block further user interaction until the processing is complete.
+
+		Please note that, as with all DataTables emitted events, this event is triggered with the `dt` namespace. As such, if you use jQuery directly to listen for this event, you must also use the `dt` namespace by simply appending `.dt` to your event name. This is done automatically if you use the DataTables `-api on()` method.
+	</description>
+
+	<example title="Insert an element into the document when a button is processing"><![CDATA[
+
+var table = $('#example').DataTable();
+var overlay = $('<div class="ui-blocker">Please wait...</div>'
+
+table.on( 'buttons-processing', function ( e, indicator ) {
+    if ( indicator ) {
+        overlay.appendTo('body');
+    }
+    else {
+        overlay.remove();
+    }
+} );
+
+]]></example>
+
+    <related>-api button().processing()</related>
+</dt-event>
