@@ -76,8 +76,6 @@ describe('buttons - buttons-action', function() {
 	describe('Fuctional test', function() {
 		dt.html('basic');
 		it('Set stuff up', function() {
-			$.fx.off = true; // disables lightbox animation
-
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: ['colvis']

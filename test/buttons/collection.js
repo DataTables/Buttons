@@ -345,22 +345,41 @@ describe('buttons - collection', function() {
 		// 	expect($('div.dt-button-collection-title').text()).toBe('test title');
 		// });
 
-		// disabled due to DD-828
-		// need to write tests - ensure goes up and down (check with and without setting)
-		// dt.html('basic');
-		// it('dropup', function() {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Bfrtip',
-		// 		buttons: [
-		// 			{
-		// 				fade: 0, // saves having to sleep in the tests
-		// 				extend: 'collection',
-		// 				buttons: [{ text: 'null', action: function() {} }],
-		// 				dropup: true
-		// 			}
-		// 		]
-		// 	});
-		// });
+		dt.html('basic');
+		it('dropup - false', function() {
+			$('#dt-test-loader-container').prepend('<div style="height: 300px;"></div>');
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [{ text: 'null', action: function() {} }],
+						dropup: false
+					}
+				]
+			});
+			$('button.dt-button').click();
+			expect($('.dt-button-collection').position().top).toBeGreaterThan($('.dt-buttons').position().top);
+		});
+
+		dt.html('basic');
+		it('dropup - true', function() {
+			$('#dt-test-loader-container').prepend('<div style="height: 300px;"></div>');
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [{ text: 'null', action: function() {} }],
+						dropup: true
+					}
+				]
+			});
+			$('button.dt-button').click();
+			expect($('.dt-button-collection').position().top).toBeLessThan($('.dt-buttons').position().top);
+		});
 
 		dt.html('basic');
 		it('fade', async function() {
