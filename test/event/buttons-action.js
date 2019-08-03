@@ -57,7 +57,6 @@ describe('buttons - buttons-action', function() {
 		it('Activates after the action', function() {
 			expect(actionCopy).toBe(1);
 		});
-		dt.html('basic');
 		it('Passes the expected parameters', function() {
 			expect(params.length).toBe(5);
 			expect(params[0] instanceof $.Event).toBe(true);
