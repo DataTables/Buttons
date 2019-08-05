@@ -917,6 +917,182 @@ $.extend( Buttons.prototype, {
 		}
 
 		return conf;
+	},
+
+	/**
+	 * Display (and replace if there is an existing one) a popover attached to a button
+	 * @param {string|node} content Content to show
+	 * @param {DataTable.Api} hostButton DT API instance of the button
+	 * @param {object} inOpts Options (see object below for all options)
+	 */
+	_popover: function ( content, hostButton, inOpts ) {
+		var dt = hostButton;
+		var buttonsSettings = this.c;
+		var options = $.extend( {
+			align: 'button-left', // button-right, dt-container
+			autoClose: false,
+			background: true,
+			backgroundClassName: 'dt-button-background',
+			contentClassName: buttonsSettings.dom.collection.className,
+			collectionLayout: '',
+			collectionTitle: '',
+			dropup: false,
+			fade: 400,
+			rightAlignClassName: 'dt-button-right',
+			tag: buttonsSettings.dom.collection.tag
+		}, inOpts );
+
+		content = $(content);
+		var hostNode = hostButton.node();
+
+		var close = function () {
+			$('.dt-button-collection').stop().fadeOut( options.fade, function () {
+				$(this).detach();
+			} );
+
+			$(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes())
+				.attr('aria-expanded', 'false');
+
+			$('div.dt-button-background').off( 'click.dtb-collection' );
+			Buttons.background( false, options.backgroundClassName, options.fade, hostNode );
+
+			$('body').off( '.dtb-collection' );
+			dt.off( 'buttons-action.b-internal' );
+		};
+
+		var existingExpanded = $(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes());
+		if ( existingExpanded.length ) {
+			hostNode = existingExpanded.eq(0);
+
+			close();
+		}
+
+		var collectionParent = $(hostButton).parents('div.dt-button-collection');
+		var tableContainer = $( hostButton.table().container() );
+
+		hostNode.attr( 'aria-expanded', 'true' );
+
+		// Remove any old collection
+		if ( collectionParent.length ) {
+			hostNode = collectionParent;
+			$('body').trigger( 'click.dtb-collection' );
+		}
+
+		if ( hostNode.parents('body')[0] !== document.body ) {
+			hostNode = document.body.lastChild;
+		}
+
+		var display = $('<' + options.tag + '/>')
+			.addClass(options.contentClassName)
+			.attr('role', 'menu');
+
+		if ( options.collectionTitle ) {
+			display.prepend('<div class="dt-button-collection-title">'+options.collectionTitle+'</div>');
+		}
+
+		display
+			.addClass( options.collectionLayout )
+			.css( 'display', 'none' )
+			.append( content )
+			.insertAfter( hostNode )
+			.stop()
+			.fadeIn( options.fade );
+
+		var position = display.css( 'position' );
+
+		if ( options.align === 'dt-container' ) {
+			hostNode = hostNode.parent();
+			display.css('width', tableContainer.width());
+		}
+
+		if ( position === 'absolute' ) {
+			var hostPosition = hostNode.position();
+
+			display.css( {
+				top: hostPosition.top + hostNode.outerHeight(),
+				left: hostPosition.left
+			} );
+
+			// calculate overflow when positioned beneath
+			var collectionHeight = display.outerHeight();
+			var collectionWidth = display.outerWidth();
+			var tableBottom = tableContainer.offset().top + tableContainer.height();
+			var listBottom = hostPosition.top + hostNode.outerHeight() + collectionHeight;
+			var bottomOverflow = listBottom - tableBottom;
+
+			// calculate overflow when positioned above
+			var listTop = hostPosition.top - collectionHeight;
+			var tableTop = tableContainer.offset().top;
+			var topOverflow = tableTop - listTop;
+
+			// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
+			var moveTop = hostPosition.top - collectionHeight - 5;
+			if ( (bottomOverflow > topOverflow || options.dropup) && -moveTop < tableTop ) {
+				display.css( 'top', moveTop);
+			}
+
+			// Right alignment is enabled on a class, e.g. bootstrap:
+			// $.fn.dataTable.Buttons.defaults.dom.collection.className += " dropdown-menu-right"; 
+			if ( display.hasClass( options.rightAlignClassName ) || options.align === 'button-right' ) {
+				display.css( 'left', hostPosition.left + hostNode.outerWidth() - collectionWidth );
+			}
+
+			// Right alignment in table container
+			var listRight = hostPosition.left + collectionWidth;
+			var tableRight = tableContainer.offset().left + tableContainer.width();
+			if ( listRight > tableRight ) {
+				display.css( 'left', hostPosition.left - ( listRight - tableRight ) );
+			}
+
+			// Right alignment to window
+			var listOffsetRight = hostNode.offset().left + collectionWidth;
+			if ( listOffsetRight > $(window).width() ) {
+				display.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
+			}
+		}
+		else {
+			// Fix position - centre on screen
+			var top = display.height() / 2;
+			if ( top > $(window).height() / 2 ) {
+				top = $(window).height() / 2;
+			}
+
+			display.css( 'marginTop', top*-1 );
+		}
+
+		if ( options.background ) {
+			Buttons.background( true, options.backgroundClassName, options.fade, hostNode );
+		}
+
+		// This is bonkers, but if we don't have a click listener on the
+		// background element, iOS Safari will ignore the body click
+		// listener below. An empty function here is all that is
+		// required to make it work...
+		$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
+
+		$('body')
+			.on( 'click.dtb-collection', function (e) {
+				// andSelf is deprecated in jQ1.8, but we want 1.7 compat
+				var back = $.fn.addBack ? 'addBack' : 'andSelf';
+
+				if ( ! $(e.target).parents()[back]().filter( content ).length ) {
+					close();
+				}
+			} )
+			.on( 'keyup.dtb-collection', function (e) {
+				if ( e.keyCode === 27 ) {
+					close();
+				}
+			} );
+
+		if ( options.autoClose ) {
+			dt.on( 'buttons-action.b-internal', function (e, btn, dt, node) {
+				if ( node[0] === hostNode[0] ) {
+					return;
+				}
+				close();
+			} );
+		}
 	}
 } );
 
@@ -1190,176 +1366,6 @@ Buttons.defaults = {
 	}
 };
 
-Buttons.popover = function ( content, hostButton, inOpts ) {
-	var dt = hostButton;
-	var buttonsSettings = dt.button(hostButton.node())[0].inst.c;
-	var options = $.extend( {
-		align: 'button-left', // button-right, dt-container
-		autoClose: false,
-		background: true,
-		backgroundClassName: 'dt-button-background',
-		contentClassName: buttonsSettings.dom.collection.className,
-		collectionLayout: '',
-		collectionTitle: '',
-		dropup: false,
-		fade: 400,
-		rightAlignClassName: 'dt-button-right',
-		tag: buttonsSettings.dom.collection.tag
-	}, inOpts );
-
-	content = $(content);
-	var hostNode = hostButton.node();
-
-	var close = function () {
-		$('.dt-button-collection').stop().fadeOut( options.fade, function () {
-			$(this).detach();
-		} );
-
-		$(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes())
-			.attr('aria-expanded', 'false');
-
-		$('div.dt-button-background').off( 'click.dtb-collection' );
-		Buttons.background( false, options.backgroundClassName, options.fade, hostNode );
-
-		$('body').off( '.dtb-collection' );
-		dt.off( 'buttons-action.b-internal' );
-	};
-
-	var existingExpanded = $(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes());
-	if ( existingExpanded.length ) {
-		hostNode = existingExpanded.eq(0);
-
-		close();
-	}
-
-	var collectionParent = $(hostButton).parents('div.dt-button-collection');
-	var tableContainer = $( hostButton.table().container() );
-
-	hostNode.attr( 'aria-expanded', 'true' );
-
-	// Remove any old collection
-	if ( collectionParent.length ) {
-		hostNode = collectionParent;
-		$('body').trigger( 'click.dtb-collection' );
-	}
-
-	if ( hostNode.parents('body')[0] !== document.body ) {
-		hostNode = document.body.lastChild;
-	}
-
-	var display = $('<' + options.tag + '/>')
-		.addClass(options.contentClassName)
-		.attr('role', 'menu');
-
-	if ( options.collectionTitle ) {
-		display.prepend('<div class="dt-button-collection-title">'+options.collectionTitle+'</div>');
-	}
-
-	display
-		.addClass( options.collectionLayout )
-		.css( 'display', 'none' )
-		.append( content )
-		.insertAfter( hostNode )
-		.stop()
-		.fadeIn( options.fade );
-
-	var position = display.css( 'position' );
-
-	if ( options.align === 'dt-container' ) {
-		hostNode = hostNode.parent();
-		display.css('width', tableContainer.width());
-	}
-
-	if ( position === 'absolute' ) {
-		var hostPosition = hostNode.position();
-
-		display.css( {
-			top: hostPosition.top + hostNode.outerHeight(),
-			left: hostPosition.left
-		} );
-
-		// calculate overflow when positioned beneath
-		var collectionHeight = display.outerHeight();
-		var collectionWidth = display.outerWidth();
-		var tableBottom = tableContainer.offset().top + tableContainer.height();
-		var listBottom = hostPosition.top + hostNode.outerHeight() + collectionHeight;
-		var bottomOverflow = listBottom - tableBottom;
-
-		// calculate overflow when positioned above
-		var listTop = hostPosition.top - collectionHeight;
-		var tableTop = tableContainer.offset().top;
-		var topOverflow = tableTop - listTop;
-
-		// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
-		var moveTop = hostPosition.top - collectionHeight - 5;
-		if ( (bottomOverflow > topOverflow || options.dropup) && -moveTop < tableTop ) {
-			display.css( 'top', moveTop);
-		}
-
-		// Right alignment is enabled on a class, e.g. bootstrap:
-		// $.fn.dataTable.Buttons.defaults.dom.collection.className += " dropdown-menu-right"; 
-		if ( display.hasClass( options.rightAlignClassName ) || options.align === 'button-right' ) {
-			display.css( 'left', hostPosition.left + hostNode.outerWidth() - collectionWidth );
-		}
-
-		// Right alignment in table container
-		var listRight = hostPosition.left + collectionWidth;
-		var tableRight = tableContainer.offset().left + tableContainer.width();
-		if ( listRight > tableRight ) {
-			display.css( 'left', hostPosition.left - ( listRight - tableRight ) );
-		}
-
-		// Right alignment to window
-		var listOffsetRight = hostNode.offset().left + collectionWidth;
-		if ( listOffsetRight > $(window).width() ) {
-			display.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
-		}
-	}
-	else {
-		// Fix position - centre on screen
-		var top = display.height() / 2;
-		if ( top > $(window).height() / 2 ) {
-			top = $(window).height() / 2;
-		}
-
-		display.css( 'marginTop', top*-1 );
-	}
-
-	if ( options.background ) {
-		Buttons.background( true, options.backgroundClassName, options.fade, hostNode );
-	}
-
-	// This is bonkers, but if we don't have a click listener on the
-	// background element, iOS Safari will ignore the body click
-	// listener below. An empty function here is all that is
-	// required to make it work...
-	$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
-
-	$('body')
-		.on( 'click.dtb-collection', function (e) {
-			// andSelf is deprecated in jQ1.8, but we want 1.7 compat
-			var back = $.fn.addBack ? 'addBack' : 'andSelf';
-
-			if ( ! $(e.target).parents()[back]().filter( content ).length ) {
-				close();
-			}
-		} )
-		.on( 'keyup.dtb-collection', function (e) {
-			if ( e.keyCode === 27 ) {
-				close();
-			}
-		} );
-
-	if ( options.autoClose ) {
-		dt.on( 'buttons-action.b-internal', function (e, btn, dt, node) {
-			if ( node[0] === hostNode[0] ) {
-				return;
-			}
-			close();
-		} );
-	}
-}
-
 /**
  * Version information
  * @type {string}
@@ -1602,9 +1608,9 @@ DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', funct
 
 // Button resolver to the popover
 DataTable.Api.register( 'button().popover()', function (content, options) {
-	Buttons.popover(content, this.button(this[0].node), options);
-	
-	return this;
+	return this.map( function ( set ) {
+		return set.inst._popover( content, this.button(this[0].node), options );
+	} );
 } );
 
 // Get the container elements
