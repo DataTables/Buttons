@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="Buttons">
+	<name>button().popover()</name>
+	<summary>Show popover box for a button, allowing extra user input</summary>
+	<since>1.6.0</since>
+
+	<type type="function">
+		<signature>button().popover( content [, options ] )</signature>
+		<parameter type="string|node" name="content">
+			The content to display in the popover. This should be an HTML string (including a wrapping element), or a node that you already have and wish to display in the popover.
+		</parameter>
+		<parameter type="object" name="options">
+			Configuration object to control the specifics of the popover. It supports the following properties:
+
+            * `-type string` `align`: The horizontal alignment of the popover relative to the button. It may be one of:
+              * `-string button-left` - Align to the left of the activation button.
+              * `-string button-right` - Align to the right of the activation button.
+              * `-string dt-container` - Align to the left of the DataTables' container and span its full width (good for large content areas).
+            * `-type boolean` `autoClose` - Indicate if the popover should close automatically when clicking on a button inside it.
+              * `true` to auto hide
+              * `false` to not.
+            * `-type boolean` `background` - Show a background behind the popover to stop user interaction with the rest of the page.
+              * `true` to show the background,
+              * `false` to keep it from showing.
+            * `-type string` `dt-button-background` - Class name to use for the background styling
+            * `-type string` `contentClassName` - Class name to use for the content container
+            * `-type string` `collectionLayout` - Class name for additional styling to be applied
+              * `-string two-colours` - Show content in two columns
+              * `-string three-colours` - Show content in three columns
+              * `-string four-colours` - Show content in four columns
+            * `-type string` `collectionTitle` - Title text to show at the top of the popover
+            * `-type boolean` `dropup` - Show popover above or below the button
+              * `true` - Show above the button when visible
+              * `false` - Show below the button (default)
+            * `-type number` `fade` Fade in / out time of the popover
+              * Number in milli-seconds.
+		</parameter>
+		<returns type="DataTable.API">
+			DataTable API instance - no mutations.
+		</returns>
+		<description>
+			Show a pop up box attached to a given button. This gives the ability to define your own content for display in context to the button, such as form fields or additional selection options.
+		</description>
+	</type>
+
+	<description>
+		Buttons are great for quick user interactions and decisions, but there are also cases where you want to hide away advanced controls, or other screens which require user input and then show them on button click. This `-api button().popover()` method provides exactly that ability via an easy to use API method. Its not a full fledged modal, so you may wish to use a full modal library for certain cases, but if you just want to get some extra information from the user, this method is super easy to use.
+
+        Simply pass in the content you want to display and any configuration options you might need (see above). That's it - you can then use the popover for search input, Editor form input, more buttons or anything else.
+	</description>
+
+	<example title="Show a simple popover"><![CDATA[
+
+var table = $('#myTable').DataTable({
+    buttons: [{
+        action: () {
+            this.popover( '<div>I love popovers!</div>', }
+                collectionTitle: 'Hello world'
+            });
+        }
+    }]
+});
+
+]]></example>
+</dt-api>
