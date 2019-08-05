@@ -960,6 +960,10 @@ $.extend( Buttons.prototype, {
 			dt.off( 'buttons-action.b-internal' );
 		};
 
+		if (content === false) {
+			close();
+		}
+
 		var existingExpanded = $(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes());
 		if ( existingExpanded.length ) {
 			hostNode = existingExpanded.eq(0);
@@ -1386,7 +1390,12 @@ $.extend( _dtButtons, {
 		action: function ( e, dt, button, config ) {
 			e.stopPropagation();
 
-			this.popover(config._collection, config);
+			if ( config._collection.parents('body').length ) {
+				this.popover(false, config);
+			}
+			else {
+				this.popover(config._collection, config);
+			}
 		},
 		attr: {
 			'aria-haspopup': true

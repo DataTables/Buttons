@@ -27,7 +27,9 @@ $(document).ready(function() {
 					},
 					{
 						collectionTitle: 'Visibility control',
-						extend: 'colvis'
+						extend: 'colvis',
+						collectionLayout: 'two-column'
+
 					}
 				]
 			}
