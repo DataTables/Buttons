@@ -57,7 +57,6 @@ describe('buttons - buttons-action', function() {
 		it('Activates after the action', function() {
 			expect(actionCopy).toBe(1);
 		});
-		dt.html('basic');
 		it('Passes the expected parameters', function() {
 			expect(params.length).toBe(5);
 			expect(params[0] instanceof $.Event).toBe(true);
@@ -76,8 +75,6 @@ describe('buttons - buttons-action', function() {
 	describe('Fuctional test', function() {
 		dt.html('basic');
 		it('Set stuff up', function() {
-			$.fx.off = true; // disables lightbox animation
-
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: ['colvis']

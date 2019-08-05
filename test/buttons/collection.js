@@ -79,24 +79,30 @@ describe('buttons - collection', function() {
 			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
 		});
 
-		// Disabled due to DD-820
-		// dt.html('basic');
-		// it('autoClose', function() {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Bfrtip',
-		// 		buttons: [
-		// 			{
-		// 				fade: 0, // saves having to sleep in the tests
-		// 				extend: 'collection',
-		// 				buttons: [{ text: 'null', action: function() {let a = table.rows().count()} }],
-		// 				autoClose: true
-		// 			}
-		// 		]
-		// 	});
-		// 	$('button.dt-button').click();
-		// 	$('div.dt-button-collection button.dt-button').click();
-		// 	expect($('button.dt-button').length).toBe(1);
-		// });
+		dt.html('basic');
+		it('autoClose', function() {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [
+							{
+								text: 'null',
+								action: function() {
+									let a = table.rows().count();
+								}
+							}
+						],
+						autoClose: true
+					}
+				]
+			});
+			$('button.dt-button').click();
+			$('div.dt-button-collection button.dt-button').click();
+			expect($('button.dt-button').length).toBe(1);
+		});
 
 		dt.html('basic');
 		it('background', function() {
@@ -206,16 +212,15 @@ describe('buttons - collection', function() {
 
 			expect(firstColumn.left).toBeLessThan(secondColumn.left);
 		});
-		// disabled because of DD-825
-		// it('collectionLayout - two-column - vertical position', function() {
-		// 	let firstRow = $('div.dt-button-collection button:eq(0)').offset();
-		// 	expect($('div.dt-button-collection button:eq(2)').offset().top).toBe(firstRow.top);
+		it('collectionLayout - two-column - vertical position', function() {
+			let firstRow = $('div.dt-button-collection button:eq(0)').offset();
+			expect($('div.dt-button-collection button:eq(2)').offset().top).toBe(firstRow.top);
 
-		// 	let secondRow = $('div.dt-button-collection button:eq(1)').offset();
-		// 	expect($('div.dt-button-collection button:eq(3)').offset().top).toBe(secondRow.top);
+			let secondRow = $('div.dt-button-collection button:eq(1)').offset();
+			expect($('div.dt-button-collection button:eq(3)').offset().top).toBe(secondRow.top);
 
-		// 	expect(firstRow.top).toBeLessThan(secondRow.left);
-		// });
+			expect(firstRow.top).toBeLessThan(secondRow.top);
+		});
 
 		dt.html('basic');
 		it('collectionLayout - three-column', function() {
@@ -229,7 +234,8 @@ describe('buttons - collection', function() {
 							{ text: 'one', action: function() {} },
 							{ text: 'two', action: function() {} },
 							{ text: 'three', action: function() {} },
-							{ text: 'four', action: function() {} }
+							{ text: 'four', action: function() {} },
+							{ text: 'five', action: function() {} }
 						],
 						collectionLayout: 'three-column'
 					}
@@ -238,129 +244,147 @@ describe('buttons - collection', function() {
 			$('button.dt-button').click();
 			expect($('div.dt-button-collection.three-column').length).toBe(1);
 		});
+		it('collectionLayout - three-column - horizontal position', function() {
+			let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
+			let secondColumn = $('div.dt-button-collection button:eq(2)').offset();
+			expect($('div.dt-button-collection button:eq(2)').offset().left).toBe(secondColumn.left);
+			let thirdColumn = $('div.dt-button-collection button:eq(4)').offset();
 
-		// Disabled because of DD-826
-		// it('collectionLayout - three-column - horizontal position', function() {
-		// 	let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
-		// 	let secondColumn = $('div.dt-button-collection button:eq(1)').offset();
-		// 	expect($('div.dt-button-collection button:eq(2)').offset().left).toBe(secondColumn.left);
-		// 	let thirdColumn = $('div.dt-button-collection button:eq(3)').offset();
+			expect(firstColumn.left).toBeLessThan(secondColumn.left);
+			expect(secondColumn.left).toBeLessThan(thirdColumn.left);
+			expect(secondColumn.left - firstColumn.left).toBe(thirdColumn.left - secondColumn.left);
+		});
+		it('collectionLayout - three-column - vertical position', function() {
+			let firstRow = $('div.dt-button-collection button:eq(0)').offset();
+			expect($('div.dt-button-collection button:eq(2)').offset().top).toBe(firstRow.top);
+			expect($('div.dt-button-collection button:eq(4)').offset().top).toBe(firstRow.top);
+			let secondRow = $('div.dt-button-collection button:eq(1)').offset();
 
-		// 	expect(firstColumn.left).toBeLessThan(secondColumn.left);
-		// 	expect(secondColumn.left).toBeLessThan(thirdColumn.left);
-		// 	expect(secondColumn.left - firstColumn.left).toBe(thirdColumn.left - secondColumn.left);
-		// });
-
-		// disabled because of DD-825
-		// it('collectionLayout - two-column - vertical position', function() {
-		// 	let firstRow = $('div.dt-button-collection button:eq(0)').offset();
-		// 	expect($('div.dt-button-collection button:eq(1)').offset().top).toBe(firstRow.top);
-		// 	expect($('div.dt-button-collection button:eq(3)').offset().top).toBe(firstRow.top);
-		// 	let secondRow = $('div.dt-button-collection button:eq(2)').offset();
-
-		// 	expect(firstRow.top).toBeLessThan(secondRow.left);
-		// });
+			expect(firstRow.top).toBeLessThan(secondRow.top);
+		});
 
 		// Disabled due to DD-827
-		// dt.html('basic');
-		// it('collectionLayout - four-column', function() {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Bfrtip',
-		// 		buttons: [
-		// 			{
-		// 				fade: 0, // saves having to sleep in the tests
-		// 				extend: 'collection',
-		// 				buttons: [
-		// 					{ text: 'one', action: function() {} },
-		// 					{ text: 'two', action: function() {} },
-		// 					{ text: 'three', action: function() {} },
-		// 					{ text: 'four', action: function() {} },
-		// 					{ text: 'five', action: function() {} }
+		dt.html('basic');
+		it('collectionLayout - four-column', function() {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [
+							{ text: 'one', action: function() {} },
+							{ text: 'two', action: function() {} },
+							{ text: 'three', action: function() {} },
+							{ text: 'four', action: function() {} },
+							{ text: 'five', action: function() {} },
+							{ text: 'six', action: function() {} },
+							{ text: 'seven', action: function() {} }
+						],
+						collectionLayout: 'four-column'
+					}
+				]
+			});
+			$('button.dt-button').click();
+			expect($('div.dt-button-collection.four-column').length).toBe(1);
+		});
+		it('collectionLayout - four-column - horizontal position', function() {
+			let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
+			let secondColumn = $('div.dt-button-collection button:eq(2)').offset();
+			expect($('div.dt-button-collection button:eq(2)').offset().left).toBe(secondColumn.left);
+			let thirdColumn = $('div.dt-button-collection button:eq(4)').offset();
+			let fourthColumn = $('div.dt-button-collection button:eq(6)').offset();
 
-		// 				],
-		// 				collectionLayout: 'four-column'
-		// 			}
-		// 		]
-		// 	});
-		// 	$('button.dt-button').click();
-		// 	expect($('div.dt-button-collection.four-column').length).toBe(1);
-		// });
-		// it('collectionLayout - three-column - horizontal position', function() {
-		// 	let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
-		// 	let secondColumn = $('div.dt-button-collection button:eq(1)').offset();
-		// 	expect($('div.dt-button-collection button:eq(2)').offset().left).toBe(secondColumn.left);
-		// 	let thirdColumn = $('div.dt-button-collection button:eq(3)').offset();
+			expect(firstColumn.left).toBeLessThan(secondColumn.left);
+			expect(secondColumn.left).toBeLessThan(thirdColumn.left);
+			expect(secondColumn.left - firstColumn.left).toBe(thirdColumn.left - secondColumn.left);
+			expect(thirdColumn.left).toBeLessThan(fourthColumn.left);
+		});
+		it('collectionLayout - four-column - vertical position', function() {
+			let firstRow = $('div.dt-button-collection button:eq(0)').offset();
+			expect($('div.dt-button-collection button:eq(2)').offset().top).toBe(firstRow.top);
+			expect($('div.dt-button-collection button:eq(4)').offset().top).toBe(firstRow.top);
+			let secondRow = $('div.dt-button-collection button:eq(1)').offset();
 
-		// 	expect(firstColumn.left).toBeLessThan(secondColumn.left);
-		// 	expect(secondColumn.left).toBeLessThan(thirdColumn.left);
-		// 	expect(secondColumn.left - firstColumn.left).toBe(thirdColumn.left - secondColumn.left);
-		// });
-		// disabled because of DD-825
-		// it('collectionLayout - two-column - vertical position', function() {
-		// 	let firstRow = $('div.dt-button-collection button:eq(0)').offset();
-		// 	expect($('div.dt-button-collection button:eq(1)').offset().top).toBe(firstRow.top);
-		// 	expect($('div.dt-button-collection button:eq(3)').offset().top).toBe(firstRow.top);
-		// 	let secondRow = $('div.dt-button-collection button:eq(2)').offset();
-
-		// 	expect(firstRow.top).toBeLessThan(secondRow.left);
-		// });
+			expect(firstRow.top).toBeLessThan(secondRow.top);
+		});
 
 		// collectionlayout with collectiontitle
-		// dt.html('basic');
-		// it('collectionLayout', function() {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Bfrtip',
-		// 		buttons: [
-		// 			{
-		// 				fade: 0, // saves having to sleep in the tests
-		// 				extend: 'collection',
-		// 				buttons: [
-		// 					{ text: 'one', action: function() {} },
-		// 					{ text: 'two', action: function() {} },
-		// 					{ text: 'three', action: function() {} },
-		// 					{ text: 'four', action: function() {} }
-		// 				],
-		// 				collectionLayout: 'two-column',
-		// 				collectionTitle: 'test title'
-		// 			}
-		// 		]
-		// 	});
-		// 	expect($('button.test-class').length).toBe(1);
-		// });
+		dt.html('basic');
+		it('collectionLayout with collectionTitle', function() {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [
+							{ text: 'one', action: function() {} },
+							{ text: 'two', action: function() {} },
+							{ text: 'three', action: function() {} },
+							{ text: 'four', action: function() {} }
+						],
+						collectionLayout: 'two-column',
+						collectionTitle: 'test title'
+					}
+				]
+			});
+			$('button.dt-button').click();
+			expect($('div.dt-button-collection-title').text()).toBe('test title');
+		});
 
-		// dt.html('basic');
-		// it('collectionTitle', function() {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Bfrtip',
-		// 		buttons: [
-		// 			{
-		// 				fade: 0, // saves having to sleep in the tests
-		// 				extend: 'collection',
-		// 				buttons: [{ text: 'null', action: function() {} }],
-		// 				collectionTitle: 'test title'
-		// 			}
-		// 		]
-		// 	});
-		// 	$('button.dt-button').click();
-		// 	expect($('div.dt-button-collection-title').text()).toBe('test title');
-		// });
+		dt.html('basic');
+		it('collectionTitle', function() {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [{ text: 'null', action: function() {} }],
+						collectionTitle: 'test title'
+					}
+				]
+			});
+			$('button.dt-button').click();
+			expect($('div.dt-button-collection-title').text()).toBe('test title');
+		});
 
-		// disabled due to DD-828
-		// need to write tests - ensure goes up and down (check with and without setting)
-		// dt.html('basic');
-		// it('dropup', function() {
-		// 	table = $('#example').DataTable({
-		// 		dom: 'Bfrtip',
-		// 		buttons: [
-		// 			{
-		// 				fade: 0, // saves having to sleep in the tests
-		// 				extend: 'collection',
-		// 				buttons: [{ text: 'null', action: function() {} }],
-		// 				dropup: true
-		// 			}
-		// 		]
-		// 	});
-		// });
+		dt.html('basic');
+		it('dropup - false', function() {
+			$('#dt-test-loader-container').prepend('<div style="height: 300px;"></div>');
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [{ text: 'null', action: function() {} }],
+						dropup: false
+					}
+				]
+			});
+			$('button.dt-button').click();
+			expect($('.dt-button-collection').position().top).toBeGreaterThan($('.dt-buttons').position().top);
+		});
+
+		dt.html('basic');
+		it('dropup - true', function() {
+			$('#dt-test-loader-container').prepend('<div style="height: 300px;"></div>');
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [{ text: 'null', action: function() {} }],
+						dropup: true
+					}
+				]
+			});
+			$('button.dt-button').click();
+			expect($('.dt-button-collection').position().top).toBeLessThan($('.dt-buttons').position().top);
+		});
 
 		dt.html('basic');
 		it('fade', async function() {
