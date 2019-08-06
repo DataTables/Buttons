@@ -941,8 +941,6 @@ $.extend( Buttons.prototype, {
 			rightAlignClassName: 'dt-button-right',
 			tag: buttonsSettings.dom.collection.tag
 		}, inOpts );
-
-		content = $(content);
 		var hostNode = hostButton.node();
 
 		var close = function () {
@@ -970,6 +968,8 @@ $.extend( Buttons.prototype, {
 
 			close();
 		}
+
+		content = $(content);
 
 		var collectionParent = $(hostButton).parents('div.dt-button-collection');
 		var tableContainer = $( hostButton.table().container() );
