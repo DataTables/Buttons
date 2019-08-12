@@ -97,11 +97,32 @@ describe('buttons - buttons.exportData()', function() {
 		it('trim - default', function() {
 			expect(defaultData.body[57][3]).toBe('99');
 		});
-		it('trim - modified', function() {
+		it('trim - false - modified (DOM source)', function() {
 			var data = table.buttons.exportData({ trim: false });
-			// DD-868
-			// expect(data.body[57][3]).toBe(' 99 ');
+			//  See DD-868 - spaces always removed from DOM when table initialised
 			expect(data.body[57][3]).toBe('99');
+		});
+		it('trim - true - modified (DOM source)', function() {
+			var data = table.buttons.exportData({ trim: true });
+			expect(data.body[57][3]).toBe('99');
+		});
+		it('trim - false - modified (row added through API)', function() {
+			table.row
+				.add([
+					'<a href="url">ZZ link name</a>',
+					'position &#10 new line',
+					' office2 ',
+					' 99 ',
+					'2019/04/16',
+					'$333,333'
+				])
+				.draw();
+			var data = table.buttons.exportData({ trim: false });
+			expect(data.body[58][3]).toBe(' 99 ');
+		});
+		it('trim - true - modified (row added through API)', function() {
+			var data = table.buttons.exportData({ trim: true });
+			expect(data.body[58][3]).toBe('99');
 		});
 		it('format - default', function() {
 			expect(defaultData.header[1]).toBe('Position');

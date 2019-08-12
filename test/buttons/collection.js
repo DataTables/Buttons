@@ -1,7 +1,7 @@
 describe('buttons - collection', function() {
 	dt.libs({
-		js: ['jquery', 'datatables', 'buttons'],
-		css: ['datatables', 'buttons']
+		js: ['jquery', 'datatables', 'buttons', 'buttons-colVis'],
+		css: ['datatables', 'buttons', 'bootstrap']
 	});
 
 	let table;
@@ -54,7 +54,7 @@ describe('buttons - collection', function() {
 		});
 	});
 
-	describe('Functional tests - single button', function() {
+	describe('Functional tests - basic', function() {
 		dt.html('basic');
 		it('action', function() {
 			table = $('#example').DataTable({
@@ -80,7 +80,7 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('autoClose', function() {
+		it('autoClose - true', function() {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -102,6 +102,31 @@ describe('buttons - collection', function() {
 			$('button.dt-button').click();
 			$('div.dt-button-collection button.dt-button').click();
 			expect($('button.dt-button').length).toBe(1);
+		});
+
+		dt.html('basic');
+		it('autoClose - false', function() {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [
+							{
+								text: 'null',
+								action: function() {
+									let a = table.rows().count();
+								}
+							}
+						],
+						autoClose: false
+					}
+				]
+			});
+			$('button.dt-button').click();
+			$('div.dt-button-collection button.dt-button').click();
+			expect($('button.dt-button').length).toBe(2);
 		});
 
 		dt.html('basic');
@@ -263,7 +288,6 @@ describe('buttons - collection', function() {
 			expect(firstRow.top).toBeLessThan(secondRow.top);
 		});
 
-		// Disabled due to DD-827
 		dt.html('basic');
 		it('collectionLayout - four-column', function() {
 			table = $('#example').DataTable({
@@ -309,7 +333,6 @@ describe('buttons - collection', function() {
 			expect(firstRow.top).toBeLessThan(secondRow.top);
 		});
 
-		// collectionlayout with collectiontitle
 		dt.html('basic');
 		it('collectionLayout with collectionTitle', function() {
 			table = $('#example').DataTable({
@@ -491,6 +514,42 @@ describe('buttons - collection', function() {
 				]
 			});
 			expect($('button.dt-button span').text()).toBe('Collection Text');
+		});
+	});
+
+	describe('Functional tests - multi-level collections', function() {
+		dt.html('basic');
+		it('Only one button initially', function() {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [
+							{ text: 'one', action: function() {} },
+							{
+								fade: 0, // saves having to sleep in the tests
+								collectionTitle: 'Visibility control',
+								extend: 'colvis'
+							}
+						]
+					}
+				]
+			});
+			expect($('button.dt-button').length).toBe(1);
+		});
+		it('Top level buttons shown', function() {
+			$('button.dt-button').click();
+			expect($('button.dt-button').length).toBe(3);
+		});
+		it('Second level buttons shown', function() {
+			$('button.buttons-colvis').click();
+			expect($('button.dt-button').length).toBe(7);
+		});
+		it('Clicking away hides all collections', function() {
+			$('div.dataTables_filter').click();
+			expect($('button.dt-button').length).toBe(1);
 		});
 	});
 });

@@ -15,11 +15,11 @@ describe('buttons - buttons.info()', function() {
 			expect(typeof table.buttons.info).toBe('function');
 		});
 		it('Returns an API instance', function() {
-			expect(table.buttons.info('fred') instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.buttons.info('unit_test') instanceof $.fn.dataTable.Api).toBe(true);
 		});
-		// Note this is needed due to DD-862 - info not removed when table destroyed
-		it('Clean-up', function() {
-			table.buttons.info(false);
+		it('Is removed when table destroyed', function() {
+			table.destroy();
+			expect($('div.dt-button-info').length).toBe(0);
 		});
 	});
 
