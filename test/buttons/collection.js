@@ -1,7 +1,7 @@
 describe('buttons - collection', function() {
 	dt.libs({
 		js: ['jquery', 'datatables', 'buttons', 'buttons-colVis'],
-		css: ['datatables', 'buttons', 'bootstrap']
+		css: ['datatables', 'buttons']
 	});
 
 	let table;
