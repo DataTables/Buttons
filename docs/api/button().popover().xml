@@ -39,12 +39,12 @@
 			DataTable API instance - no mutations.
 		</returns>
 		<description>
-			Show a pop up box attached to a given button. This gives the ability to define your own content for display in context to the button, such as form fields or additional selection options.
+			Show a pop-up box attached to a given button. This gives the ability to define your own content for display in context to the button, such as form fields or additional selection options.
 		</description>
 	</type>
 
 	<description>
-		Buttons are great for quick user interactions and decisions, but there are also cases where you want to hide away advanced controls, or other screens which require user input and then show them on button click. This `-api button().popover()` method provides exactly that ability via an easy to use API method. Its not a full fledged modal, so you may wish to use a full modal library for certain cases, but if you just want to get some extra information from the user, this method is super easy to use.
+		Buttons are great for quick user interactions and decisions, but there are also cases where you want to hide away advanced controls, or other screens which require user input and then show them on button click. This `-api button().popover()` method provides that via an easy to use API method. It's not a full fledged modal, so you may wish to use a full modal library for certain cases, but if you just want to get some extra information from the user, this method is super easy to use.
 
     Simply pass in the content you want to display and any configuration options you might need (see above). That's it - you can then use the popover for search input, Editor form input, more buttons or anything else.
 
@@ -54,10 +54,11 @@
 	<example title="Show a simple popover"><![CDATA[
 
 var table = $('#myTable').DataTable({
+    dom: 'Bt',
     buttons: [{
-        action: (e) {
+        action: function(e) {
             e.stopPropagation();
-            this.popover( '<div>I love popovers!</div>', }
+            this.popover( '<div>I love popovers!</div>', {
                 collectionTitle: 'Hello world'
             });
         }
