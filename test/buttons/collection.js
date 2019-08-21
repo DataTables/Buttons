@@ -80,7 +80,7 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('autoClose', function() {
+		it('autoClose', function(done) {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -100,8 +100,15 @@ describe('buttons - collection', function() {
 				]
 			});
 			$('button.dt-button').click();
-			$('div.dt-button-collection button.dt-button').click();
-			expect($('button.dt-button').length).toBe(1);
+
+			setTimeout( function () {
+				$('div.dt-button-collection button.dt-button').click();
+
+				setTimeout( function () {
+					expect($('button.dt-button').length).toBe(1);
+					done();
+				}, 50);
+			}, 50 );
 		});
 
 		dt.html('basic');

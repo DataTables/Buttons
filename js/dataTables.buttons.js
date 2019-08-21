@@ -971,16 +971,9 @@ $.extend( Buttons.prototype, {
 
 		content = $(content);
 
-		var collectionParent = $(hostButton).parents('div.dt-button-collection');
 		var tableContainer = $( hostButton.table().container() );
 
 		hostNode.attr( 'aria-expanded', 'true' );
-
-		// Remove any old collection
-		if ( collectionParent.length ) {
-			hostNode = collectionParent;
-			$('body').trigger( 'click.dtb-collection' );
-		}
 
 		if ( hostNode.parents('body')[0] !== document.body ) {
 			hostNode = document.body.lastChild;
@@ -1090,12 +1083,14 @@ $.extend( Buttons.prototype, {
 			} );
 
 		if ( options.autoClose ) {
-			dt.on( 'buttons-action.b-internal', function (e, btn, dt, node) {
-				if ( node[0] === hostNode[0] ) {
-					return;
-				}
-				close();
-			} );
+			setTimeout( function () {
+				dt.on( 'buttons-action.b-internal', function (e, btn, dt, node) {
+					if ( node[0] === hostNode[0] ) {
+						return;
+					}
+					close();
+				} );
+			}, 0);
 		}
 	}
 } );
