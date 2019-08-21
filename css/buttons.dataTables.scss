@@ -27,6 +27,7 @@ a.dt-button {
 	user-select: none;
 	text-decoration: none;
 	outline: none;
+	text-overflow: ellipsis;
 
 	&.disabled {
 		color: #999;
