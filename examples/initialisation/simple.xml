@@ -6,12 +6,24 @@
 <![CDATA[
 
 $(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			'copy', 'csv', 'excel', 'pdf', 'print'
-		]
-	} );
+			var table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [
+							{
+								text: 'null',
+								action: function() {
+									let a = table.rows().count();
+								}
+							}
+						],
+						autoClose: false
+					}
+				]
+			});
 } );
 
 ]]>
