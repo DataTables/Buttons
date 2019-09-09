@@ -289,7 +289,7 @@ $.extend( Buttons.prototype, {
 		$(button.node).toggleClass( 'processing', flag );
 
 		$(dt.table().node()).triggerHandler( 'buttons-processing.dt', [
-			flag, dt.button( node ), dt, node, button.conf
+			flag, dt.button( node ), dt, $(node), button.conf
 		] );
 
 		return this;
