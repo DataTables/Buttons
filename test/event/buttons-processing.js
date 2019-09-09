@@ -53,8 +53,7 @@ describe('buttons - buttons-processing', function() {
 			expect(typeof params[1]).toBe('boolean');
 			expect(params[2] instanceof $.fn.dataTable.Api).toBe(true);
 			expect(params[3] instanceof $.fn.dataTable.Api).toBe(true);
-			//DD=1036
-			expect(params[4] instanceof $).toBe(false);
+			expect(params[4] instanceof $).toBe(true);
 			expect(typeof params[5]).toBe('object');
 		});
 		it('Activates on the correct button', function() {
