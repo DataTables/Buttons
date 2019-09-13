@@ -123,17 +123,19 @@ $.extend( DataTable.ext.buttons, {
 						return;
 					}
 
-					conf.columns = $.inArray( conf.columns, details.mapping );
-					button.attr( 'data-cv-idx', conf.columns );
+					if (conf.columns !== details.mapping[conf.columns]) {
+						conf.columns = details.mapping[conf.columns];
+						button.attr('data-cv-idx', conf.columns);
 
-					// Reorder buttons for new table order
-					button
-						.parent()
-						.children('[data-cv-idx]')
-						.sort( function (a, b) {
-							return (a.getAttribute('data-cv-idx')*1) - (b.getAttribute('data-cv-idx')*1);
-						} )
-						.appendTo(button.parent());
+						// Reorder buttons for new table order
+						button
+							.parent()
+							.children('[data-cv-idx]')
+							.sort(function (a, b) {
+								return (a.getAttribute('data-cv-idx') * 1) - (b.getAttribute('data-cv-idx') * 1);
+							})
+							.appendTo(button.parent());
+					}
 				} );
 
 			this.active( dt.column( conf.columns ).visible() );
