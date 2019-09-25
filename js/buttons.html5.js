@@ -771,6 +771,7 @@ var excelStrings = {
 // Ref: section 3.8.30 - built in formatters in open spreadsheet
 //   https://www.ecma-international.org/news/TC45_current_work/Office%20Open%20XML%20Part%204%20-%20Markup%20Language%20Reference.pdf
 var _excelSpecials = [
+	{ match: /^=HYPERLINK\(.+\)$/,  style: 4, nodeName: 'f', replace: /^=/ }, // Hyperlink
 	{ match: /^\-?\d+\.\d%$/,       style: 60, fmt: function (d) { return d/100; } }, // Precent with d.p.
 	{ match: /^\-?\d+\.?\d*%$/,     style: 56, fmt: function (d) { return d/100; } }, // Percent
 	{ match: /^\-?\$[\d,]+.?\d*$/,  style: 57 }, // Dollars
@@ -1071,7 +1072,7 @@ DataTable.ext.buttons.excelHtml5 = {
 					// if they are returning a string, since at the moment it is
 					// assumed to be a number
 					if ( row[i].match && ! row[i].match(/^0\d+/) && row[i].match( special.match ) ) {
-						var val = row[i].replace(/[^\d\.\-]/g, '');
+						var val = row[i].replace(special.replace || /[^\d\.\-]/g, '');
 
 						if ( special.fmt ) {
 							val = special.fmt( val );
@@ -1083,7 +1084,7 @@ DataTable.ext.buttons.excelHtml5 = {
 								s: special.style
 							},
 							children: [
-								_createNode( rels, 'v', { text: val } )
+								_createNode( rels, special.nodeName || 'v', { text: val } )
 							]
 						} );
 
