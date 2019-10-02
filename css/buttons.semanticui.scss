@@ -6,7 +6,7 @@ div.dt-button-collection {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 150px;
+	min-width: 200px;
 	margin-top: 3px !important;
 	z-index: 2002;
 	background: white;
@@ -19,6 +19,7 @@ button.buttons-collection.ui.button span:after {
 	content: "▾";
 	padding-left: 0.5em;
 }
+
 
 div.dt-button-background {
 	position: fixed;

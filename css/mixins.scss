@@ -42,13 +42,14 @@
 		}
 	}
 
-	> div:last-child {
+	> :last-child {
 		> * {
 			-webkit-column-break-inside: avoid;
 			break-inside: avoid;
 		}
 
 		// Multi-column layout feature
+		display: block !important;
 		-webkit-column-gap: 8px;
 		-moz-column-gap: 8px;
 			-ms-column-gap: 8px;
@@ -59,7 +60,7 @@
 	&.two-column {
 		width: 300px;
 
-		> div:last-child {
+		> :last-child {
 			padding-bottom: 1px;
 
 			-webkit-column-count: 2;
@@ -73,7 +74,7 @@
 	&.three-column {
 		width: 450px;
 
-		> div:last-child {
+		> :last-child {
 			padding-bottom: 1px;
 
 			-webkit-column-count: 3;
@@ -87,7 +88,7 @@
 	&.four-column {
 		width: 600px;
 
-		> div:last-child {
+		> :last-child {
 			padding-bottom: 1px;
 
 			-webkit-column-count: 4;

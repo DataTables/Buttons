@@ -505,7 +505,8 @@ $.extend( Buttons.prototype, {
 			}
 
 			if ( built.conf.buttons ) {
-				built.collection = $('<div/>');
+				built.collection = $('<'+this.c.dom.collection.tag+'/>');
+
 				built.conf._collection = built.collection;
 
 				this._expandButton( built.buttons, built.conf.buttons, true, attachPoint );
@@ -969,9 +970,15 @@ $.extend( Buttons.prototype, {
 			close();
 		}
 
-		content = $(content);
+		var display = $('<div/>')
+			.addClass('dt-button-collection')
+			.addClass(options.collectionLayout)
+			.css('display', 'none');
 
-		var tableContainer = $( hostButton.table().container() );
+		content = $(content)
+			.addClass(options.contentClassName)
+			.attr('role', 'menu')
+			.appendTo(display);
 
 		hostNode.attr( 'aria-expanded', 'true' );
 
@@ -979,22 +986,15 @@ $.extend( Buttons.prototype, {
 			hostNode = document.body.lastChild;
 		}
 
-		var display = $('<' + options.tag + '/>')
-			.addClass(options.contentClassName)
-			.attr('role', 'menu');
-
 		if ( options.collectionTitle ) {
 			display.prepend('<div class="dt-button-collection-title">'+options.collectionTitle+'</div>');
 		}
 
 		display
-			.addClass( options.collectionLayout )
-			.css( 'display', 'none' )
-			.append( content )
 			.insertAfter( hostNode )
-			.stop()
 			.fadeIn( options.fade );
 
+		var tableContainer = $( hostButton.table().container() );
 		var position = display.css( 'position' );
 
 		if ( options.align === 'dt-container' ) {
@@ -1347,7 +1347,7 @@ Buttons.defaults = {
 		},
 		collection: {
 			tag: 'div',
-			className: 'dt-button-collection'
+			className: ''
 		},
 		button: {
 			// Flash buttons will not work with `<button>` in IE - it has to be `<a>`

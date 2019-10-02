@@ -17,7 +17,9 @@ ul.dt-buttons.button-group a {
 	                  // active class to look wrong
 }
 
-ul.dt-button-collection.f-dropdown {
+div.dt-button-collection {
+	position: absolute;
+
 	@include dtb-fixed-collection();
 
 	&.fixed {

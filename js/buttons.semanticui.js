@@ -47,7 +47,7 @@ $.extend( true, DataTable.Buttons.defaults, {
 		},
 		collection: {
 			tag: 'div',
-			className: 'dt-button-collection ui basic vertical buttons'
+			className: 'ui basic vertical buttons'
 		}
 	}
 } );
