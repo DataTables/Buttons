@@ -4,8 +4,9 @@ describe('buttons - button().remove()', function() {
 		css: ['datatables', 'buttons']
 	});
 
+	let table;
+
 	describe('Check the defaults', function() {
-		var table;
 		dt.html('basic');
 		it('Ensure its a function', function() {
 			table = $('#example').DataTable({
@@ -23,7 +24,6 @@ describe('buttons - button().remove()', function() {
 	});
 
 	describe('Single Group', function() {
-		var table;
 		dt.html('basic');
 		it('Single button added at initialisation', function() {
 			table = $('#example').DataTable({
@@ -86,8 +86,6 @@ describe('buttons - button().remove()', function() {
 	});
 
 	describe('Collections', function() {
-		var table;
-
 		dt.html('basic');
 		it('Added at initialisation', function() {
 			table = $('#example').DataTable({
@@ -134,7 +132,6 @@ describe('buttons - button().remove()', function() {
 	});
 
 	describe('Multiple Groups', function() {
-		var table;
 		dt.html('basic');
 		it('Added at initialisation', function() {
 			table = $('#example').DataTable({
