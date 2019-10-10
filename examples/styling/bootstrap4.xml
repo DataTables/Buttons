@@ -8,7 +8,20 @@
 $(document).ready(function() {
 	var table = $('#example').DataTable( {
 		lengthChange: false,
-		buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
+		buttons: [ 'copy', 'excel', 'pdf', 
+		
+      {
+        extend: "colvis",
+        //text: 'Column Selection',
+        collectionLayout: "fixed two-column",
+        collectionTitle: "Select Columns",
+        postfixButtons: ["colvisRestore"],
+        columnText: function(dt, idx, title) {
+          return idx + 1 + ": " + title;
+        }
+      }
+		
+		 ]
 	} );
 
 	table.buttons().container()
