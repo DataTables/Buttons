@@ -1042,7 +1042,7 @@ $.extend( Buttons.prototype, {
 			}
 
 			// Right alignment to window
-			var listOffsetRight = hostNode.offset().left + collectionWidth;
+			var listOffsetRight = display.offset().left + collectionWidth;
 			if ( listOffsetRight > $(window).width() ) {
 				display.css( 'left', hostPosition.left - (listOffsetRight-$(window).width()) );
 			}
