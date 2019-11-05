@@ -79,6 +79,15 @@ div.dt-buttons {
 	}
 }
 
+// DT2 layout does not need or want a float
+div.dataTables_layout_cell div.dt-buttons {
+	float: none;
+
+	&.buttons-right {
+		float: none;
+	}
+}
+
 div.dt-button-collection {
 	position: absolute;
 	top: 0;
