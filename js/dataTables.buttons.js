@@ -1992,9 +1992,11 @@ $(document).on( 'init.dt plugin-init.dt', function (e, settings) {
 	}
 } );
 
-function _init ( settings ) {
+function _init ( settings, options ) {
 	var api = new DataTable.Api( settings );
-	var opts = api.init().buttons || DataTable.defaults.buttons;
+	var opts = options
+		? options
+		: api.init().buttons || DataTable.defaults.buttons;
 
 	return new Buttons( api, opts ).container();
 }
