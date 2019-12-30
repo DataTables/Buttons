@@ -1958,7 +1958,7 @@ var _exportData = function ( dt, inOpts )
 	};
 
 	if ( config.customizeData ) {
-		config.customizeData( data );
+		data = config.customizeData( data );
 	}
 
 	return data;
