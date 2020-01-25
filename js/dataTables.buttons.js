@@ -1964,11 +1964,23 @@ var _exportData = function ( dt, inOpts )
 		return str;
 	};
 
-
-	var header = dt.columns( config.columns ).indexes().map( function (idx) {
+	/* ----- BEGIN added/edited Code ----- */
+	/*var header = dt.columns( config.columns ).indexes().map( function (idx) {
 		var el = dt.column( idx ).header();
 		return config.format.header( el.innerHTML, idx, el );
 	} ).toArray();
+	*/
+    var rawHeaderMatrix = getHeaders( dt.settings()[0] );
+    var headerMatrix = [];
+    var numRows = rawHeaderMatrix.length;
+    for ( var rowIdx = 0;  rowIdx < numRows;  rowIdx++ ) {
+    	var headerRow = dt.columns( config.columns ).indexes().map( function (idx) {
+             var $th = rawHeaderMatrix[rowIdx][idx];
+             return config.format.header($th, idx, $th);
+        } ).toArray();
+       headerMatrix.push( headerRow );
+    }
+	/* ----- END added/edited Code ----- */
 
 	var footer = dt.table().footer() ?
 		dt.columns( config.columns ).indexes().map( function (idx) {
@@ -1996,7 +2008,10 @@ var _exportData = function ( dt, inOpts )
 		.nodes()
 		.toArray();
 
-	var columns = header.length;
+	/* ----- BEGIN added/edited Code ----- */
+	//var columns = header.length;
+	var columns = headerMatrix[headerMatrix.length - 1].length;
+	/* ----- END added/edited Code ----- */
 	var rows = columns > 0 ? cells.length / columns : 0;
 	var body = [];
 	var cellCounter = 0;
@@ -2013,7 +2028,10 @@ var _exportData = function ( dt, inOpts )
 	}
 
 	var data = {
-		header: header,
+		/* ----- BEGIN added/edited Code ----- */
+		//header: header,
+		header: headerMatrix,
+		/* ----- END added/edited Code ----- */
 		footer: footer,
 		body:   body
 	};
