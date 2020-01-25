@@ -1841,6 +1841,67 @@ var _message = function ( dt, option, position )
 
 
 
+/* ----- BEGIN added/edited Code ----- */
+/**
+ * getHeaders - function to read full data content based on dt and convert it into matrix
+ * form for exporting.
+ *
+ */
+var getHeaders = function( dt ){
+    var thRows = dt.aoHeader;
+    var numRows = thRows.length;
+    var numCols = thRows[0].length;
+    var matrix = [];
+
+    //initialize matrix with "_getHeaders_initialized_" string
+    for ( var rowIdx = 0;  rowIdx < numRows;  rowIdx++ ) {
+    	matrix[rowIdx] = [];
+    	for ( var colIdx = 0;  colIdx < numCols;  colIdx++ ){
+    		matrix[rowIdx][colIdx] = "_getHeaders_initialized_"
+    	}
+    }
+
+    // Iterate over each row of the header and add information to matrix.
+    for ( var rowIdx = 0;  rowIdx < numRows;  rowIdx++ ) {
+        var $row = thRows[rowIdx];
+        
+        // Iterate over all columns specified in this row.
+        for ( var colIdx = 0;  colIdx < numCols;  colIdx++ )
+        {
+            var $th = $($row[colIdx].cell);
+            var colspan = $th.attr("colspan") || 1;
+            var rowspan = $th.attr("rowspan") || 1;
+            var cellIndex = $row[colIdx].cell.cellIndex;
+            
+            
+            // If the cell has been initialized but not changed, update
+          	if (matrix[rowIdx][colIdx]=="_getHeaders_initialized_") {
+
+          		matrix[rowIdx][colIdx] = $th.text();
+
+              	// rowspan
+              	for(var expand = 1; expand < rowspan; expand++){
+              		matrix[rowIdx+expand][colIdx]="";
+              	}
+
+              	// colspan, use cellindex instead. 
+              	// colspan will be incorrect for hidden columns (colvis), but cellIndex will correctly find them
+				expand = 1;
+				if (colIdx + expand < numCols) {
+	              	var next_cellIndex = $row[colIdx+expand].cell.cellIndex;
+	              	while(cellIndex == next_cellIndex){
+	              		matrix[rowIdx][colIdx+expand]="";
+	              		expand++;
+	              		if (colIdx + expand >= numCols) break;
+	              		next_cellIndex = $row[colIdx+expand].cell.cellIndex;
+	              	}
+	            }
+          	} 	
+        }
+    }
+    return matrix;
+};
+/* ----- END added/edited Code ----- */
 
 
 var _exportTextarea = $('<textarea/>')[0];
