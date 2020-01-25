@@ -309,7 +309,19 @@ var _exportData = function ( dt, config )
 		return s;
 	};
 
-	var header = config.header ? join( data.header )+newLine : '';
+    /* ----- BEGIN added/edited Code ----- */
+	//var header = config.header ? join( data.header )+newLine : '';
+	if (config.header) {
+		var header = [];
+		for (var i=0, ien=data.header.length; i<ien; i++ ) {
+			header.push( join(data.header[i] ) );
+		}
+		header = header.join(newLine) + newLine;
+	} else {
+		header = '';
+	}
+	/* ----- END added/edited Code ----- */
+	
 	var footer = config.footer && data.footer ? newLine+join( data.footer ) : '';
 	var body = [];
 
