@@ -123,11 +123,70 @@ DataTable.ext.buttons.print = {
 		if ( config.header ) {
 			/* ----- BEGIN added/edited Code ----- */
 			//html += '<thead>'+ addRow( data.header, 'th' ) +'</thead>';
-			for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
-        		html += "<thead>" + addRow(data.header[i], "th") + "</thead>";
-        	}
-        	/* ----- END added/edited Code ----- */
+			html += "<thead>";
 
+			//for each header row
+            for(var o=0; o < data.header.length; o++) {
+            	html += "<tr>";
+              
+              	//for each column (cell) in the row
+              	for(var oj=0; oj<data.header[o].length; oj++) {
+	                //look for a non-colspan/rowspan cell
+	                if(data.header[o][oj] != "") {
+	                	var startRow = o;
+		                var startCol = oj;
+		                var endRow = o;
+		                var endCol = oj;
+	                                       
+	                    //lookahead
+	                    if(oj+1 < data.header[o].length){ 
+	                        if(data.header[o][oj+1] == "") { //is the cell next to a colspan?
+	                          
+	                          startCol = oj;
+	                          endCol = oj+1;
+	  
+	                          //get to the last column in the colspan
+	                          while(endCol < data.header[o].length && data.header[o][endCol] == "") {
+	                            endCol++;
+	                          }
+	                          endCol--;
+	                        }
+	                     }
+	                    
+	                    if(o+1 < data.header.length) {
+	                        if(data.header[o+1][oj] == "") //is the cell above a rowspan?
+	                        {  
+	                          
+	                          startRow = o;
+	                          endRow = o+1;
+	  
+	                          //get to the last row in the rowspan
+	                          while(endRow < data.header.length - 1 && data.header[endRow][oj] == "") {
+	                            endRow++;
+	                          }
+	                        }
+	                    }
+	                    
+		                //create and store merged ranges
+		                //if endCol or endRow show movement
+		                   
+		                var cspan = endCol - startCol + 1;
+		                var rspan = endRow - startRow + 1;  
+
+		                var classAttr = columnClasses[i] ?
+						'class="'+columnClasses[i]+'"' :
+						'';
+	              
+
+	                	html += '<th colspan="' + cspan + '" rowspan="' + rspan + '" ' +classAttr+'>' + data.header[o][oj] + '</th>'
+                	}
+              	}
+				
+				html += "</tr>";
+            }               
+            
+            html += "</thead>";
+            /* ----- END added/edited Code ----- */
 		}
 
 		html += '<tbody>';
