@@ -1333,12 +1333,16 @@ DataTable.ext.buttons.pdfHtml5 = {
 		var rows = [];
 
 		if ( config.header ) {
-			rows.push( $.map( data.header, function ( d ) {
-				return {
-					text: typeof d === 'string' ? d : d+'',
-					style: 'tableHeader'
-				};
-			} ) );
+		/* ----- BEGIN added/edited Code ----- */
+			for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+				rows.push( $.map( data.header[i], function ( d ) {
+					return {
+						text: typeof d === 'string' ? d : d+'',
+						style: 'tableHeader'
+					};
+				} ) );
+			}
+    	/* ----- END added/edited Code ----- */
 		}
 
 		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
