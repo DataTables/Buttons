@@ -1869,6 +1869,7 @@ var getHeaders = function( dt ){
         for ( var colIdx = 0;  colIdx < numCols;  colIdx++ )
         {
             var $th = $($row[colIdx].cell);
+            var is_unique = $row[colIdx].unique;
             var colspan = $th.attr("colspan") || 1;
             var rowspan = $th.attr("rowspan") || 1;
             var cellIndex = $row[colIdx].cell.cellIndex;
@@ -1884,17 +1885,20 @@ var getHeaders = function( dt ){
               		matrix[rowIdx+expand][colIdx]="";
               	}
 
-              	// colspan, use cellindex instead. 
-              	// colspan will be incorrect for hidden columns (colvis), but cellIndex will correctly find them
+              	// colspan
+              	// colspan will be incorrect for hidden columns (colvis)
+              	// but cellIndex will correctly find them, in combination with unique
 				expand = 1;
-				if (colIdx + expand < numCols) {
-	              	var next_cellIndex = $row[colIdx+expand].cell.cellIndex;
-	              	while(cellIndex == next_cellIndex){
-	              		matrix[rowIdx][colIdx+expand]="";
-	              		expand++;
-	              		if (colIdx + expand >= numCols) break;
-	              		next_cellIndex = $row[colIdx+expand].cell.cellIndex;
-	              	}
+				if (!is_unique){
+					if (colIdx + expand < numCols) {
+		              	var next_cellIndex = $row[colIdx+expand].cell.cellIndex;
+		              	while(cellIndex == next_cellIndex){
+		              		matrix[rowIdx][colIdx+expand]="";
+		              		expand++;
+		              		if (colIdx + expand >= numCols) break;
+		              		next_cellIndex = $row[colIdx+expand].cell.cellIndex;
+		              	}
+		            }
 	            }
           	} 	
         }
