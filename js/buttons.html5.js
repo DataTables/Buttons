@@ -501,7 +501,15 @@ function _createNode( doc, nodeName, opts ) {
  * @return {int}         Column width
  */
 function _excelColWidth( data, col ) {
-	var max = data.header[col].length;
+	/* ----- BEGIN added/edited Code ----- */
+	//var max = data.header[col].length;
+
+	// gets the largest width of column col
+	var max = 0;
+	for (i = 0; i<data.header.length; i++) {
+		max = Math.max(max, data.header[i][col].length);
+	} 
+	/* ----- END added/edited Code ----- */
 	var len, lineSplit, str;
 
 	if ( data.footer && data.footer[col].length > max ) {
@@ -1177,19 +1185,132 @@ DataTable.ext.buttons.excelHtml5 = {
 		var exportInfo = dt.buttons.exportInfo( config );
 		if ( exportInfo.title ) {
 			addRow( [exportInfo.title], rowPos );
-			mergeCells( rowPos, data.header.length-1 );
+			/* ----- BEGIN added/edited Code ----- */
+			//mergeCells( rowPos, data.header.length-1 );
+			mergeCells( rowPos, data.header[data.header.length - 1].length-1 );
+			/* ----- END added/edited Code ----- */
 		}
 
 		if ( exportInfo.messageTop ) {
 			addRow( [exportInfo.messageTop], rowPos );
-			mergeCells( rowPos, data.header.length-1 );
+			/* ----- BEGIN added/edited Code ----- */
+			//mergeCells( rowPos, data.header.length-1 );
+			mergeCells( rowPos, data.header[data.header.length - 1].length-1 );
+			/* ----- END added/edited Code ----- */
 		}
 
 
 		// Table itself
 		if ( config.header ) {
-			addRow( data.header, rowPos );
-			$('row:last c', rels).attr( 's', '2' ); // bold
+			/* ----- BEGIN added/edited Code ----- */
+			//addRow( data.header, rowPos );
+			//$('row:last c', rels).attr( 's', '2' ); // bold
+
+			var headerStartRow = rowPos;
+
+			// adds header, without merges:
+			for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+				addRow(data.header[i], rowPos);
+				$("row:last c", rels).attr("s", "2"); // bold
+            }
+            
+
+            // process merged cells:
+            var mgCnt = 0;
+            var merges=[];
+
+            //for each header row
+            for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+
+              //for each column (cell) in the row
+              for(var j=0; j<data.header[i].length; j++)
+              {
+                //look for a non-colspan/rowspan cell
+                if(data.header[i][j] != "")
+                {
+                  var startRow = i;
+                  var startCol = j;
+                  var endRow = i;
+                  var endCol = j;
+                                       
+                  //lookahead
+                  if(j+1 < data.header[i].length){ 
+                      if(data.header[i][j+1] == "") //is the cell to the right a colspan?
+                      { 
+                        
+                        startCol = j;
+                        endCol = j+1;
+
+                        //get to the last column in the colspan
+                        while(endCol < data.header[i].length && data.header[i][endCol] == "")
+                        {
+                          endCol++;
+                        }
+                        endCol--;
+                      }
+                   }
+                  
+                  if(i+1 < data.header.length) {
+                      if(data.header[i+1][j] == "") //is the cell below a rowspan?
+                      {  
+                        
+                        startRow = i;
+                        endRow = i+1;
+
+                        //get to the last row in the rowspan
+                        while(endRow < data.header.length && data.header[endRow][j] == "")
+                        {
+                          endRow++;
+                        }
+                      }
+                  }
+                  
+                  //create and store merge ranges
+                  //if endCol or endRow show movement
+                  if(startRow != endRow || startCol != endCol)
+                  {
+                    var sC = createCellPos(startCol); //convert startCol to excel column letter
+                    var sR = startRow+1+headerStartRow; // actual row to be merged needs to take into account 0 index and current row (g)
+                    var eC = createCellPos(endCol); //convert endCol to excel column letter
+                    var eR = endRow+headerStartRow; // actual row to be merged needs to take into account 0 index and current row (g)
+                                            
+                    merges[mgCnt] = sC+""+sR; //start of range
+                    
+                    if(endCol > startCol){ //end column
+                      merges[mgCnt] = merges[mgCnt] + ":" + eC;
+                    } else {
+                      merges[mgCnt] = merges[mgCnt] + ":" + sC;
+                    }
+                    
+                    if(endRow > startRow) { //end row
+                      merges[mgCnt] = merges[mgCnt] + eR;
+                    } else {
+                      merges[mgCnt] = merges[mgCnt] + sR;
+                    }
+                                            
+                    mgCnt++; //increment number of merge ranges
+                  }
+                }
+              }
+            }               
+            
+
+
+            if (mgCnt > 0) {
+              //add each merge range as a child
+              var headerMerges = $("mergeCells", rels);
+              for(i=0;i<mgCnt;i++)
+              {
+
+              	headerMerges[0].appendChild(_createNode(rels, "mergeCell", {
+                        attr: {
+                            ref: merges[i]
+                        }
+                    }));
+              	headerMerges.attr("count", parseFloat(headerMerges.attr("count")) + 1);
+              }
+            }
+			/* ----- END added/edited Code ----- */
 		}
 	
 		dataStartRow = rowPos;
@@ -1208,14 +1329,20 @@ DataTable.ext.buttons.excelHtml5 = {
 		// Below the table
 		if ( exportInfo.messageBottom ) {
 			addRow( [exportInfo.messageBottom], rowPos );
-			mergeCells( rowPos, data.header.length-1 );
+			/* ----- BEGIN added/edited Code ----- */
+			//mergeCells( rowPos, data.header.length-1 );
+			mergeCells( rowPos, data.header[data.header.length - 1].length-1 );
+			/* ----- END added/edited Code ----- */		
 		}
 
 		// Set column widths
 		var cols = _createNode( rels, 'cols' );
 		$('worksheet', rels).prepend( cols );
 
-		for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+		/* ----- BEGIN added/edited Code ----- */
+		//for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
+		for ( var i=0, ien=data.header[data.header.length - 1].length ; i<ien ; i++ ) {
+		/* ----- END added/edited Code ----- */			
 			cols.appendChild( _createNode( rels, 'col', {
 				attr: {
 					min: i+1,
@@ -1235,7 +1362,10 @@ DataTable.ext.buttons.excelHtml5 = {
 		if ( config.autoFilter ) {
 			$('mergeCells', rels).before( _createNode( rels, 'autoFilter', {
 				attr: {
-					ref: 'A'+dataStartRow+':'+createCellPos(data.header.length-1)+dataEndRow
+					/* ----- BEGIN added/edited Code ----- */
+					//ref: 'A'+dataStartRow+':'+createCellPos(data.header.length-1)+dataEndRow
+					ref: 'A'+dataStartRow+':'+createCellPos(data.header[data.header.length - 1].length-1)+dataEndRow
+					/* ----- END added/edited Code ----- */		
 				}
 			} ) );
 
@@ -1245,7 +1375,10 @@ DataTable.ext.buttons.excelHtml5 = {
 					localSheetId: '0',
 					hidden: 1
 				},
-				text: _sheetname(config)+'!$A$'+dataStartRow+':'+createCellPos(data.header.length-1)+dataEndRow
+				/* ----- BEGIN added/edited Code ----- */
+				//text: _sheetname(config)+'!$A$'+dataStartRow+':'+createCellPos(data.header.length-1)+dataEndRow
+				text: _sheetname(config)+'!$A$'+dataStartRow+':'+createCellPos(data.header[data.header.length - 1].length-1)+dataEndRow
+				/* ----- END added/edited Code ----- */	
 			} ) );
 		}
 
