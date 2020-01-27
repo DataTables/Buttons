@@ -1882,7 +1882,7 @@ var getHeadersFooters = function( thRows ){
 
               	// rowspan
               	for(var expand = 1; expand < rowspan; expand++){
-              		matrix[rowIdx+expand][colIdx]="";
+              		matrix[rowIdx+expand][colIdx]="_rowspan_";
               	}
 
               	// colspan
@@ -1893,7 +1893,7 @@ var getHeadersFooters = function( thRows ){
 					if (colIdx + expand < numCols) {
 		              	var next_cellIndex = $row[colIdx+expand].cell.cellIndex;
 		              	while(cellIndex == next_cellIndex){
-		              		matrix[rowIdx][colIdx+expand]="";
+		              		matrix[rowIdx][colIdx+expand]="_colspan_";
 		              		expand++;
 		              		if (colIdx + expand >= numCols) break;
 		              		next_cellIndex = $row[colIdx+expand].cell.cellIndex;
