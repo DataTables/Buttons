@@ -1843,21 +1843,21 @@ var _message = function ( dt, option, position )
 
 /* ----- BEGIN added/edited Code ----- */
 /**
- * getHeaders - function to read full data content based on dt and convert it into matrix
+ * getHeadersFooters - function to read full data content based on dt.aoHeader or dt.aoFooter and convert it into matrix
  * form for exporting.
  *
  */
-var getHeaders = function( dt ){
-    var thRows = dt.aoHeader;
+var getHeadersFooters = function( thRows ){
+    
     var numRows = thRows.length;
     var numCols = thRows[0].length;
     var matrix = [];
 
-    //initialize matrix with "_getHeaders_initialized_" string
+    //initialize matrix with "_getHeadersFooters_initialized_" string
     for ( var rowIdx = 0;  rowIdx < numRows;  rowIdx++ ) {
     	matrix[rowIdx] = [];
     	for ( var colIdx = 0;  colIdx < numCols;  colIdx++ ){
-    		matrix[rowIdx][colIdx] = "_getHeaders_initialized_"
+    		matrix[rowIdx][colIdx] = "_getHeadersFooters_initialized_"
     	}
     }
 
@@ -1876,7 +1876,7 @@ var getHeaders = function( dt ){
             
             
             // If the cell has been initialized but not changed, update
-          	if (matrix[rowIdx][colIdx]=="_getHeaders_initialized_") {
+          	if (matrix[rowIdx][colIdx]=="_getHeadersFooters_initialized_") {
 
           		matrix[rowIdx][colIdx] = $th.text();
 
@@ -1974,7 +1974,7 @@ var _exportData = function ( dt, inOpts )
 		return config.format.header( el.innerHTML, idx, el );
 	} ).toArray();
 	*/
-    var rawHeaderMatrix = getHeaders( dt.settings()[0] );
+    var rawHeaderMatrix = getHeadersFooters( dt.settings()[0].aoHeader );
     var headerMatrix = [];
     var numRows = rawHeaderMatrix.length;
     for ( var rowIdx = 0;  rowIdx < numRows;  rowIdx++ ) {
