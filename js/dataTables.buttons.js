@@ -1979,8 +1979,8 @@ var _exportData = function ( dt, inOpts )
     var numRows = rawHeaderMatrix.length;
     for ( var rowIdx = 0;  rowIdx < numRows;  rowIdx++ ) {
     	var headerRow = dt.columns( config.columns ).indexes().map( function (idx) {
-             var $th = rawHeaderMatrix[rowIdx][idx];
-             return config.format.header($th, idx, $th);
+             var el = rawHeaderMatrix[rowIdx][idx];
+             return config.format.header(el, idx, el);
         } ).toArray();
        headerMatrix.push( headerRow );
     }
