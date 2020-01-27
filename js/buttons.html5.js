@@ -314,15 +314,29 @@ var _exportData = function ( dt, config )
 	if (config.header) {
 		var header = [];
 		for (var i=0, ien=data.header.length; i<ien; i++ ) {
-			header.push( join(data.header[i] ) );
+			var rawHeader = data.header[i];
+			rawHeader.forEach(function(item, i) { if (item == "_colspan_" || item == "_rowspan_") rawHeader[i] = ''; });
+			header.push( join(rawHeader) );
 		}
 		header = header.join(newLine) + newLine;
 	} else {
 		header = '';
 	}
+		
+	//var footer = config.footer && data.footer ? newLine+join( data.footer ) : '';
+	if (config.footer && data.footer) {
+		var footer = [];
+		for (var i=0, ien=data.footer.length; i<ien; i++ ) {
+			var rawFooter = data.footer[i];
+			rawFooter.forEach(function(item, i) { if (item == "_colspan_" || item == "_rowspan_") rawFooter[i] = ''; });
+			footer.push( join(rawFooter) );
+		}
+		footer = newLine + footer.join(newLine) ;
+	} else {
+		footer = '';
+	}
 	/* ----- END added/edited Code ----- */
-	
-	var footer = config.footer && data.footer ? newLine+join( data.footer ) : '';
+
 	var body = [];
 
 	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
@@ -512,9 +526,21 @@ function _excelColWidth( data, col ) {
 	/* ----- END added/edited Code ----- */
 	var len, lineSplit, str;
 
-	if ( data.footer && data.footer[col].length > max ) {
+	/* ----- BEGIN added/edited Code ----- */
+	/*if ( data.footer && data.footer[col].length > max ) {
 		max = data.footer[col].length;
 	}
+	*/
+
+	if ( data.footer) {
+		var maxFooter = 0;
+		for (i = 0; i<data.footer.length; i++) {
+			maxFooter = Math.max(maxFooter, data.footer[i][col].length);
+		}
+
+		max = Math.max(max, maxFooter);
+	}
+	/* ----- END added/edited Code ----- */
 
 	for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
 		var point = data.body[i][col];
@@ -1226,7 +1252,7 @@ DataTable.ext.buttons.excelHtml5 = {
               for(var j=0; j<data.header[i].length; j++)
               {
                 //look for a non-colspan/rowspan cell
-                if(data.header[i][j] != "")
+                if(data.header[i][j] != "_colspan_" && data.header[i][j] != "_rowspan_") 
                 {
                   var startRow = i;
                   var startCol = j;
@@ -1235,14 +1261,14 @@ DataTable.ext.buttons.excelHtml5 = {
                                        
                   //lookahead
                   if(j+1 < data.header[i].length){ 
-                      if(data.header[i][j+1] == "") //is the cell to the right a colspan?
+                      if(data.header[i][j+1] == "_colspan_") //is the cell to the right a colspan?
                       { 
                         
                         startCol = j;
                         endCol = j+1;
 
                         //get to the last column in the colspan
-                        while(endCol < data.header[i].length && data.header[i][endCol] == "")
+                        while(endCol < data.header[i].length && data.header[i][endCol] == "_colspan_")
                         {
                           endCol++;
                         }
@@ -1251,14 +1277,14 @@ DataTable.ext.buttons.excelHtml5 = {
                    }
                   
                   if(i+1 < data.header.length) {
-                      if(data.header[i+1][j] == "") //is the cell below a rowspan?
+                      if(data.header[i+1][j] == "_rowspan_") //is the cell below a rowspan?
                       {  
                         
                         startRow = i;
                         endRow = i+1;
 
                         //get to the last row in the rowspan
-                        while(endRow < data.header.length && data.header[endRow][j] == "")
+                        while(endRow < data.header.length && data.header[endRow][j] == "_rowspan_")
                         {
                           endRow++;
                         }
@@ -1322,8 +1348,117 @@ DataTable.ext.buttons.excelHtml5 = {
 		dataEndRow = rowPos;
 
 		if ( config.footer && data.footer ) {
-			addRow( data.footer, rowPos);
-			$('row:last c', rels).attr( 's', '2' ); // bold
+			/* ----- BEGIN added/edited Code ----- */
+			//addRow( data.footer, rowPos);
+			//$('row:last c', rels).attr( 's', '2' ); // bold
+
+
+			var footerStartRow = rowPos;
+
+			// adds header, without merges:
+			for ( var i=0, ien=data.footer.length ; i<ien ; i++ ) {
+				addRow(data.footer[i], rowPos);
+				$("row:last c", rels).attr("s", "2"); // bold
+            }
+            
+
+            // process merged cells:
+            var mgCnt = 0;
+            var merges=[];
+
+            //for each footer row
+            for ( var i=0, ien=data.footer.length ; i<ien ; i++ ) {
+
+              //for each column (cell) in the row
+              for(var j=0; j<data.footer[i].length; j++)
+              {
+                //look for a non-colspan/rowspan cell
+                if(data.footer[i][j] != "_colspan_" && data.footer[i][j] != "_rowspan_") 
+                {
+                  var startRow = i;
+                  var startCol = j;
+                  var endRow = i;
+                  var endCol = j;
+                                       
+                  //lookahead
+                  if(j+1 < data.footer[i].length){ 
+                      if(data.footer[i][j+1] == "_colspan_") //is the cell to the right a colspan?
+                      { 
+                        
+                        startCol = j;
+                        endCol = j+1;
+
+                        //get to the last column in the colspan
+                        while(endCol < data.footer[i].length && data.footer[i][endCol] == "_colspan_")
+                        {
+                          endCol++;
+                        }
+                        endCol--;
+                      }
+                   }
+                  
+                  if(i+1 < data.footer.length) {
+                      if(data.footer[i+1][j] == "_rowspan_") //is the cell below a rowspan?
+                      {  
+                        
+                        startRow = i;
+                        endRow = i+1;
+
+                        //get to the last row in the rowspan
+                        while(endRow < data.footer.length && data.footer[endRow][j] == "_rowspan_")
+                        {
+                          endRow++;
+                        }
+                      }
+                  }
+                  
+                  //create and store merge ranges
+                  //if endCol or endRow show movement
+                  if(startRow != endRow || startCol != endCol)
+                  {
+                    var sC = createCellPos(startCol); //convert startCol to excel column letter
+                    var sR = startRow+1+footerStartRow; // actual row to be merged needs to take into account 0 index and current row (g)
+                    var eC = createCellPos(endCol); //convert endCol to excel column letter
+                    var eR = endRow+footerStartRow; // actual row to be merged needs to take into account 0 index and current row (g)
+                                            
+                    merges[mgCnt] = sC+""+sR; //start of range
+                    
+                    if(endCol > startCol){ //end column
+                      merges[mgCnt] = merges[mgCnt] + ":" + eC;
+                    } else {
+                      merges[mgCnt] = merges[mgCnt] + ":" + sC;
+                    }
+                    
+                    if(endRow > startRow) { //end row
+                      merges[mgCnt] = merges[mgCnt] + eR;
+                    } else {
+                      merges[mgCnt] = merges[mgCnt] + sR;
+                    }
+                                            
+                    mgCnt++; //increment number of merge ranges
+                  }
+                }
+              }
+            }               
+            
+
+
+            if (mgCnt > 0) {
+              //add each merge range as a child
+              var footerMerges = $("mergeCells", rels);
+              for(i=0;i<mgCnt;i++)
+              {
+
+              	footerMerges[0].appendChild(_createNode(rels, "mergeCell", {
+                        attr: {
+                            ref: merges[i]
+                        }
+                    }));
+              	footerMerges.attr("count", parseFloat(footerMerges.attr("count")) + 1);
+              }
+            }
+
+        	/* ----- END added/edited Code ----- */
 		}
 
 		// Below the table
@@ -1466,7 +1601,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 		var rows = [];
 
 		if ( config.header ) {
-		/* ----- BEGIN added/edited Code ----- */
+			/* ----- BEGIN added/edited Code ----- */
 			/*for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
 				rows.push( $.map( data.header[i], function ( d ) {
 					return {
@@ -1482,7 +1617,7 @@ DataTable.ext.buttons.pdfHtml5 = {
               	//for each column (cell) in the row
               	for(var j=0; j<data.header[i].length; j++) {
 	                //look for a non-colspan/rowspan cell
-	                if(data.header[i][j] != "") {
+	                if(data.header[i][j] != "_colspan_" && data.header[i][j] != "_rowspan_") {
 	                	var startRow = i;
 		                var startCol = j;
 		                var endRow = i;
@@ -1490,13 +1625,13 @@ DataTable.ext.buttons.pdfHtml5 = {
 	                                       
 	                    //lookahead
 	                    if(j+1 < data.header[i].length){ 
-	                        if(data.header[i][j+1] == "") { //is the cell next to a colspan?
+	                        if(data.header[i][j+1] == "_colspan_") { //is the cell next to a colspan?
 	                          
 	                          startCol = j;
 	                          endCol = j+1;
 	  
 	                          //get to the last column in the colspan
-	                          while(endCol < data.header[i].length && data.header[i][endCol] == "") {
+	                          while(endCol < data.header[i].length && data.header[i][endCol] == "_colspan_") {
 	                            endCol++;
 	                          }
 	                          endCol--;
@@ -1504,14 +1639,14 @@ DataTable.ext.buttons.pdfHtml5 = {
 	                     }
 	                    
 	                    if(i+1 < data.header.length) {
-	                        if(data.header[i+1][j] == "") //is the cell above a rowspan?
+	                        if(data.header[i+1][j] == "_rowspan_") //is the cell above a rowspan?
 	                        {  
 	                          
 	                          startRow = i;
 	                          endRow = i+1;
 	  
 	                          //get to the last row in the rowspan
-	                          while(endRow < data.header.length - 1 && data.header[endRow][j] == "") {
+	                          while(endRow < data.header.length - 1 && data.header[endRow][j] == "_rowspan_") {
 	                            endRow++;
 	                          }
 	                        }
@@ -1538,7 +1673,7 @@ DataTable.ext.buttons.pdfHtml5 = {
               rows.push(this_row);
 
             }    
-    	/* ----- END added/edited Code ----- */
+    		/* ----- END added/edited Code ----- */
 		}
 
 		for ( var i=0, ien=data.body.length ; i<ien ; i++ ) {
@@ -1554,12 +1689,79 @@ DataTable.ext.buttons.pdfHtml5 = {
 		}
 
 		if ( config.footer && data.footer) {
-			rows.push( $.map( data.footer, function ( d ) {
+			/* ----- BEGIN added/edited Code ----- */
+			/*rows.push( $.map( data.footer, function ( d ) {
 				return {
 					text: typeof d === 'string' ? d : d+'',
 					style: 'tableFooter'
 				};
 			} ) );
+			*/
+			
+			//for each footer row
+            for ( var i=0, ien=data.footer.length ; i<ien ; i++ ) {	
+              var this_row = [];              
+
+              	//for each column (cell) in the row
+              	for(var j=0; j<data.footer[i].length; j++) {
+	                //look for a non-colspan/rowspan cell
+	                if(data.footer[i][j] != "_colspan_" && data.footer[i][j] != "_rowspan_") {
+	                	var startRow = i;
+		                var startCol = j;
+		                var endRow = i;
+		                var endCol = j;
+	                                       
+	                    //lookahead
+	                    if(j+1 < data.footer[i].length){ 
+	                        if(data.footer[i][j+1] == "_colspan_") { //is the cell next to a colspan?
+	                          
+	                          startCol = j;
+	                          endCol = j+1;
+	  
+	                          //get to the last column in the colspan
+	                          while(endCol < data.footer[i].length && data.footer[i][endCol] == "_colspan_") {
+	                            endCol++;
+	                          }
+	                          endCol--;
+	                        }
+	                     }
+	                    
+	                    if(i+1 < data.footer.length) {
+	                        if(data.footer[i+1][j] == "_rowspan_") //is the cell above a rowspan?
+	                        {  
+	                          
+	                          startRow = i;
+	                          endRow = i+1;
+	  
+	                          //get to the last row in the rowspan
+	                          while(endRow < data.footer.length - 1 && data.footer[endRow][j] == "_rowspan_") {
+	                            endRow++;
+	                          }
+	                        }
+	                    }
+	                    
+		                //create and store merged ranges
+		                //if endCol or endRow show movement
+		                   
+		                var cspan = endCol - startCol + 1;
+		                var rspan = endRow - startRow + 1;  
+		                var d = data.footer[i][j];
+
+		                this_row.push ({
+		                		text: typeof d === 'string' ? d : d+'',
+								style: 'tableFooter',
+								colSpan: cspan,
+								rowSpan: rspan
+		                	});
+                	} else {
+                		this_row.push ({});
+                	}
+              	}
+
+              rows.push(this_row);
+
+            }    
+    		/* ----- END added/edited Code ----- */
 		}
 
 		var doc = {
