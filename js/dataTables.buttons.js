@@ -1984,15 +1984,31 @@ var _exportData = function ( dt, inOpts )
         } ).toArray();
        headerMatrix.push( headerRow );
     }
-	/* ----- END added/edited Code ----- */
 
-	var footer = dt.table().footer() ?
+	/*var footer = dt.table().footer() ?
 		dt.columns( config.columns ).indexes().map( function (idx) {
 			var el = dt.column( idx ).footer();
 			return config.format.footer( el ? el.innerHTML : '', idx, el );
 		} ).toArray() :
 		null;
-	
+	*/
+	if (dt.table().footer()) {
+		var rawFooterMatrix = getHeadersFooters( dt.settings()[0].aoFooter );
+	    var footerMatrix = [];
+	    var numRows = rawFooterMatrix.length;
+	    for ( var rowIdx = 0;  rowIdx < numRows;  rowIdx++ ) {
+	    	var footerRow = dt.columns( config.columns ).indexes().map( function (idx) {
+	             var el = rawFooterMatrix[rowIdx][idx];
+	             return config.format.footer(el, idx, el);
+	        } ).toArray();
+	       footerMatrix.push( footerRow );
+	    }
+
+	} else {
+		var footerMatrix = null;
+	}
+	/* ----- END added/edited Code ----- */
+
 	// If Select is available on this table, and any rows are selected, limit the export
 	// to the selected rows. If no rows are selected, all rows will be exported. Specify
 	// a `selected` modifier to control directly.
@@ -2035,8 +2051,9 @@ var _exportData = function ( dt, inOpts )
 		/* ----- BEGIN added/edited Code ----- */
 		//header: header,
 		header: headerMatrix,
+		//footer: footer,
+		footer: footerMatrix,
 		/* ----- END added/edited Code ----- */
-		footer: footer,
 		body:   body
 	};
 
