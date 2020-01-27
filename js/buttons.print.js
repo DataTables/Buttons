@@ -126,42 +126,42 @@ DataTable.ext.buttons.print = {
 			html += "<thead>";
 
 			//for each header row
-            for(var o=0; o < data.header.length; o++) {
+			for ( var i=0, ien=data.header.length ; i<ien ; i++ ) {
             	html += "<tr>";
               
               	//for each column (cell) in the row
-              	for(var oj=0; oj<data.header[o].length; oj++) {
+              	for(var j=0; j<data.header[i].length; j++) {
 	                //look for a non-colspan/rowspan cell
-	                if(data.header[o][oj] != "") {
-	                	var startRow = o;
-		                var startCol = oj;
-		                var endRow = o;
-		                var endCol = oj;
+	                if(data.header[i][j] != "") {
+	                	var startRow = i;
+		                var startCol = j;
+		                var endRow = i;
+		                var endCol = j;
 	                                       
 	                    //lookahead
-	                    if(oj+1 < data.header[o].length){ 
-	                        if(data.header[o][oj+1] == "") { //is the cell next to a colspan?
+	                    if(j+1 < data.header[i].length){ 
+	                        if(data.header[i][j+1] == "") { //is the cell next to a colspan?
 	                          
-	                          startCol = oj;
-	                          endCol = oj+1;
+	                          startCol = j;
+	                          endCol = j+1;
 	  
 	                          //get to the last column in the colspan
-	                          while(endCol < data.header[o].length && data.header[o][endCol] == "") {
+	                          while(endCol < data.header[i].length && data.header[i][endCol] == "") {
 	                            endCol++;
 	                          }
 	                          endCol--;
 	                        }
 	                     }
 	                    
-	                    if(o+1 < data.header.length) {
-	                        if(data.header[o+1][oj] == "") //is the cell above a rowspan?
+	                    if(i+1 < data.header.length) {
+	                        if(data.header[i+1][j] == "") //is the cell above a rowspan?
 	                        {  
 	                          
-	                          startRow = o;
-	                          endRow = o+1;
+	                          startRow = i;
+	                          endRow = i+1;
 	  
 	                          //get to the last row in the rowspan
-	                          while(endRow < data.header.length - 1 && data.header[endRow][oj] == "") {
+	                          while(endRow < data.header.length - 1 && data.header[endRow][j] == "") {
 	                            endRow++;
 	                          }
 	                        }
@@ -173,12 +173,12 @@ DataTable.ext.buttons.print = {
 		                var cspan = endCol - startCol + 1;
 		                var rspan = endRow - startRow + 1;  
 
-		                var classAttr = columnClasses[i] ?
-						'class="'+columnClasses[i]+'"' :
+		                var classAttr = columnClasses[j] ?
+						'class="'+columnClasses[j]+'"' :
 						'';
 	              
 
-	                	html += '<th colspan="' + cspan + '" rowspan="' + rspan + '" ' +classAttr+'>' + data.header[o][oj] + '</th>'
+	                	html += '<th colspan="' + cspan + '" rowspan="' + rspan + '" ' +classAttr+'>' + data.header[i][j] + '</th>'
                 	}
               	}
 				
