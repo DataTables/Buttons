@@ -132,7 +132,7 @@ DataTable.ext.buttons.print = {
               	//for each column (cell) in the row
               	for(var j=0; j<data.header[i].length; j++) {
 	                //look for a non-colspan/rowspan cell
-	                if(data.header[i][j] != "") {
+	                if(data.header[i][j] != "_colspan_" && data.header[i][j] != "_rowspan_") {
 	                	var startRow = i;
 		                var startCol = j;
 		                var endRow = i;
@@ -140,13 +140,13 @@ DataTable.ext.buttons.print = {
 	                                       
 	                    //lookahead
 	                    if(j+1 < data.header[i].length){ 
-	                        if(data.header[i][j+1] == "") { //is the cell next to a colspan?
+	                        if(data.header[i][j+1] == "_colspan_") { //is the cell next to a colspan?
 	                          
 	                          startCol = j;
 	                          endCol = j+1;
 	  
 	                          //get to the last column in the colspan
-	                          while(endCol < data.header[i].length && data.header[i][endCol] == "") {
+	                          while(endCol < data.header[i].length && data.header[i][endCol] == "_colspan_") {
 	                            endCol++;
 	                          }
 	                          endCol--;
@@ -154,14 +154,14 @@ DataTable.ext.buttons.print = {
 	                     }
 	                    
 	                    if(i+1 < data.header.length) {
-	                        if(data.header[i+1][j] == "") //is the cell above a rowspan?
+	                        if(data.header[i+1][j] == "_rowspan_") //is the cell above a rowspan?
 	                        {  
 	                          
 	                          startRow = i;
 	                          endRow = i+1;
 	  
 	                          //get to the last row in the rowspan
-	                          while(endRow < data.header.length - 1 && data.header[endRow][j] == "") {
+	                          while(endRow < data.header.length - 1 && data.header[endRow][j] == "_rowspan_") {
 	                            endRow++;
 	                          }
 	                        }
@@ -196,10 +196,74 @@ DataTable.ext.buttons.print = {
 		html += '</tbody>';
 
 		if ( config.footer && data.footer ) {
-			html += '<tfoot>'+ addRow( data.footer, 'th' ) +'</tfoot>';
+			/* ----- BEGIN added/edited Code ----- */
+			//html += '<tfoot>'+ addRow( data.footer, 'th' ) +'</tfoot>';
+			html += "<tfoot>";
+
+			//for each footer row
+			for ( var i=0, ien=data.footer.length ; i<ien ; i++ ) {
+            	html += "<tr>";
+              
+              	//for each column (cell) in the row
+              	for(var j=0; j<data.footer[i].length; j++) {
+	                //look for a non-colspan/rowspan cell
+	                if(data.footer[i][j] != "_colspan_" && data.footer[i][j] != "_rowspan_") {
+	                	var startRow = i;
+		                var startCol = j;
+		                var endRow = i;
+		                var endCol = j;
+	                                       
+	                    //lookahead
+	                    if(j+1 < data.footer[i].length){ 
+	                        if(data.footer[i][j+1] == "_colspan_") { //is the cell next to a colspan?
+	                          
+	                          startCol = j;
+	                          endCol = j+1;
+	  
+	                          //get to the last column in the colspan
+	                          while(endCol < data.footer[i].length && data.footer[i][endCol] == "_colspan_") {
+	                            endCol++;
+	                          }
+	                          endCol--;
+	                        }
+	                     }
+	                    
+	                    if(i+1 < data.footer.length) {
+	                        if(data.footer[i+1][j] == "_rowspan_") //is the cell above a rowspan?
+	                        {  
+	                          
+	                          startRow = i;
+	                          endRow = i+1;
+	  
+	                          //get to the last row in the rowspan
+	                          while(endRow < data.footer.length - 1 && data.footer[endRow][j] == "_rowspan_") {
+	                            endRow++;
+	                          }
+	                        }
+	                    }
+	                    
+		                //create and store merged ranges
+		                //if endCol or endRow show movement
+		                   
+		                var cspan = endCol - startCol + 1;
+		                var rspan = endRow - startRow + 1;  
+
+		                var classAttr = columnClasses[j] ?
+						'class="'+columnClasses[j]+'"' :
+						'';
+	              
+
+	                	html += '<th colspan="' + cspan + '" rowspan="' + rspan + '" ' +classAttr+'>' + data.footer[i][j] + '</th>'
+                	}
+              	}
+				
+				html += "</tr>";
+            }               
+            
+            html += "</tfoot>";
+			/* ----- END added/edited Code ----- */
 		}
 		html += '</table>';
-
 		// Open a new window for the printable table
 		var win = window.open( '', '' );
 		win.document.close();
