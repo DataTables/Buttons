@@ -1133,6 +1133,8 @@ $.extend( Buttons.prototype, {
 				} );
 			}, 0);
 		}
+
+		$(display).trigger('buttons-popover.dt');
 	}
 } );
 
