@@ -30,7 +30,7 @@ describe('Buttons - options - buttons.action', function() {
 			});
 			expect($('button.dt-button:eq(2)').text()).toBe('third');
 		});
-		it('Action called if button pressed', function() {
+		it('Action called if button pressed?', function() {
 			$('button.dt-button:eq(1)').click();
 			expect(params).not.toBe(undefined);
 		});

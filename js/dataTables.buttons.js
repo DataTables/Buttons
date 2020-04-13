@@ -576,7 +576,7 @@ $.extend( Buttons.prototype, {
 					action( e, dt, button, config );
 				}
 				if( clickBlurs ) {
-					button.blur();
+					button.trigger('blur');
 				}
 			} )
 			.on( 'keyup.dtb', function (e) {
