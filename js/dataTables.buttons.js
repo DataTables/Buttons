@@ -1000,7 +1000,6 @@ $.extend( Buttons.prototype, {
 		if ( options.align === 'dt-container' ) {
 			hostNode = hostNode.parent();
 			display.css('width', tableContainer.width());
-			console.log(display.width())
 		}
 
 		if ( position === 'absolute' ) {
@@ -1031,19 +1030,19 @@ $.extend( Buttons.prototype, {
 			}
 
 			// Get the size of the container (left and width - and thus also right)
-				var tableLeft = tableContainer.offset().left;
-				var tableWidth = tableContainer.width();
-				var tableRight = tableLeft + tableWidth;
+			var tableLeft = tableContainer.offset().left;
+			var tableWidth = tableContainer.width();
+			var tableRight = tableLeft + tableWidth;
 
 			// Get the size of the popover (left and width - and ...)
-				var popoverLeft = display.offset().left;
-				var popoverWidth = display.width();
-				var popoverRight = popoverLeft + popoverWidth;
+			var popoverLeft = display.offset().left;
+			var popoverWidth = display.width();
+			var popoverRight = popoverLeft + popoverWidth;
 
 			// Get the size of the host buttons (left and width - and ...)
-				var buttonsLeft = hostNode.offset().left;
-				var buttonsWidth = hostNode.width()
-				var buttonsRight = buttonsLeft + buttonsWidth;
+			var buttonsLeft = hostNode.offset().left;
+			var buttonsWidth = hostNode.width()
+			var buttonsRight = buttonsLeft + buttonsWidth;
 			
 			// You've then got all the numbers you need to do some calculations and if statements,
 			//  so we can do some quick JS maths and apply it only once
