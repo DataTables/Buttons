@@ -189,7 +189,9 @@ $.extend( Buttons.prototype, {
 	disable: function ( node ) {
 		var button = this._nodeToButton( node );
 
-		$(button.node).addClass( this.c.dom.button.disabled );
+		$(button.node)
+			.addClass( this.c.dom.button.disabled )
+			.attr('disabled', true);
 
 		return this;
 	},
@@ -242,7 +244,9 @@ $.extend( Buttons.prototype, {
 		}
 
 		var button = this._nodeToButton( node );
-		$(button.node).removeClass( this.c.dom.button.disabled );
+		$(button.node)
+			.removeClass( this.c.dom.button.disabled )
+			.removeAttr('disabled');
 
 		return this;
 	},

@@ -33,6 +33,7 @@ describe('buttons - button().disable()', function() {
 			table.button(0).disable();
 
 			expect($('button.disabled').length).toBe(1);
+			expect($('button.disabled').attr('disabled')).toBe('disabled');
 			expect($('button.disabled').text()).toBe('first');
 		});
 
@@ -46,6 +47,7 @@ describe('buttons - button().disable()', function() {
 			table.button(1).disable();
 
 			expect($('button.disabled').length).toBe(1);
+			expect($('button.disabled').attr('disabled')).toBe('disabled');
 			expect($('button.disabled').text()).toBe('second');
 
 			table.button(0).disable();
@@ -68,6 +70,7 @@ describe('buttons - button().disable()', function() {
 			table.button(0).disable();
 
 			expect($('button.disabled').length).toBe(1);
+			expect($('button.disabled').attr('disabled')).toBe('disabled');
 			expect($('button.disabled').text()).toBe('first');
 		});
 
@@ -84,11 +87,13 @@ describe('buttons - button().disable()', function() {
 			table.button(1).disable();
 
 			expect($('button.disabled').length).toBe(1);
+			expect($('button.disabled').attr('disabled')).toBe('disabled');
 			expect($('button.disabled').text()).toBe('second');
 
 			table.button(0).disable();
 
 			expect($('button.disabled').length).toBe(2);
+			expect($('button.disabled:first').attr('disabled')).toBe('disabled');
 			expect($('button.disabled:first').text()).toBe('first');
 		});
 	});
@@ -115,6 +120,7 @@ describe('buttons - button().disable()', function() {
 			$('.buttons-collection').click();
 
 			expect($('button.disabled').length).toBe(1);
+			expect($('button.disabled').attr('disabled')).toBe('disabled');
 			expect($('button.disabled').text()).toBe('first');
 		});
 
@@ -137,6 +143,7 @@ describe('buttons - button().disable()', function() {
 			$('.buttons-collection').click();
 
 			expect($('button.disabled').length).toBe(1);
+			expect($('button.disabled').attr('disabled')).toBe('disabled');
 			expect($('button.disabled').text()).toBe('first');
 		});
 
@@ -161,6 +168,7 @@ describe('buttons - button().disable()', function() {
 
 			expect($('.dt-button').length).toBe(1);
 			expect($('button.disabled').length).toBe(1);
+			expect($('button.disabled').attr('disabled')).toBe('disabled');
 			expect($('button.disabled').text()).toBe('Table control');
 		});
 	});
