@@ -72,7 +72,7 @@ describe('buttons - button().add()', function() {
 				text: 'Last'
 			});
 			expect(table.buttons().count()).toBe(10);
-			expect($('.dt-button:first').text()).toBe('Last');
+			expect($('.dt-button:last').text()).toBe('Last');
 		});
 	});
 

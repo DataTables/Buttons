@@ -500,7 +500,7 @@ $.extend( Buttons.prototype, {
 				continue;
 			}
 
-			if ( attachPoint !== undefined ) {
+			if ( attachPoint !== undefined && attachPoint !== null ) {
 				attachTo.splice( attachPoint, 0, built );
 				attachPoint++;
 			}
