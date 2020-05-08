@@ -46,10 +46,14 @@ function _fadeIn(el, duration, fn) {
 	if ($.fn.animate) {
 		el
 			.stop()
-			.fadeIn( duration );
+			.fadeIn( duration, fn );
 	}
 	else {
 		el.css('display', 'block');
+
+		if (fn) {
+			fn.call(el);
+		}
 	}
 }
 
@@ -61,6 +65,10 @@ function _fadeOut(el, duration, fn) {
 	}
 	else {
 		el.css('display', 'none');
+		
+		if (fn) {
+			fn.call(el);
+		}
 	}
 }
 
