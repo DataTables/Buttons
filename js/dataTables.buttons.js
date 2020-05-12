@@ -1115,8 +1115,9 @@ $.extend( Buttons.prototype, {
 			.on( 'click.dtb-collection', function (e) {
 				// andSelf is deprecated in jQ1.8, but we want 1.7 compat
 				var back = $.fn.addBack ? 'addBack' : 'andSelf';
+				var parent = $(e.target).parent()[0];
 
-				if ( ! $(e.target).parents()[back]().filter( content ).length ) {
+				if ( ! $(e.target).parents()[back]().filter( content ).length  && !$(parent).hasClass('dt-buttons')) {
 					close();
 				}
 			} )
