@@ -1,5 +1,5 @@
-/*! Buttons for DataTables 1.6.1
- * ©2016-2019 SpryMedia Ltd - datatables.net/license
+/*! Buttons for DataTables 1.6.2
+ * ©2016-2020 SpryMedia Ltd - datatables.net/license
  */
 
 (function( factory ){
@@ -40,6 +40,37 @@ var _instCounter = 0;
 var _buttonCounter = 0;
 
 var _dtButtons = DataTable.ext.buttons;
+
+// Allow for jQuery slim
+function _fadeIn(el, duration, fn) {
+	if ($.fn.animate) {
+		el
+			.stop()
+			.fadeIn( duration, fn );
+	}
+	else {
+		el.css('display', 'block');
+
+		if (fn) {
+			fn.call(el);
+		}
+	}
+}
+
+function _fadeOut(el, duration, fn) {
+	if ($.fn.animate) {
+		el
+			.stop()
+			.fadeOut( duration, fn );
+	}
+	else {
+		el.css('display', 'none');
+		
+		if (fn) {
+			fn.call(el);
+		}
+	}
+}
 
 /**
  * [Buttons description]
@@ -949,9 +980,13 @@ $.extend( Buttons.prototype, {
 		var hostNode = hostButton.node();
 
 		var close = function () {
-			$('.dt-button-collection').stop().fadeOut( options.fade, function () {
-				$(this).detach();
-			} );
+			_fadeOut(
+				$('.dt-button-collection'),
+				options.fade,
+				function () {
+					$(this).detach();
+				}
+			);
 
 			$(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes())
 				.attr('aria-expanded', 'false');
@@ -994,9 +1029,7 @@ $.extend( Buttons.prototype, {
 			display.prepend('<div class="dt-button-collection-title">'+options.collectionTitle+'</div>');
 		}
 
-		display
-			.insertAfter( hostNode )
-			.fadeIn( options.fade );
+		_fadeIn( display.insertAfter( hostNode ) );
 
 		var tableContainer = $( hostButton.table().container() );
 		var position = display.css( 'position' );
@@ -1164,21 +1197,24 @@ Buttons.background = function ( show, className, fade, insertPoint ) {
 	}
 
 	if ( show ) {
-		$('<div/>')
-			.addClass( className )
-			.css( 'display', 'none' )
-			.insertAfter( insertPoint )
-			.stop()
-			.fadeIn( fade );
+		_fadeIn(
+			$('<div/>')
+				.addClass( className )
+				.css( 'display', 'none' )
+				.insertAfter( insertPoint ),
+			fade
+		);
 	}
 	else {
-		$('div.'+className)
-			.stop()
-			.fadeOut( fade, function () {
+		_fadeOut(
+			$('div.'+className),
+			fade,
+			function () {
 				$(this)
 					.removeClass( className )
 					.remove();
-			} );
+			}
+		);
 	}
 };
 
@@ -1417,7 +1453,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '1.6.1';
+Buttons.version = '1.6.2';
 
 
 $.extend( _dtButtons, {
@@ -1730,9 +1766,13 @@ DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
 
 	if ( title === false ) {
 		this.off('destroy.btn-info');
-		$('#datatables_buttons_info').fadeOut( function () {
-			$(this).remove();
-		} );
+		_fadeOut(
+			$('#datatables_buttons_info'),
+			400,
+			function () {
+				$(this).remove();
+			}
+		);
 		clearTimeout( _infoTimer );
 		_infoTimer = null;
 
@@ -1749,12 +1789,13 @@ DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
 
 	title = title ? '<h2>'+title+'</h2>' : '';
 
-	$('<div id="datatables_buttons_info" class="dt-button-info"/>')
-		.html( title )
-		.append( $('<div/>')[ typeof message === 'string' ? 'html' : 'append' ]( message ) )
-		.css( 'display', 'none' )
-		.appendTo( 'body' )
-		.fadeIn();
+	_fadeIn(
+		$('<div id="datatables_buttons_info" class="dt-button-info"/>')
+			.html( title )
+			.append( $('<div/>')[ typeof message === 'string' ? 'html' : 'append' ]( message ) )
+			.css( 'display', 'none' )
+			.appendTo( 'body' )
+	);
 
 	if ( time !== undefined && time !== 0 ) {
 		_infoTimer = setTimeout( function () {
