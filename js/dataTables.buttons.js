@@ -1039,7 +1039,14 @@ $.extend( Buttons.prototype, {
 			display.css('width', tableContainer.width());
 		}
 
-		if ( position === 'absolute' ) {
+		if (
+			position === 'absolute' &&
+			(
+				display.hasClass( options.rightAlignClassName ) ||
+				display.hasClass( options.leftAlignClassName ) ||
+				options.align === 'dt-container'
+			)
+		) {
 
 			var hostPosition = hostNode.position();
 
@@ -1050,7 +1057,6 @@ $.extend( Buttons.prototype, {
 
 			// calculate overflow when positioned beneath
 			var collectionHeight = display.outerHeight();
-			var collectionWidth = display.outerWidth();
 			var tableBottom = tableContainer.offset().top + tableContainer.height();
 			var listBottom = hostPosition.top + hostNode.outerHeight() + collectionHeight;
 			var bottomOverflow = listBottom - tableBottom;
@@ -1088,7 +1094,7 @@ $.extend( Buttons.prototype, {
 			//  side of the button - check to see if the left of the popover is inside the table container.
 			// If not, move the popover so it is, but not more than it means that the popover is to the right of the table container
 			var popoverShuffle = 0;
-			if ( display.hasClass( options.rightAlignClassName ) || options.align === 'button-right' || $(hostNode.parent()[0]).css('float') === 'right') {
+			if ( display.hasClass( options.rightAlignClassName )) {
 				popoverShuffle = buttonsRight - popoverRight;
 				if(tableLeft > (popoverLeft + popoverShuffle)){
 					var leftGap = tableLeft - (popoverLeft + popoverShuffle);
@@ -1123,6 +1129,55 @@ $.extend( Buttons.prototype, {
 
 			display.css('left', display.position().left + popoverShuffle);
 			
+		}
+		else if (
+			position === 'absolute'
+		) {
+
+			var hostPosition = hostNode.position();
+
+			display.css( {
+				top: hostPosition.top + hostNode.outerHeight(),
+				left: hostPosition.left
+			} );
+
+			// calculate overflow when positioned beneath
+			var collectionHeight = display.outerHeight();
+			var top = hostNode.offset().top
+			var popoverShuffle = 0;
+
+			// Get the size of the host buttons (left and width - and ...)
+			var buttonsLeft = hostNode.offset().left;
+			var buttonsWidth = hostNode.outerWidth()
+			var buttonsRight = buttonsLeft + buttonsWidth;
+
+			// Get the size of the popover (left and width - and ...)
+			var popoverLeft = display.offset().left;
+			var popoverWidth = display.width();
+			var popoverRight = popoverLeft + popoverWidth;
+
+			var moveTop = hostPosition.top - collectionHeight - 5;
+			var tableBottom = tableContainer.offset().top + tableContainer.height();
+			var listBottom = hostPosition.top + hostNode.outerHeight() + collectionHeight;
+			var bottomOverflow = listBottom - tableBottom;
+
+			// calculate overflow when positioned above
+			var listTop = hostPosition.top - collectionHeight;
+			var tableTop = tableContainer.offset().top;
+			var topOverflow = tableTop - listTop;
+
+			if ( (bottomOverflow > topOverflow || options.dropup) && -moveTop < tableTop ) {
+				display.css( 'top', moveTop);
+			}
+
+			if (options.align === 'button-right') {
+				popoverShuffle = buttonsRight - popoverRight;
+			}
+			else {
+				popoverShuffle = buttonsLeft - popoverLeft;
+			}
+
+			display.css('left', display.position().left + popoverShuffle);
 		}
 		else {
 			// Fix position - centre on screen
