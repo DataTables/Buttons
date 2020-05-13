@@ -1150,7 +1150,7 @@ $.extend( Buttons.prototype, {
 				var back = $.fn.addBack ? 'addBack' : 'andSelf';
 				var parent = $(e.target).parent()[0];
 
-				if ( ! $(e.target).parents()[back]().filter( content ).length  && !$(parent).hasClass('dt-buttons')) {
+				if (( ! $(e.target).parents()[back]().filter( content ).length  && !$(parent).hasClass('dt-buttons')) || $(e.target).hasClass('dt-button-background')) {
 					close();
 				}
 			} )
