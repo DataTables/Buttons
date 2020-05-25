@@ -1153,7 +1153,7 @@ $.extend( Buttons.prototype, {
 
 			// Get the size of the popover (left and width - and ...)
 			var popoverLeft = display.offset().left;
-			var popoverWidth = display.width();
+			var popoverWidth = content.width();
 			var popoverRight = popoverLeft + popoverWidth;
 
 			var moveTop = hostPosition.top - collectionHeight - 5;
