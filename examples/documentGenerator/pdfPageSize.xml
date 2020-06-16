@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="4">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons buttons-docgen">
+<![CDATA[
+
+$(document).ready(function() {
+	var table = $('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: ['pdf']
+	} );
+
+    var obj = JSON.parse(table.docGen.parse());
+
+    obj.props = {
+        pdf:{
+            size: 'A5'
+        }
+    }
+
+	$('#dtstText').val(
+        JSON.stringify(obj)
+	);
+});
+
+]]>
+</js>
+
+<title lib="Buttons">PDF Page Size</title>
+
+<info><![CDATA[
+
+This is the Document Generator plug-in for Buttons. It allows for documents to be built on the server side and downloaded on the client side. This example shows the pdf export.
+
+The server-side code can be found [here](). It is powered using NodeJS.
+
+The data can be retrieved and set using the `-api docgen.parse()` method. The structure of the JSON object is fully [documented]().
+
+<form action="http://192.168.234.234:8090/csv" method="post" id="dtst" target="hiddenframe"><textarea name="data" id="dtstText"></textarea></form>
+
+]]></info>
+
+</dt-example>
+

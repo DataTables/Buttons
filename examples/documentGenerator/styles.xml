@@ -28,7 +28,7 @@ $(document).ready(function() {
                         "alignment":{"horizontal":"center"},
                         "fill":{"bgColor":"lime"}
                     }}
-                ]},
+                ]}
             ]
         ],
         "style":{
