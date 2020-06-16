@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" order="15">
+<dt-example table-type="html" order="2">
 
 <css lib="datatables buttons"/>
 <js lib="jquery datatables buttons buttons-docgen">
@@ -19,7 +19,7 @@ $(document).ready(function() {
 ]]>
 </js>
 
-<title lib="Buttons">Document Generator</title>
+<title lib="Buttons">PDF</title>
 
 <info><![CDATA[
 

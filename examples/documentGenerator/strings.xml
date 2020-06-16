@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="3">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons buttons-docgen">
+<![CDATA[
+
+$(document).ready(function() {
+	var table = $('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: ['csv', 'html', 'excel', 'pdf', 'print']
+	} );
+
+    var obj = {
+        "filename":"OneOfEvery",
+        "blocks":[
+            [
+                {"type":"string", "children":[], "text":"I'm just a string"},
+                {"type":"a", "href":"https://datatables.net", "children":[
+                    {"type":"string", "children":[], "text":"I'm a link"}
+                ]},
+                {"type":"p", "children":[
+                    {"type":"string", "children":[], "text":"I'm a paragraph"}
+                ]},
+                {"type":"b", "children":[
+                    {"type":"string", "children":[], "text":"I'm Bold"}
+                ]},
+                {"type":"i", "children":[
+                    {"type":"string", "children":[], "text":"I'm Italic"}
+                ]},
+                {"type":"u", "children":[
+                    {"type":"string", "children":[], "text":"I'm underlined"}
+                ]},
+                {"type":"s", "children":[
+                    {"type":"string", "children":[], "text":"I'm crossed out"}
+                ]},
+                {"type":"b", "children":[
+                    {"type":"i", "children":[
+                        {"type":"u", "children":[
+                            {"type":"s", "children":[
+                                {"type":"string", "children":[], "text":"I'm bold, italic, underlined and crossed out"}
+                            ]}
+                        ]}
+                    ]}
+                ]},
+                {"type":"p", "children":[
+                    {"type":"string", "children":[], "text":"I'm a paragraph with a br here >"},
+                    {"type":"br", "children":[]},
+                    {"type":"string", "children":[], "text":"< so this should be on a new line"}
+                ]},
+                {"type":"title", "children":[
+                    {"type":"string", "children":[], "text":"I'm a title"}
+                ]}
+            ]
+        ]
+    }
+
+	$('#dtstText').val(
+		table.docGen.parse(JSON.stringify(obj))
+	);
+
+});
+
+]]>
+</js>
+
+<title lib="Buttons">Strings</title>
+
+<info><![CDATA[
+
+This is the Document Generator plug-in for Buttons. It allows for documents to be built on the server side and downloaded on the client side.
+
+This example shows how to embed text, paragraphs and titles into a document. It also shows how to apply bold, italic, underline and various other text specific styling options.
+
+All of the different ways to add content and style the documents that are exported by the document builder can be found at 
+
+* [images](/images)
+* [strings](/strings)
+* [styles](/styles)
+* [tables](/tables)
+
+The server-side code can be found [here](). It is powered using nodeJS.
+
+The data can be retrieved and set using the `-api docgen.parse()` method. The structure of the JSON object is fully [documented]().
+
+<form action="http://192.168.234.234:8090/csv" method="post" id="dtst" target="hiddenframe"><textarea name="data" id="dtstText"></textarea></form>
+
+]]></info>
+
+</dt-example>
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="3">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons buttons-docgen">
+<![CDATA[
+
+$(document).ready(function() {
+	var table = $('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: ['csv', 'html', 'excel', 'pdf', 'print']
+	} );
+
+    var obj = {
+        "filename":"Image",
+        "blocks":[
+            [
+                {"type":"img", "children":[], "href":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3hpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowYzM2OTczNC1lOWYxLTQ3ZmQtYTJmMS0xMTRiNDU5YzliZjgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QUMwMTE4MDQwNEQ4MTFFOEEyQTFCRUVFOUI3NDk2NTYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QUMwMTE4MDMwNEQ4MTFFOEEyQTFCRUVFOUI3NDk2NTYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxMzZlMDIyMC1hZmVjLTRkNGMtYTc1ZS02NjUwNTlkNjAxMDIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MGMzNjk3MzQtZTlmMS00N2ZkLWEyZjEtMTE0YjQ1OWM5YmY4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"},
+            ]
+        ]
+    }
+
+	$('#dtstText').val(
+		table.docGen.parse(JSON.stringify(obj))
+	);
+
+});
+
+]]>
+</js>
+
+<title lib="Buttons">Images</title>
+
+<info><![CDATA[
+
+This is the Document Generator plug-in for Buttons. It allows for documents to be built on the server side and downloaded on the client side.
+
+This example shows how to embed an image into a document. A node of type `img` takes a href property that is a base64 representation of an image.
+
+All of the different ways to add content and style the documents that are exported by the document builder can be found at 
+
+* [images](/images)
+* [strings](/strings)
+* [styles](/styles)
+* [tables](/tables)
+
+The server-side code can be found [here](). It is powered using nodeJS.
+
+The data can be retrieved and set using the `-api docgen.parse()` method. The structure of the JSON object is fully [documented]().
+
+<form action="http://192.168.234.234:8090/csv" method="post" id="dtst" target="hiddenframe"><textarea name="data" id="dtstText"></textarea></form>
+
+]]></info>
+
+</dt-example>
+

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="3">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons buttons-docgen">
+<![CDATA[
+
+$(document).ready(function() {
+	var table = $('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: ['csv', 'html', 'excel', 'pdf', 'print']
+	} );
+
+    var obj = {
+        "filename":"Table",
+        "blocks":[
+            [
+                {"type":"table", "children":[
+                    {"type":"thead", "children":[
+                        {"type":"tr", "children":[
+                            {"type":"th", "children":[
+                                {"type":"string", "children":[], "text":"Header1"}
+                            ]},
+                            {"type":"th", "children":[
+                                {"type":"string", "children":[], "text":"Header2"}
+                            ]}
+                        ]}
+                    ]},
+                    {"type":"tbody", "children":[
+                        {"type":"tr", "children":[
+                            {"type":"td", "style":"cell", "children":[
+                                {"type":"string", "children":[], "text":"Cell11"}
+                            ]},
+                            {"type":"td", "children":[
+                                {"type":"string", "children":[], "text":"Cell12"}
+                            ]}
+                        ]},
+                        {"type":"tr", "children":[
+                            {"type":"td", "children":[
+                                {"type":"string", "children":[], "text":"Cell21"}
+                            ]},
+                            {"type":"td", "children":[
+                                {"type":"string", "children":[], "text":"Cell22"}
+                            ]}
+                        ]}
+                    ]},
+                    {"type":"tfoot", "children":[
+                        {"type":"tr", "children":[
+                            {"type":"th", "children":[
+                                {"type":"string", "children":[], "text":"Footer1"}
+                            ]},
+                            {"type":"th", "children":[
+                                {"type":"string", "children":[], "text":"Footer2"}
+                            ]}
+                        ]}
+                    ]}
+                ]}
+            ]
+        ]
+    }
+
+	$('#dtstText').val(
+		table.docGen.parse(JSON.stringify(obj))
+	);
+
+});
+
+]]>
+</js>
+
+<title lib="Buttons">Tables</title>
+
+<info><![CDATA[
+
+This is the Document Generator plug-in for Buttons. It allows for documents to be built on the server side and downloaded on the client side.
+
+This example shows how to embed a table into a document. Nodes of types `table`, `thead`, `tbody`, `tfoot`, `tr`, `th`, `td` and `string`. The structure is similar to that of an HTML table.
+
+All of the different ways to add content and style the documents that are exported by the document builder can be found at 
+
+* [images](/images)
+* [strings](/strings)
+* [styles](/styles)
+* [tables](/tables)
+
+The server-side code can be found [here](). It is powered using nodeJS.
+
+The data can be retrieved and set using the `-api docgen.parse()` method. The structure of the JSON object is fully [documented]().
+
+<form action="http://192.168.234.234:8090/csv" method="post" id="dtst" target="hiddenframe"><textarea name="data" id="dtstText"></textarea></form>
+
+]]></info>
+
+</dt-example>
+
