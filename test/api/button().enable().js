@@ -37,17 +37,20 @@ describe('buttons - button().enable()', function() {
 			table.button(0).enable(false);
 
 			expect($('button.disabled').length).toBe(1);
+			expect($('button.disabled').attr('disabled')).toBe('disabled');
 			expect($('button.disabled').text()).toBe('first');
 		});
 		it('Use enable to enable', function() {
 			table.button(0).enable(true);
 
+			expect($('button.disabled').attr('disabled')).toBe(undefined);
 			expect($('button.disabled').length).toBe(0);
 		});
 		it('Disable again', function() {
 			table.button(0).enable(false);
 
 			expect($('button.disabled').length).toBe(1);
+			expect($('button.disabled').attr('disabled')).toBe('disabled');
 			expect($('button.disabled').text()).toBe('first');
 		});
 		it('Use enable to enable with default setting', function() {
