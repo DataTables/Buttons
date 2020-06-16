@@ -38,37 +38,6 @@ var DataTable = $.fn.dataTable;
 
 var parseJSON;
 
-function download(ext, type, xhr) {
-	// The server should return a Blob, but on the off chance that it doesn't create one from the response
-	if(xhr.response instanceof Blob) {
-		var url = URL.createObjectURL(xhr.response);
-	}
-	else {
-		url =URL.createObjectURL(new Blob([xhr.response], {type}));
-	}
-
-	// Get and set the filename for the download. As default the title of the page will be used if it is not
-	//  defined in the data sent to the server. This follows the standard Buttons behaviour.
-	var disposition = xhr.getResponseHeader('Content-Disposition')
-	var filename= $('#example').DataTable().buttons.exportInfo({filename:'*'}).filename + ext;
-	if (disposition && disposition.indexOf('attachment') !== -1) {
-		var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-		var matches = filenameRegex.exec(disposition);
-		if (matches != null && matches[1] && matches[1] !== '"dt_default'+ext+'"') { 
-			filename = matches[1].replace(/['"]/g, '');
-		}
-	}
-
-	// Create an anchor link to trigger the download
-	var anchor = $('<a id="dt_download" >download</a>');
-	$(anchor).attr('href', url);
-	$(anchor).attr('download', filename);
-	$(anchor).insertAfter('#example');
-	var link = $('a#dt_download');
-	link[0].click();
-	$(anchor).remove();
-}
-
 function parse(prevJson, content) {
 	content.push({children:[{type:'string', text:$('#example').DataTable().buttons.exportInfo({filename:'*'}).filename, children:[]}], type:'title'});
 	let tableNode= {children:[], type: 'table'};
@@ -125,6 +94,18 @@ function _addHeader(head) {
 	return headNode;
 }
 
+/**
+* Sleeps the synchronous code
+* @param duration How long to sleep for
+*/
+function sleep(duration) {
+   return new Promise(resolve => {
+	   setTimeout(() => {
+		   resolve();
+	   }, duration);
+   });
+}
+
 DataTable.ext.buttons.print = {
 	className: 'buttons-print',
 
@@ -141,7 +122,6 @@ DataTable.ext.buttons.print = {
                 var win = window.open('', '');
                 win.document.write(xhr.response);
                 win.document.close();
-                console.log(win.document);
                 win.print();
                 win.close();
             }
@@ -172,16 +152,12 @@ DataTable.ext.buttons.csv = {
 		return dt.i18n( 'buttons.csv', 'csv' );
 	},
 
-	action: function ( e, dt, button, config ) {
-		var xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function() {};
-		xhr.open('POST', 'http://192.168.234.234:8090/csv');
-		xhr.send(parseJSON);
-		xhr.onreadystatechange = function() {
-			if(this.readyState === 4 && this.status === 200){
-				download('.csv', 'text/csv', xhr);
-			}
-		};
+	action: async function ( e, dt, button, config ) {
+		$('#dtst').attr('action', 'http://192.168.234.234:8090/csv')
+		var frame = $('<iframe name="hiddenframe" style="display: none;" target="_self"></iframe>').insertAfter($('#dtst'));
+		document.getElementById("dtst").submit();
+		await sleep(60000);
+		$(frame).remove()
 	},
 
 	title: '*',
@@ -208,16 +184,12 @@ DataTable.ext.buttons.html = {
 		return dt.i18n( 'buttons.html', 'html' );
 	},
 
-	action: function ( e, dt, button, config ) {
-		var xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function() {};
-		xhr.open('POST', 'http://192.168.234.234:8090/html');
-		xhr.send(parseJSON)
-		xhr.onreadystatechange = function() {
-			if(this.readyState === 4 && this.status === 200){
-				download('.html', 'text/html', xhr);
-			}
-		};
+	action: async function ( e, dt, button, config ) {
+		$('#dtst').attr('action', 'http://192.168.234.234:8090/html')
+		var frame = $('<iframe name="hiddenframe" style="display: none;" target="_self"></iframe>').insertAfter($('#dtst'));
+		document.getElementById("dtst").submit();
+		await sleep(60000);
+		$(frame).remove()
 	},
 
 	title: '*',
@@ -244,16 +216,12 @@ DataTable.ext.buttons.pdf = {
 		return dt.i18n( 'buttons.pdf', 'pdf' );
 	},
 
-	action: function ( e, dt, button, config ) {
-		var xhr = new XMLHttpRequest();
-		xhr.responseType = 'blob'
-		xhr.open('POST', 'http://192.168.234.234:8090/pdf');
-		xhr.send(parseJSON)
-		xhr.onreadystatechange = function() {
-			if(this.readyState === 4 && this.status === 200){
-				download('.pdf', 'application/pdf', xhr);
-			}
-		};
+	action: async function ( e, dt, button, config ) {
+		$('#dtst').attr('action', 'http://192.168.234.234:8090/pdf')
+		var frame = $('<iframe name="hiddenframe" style="display: none;" target="_self"></iframe>').insertAfter($('#dtst'));
+		document.getElementById("dtst").submit();
+		await sleep(60000);
+		$(frame).remove()
 	},
 
 	title: '*',
@@ -280,16 +248,12 @@ DataTable.ext.buttons.excel = {
 		return dt.i18n( 'buttons.excel', 'excel' );
 	},
 
-	action: function ( e, dt, button, config ) {
-		var xhr = new XMLHttpRequest();
-		xhr.responseType = 'blob'
-		xhr.open('POST', 'http://192.168.234.234:8090/excel');
-		xhr.send(parseJSON)
-		xhr.onreadystatechange = function() {
-			if(this.readyState === 4 && this.status === 200){
-				download('.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', xhr)
-			}
-		};
+	action: async function ( e, dt, button, config ) {
+		$('#dtst').attr('action', 'http://192.168.234.234:8090/excel')
+		var frame = $('<iframe name="hiddenframe" style="display: none;" target="_self"></iframe>').insertAfter($('#dtst'));
+		document.getElementById("dtst").submit();
+		await sleep(60000);
+		$(frame).remove()
 	},
 
 	title: '*',
