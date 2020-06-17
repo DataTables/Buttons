@@ -273,14 +273,19 @@ DataTable.ext.buttons.excel = {
 	customize: null
 };
 
-DataTable.Api.register('docGen.parse()', function (setJson) {
+/**
+ * API function to get/set the JSON for the document generator
+ * @param setJson is any JSON that is to be set
+ * @param options is an object of the same structure taken by `-api buttons.exportData()¬
+ */
+DataTable.Api.register('docGen.parse()', function (setJson, options = undefined) {
 	if(setJson !== undefined) {
 		parseJSON = setJson;
 	}
 	else {
 		parseJSON = JSON.stringify(
 			{
-				blocks: [parse(this.buttons.exportData(), [])],
+				blocks: [parse(this.buttons.exportData(options), [])],
 				style:{
 					font:{
 						name: 'Arial',

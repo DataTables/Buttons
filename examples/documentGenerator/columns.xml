@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="0">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons buttons-docgen">
+<![CDATA[
+
+$(document).ready(function() {
+	var table = $('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: ['csv', 'html', 'excel', 'pdf', 'print']
+	} );
+
+	$('#dtstText').val(
+		table.docGen.parse(undefined, {columns:[0,1,2]})
+	);
+});
+
+]]>
+</js>
+
+<title lib="Buttons">Document Generator</title>
+
+<info><![CDATA[
+
+This is the Document Generator plug-in for Buttons. It allows for documents to be built on the server side and downloaded on the client side.
+
+This example shows how you can select which columns to export. The second argument into the `-api docGen.parse()` function is an object of the same sructure taken by `-api buttons.exportData()`.
+
+The server-side code can be found [here](). It is powered using nodeJS.
+
+The data can be retrieved and set using the `-api docgen.parse()` method. The structure of the JSON object is fully [documented]().
+
+<form action="http://192.168.234.234:8090/csv" method="post" id="dtst" target="hiddenframe"><textarea name="data" id="dtstText"></textarea></form>
+
+]]></info>
+
+</dt-example>
+
