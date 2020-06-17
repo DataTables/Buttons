@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" order="0">
+<dt-example table-type="html" order="4">
 
 <css lib="datatables buttons"/>
 <js lib="jquery datatables buttons buttons-docgen">
@@ -8,26 +8,37 @@
 $(document).ready(function() {
 	var table = $('#example').DataTable( {
 		dom: 'Bfrtip',
-		buttons: ['csv', 'html', 'excel', 'pdf', 'print']
+		buttons:[
+            {
+                extend: 'csv',
+                text: 'tsv'
+            }
+        ],
 	} );
 
+    var obj = JSON.parse(table.docGen.parse());
+
+    obj.props = {
+        csv:{
+            seperator: '\t'
+        }
+    }
+
 	$('#dtstText').val(
-		table.docGen.parse(undefined, {columns:[0,1,2]})
+        JSON.stringify(obj)
 	);
 });
 
 ]]>
 </js>
 
-<title lib="Buttons">Column Selection</title>
+<title lib="Buttons">TSV</title>
 
 <info><![CDATA[
 
-This is the Document Generator plug-in for Buttons. It allows for documents to be built on the server side and downloaded on the client side.
+This is the Document Generator plug-in for Buttons. It allows for documents to be built on the server side and downloaded on the client side. This example shows the pdf export.
 
-This example shows how you can select which columns to export. The second argument into the `-api docGen.parse()` function is an object of the same sructure taken by `-api buttons.exportData()`.
-
-The server-side code can be found [here](). It is powered using nodeJS.
+The server-side code can be found [here](). It is powered using NodeJS.
 
 The data can be retrieved and set using the `-api docgen.parse()` method. The structure of the JSON object is fully [documented]().
 
