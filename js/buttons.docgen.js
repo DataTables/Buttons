@@ -119,11 +119,13 @@ DataTable.ext.buttons.print = {
         xhr.send(parseJSON)
         xhr.onreadystatechange = function() {
             if(this.readyState === 4 && this.status === 200){
-                var win = window.open('', '');
+				var win = window.open('', '');
                 win.document.write(xhr.response);
-                win.document.close();
-                win.print();
-                win.close();
+				win.document.close();
+				$(win.document).ready(function() {
+					win.print();
+					win.close();
+				})
             }
         };
 	},
