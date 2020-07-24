@@ -1039,6 +1039,8 @@ $.extend( Buttons.prototype, {
 			display.css('width', tableContainer.width());
 		}
 
+		// Align the popover relative to the DataTables container
+		// Useful for wide popovers such as SearchPanes
 		if (
 			position === 'absolute' &&
 			(
@@ -1130,10 +1132,8 @@ $.extend( Buttons.prototype, {
 			display.css('left', display.position().left + popoverShuffle);
 			
 		}
-		else if (
-			position === 'absolute'
-		) {
-
+		else if (position === 'absolute') {
+			// Align relative to the host button
 			var hostPosition = hostNode.position();
 
 			display.css( {
@@ -1170,12 +1170,9 @@ $.extend( Buttons.prototype, {
 				display.css( 'top', moveTop);
 			}
 
-			if (options.align === 'button-right') {
-				popoverShuffle = buttonsRight - popoverRight;
-			}
-			else {
-				popoverShuffle = buttonsLeft - popoverLeft;
-			}
+			popoverShuffle = options.align === 'button-right'
+				? buttonsRight - popoverRight
+				: buttonsLeft - popoverLeft;
 
 			display.css('left', display.position().left + popoverShuffle);
 		}
