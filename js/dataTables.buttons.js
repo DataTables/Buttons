@@ -2038,7 +2038,7 @@ var _exportData = function ( dt, inOpts )
 			str = str.replace( /\n/g, ' ' );
 		}
 
-		if ( config.decodeEntities ) {
+		if ( config.decodeEntities && str.indexOf('&') !== -1 ) {
 			_exportTextarea.innerHTML = str;
 			str = _exportTextarea.value;
 		}
