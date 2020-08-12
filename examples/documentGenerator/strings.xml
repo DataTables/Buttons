@@ -56,7 +56,7 @@ $(document).ready(function() {
     }
 
 	$('#dtstText').val(
-		table.docGen.parse(JSON.stringify(obj))
+		table.docGen.parse(JSON.stringify(obj, null, '\t'))
 	);
 
 });

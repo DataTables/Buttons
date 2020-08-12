@@ -11,58 +11,9 @@ $(document).ready(function() {
 		buttons: ['csv', 'html', 'excel', 'pdf', 'print']
 	} );
 
-    var obj = {
-        "filename":"Table",
-        "blocks":[
-            [
-                {"type":"table", "children":[
-                    {"type":"thead", "children":[
-                        {"type":"tr", "children":[
-                            {"type":"th", "children":[
-                                {"type":"string", "children":[], "text":"Header1"}
-                            ]},
-                            {"type":"th", "children":[
-                                {"type":"string", "children":[], "text":"Header2"}
-                            ]}
-                        ]}
-                    ]},
-                    {"type":"tbody", "children":[
-                        {"type":"tr", "children":[
-                            {"type":"td", "style":"cell", "children":[
-                                {"type":"string", "children":[], "text":"Cell11"}
-                            ]},
-                            {"type":"td", "children":[
-                                {"type":"string", "children":[], "text":"Cell12"}
-                            ]}
-                        ]},
-                        {"type":"tr", "children":[
-                            {"type":"td", "children":[
-                                {"type":"string", "children":[], "text":"Cell21"}
-                            ]},
-                            {"type":"td", "children":[
-                                {"type":"string", "children":[], "text":"Cell22"}
-                            ]}
-                        ]}
-                    ]},
-                    {"type":"tfoot", "children":[
-                        {"type":"tr", "children":[
-                            {"type":"th", "children":[
-                                {"type":"string", "children":[], "text":"Footer1"}
-                            ]},
-                            {"type":"th", "children":[
-                                {"type":"string", "children":[], "text":"Footer2"}
-                            ]}
-                        ]}
-                    ]}
-                ]}
-            ]
-        ]
-    }
-
 	$('#dtstText').val(
-		table.docGen.parse(JSON.stringify(obj))
+		table.docGen.parse()
 	);
-
 });
 
 ]]>

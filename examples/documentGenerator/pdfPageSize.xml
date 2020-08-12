@@ -20,7 +20,7 @@ $(document).ready(function() {
     }
 
 	$('#dtstText').val(
-        JSON.stringify(obj)
+        JSON.stringify(obj, null, '\t')
 	);
 });
 
