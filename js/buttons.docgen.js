@@ -311,7 +311,9 @@ DataTable.Api.register('docGen.parse()', function (setJson, options = undefined)
 						}
 					}
 				}
-			}
+			},
+			null,
+			'\t'
 		);
 	}
 	return parseJSON
