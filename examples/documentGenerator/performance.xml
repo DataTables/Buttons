@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="ajax" order="3">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons buttons-docgen">
+<![CDATA[
+
+$(document).ready(function() {
+	var table = $('#example').DataTable( {
+		dom: 'Bfrtip',
+        ajax: '../../../../examples/ajax/data/data_10k.txt',
+        columns: [
+            { data: "name" },
+            { data: "position" },
+            { data: "office" },
+            { data: "extn" },
+            { data: "start_date" },
+            { data: "salary" }
+        ],
+		buttons: ['csv', 'html', 'excel', 'pdf', 'print'],
+        deferRender: true
+	} );
+
+
+    table.on('draw', function() {
+//        $('#dtstText').val(
+            table.docGen.parse(undefined, {
+                //decodeEntities: false
+            })
+  //      );
+    })
+
+});
+
+]]>
+</js>
+
+<title lib="Buttons">10k Rows</title>
+
+<info><![CDATA[
+
+This is the Document Generator plug-in for Buttons. It allows for documents to be built on the server side and downloaded on the client side.
+
+This example shows how to embed a table into a document, when that table has a large amount of data. Nodes of types `table`, `thead`, `tbody`, `tfoot`, `tr`, `th`, `td` and `string`. The structure is similar to that of an HTML table.
+
+All of the different ways to add content and style the documents that are exported by the document builder can be found at 
+
+* [images](/images)
+* [strings](/strings)
+* [styles](/styles)
+* [tables](/tables)
+
+The server-side code can be found [here](). It is powered using nodeJS.
+
+The data can be retrieved and set using the `-api docgen.parse()` method. The structure of the JSON object is fully [documented]().
+
+For berevity an example structure is shown below rather than showing the entire 10k rows.
+
+<textarea>
+{
+	"blocks": [
+		[
+			{
+				"children": [
+					{
+						"type": "string",
+						"text": "Buttons example - Document Generator",
+						"children": []
+					}
+				],
+				"type": "title"
+			},
+			{
+				"children": [
+					{
+						"children": [
+							{
+								"children": [
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Name"
+											}
+										],
+										"type": "th"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Position"
+											}
+										],
+										"type": "th"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Office"
+											}
+										],
+										"type": "th"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Age"
+											}
+										],
+										"type": "th"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Start date"
+											}
+										],
+										"type": "th"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Salary"
+											}
+										],
+										"type": "th"
+									}
+								],
+								"type": "tr"
+							}
+						],
+						"type": "thead",
+						"style": "header"
+					},
+					{
+						"children": [
+							{
+								"children": [
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Airi Satou"
+											}
+										],
+										"type": "td"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Accountant"
+											}
+										],
+										"type": "td"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Tokyo"
+											}
+										],
+										"type": "td"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "33"
+											}
+										],
+										"type": "td"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "2008/11/28"
+											}
+										],
+										"type": "td"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "$162,700"
+											}
+										],
+										"type": "td"
+									}
+								],
+								"type": "tr"
+							},
+							{
+								"children": [
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Angelica Ramos"
+											}
+										],
+										"type": "td"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Chief Executive Officer (CEO)"
+											}
+										],
+										"type": "td"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "London"
+											}
+										],
+										"type": "td"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "47"
+											}
+										],
+										"type": "td"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "2009/10/09"
+											}
+										],
+										"type": "td"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "$1,200,000"
+											}
+										],
+										"type": "td"
+									}
+								],
+								"type": "tr",
+								"style": "even"
+							},
+                            ...
+						],
+						"type": "tbody"
+					},
+					{
+						"children": [
+							{
+								"children": [
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Name"
+											}
+										],
+										"type": "th"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Position"
+											}
+										],
+										"type": "th"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Office"
+											}
+										],
+										"type": "th"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Age"
+											}
+										],
+										"type": "th"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Start date"
+											}
+										],
+										"type": "th"
+									},
+									{
+										"children": [
+											{
+												"children": [],
+												"type": "string",
+												"text": "Salary"
+											}
+										],
+										"type": "th"
+									}
+								],
+								"type": "tr"
+							}
+						],
+						"type": "tfoot",
+						"style": "header"
+					}
+				],
+				"type": "table"
+			}
+		]
+	],
+	"style": {
+		"font": {
+			"name": "Arial",
+			"size": "12",
+			"color": "black"
+		},
+		"refs": {
+			"header": {
+				"fill": {
+					"bgColor": "navy"
+				},
+				"font": {
+					"color": "white",
+					"size": "14"
+				}
+			},
+			"even": {
+				"fill": {
+					"bgColor": "#e9e9e9"
+				}
+			}
+		}
+	}
+}
+</textarea>
+
+]]></info>
+
+</dt-example>
+
