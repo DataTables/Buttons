@@ -149,7 +149,7 @@ $.extend( DataTable.ext.buttons, {
 				title = dt.column(idx).header().innerHTML;
 			}
 
-			title
+			title = title
 				.replace(/\n/g," ")        // remove new lines
 				.replace(/<br\s*\/?>/gi, " ")  // replace line breaks with spaces
 				.replace(/<select(.*?)<\/select>/g, "") // remove select tags, including options text
