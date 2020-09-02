@@ -4,8 +4,10 @@
 
 div.dt-button-collection {
 	position: absolute;
+	z-index: 2001;
 
 	ul.dropdown-menu {
+		position: relative;
 		display: block;
 		z-index: 2002;
 		min-width: 100%;
