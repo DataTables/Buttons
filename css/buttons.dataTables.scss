@@ -8,7 +8,8 @@ $dtb-button-border: 1px solid dtb-shade(transparent, 30%) !default;
 
 button.dt-button,
 div.dt-button,
-a.dt-button {
+a.dt-button,
+input.dt-button {
 	position: relative;
 	display: inline-block;
 	box-sizing: border-box;
