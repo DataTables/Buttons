@@ -40,8 +40,8 @@ If you wish to customise this behaviour, you can use the `exportOptions` object 
 
 In this example the Select extension is used to give the end user the ability to select rows by clicking on them. Two print buttons are utilised in this example to demonstrate the `exportOptions` option:
 
-* The first button will print all rows (after filtering)
-* The second button will print only the selected rows. This is done by setting the `selected` modifier to be `null`.
+* The first button will print all rows (after filtering). This is done by setting the `selected` modifier to be `null`.
+* The second button will print only the selected rows.
 
 ]]></info>
 
