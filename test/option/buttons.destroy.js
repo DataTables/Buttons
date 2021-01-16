@@ -33,7 +33,7 @@ describe('Buttons - options - buttons.available', function() {
 		it('Can remove button if no option', function() {
 			table.button(2).remove();
 			expect(params).toBe(undefined);
-			expect($('button.dt-button').text()).toBe('firstsecondXXX');
+			expect($('button.dt-button').text()).toBe('firstsecond');
 		});
 		it('Can remove button with option', function() {
 			table.button(0).remove();
