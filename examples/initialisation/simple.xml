@@ -2,7 +2,7 @@
 <dt-example table-type="html" order="1">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons buttons-flash jszip pdfmake vfsfonts buttons-html5 buttons-print">
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
 <![CDATA[
 
 $(document).ready(function() {
