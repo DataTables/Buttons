@@ -1468,7 +1468,7 @@ Buttons.buttonSelector = function ( insts, selector )
  * Default function used for formatting output data.
  * @param {*} str Data to strip
  */
-Buttons.stripData = function ( str ) {
+Buttons.stripData = function ( str, config ) {
 	if ( typeof str !== 'string' ) {
 		return str;
 	}
@@ -2053,13 +2053,13 @@ var _exportData = function ( dt, inOpts )
 		trim:           true,
 		format:         {
 			header: function ( d ) {
-				return Buttons.stripData( d );
+				return Buttons.stripData( d, config );
 			},
 			footer: function ( d ) {
-				return Buttons.stripData( d );
+				return Buttons.stripData( d, config );
 			},
 			body: function ( d ) {
-				return Buttons.stripData( d );
+				return Buttons.stripData( d, config );
 			}
 		},
 		customizeData: null
