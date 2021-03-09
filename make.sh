@@ -44,9 +44,6 @@ js_compress $OUT_DIR/js/buttons.print.js
 rsync -r examples $OUT_DIR
 examples_process $OUT_DIR/examples
 
-# SWF file flash export options
-rsync -r swf $OUT_DIR
-
 # Readme and license
 cp Readme.md $OUT_DIR
 cp License.txt $OUT_DIR
