@@ -65,7 +65,7 @@
 	</option>
 
 	<option type="string" name="newline" default="\n">
-		The character(s) used to separate the lines of data. Please note that on Windows client's the default is `\r\n`. All other platforms have a default or `\n` only.
+		The character(s) used to separate the lines of data. Please note that on Windows clients the default is `\r\n`. All other platforms have a default or `\n` only.
 	</option>
 
 	<option type="object" name="exportOptions" default="{}">
