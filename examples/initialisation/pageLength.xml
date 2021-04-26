@@ -21,7 +21,7 @@ $(document).ready(function() {
 ]]>
 </js>
 
-<title lib="Buttons">Page length</title>
+<title lib="Buttons">Page length (button)</title>
 
 <info><![CDATA[
 
