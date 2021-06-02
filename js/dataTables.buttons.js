@@ -1051,25 +1051,26 @@ $.extend( Buttons.prototype, {
 		) {
 
 			var hostPosition = hostNode.position();
+			var buttonPosition = $(hostButton.node()).position();
 
 			display.css( {
-				top: hostPosition.top + hostNode.outerHeight(),
+				top: buttonPosition.top + hostNode.outerHeight(),
 				left: hostPosition.left
 			} );
 
 			// calculate overflow when positioned beneath
 			var collectionHeight = display.outerHeight();
 			var tableBottom = tableContainer.offset().top + tableContainer.height();
-			var listBottom = hostPosition.top + hostNode.outerHeight() + collectionHeight;
+			var listBottom = buttonPosition.top + hostNode.outerHeight() + collectionHeight;
 			var bottomOverflow = listBottom - tableBottom;
 
 			// calculate overflow when positioned above
-			var listTop = hostPosition.top - collectionHeight;
+			var listTop = buttonPosition.top - collectionHeight;
 			var tableTop = tableContainer.offset().top;
 			var topOverflow = tableTop - listTop;
 
 			// if bottom overflow is larger, move to the top because it fits better, or if dropup is requested
-			var moveTop = hostPosition.top - collectionHeight - 5;
+			var moveTop = buttonPosition.top - collectionHeight - 5;
 			if ( (bottomOverflow > topOverflow || options.dropup) && -moveTop < tableTop ) {
 				display.css( 'top', moveTop);
 			}
