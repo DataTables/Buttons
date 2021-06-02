@@ -1,2 +1,16 @@
 
 @import 'buttons.bootstrap4.scss';
+
+div.flex-wrap {
+    flex-wrap: nowrap !important;   
+}
+
+div.btn-group,
+div.btn-group-vertical {
+    position: absolute;
+    display: block;
+}
+
+div.dt-button-collection {
+    position: static;
+}
