@@ -169,3 +169,17 @@ div.dt-button.processing,
 a.dt-button.processing {
 	@include dtb-processing();
 }
+
+button.dt-btn-split-drop {
+	margin-left: -0.333em;
+	padding-left: 1px;
+	padding-right: 1px;
+	border-left: 1px solid rgba( 0, 0, 0, 0.3);
+	border-radius: 0px 1px 1px 0px;
+}
+
+button.buttons-split {
+	padding-right: 5px;
+	border-right: 1px solid rgba( 0, 0, 0, 0.3);
+	border-radius: 1px 0px 0px 1px;
+}
