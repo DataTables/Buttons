@@ -488,7 +488,6 @@ $.extend( Buttons.prototype, {
 		container.children().detach();
 
 		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
-			// console.log(container, buttons[i].inserter)
 			container.append( buttons[i].inserter );
 			container.append( ' ' );
 
@@ -496,7 +495,6 @@ $.extend( Buttons.prototype, {
 				this._draw( buttons[i].collection, buttons[i].buttons );
 			}
 		}
-		// console.log(container.children())
 	},
 
 	/**
@@ -546,7 +544,6 @@ $.extend( Buttons.prototype, {
 
 				built.conf._collection = built.collection;
 
-				// console.log(built.conf)
 				this._expandButton( built.buttons, built.conf.buttons, !isSplit, false, isSplit, attachPoint );
 			}
 
@@ -608,8 +605,6 @@ $.extend( Buttons.prototype, {
 		}
 
 		var action = function ( e, dt, button, config ) {
-			console.log(button, dt.button(button), config)
-			console.log($('div.dt-btn-split-wrapper'));
 			config.action.call( dt.button( button, $('div.dt-btn-split-wrapper')[0] ), e, dt, button, config );
 
 			$(dt.table().node()).triggerHandler( 'buttons-action.dt', [
@@ -627,7 +622,6 @@ $.extend( Buttons.prototype, {
 			.on( 'click.dtb', function (e) {
 				e.preventDefault();
 
-				// console.log(this);
 				if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
 					action( e, dt, button, config );
 				}
@@ -718,14 +712,21 @@ $.extend( Buttons.prototype, {
 			})
 
 			this._addKey(dropButtonConfig);
+
+			var splitAction = function ( e, dt, button, config ) {
+				config.action.call( dt.button($('div.dt-btn-split-wrapper')[0] ), e, dt, button, config );
+	
+				$(dt.table().node()).triggerHandler( 'buttons-action.dt', [
+					dt.button( button ), dt, button, config 
+				] );
+			};
 			
 			var dropButton = $('<button class="dt-btn-split-drop dt-button">&#x25BC;</button>')
 				.on( 'click.dtb', function (e) {
 					e.preventDefault();
 
-					// console.log(this);
 					if ( ! dropButton.hasClass( buttonDom.disabled ) && dropButtonConfig.action ) {
-						action( e, dt, dropButton, dropButtonConfig );
+						splitAction( e, dt, dropButton, dropButtonConfig );
 					}
 					if( clickBlurs ) {
 						dropButton.trigger('blur');
@@ -734,7 +735,7 @@ $.extend( Buttons.prototype, {
 				.on( 'keyup.dtb', function (e) {
 					if ( e.keyCode === 13 ) {
 						if ( ! dropButton.hasClass( buttonDom.disabled ) && dropButtonConfig.action ) {
-							action( e, dt, dropButton, dropButtonConfig );
+							splitAction( e, dt, dropButton, dropButtonConfig );
 						}
 					}
 				} );
@@ -1034,7 +1035,6 @@ $.extend( Buttons.prototype, {
 			rightAlignClassName: 'dt-button-right',
 			tag: buttonsSettings.dom.collection.tag
 		}, inOpts );
-		// console.log("popover")
 		var hostNode = hostButton.node();
 
 		var close = function () {
@@ -1092,7 +1092,6 @@ $.extend( Buttons.prototype, {
 		var tableContainer = $( hostButton.table().container() );
 		var position = display.css( 'position' );
 
-		// console.log("aligning")
 		if ( options.align === 'dt-container' ) {
 			hostNode = hostNode.parent();
 			display.css('width', tableContainer.width());
@@ -1351,6 +1350,7 @@ Buttons.instanceSelector = function ( group, buttons )
 	
 	process( group );
 
+
 	return ret;
 };
 
@@ -1401,7 +1401,6 @@ Buttons.buttonSelector = function ( insts, selector )
 			return v.node;
 		} );
 
-		console.log(selector, typeof selector)
 		if ( Array.isArray( selector ) || selector instanceof $ ) {
 			for ( i=0, ien=selector.length ; i<ien ; i++ ) {
 				run( selector[i], inst );
@@ -1470,10 +1469,8 @@ Buttons.buttonSelector = function ( insts, selector )
 		}
 		else if ( typeof selector === 'object' && selector.nodeName ) {
 			// Node selector
-			console.log(nodes)
 			var idx = $.inArray( selector, nodes );
 
-			console.log(idx)
 			if ( idx !== -1 ) {
 				ret.push( {
 					inst: inst,
@@ -1593,7 +1590,6 @@ $.extend( _dtButtons, {
 		action: function ( e, dt, button, config ) {
 			e.stopPropagation();
 
-			// console.log(this)
 			if ( config._collection.parents('body').length ) {
 				this.popover(false, config);
 			}
@@ -1617,14 +1613,11 @@ $.extend( _dtButtons, {
 		action: function ( e, dt, button, config ) {
 			e.stopPropagation();
 
-			// console.log(this)
 			if(button.hasClass("dt-btn-split-drop")) {
-				// console.log(this);
-				// console.log("drop", button, config, config._collection.children());
 				this.splitPopover(config._collection, config);
 			}
 			else {
-				// console.log("primary")
+				console.log("primary")
 			}
 		},
 		attr: {
@@ -1733,7 +1726,6 @@ $.extend( _dtButtons, {
 
 // Buttons group and individual button selector
 DataTable.Api.register( 'buttons()', function ( group, selector ) {
-	console.log(selector)
 	// Argument shifting
 	if ( selector === undefined ) {
 		selector = group;
@@ -1743,7 +1735,6 @@ DataTable.Api.register( 'buttons()', function ( group, selector ) {
 	this.selector.buttonGroup = group;
 
 	var res = this.iterator( true, 'table', function ( ctx ) {
-		console.log(ctx)
 		if ( ctx._buttons ) {
 			return Buttons.buttonSelector(
 				Buttons.instanceSelector( group, ctx._buttons ),
@@ -1855,20 +1846,14 @@ DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', funct
 
 // Button resolver to the popover
 DataTable.Api.register( 'button().popover()', function (content, options) {
-	// console.log("popover API", this)
 	return this.map( function ( set ) {
-		// console.log("setting")
 		return set.inst._popover( content, this.button(this[0].node), options );
 	} );
 } );
 
 // Button resolver to the popover
 DataTable.Api.register( 'button().splitPopover()', function (content, options) {
-	// console.log("popover API", this)
 	return this.map( function ( set ) {
-		// console.log("setting")
-		// var button = this.button(this[0].children()[0]);
-		// console.log(this[0].node, this[0].children()[0], button)
 		return set.inst._popover( content, this.button(this[0].node), options );
 	} );
 } );
