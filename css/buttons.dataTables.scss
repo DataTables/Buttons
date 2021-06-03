@@ -171,15 +171,23 @@ a.dt-button.processing {
 }
 
 button.dt-btn-split-drop {
-	margin-left: -0.333em;
-	padding-left: 1px;
-	padding-right: 1px;
-	border-left: 1px solid rgba( 0, 0, 0, 0.3);
+	margin-left: calc(-1px - 0.333em);
+	padding-left: 0.333em;
+	padding-right: 0.333em;
+	padding-bottom: calc(0.5em - 1px);
 	border-radius: 0px 1px 1px 0px;
+	color: rgba(70, 70, 70, 0.7);
+	
+	span.dt-btn-split-drop-arrow {
+		font-size: 10px;
+	}
+
+	&:hover {
+		z-index: 2;
+	}
 }
 
 button.buttons-split {
-	padding-right: 5px;
-	border-right: 1px solid rgba( 0, 0, 0, 0.3);
+	border-right: 1px solid rgba( 70, 70, 70, -0.3);
 	border-radius: 1px 0px 0px 1px;
 }
