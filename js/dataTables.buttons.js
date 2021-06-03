@@ -197,7 +197,7 @@ $.extend( Buttons.prototype, {
 			idx = split[ split.length-1 ]*1;
 		}
 
-		this._expandButton( buttons, config, config.extend !== 'split' && base !== undefined, config.extend === 'split', false, idx );
+		this._expandButton( buttons, config, (config === undefined || config.extend !== 'split') && base !== undefined, config !== undefined && config.extend !== 'split', false, idx );
 		this._draw();
 
 		return this;
@@ -1350,7 +1350,6 @@ Buttons.instanceSelector = function ( group, buttons )
 	
 	process( group );
 
-
 	return ret;
 };
 
@@ -1558,10 +1557,6 @@ Buttons.defaults = {
 		split: {
 			tag: 'div',
 			className: 'dt-button-split',
-			buttonLiner: {
-				tag: 'div',
-				className: 'dt-btn-split-liner'
-			}
 		},
 		splitCollection: {
 			tag: 'div',
@@ -1614,7 +1609,7 @@ $.extend( _dtButtons, {
 			e.stopPropagation();
 
 			if(button.hasClass("dt-btn-split-drop")) {
-				this.splitPopover(config._collection, config);
+				this.popover(config._collection, config);
 			}
 			else {
 				console.log("primary")
@@ -1846,13 +1841,6 @@ DataTable.Api.registerPlural( 'buttons().trigger()', 'button().trigger()', funct
 
 // Button resolver to the popover
 DataTable.Api.register( 'button().popover()', function (content, options) {
-	return this.map( function ( set ) {
-		return set.inst._popover( content, this.button(this[0].node), options );
-	} );
-} );
-
-// Button resolver to the popover
-DataTable.Api.register( 'button().splitPopover()', function (content, options) {
 	return this.map( function ( set ) {
 		return set.inst._popover( content, this.button(this[0].node), options );
 	} );
