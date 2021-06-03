@@ -197,7 +197,7 @@ $.extend( Buttons.prototype, {
 			idx = split[ split.length-1 ]*1;
 		}
 
-		this._expandButton( buttons, config, (config === undefined || config.extend !== 'split') && base !== undefined, config !== undefined && config.extend !== 'split', false, idx );
+		this._expandButton( buttons, config, (config === undefined || config.extend !== 'split') && base !== undefined, config !== undefined && config.extend === 'split', false, idx );
 		this._draw();
 
 		return this;
@@ -605,14 +605,13 @@ $.extend( Buttons.prototype, {
 		}
 
 		var action = function ( e, dt, button, config ) {
-			config.action.call( dt.button( button, $('div.dt-btn-split-wrapper')[0] ), e, dt, button, config );
+			config.action.call( dt.button( button ), e, dt, button, config );
 
 			$(dt.table().node()).triggerHandler( 'buttons-action.dt', [
 				dt.button( button ), dt, button, config 
 			] );
 		};
 
-		
 		var tag = config.tag || buttonDom.tag;
 		var clickBlurs = config.clickBlurs === undefined ? true : config.clickBlurs
 		var button = $('<'+tag+'/>')
@@ -721,7 +720,7 @@ $.extend( Buttons.prototype, {
 				] );
 			};
 			
-			var dropButton = $('<button class="dt-btn-split-drop dt-button">&#x25BC;</button>')
+			var dropButton = $('<button class="dt-btn-split-drop dt-button"><span class="dt-btn-split-drop-arrow">&#x25BC;</span></button>')
 				.on( 'click.dtb', function (e) {
 					e.preventDefault();
 
