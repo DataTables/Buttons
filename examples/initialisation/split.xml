@@ -10,9 +10,9 @@ $(document).ready(function() {
 		dom: 'Bfrtip',
 		buttons: [
 			{
-				extend: 'split',
+				extend: 'CSV',
 				text: 'Primary',
-				buttons: [
+				split: [
 					{
 						text: 'Toggle start date',
 						action: function ( e, dt, node, config ) {
