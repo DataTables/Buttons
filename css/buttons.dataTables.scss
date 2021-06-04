@@ -143,14 +143,27 @@ div.dt-button-collection {
 	}
 
 	div.dt-btn-split-wrapper {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		align-content: flex-start;
+		align-items: flex-start;
+
 		button.dt-button {
-			width: 161px;
 			margin-right: 0px;
 			display: inline-block;
+			width: 0;
+			flex-grow: 1;
+			flex-shrink: 0;
+			flex-basis: 50px;
 		}
 		button.dt-btn-split-drop {
-			width: auto;
+			min-width: 20px;
 			margin-left: -1px;
+			flex-grow: 0;
+			flex-shrink: 0;
+			flex-basis: 0;
 		}
 	}
 
