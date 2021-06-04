@@ -561,6 +561,20 @@ $.extend( Buttons.prototype, {
 
 				built.conf._collection = built.collection;
 
+				if(built.conf.split) {
+					for(var i = 0; i < built.conf.split.length; i++) {
+						if(built.conf.split[i].collectionLayout === undefined) {
+							built.conf.split[i].collectionLayout = built.conf.collectionLayout;
+						}
+						if(built.conf.split[i].dropup === undefined) {
+							built.conf.split[i].dropup = built.conf.dropup;
+						}
+						if(built.conf.split[i].fade === undefined) {
+							built.conf.split[i].fade = built.conf.fade;
+						}
+					}
+				}
+
 				this._expandButton( built.buttons, built.conf.buttons, built.conf.split, !isSplit, isSplit, attachPoint );
 			}
 
