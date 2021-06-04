@@ -197,7 +197,13 @@ $.extend( Buttons.prototype, {
 			idx = split[ split.length-1 ]*1;
 		}
 
-		this._expandButton( buttons, config, (config === undefined || config.extend !== 'split') && base !== undefined, config !== undefined && config.extend === 'split', false, idx );
+		this._expandButton(
+			buttons,
+			config,
+			config !== undefined ? config.split : undefined,
+			(config === undefined || config.split === undefined || config.split.length === 0) && base !== undefined,
+			false,
+			idx );
 		this._draw();
 
 		return this;
@@ -504,14 +510,25 @@ $.extend( Buttons.prototype, {
 	 * @param  {boolean} inCollection true if the button is in a collection
 	 * @private
 	 */
-	_expandButton: function ( attachTo, button, inCollection, isSplit, inSplit, attachPoint )
+	_expandButton: function ( attachTo, button, split, inCollection, inSplit, attachPoint )
 	{
 		var dt = this.s.dt;
 		var buttonCounter = 0;
+		var isSplit = false;
 		var buttons = ! Array.isArray( button ) ?
 			[ button ] :
 			button;
+		
+		if(button === undefined ) {
+			buttons = !Array.isArray(split) ?
+				[ split ] :
+				split;
+		}
 
+		if (button !== undefined && button.split !== undefined) {
+			isSplit = true;
+		}
+			
 		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
 			var conf = this._resolveExtends( buttons[i] );
 
@@ -522,11 +539,11 @@ $.extend( Buttons.prototype, {
 			// If the configuration is an array, then expand the buttons at this
 			// point
 			if ( Array.isArray( conf ) ) {
-				this._expandButton( attachTo, conf, inCollection, false, true, attachPoint );
+				this._expandButton( attachTo, conf, built !== undefined && built.conf !== undefined ? built.conf.split : undefined, inCollection, true, attachPoint );
 				continue;
 			}
 
-			var built = this._buildButton( conf, inCollection, isSplit, inSplit );
+			var built = this._buildButton( conf, inCollection, conf.split !== undefined, inSplit );
 			if ( ! built ) {
 				continue;
 			}
@@ -539,12 +556,12 @@ $.extend( Buttons.prototype, {
 				attachTo.push( built );
 			}
 
-			if ( built.conf.buttons ) {
+			if ( built.conf.buttons || built.conf.split ) {
 				built.collection = $('<'+(isSplit ? this.c.dom.splitCollection.tag : this.c.dom.collection.tag)+'/>');
 
 				built.conf._collection = built.collection;
 
-				this._expandButton( built.buttons, built.conf.buttons, !isSplit, false, isSplit, attachPoint );
+				this._expandButton( built.buttons, built.conf.buttons, built.conf.split, !isSplit, isSplit, attachPoint );
 			}
 
 			// init call is made here, rather than buildButton as it needs to
@@ -707,17 +724,22 @@ $.extend( Buttons.prototype, {
 			splitDiv.append(button);
 			var dropButtonConfig = $.extend(config, {
 				text: "&#x25BC;",
-				className: "dt-btn-split-drop"
+				className: "dt-btn-split-drop",
+				attr: {
+					'aria-haspopup': true,
+					'aria-expanded': false
+				}
 			})
 
 			this._addKey(dropButtonConfig);
 
 			var splitAction = function ( e, dt, button, config ) {
-				config.action.call( dt.button($('div.dt-btn-split-wrapper')[0] ), e, dt, button, config );
+				_dtButtons.split.action.call( dt.button($('div.dt-btn-split-wrapper')[0] ), e, dt, button, config );
 	
 				$(dt.table().node()).triggerHandler( 'buttons-action.dt', [
 					dt.button( button ), dt, button, config 
 				] );
+				button.attr('aria-expanded', true)
 			};
 			
 			var dropButton = $('<button class="dt-btn-split-drop dt-button"><span class="dt-btn-split-drop-arrow">&#x25BC;</span></button>')
@@ -739,7 +761,7 @@ $.extend( Buttons.prototype, {
 					}
 				} );
 
-			splitDiv.append(dropButton);
+			splitDiv.append(dropButton).attr(dropButtonConfig.attr);
 		}
 
 		return {
@@ -1606,13 +1628,7 @@ $.extend( _dtButtons, {
 		},
 		action: function ( e, dt, button, config ) {
 			e.stopPropagation();
-
-			if(button.hasClass("dt-btn-split-drop")) {
-				this.popover(config._collection, config);
-			}
-			else {
-				console.log("primary")
-			}
+			this.popover(config._collection, config);
 		},
 		attr: {
 			'aria-haspopup': true

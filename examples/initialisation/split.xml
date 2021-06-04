@@ -2,7 +2,7 @@
 <dt-example table-type="html" order="100">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons">
+<js lib="jquery datatables buttons buttons-html5">
 <![CDATA[
 
 $(document).ready(function() {
@@ -10,14 +10,22 @@ $(document).ready(function() {
 		dom: 'Bfrtip',
 		buttons: [
 			{
-				extend: 'CSV',
+				extend: 'csv',
 				text: 'Primary',
 				split: [
 					{
 						text: 'Toggle start date',
 						action: function ( e, dt, node, config ) {
 							dt.column( -2 ).visible( ! dt.column( -2 ).visible() );
-						}
+						},
+						split: [
+							{
+								text: 'Another Split',
+								action: function () {
+									console.log("SPLIT")
+								}
+							}
+						]
 					},
 					{
 						text: 'Toggle salary',
