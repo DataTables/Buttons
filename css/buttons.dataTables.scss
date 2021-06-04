@@ -110,7 +110,7 @@ div.dt-button-collection {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 150px;
+	width: 200px;
 	margin-top: 3px;
 	padding: 8px 8px 4px 8px;
 	border: 1px solid #ccc;
@@ -139,6 +139,18 @@ div.dt-button-collection {
 		&.active:not(.disabled) {
 			@include dtb-two-stop-gradient(#f0f0f0, #dadada);
 			box-shadow: inset 1px 1px 3px #666;
+		}
+	}
+
+	div.dt-btn-split-wrapper {
+		button.dt-button {
+			width: 161px;
+			margin-right: 0px;
+			display: inline-block;
+		}
+		button.dt-btn-split-drop {
+			width: auto;
+			margin-left: -1px;
 		}
 	}
 
