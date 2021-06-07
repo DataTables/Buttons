@@ -76,7 +76,7 @@
 		* `-string button-left` - Align to the left of the activation button.
 		* `-string button-right` - Align to the right of the activation button.
 		* `-string dt-container` - Align to the left of the DataTables' container and span its full width (good for large content areas).
-	</option
+	</option>
 
 	<example title="DataTables initialisation: Create an export collection"><![CDATA[
 
