@@ -57,7 +57,16 @@ $.extend( true, DataTable.Buttons.defaults, {
 				tag: 'a',
 				className: ''
 			}
-		}
+		},
+		splitWrapper: {
+			tag: 'div',
+			className: 'dt-btn-split-wrapper btn-group',
+		},
+		splitDropdown: {
+			tag: 'button',
+			text: '&#x25BC;',
+			className: 'btn btn-default dt-btn-split-drop dropdown-toggle',
+		},
 	}
 } );
 

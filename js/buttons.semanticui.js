@@ -48,7 +48,16 @@ $.extend( true, DataTable.Buttons.defaults, {
 		collection: {
 			tag: 'div',
 			className: 'ui basic vertical buttons'
-		}
+		},
+		splitWrapper: {
+			tag: 'div',
+			className: 'dt-btn-split-wrapper buttons',
+		},
+		splitDropdown: {
+			tag: 'button',
+			text: '&#x25BC;',
+			className: 'ui floating button dt-btn-split-drop dropdown icon',
+		},
 	}
 } );
 

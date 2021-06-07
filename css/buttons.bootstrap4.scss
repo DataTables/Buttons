@@ -27,6 +27,29 @@ div.dt-button-collection {
 			display: none;
 		}
 	}
+
+	button.dt-btn-split-drop-button {
+		width: 100%;
+		color: #212529;
+		border: none;
+		background-color: white;
+		border-radius: 0px;
+		margin-left: 0px !important;
+
+		&:focus {
+			border: none;
+			border-radius: 0px;
+			outline: none;
+		}
+
+		&:hover {
+			background-color: #e9ecef;
+		}
+
+		&:active {
+			background-color: #007bff !important;
+		}
+	}
 }
 
 div.dt-button-background {

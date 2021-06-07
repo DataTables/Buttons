@@ -649,6 +649,7 @@ $.extend( Buttons.prototype, {
 		var clickBlurs = config.clickBlurs === undefined ? true : config.clickBlurs
 		var button = $('<'+tag+'/>')
 			.addClass( buttonDom.className )
+			.addClass( inSplit ? this.c.dom.splitDropdownButton.className : '')
 			.attr( 'tabindex', this.s.dt.settings()[0].iTabIndex )
 			.attr( 'aria-controls', this.s.dt.table().node().id )
 			.on( 'click.dtb', function (e) {
@@ -736,11 +737,11 @@ $.extend( Buttons.prototype, {
 
 		var splitDiv;
 		if(isSplit) {
-			splitDiv = $('<div class="dt-btn-split-wrapper"/>')
+			splitDiv = $('<div/>').addClass(this.c.dom.splitWrapper.className)
 			splitDiv.append(button);
 			var dropButtonConfig = $.extend(config, {
-				text: "&#x25BC;",
-				className: "dt-btn-split-drop",
+				text: this.c.dom.splitDropdown.text,
+				className: this.c.dom.splitDropdown.className,
 				attr: {
 					'aria-haspopup': true,
 					'aria-expanded': false
@@ -758,7 +759,7 @@ $.extend( Buttons.prototype, {
 				button.attr('aria-expanded', true)
 			};
 			
-			var dropButton = $('<button class="dt-btn-split-drop dt-button"><span class="dt-btn-split-drop-arrow">&#x25BC;</span></button>')
+			var dropButton = $('<button class="' + this.c.dom.splitDropdown.className + ' dt-button"><span class="dt-btn-split-drop-arrow">'+this.c.dom.splitDropdown.text+'</span></button>')
 				.on( 'click.dtb', function (e) {
 					e.preventDefault();
 
@@ -1594,6 +1595,19 @@ Buttons.defaults = {
 		split: {
 			tag: 'div',
 			className: 'dt-button-split',
+		},
+		splitWrapper: {
+			tag: 'div',
+			className: 'dt-btn-split-wrapper',
+		},
+		splitDropdown: {
+			tag: 'button',
+			text: '&#x25BC;',
+			className: 'dt-btn-split-drop',
+		},
+		splitDropdownButton: {
+			tag: 'button',
+			className: 'dt-btn-split-drop-button',
 		},
 		splitCollection: {
 			tag: 'div',

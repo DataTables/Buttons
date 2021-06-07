@@ -17,6 +17,19 @@ div.dt-button-collection {
 		background-color: white;
 	}
 
+	button.dt-btn-split-drop-button {
+		width: 100%;
+		border: none;
+		border-radius: 0px;
+		margin-left: 0px !important;
+
+		&:focus {
+			border: none;
+			border-radius: 0px;
+			outline: none;
+		}
+	}
+
 	@include dtb-fixed-collection();
 }
 

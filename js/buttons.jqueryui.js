@@ -49,7 +49,16 @@ $.extend( true, DataTable.Buttons.defaults, {
 		buttonLiner: {
 			tag: 'span',
 			className: 'ui-button-text'
-		}
+		},
+		splitWrapper: {
+			tag: 'div',
+			className: 'dt-btn-split-wrapper dt-btn-split-wrapper ui-widget ui-controlgroup-item ui-button ui-corner-left',
+		},
+		splitDropdown: {
+			tag: 'button',
+			text: '&#x25BC;',
+			className: 'dt-btn-split-drop ui-selectmenu-button demo-splitbutton-select ui-button ui-widget ui-controlgroup-item ui-selectmenu-button-closed ui-corner-right',
+		},
 	}
 } );
 
