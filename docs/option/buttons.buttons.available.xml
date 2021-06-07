@@ -28,7 +28,7 @@
 	</type>
 
 	<description>
-		A number of buttons types, particularly the file export buttons, can depend upon certain APIs being available in the web-browser and external third-party libraries having been loaded. For example the `b-button pdfHtml5` button type depends upon the `FileReader` API and also the `makePdf` library, while the `b-button pdfFlash` button depends upon Adobe Flash being available.
+		A number of buttons types, particularly the file export buttons, can depend upon certain APIs being available in the web-browser and external third-party libraries having been loaded. For example the `b-button pdfHtml5` button type depends upon the `FileReader` API and also the `makePdf` library.
 
 		This method provides button developers with the ability to ensure that any dependencies their buttons might have are satisfied before the button is shown to the end user. If the function returns `false`, the button is simply not shown to the end user.
 	</description>

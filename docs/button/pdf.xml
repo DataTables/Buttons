@@ -5,25 +5,18 @@
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _HTML5 export button_ plug-in (`-button pdfHtml5`) **and / or**
-		* Buttons' _Flash export button_ plug-in (`-button pdfFlash`).
+		* Buttons' _HTML5 export button_ plug-in (`-button pdfHtml5`)
 
 		To ensure that all files required for PDF export are included, the [DataTables download builder](/download) is recommend.
 	</requires>
 
 	<description>
-		This button type serves as a proxy that will automatically detect if the `b-button pdfHtml5` or `b-button pdfFlash` buttons can be used based on the browser's capabilities and the libraries available on the page.
+		This button type serves as a proxy that will automatically detect if the `b-button pdfHtml5` button can be used based on the browser's capabilities and the libraries available on the page.
 
 		This is provided as an option since the HTML5 button type requires a reasonably modern browser which may not always be available to the end user.
 
-		The order of selection, in priority order is:
+		If the requirements of the `b-button pdfHtml5` button are not satisfied, no button will be presented to the end user. For the requirements of each button type, please refer to its own documentation.
 
-		* `b-button pdfHtml5`
-		* `b-button pdfFlash`
-
-		If the requirements of both buttons are not satisfied, no button will be presented to the end user. For the requirements of each button type, please refer to its own documentation.
-
-		The options available to the HTML5 and Flash buttons are common between them to ensure that no additional logic is required by the developer based on which button type is selected - e.g. if you set the `message` option, it will be used by the HTML5 and Flash button types. The sole exception to this is the `customize` option which can be used for HTML5 buttons only. It will be ignored by the Flash PDF generator.
 	</description>
 
 
@@ -96,7 +89,7 @@
 	</option>
 
 
-	<example title="DataTables initialisation: Use the `b-button pdf` button type to automatically select between the Flash and HTML button options."><![CDATA[
+	<example title="DataTables initialisation: Use the `b-button pdf` button type to alias the HTML button options."><![CDATA[
 
 $('#myTable').DataTable( {
 	buttons: [

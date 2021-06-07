@@ -105,7 +105,7 @@
 	</option>
 
 
-	<example title="DataTables initialisation: Use the Flash copy button"><![CDATA[
+	<example title="DataTables initialisation: Use the Html copy button"><![CDATA[
 
 $('#myTable').DataTable( {
 	buttons: [
@@ -115,7 +115,7 @@ $('#myTable').DataTable( {
 
 ]]></example>
 
-	<example title="DataTables initialisation: Use the `b-button copy` button type to automatically select between the Flash and HTML button options."><![CDATA[
+	<example title="DataTables initialisation: Use the `b-button copy` button type to alias the HTML button options."><![CDATA[
 
 $('#myTable').DataTable( {
 	buttons: [

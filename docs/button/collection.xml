@@ -85,7 +85,7 @@ $('#myTable').DataTable( {
 		{
 			extend: 'collection',
 			text: 'Export',
-			buttons: [ 'csv-flash', 'xls-flash', 'pdf-flash' ]
+			buttons: [ 'csv', 'excel', 'pdf' ]
 		}
 	]
 } );
