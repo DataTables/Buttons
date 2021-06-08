@@ -1153,7 +1153,9 @@ $.extend( Buttons.prototype, {
 			var buttonPosition = $(hostButton.node()).position();
 
 			display.css( {
-				top: buttonPosition.top + hostNode.outerHeight(),
+				top: $($(hostButton[0].node).parent()[0]).hasClass('dt-buttons')
+					? buttonPosition.top + hostNode.outerHeight()
+					: hostPosition.top + hostNode.outerHeight(),
 				left: hostPosition.left
 			} );
 
