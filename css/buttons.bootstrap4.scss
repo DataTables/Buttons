@@ -81,3 +81,10 @@ div.dt-buttons {
 		@include dtb-processing();
 	}
 }
+
+div.dt-btn-split-wrapper {
+	button.dt-btn-split-drop {
+		border-top-right-radius: .25rem !important;
+		border-bottom-right-radius: .25rem !important;
+	}
+}
