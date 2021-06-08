@@ -633,88 +633,94 @@ $.extend( Buttons.prototype, {
 
 		// Make sure that the button is available based on whatever requirements
 		// it has. For example, PDF button require pdfmake
-		if ( config.available && ! config.available( dt, config ) ) {
+		if ( config.available && ! config.available( dt, config ) && !config.hasOwnProperty('html') ) {
 			return false;
 		}
 
-		var action = function ( e, dt, button, config ) {
-			config.action.call( dt.button( button ), e, dt, button, config );
-
-			$(dt.table().node()).triggerHandler( 'buttons-action.dt', [
-				dt.button( button ), dt, button, config 
-			] );
-		};
-
-		var tag = config.tag || buttonDom.tag;
-		var clickBlurs = config.clickBlurs === undefined ? true : config.clickBlurs
-		var button = $('<'+tag+'/>')
-			.addClass( buttonDom.className )
-			.addClass( inSplit ? this.c.dom.splitDropdownButton.className : '')
-			.attr( 'tabindex', this.s.dt.settings()[0].iTabIndex )
-			.attr( 'aria-controls', this.s.dt.table().node().id )
-			.on( 'click.dtb', function (e) {
-				e.preventDefault();
-
-				if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
-					action( e, dt, button, config );
-				}
-				if( clickBlurs ) {
-					button.trigger('blur');
-				}
-			} )
-			.on( 'keyup.dtb', function (e) {
-				if ( e.keyCode === 13 ) {
+		var button;
+		if(!config.hasOwnProperty('html')) {
+			var action = function ( e, dt, button, config ) {
+				config.action.call( dt.button( button ), e, dt, button, config );
+	
+				$(dt.table().node()).triggerHandler( 'buttons-action.dt', [
+					dt.button( button ), dt, button, config 
+				] );
+			};
+	
+			var tag = config.tag || buttonDom.tag;
+			var clickBlurs = config.clickBlurs === undefined ? true : config.clickBlurs
+			button = $('<'+tag+'/>')
+				.addClass( buttonDom.className )
+				.addClass( inSplit ? this.c.dom.splitDropdownButton.className : '')
+				.attr( 'tabindex', this.s.dt.settings()[0].iTabIndex )
+				.attr( 'aria-controls', this.s.dt.table().node().id )
+				.on( 'click.dtb', function (e) {
+					e.preventDefault();
+	
 					if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
 						action( e, dt, button, config );
 					}
-				}
-			} );
-
-		// Make `a` tags act like a link
-		if ( tag.toLowerCase() === 'a' ) {
-			button.attr( 'href', '#' );
-		}
-
-		// Button tags should have `type=button` so they don't have any default behaviour
-		if ( tag.toLowerCase() === 'button' ) {
-			button.attr( 'type', 'button' );
-		}
-
-		if ( linerDom.tag ) {
-			var liner = $('<'+linerDom.tag+'/>')
-				.html( text( config.text ) )
-				.addClass( linerDom.className );
-
-			if ( linerDom.tag.toLowerCase() === 'a' ) {
-				liner.attr( 'href', '#' );
+					if( clickBlurs ) {
+						button.trigger('blur');
+					}
+				} )
+				.on( 'keyup.dtb', function (e) {
+					if ( e.keyCode === 13 ) {
+						if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
+							action( e, dt, button, config );
+						}
+					}
+				} );
+	
+			// Make `a` tags act like a link
+			if ( tag.toLowerCase() === 'a' ) {
+				button.attr( 'href', '#' );
 			}
-
-			button.append( liner );
+	
+			// Button tags should have `type=button` so they don't have any default behaviour
+			if ( tag.toLowerCase() === 'button' ) {
+				button.attr( 'type', 'button' );
+			}
+	
+			if ( linerDom.tag ) {
+				var liner = $('<'+linerDom.tag+'/>')
+					.html( text( config.text ) )
+					.addClass( linerDom.className );
+	
+				if ( linerDom.tag.toLowerCase() === 'a' ) {
+					liner.attr( 'href', '#' );
+				}
+	
+				button.append( liner );
+			}
+			else {
+				button.html( text( config.text ) );
+			}
+	
+			if ( config.enabled === false ) {
+				button.addClass( buttonDom.disabled );
+			}
+	
+			if ( config.className ) {
+				button.addClass( config.className );
+			}
+	
+			if ( config.titleAttr ) {
+				button.attr( 'title', text( config.titleAttr ) );
+			}
+	
+			if ( config.attr ) {
+				button.attr( config.attr );
+			}
+	
+			if ( ! config.namespace ) {
+				config.namespace = '.dt-button-'+(_buttonCounter++);
+			}
 		}
 		else {
-			button.html( text( config.text ) );
+			button = $(config.html)
 		}
-
-		if ( config.enabled === false ) {
-			button.addClass( buttonDom.disabled );
-		}
-
-		if ( config.className ) {
-			button.addClass( config.className );
-		}
-
-		if ( config.titleAttr ) {
-			button.attr( 'title', text( config.titleAttr ) );
-		}
-
-		if ( config.attr ) {
-			button.attr( config.attr );
-		}
-
-		if ( ! config.namespace ) {
-			config.namespace = '.dt-button-'+(_buttonCounter++);
-		}
-
+	
 		var buttonContainer = this.c.dom.buttonContainer;
 		var inserter;
 		if ( buttonContainer && buttonContainer.tag ) {
@@ -967,7 +973,7 @@ $.extend( Buttons.prototype, {
 				}
 				else if ( typeof base === 'string' ) {
 					if ( ! _dtButtons[ base ] ) {
-						throw 'Unknown button type: '+base;
+						return {html: base}
 					}
 
 					base = _dtButtons[ base ];
