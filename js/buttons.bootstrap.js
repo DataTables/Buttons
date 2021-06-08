@@ -66,6 +66,8 @@ $.extend( true, DataTable.Buttons.defaults, {
 			tag: 'button',
 			text: '&#x25BC;',
 			className: 'btn btn-default dt-btn-split-drop dropdown-toggle',
+			align: 'split-left',
+			splitAlignClass: 'dt-button-split-left'
 		},
 	}
 } );

@@ -745,7 +745,10 @@ $.extend( Buttons.prototype, {
 				attr: {
 					'aria-haspopup': true,
 					'aria-expanded': false
-				}
+				},
+				align: this.c.dom.splitDropdown.align,
+				splitAlignClass: this.c.dom.splitDropdown.splitAlignClass
+				
 			})
 
 			this._addKey(dropButtonConfig);
@@ -1061,7 +1064,7 @@ $.extend( Buttons.prototype, {
 		var dt = hostButton;
 		var buttonsSettings = this.c;
 		var options = $.extend( {
-			align: 'button-left', // button-right, dt-container
+			align: 'button-left', // button-right, dt-container, split-left, split-right
 			autoClose: false,
 			background: true,
 			backgroundClassName: 'dt-button-background',
@@ -1071,6 +1074,8 @@ $.extend( Buttons.prototype, {
 			dropup: false,
 			fade: 400,
 			rightAlignClassName: 'dt-button-right',
+			splitRightAlignClassName: 'dt-button-split-right',
+			splitLeftAlignClassName: 'dt-button-split-left',
 			tag: buttonsSettings.dom.collection.tag
 		}, inOpts );
 		var hostNode = hostButton.node();
@@ -1108,6 +1113,7 @@ $.extend( Buttons.prototype, {
 		var display = $('<div/>')
 			.addClass('dt-button-collection')
 			.addClass(options.collectionLayout)
+			.addClass(options.splitAlignClass)
 			.css('display', 'none');
 
 		content = $(content)
@@ -1171,7 +1177,15 @@ $.extend( Buttons.prototype, {
 
 			// Get the size of the popover (left and width - and ...)
 			var popoverLeft = display.offset().left;
-			var popoverWidth = display.width();
+			var popoverWidth = display.outerWidth();
+
+			// Foundations display dom element has a width of 0 - the true width is within the child
+			if (popoverWidth === 0) {
+				if (display.children().length > 0) {
+					popoverWidth = $(display.children()[0]).outerWidth();
+				}
+			}
+			
 			var popoverRight = popoverLeft + popoverWidth;
 
 			// Get the size of the host buttons (left and width - and ...)
@@ -1182,8 +1196,19 @@ $.extend( Buttons.prototype, {
 			if (
 				display.hasClass( options.rightAlignClassName ) ||
 				display.hasClass( options.leftAlignClassName ) ||
+				display.hasClass( options.splitAlignClass ) ||
 				options.align === 'dt-container'
 			){
+				var splitButtonLeft = 0;
+				var splitButtonWidth = 0;
+				var splitButtonRight = 0;
+
+				// If the button is a split button then need to calculate some more values
+				if (hostNode.hasClass('dt-btn-split-wrapper')) {
+					splitButtonLeft = hostNode.children('button.dt-btn-split-drop').offset().left;
+					splitButtonWidth = hostNode.children('button.dt-btn-split-drop').outerWidth();
+					splitButtonRight = splitButtonLeft + splitButtonWidth;
+				}
 				// You've then got all the numbers you need to do some calculations and if statements,
 				//  so we can do some quick JS maths and apply it only once
 				// If it has the right align class OR the buttons are right aligned OR the button container is floated right,
@@ -1203,6 +1228,36 @@ $.extend( Buttons.prototype, {
 						else {
 							popoverShuffle += leftGap;
 						}
+					}
+				}
+				else if ( display.hasClass( options.splitRightAlignClassName )) {
+					popoverShuffle = splitButtonRight - popoverRight;
+					if(tableLeft > (popoverLeft + popoverShuffle)){
+						var leftGap = tableLeft - (popoverLeft + popoverShuffle);
+						var rightGap = tableRight - (popoverRight + popoverShuffle);
+		
+						if(leftGap > rightGap){
+							popoverShuffle += rightGap; 
+						}
+						else {
+							popoverShuffle += leftGap;
+						}
+					}
+				}
+				else if ( display.hasClass( options.splitLeftAlignClassName )) {
+					popoverShuffle = splitButtonLeft - popoverLeft;
+
+					if(tableRight < (popoverRight + popoverShuffle) || tableLeft > (popoverLeft + popoverShuffle)){
+						var leftGap = tableLeft - (popoverLeft + popoverShuffle);
+						var rightGap = tableRight - (popoverRight + popoverShuffle);
+	
+						if(leftGap > rightGap ){
+							popoverShuffle += rightGap;
+						}
+						else {
+							popoverShuffle += leftGap;
+						}
+	
 					}
 				}
 				// else attempt to left align the popover to the button. Similar to above, if the popover's right goes past the table container's right,
@@ -1604,6 +1659,8 @@ Buttons.defaults = {
 			tag: 'button',
 			text: '&#x25BC;',
 			className: 'dt-btn-split-drop',
+			align: 'split-right',
+			splitAlignClass: 'dt-button-split-right'
 		},
 		splitDropdownButton: {
 			tag: 'button',

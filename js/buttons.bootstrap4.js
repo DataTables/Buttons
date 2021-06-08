@@ -61,6 +61,8 @@ $.extend( true, DataTable.Buttons.defaults, {
 			tag: 'button',
 			text: '',
 			className: 'btn btn-secondary dt-btn-split-drop dropdown-toggle dropdown-toggle-split',
+			align: 'split-left',
+			splitAlignClass: 'dt-button-split-left'
 		},
 	},
 	buttonCreated: function ( config, button ) {
