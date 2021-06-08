@@ -8,14 +8,16 @@
 
     <type type="array">
         <description>
-            This array contains further buttons which are to be added as secondary buttons which are displayed within a popover. The buttons within this array can be declared in the same form as the `-init buttons.buttons` option, please read that documentation for full details.
+This array contains further buttons which are to be added as secondary buttons which are displayed within a popover. The buttons within this array can be declared in the same form as the `-init buttons.buttons` option, please read that documentation for full details.
         </description>
     </type>
 
 	<description>
-        This option allows for split button functionality with all DataTables buttons.
+This option allows for split button functionality with all DataTables buttons.
 
-        To implement split buttons simply extend any existing button type to include the `-init buttons.buttons.split` config option, or include it within your custom buttons initialisation. The value of this option is an array that contains further buttons which are to be added as secondary buttons. The buttons within this array can be declared in the same form as the `-init buttons.buttons` option, please read that documentation for full details.
+To implement split buttons simply extend any existing button type to include the `-init buttons.buttons.split` config option, or include it within your custom buttons initialisation. The value of this option is an array that contains further buttons which are to be added as secondary buttons. The buttons within this array can be declared in the same form as the `-init buttons.buttons` option, please read that documentation for full details.
+
+Note: Bulma does not support split button dropdowns at the time of creating the styling integrations. Because of this, split buttons are not supported in Bulma. This will be updated in the future if Bulma begin supporting split buttons.
 	</description>
 
 	
