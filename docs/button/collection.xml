@@ -68,6 +68,12 @@
 	</option>
 	
 	<option type="string" name="collectionTitle" default="" since="1.5.4">
+		Deprecated in Favour of popoverTitle - will be removed version 3.0.0
+
+		A text string to show at the top of a collection. This can be useful for multi-level collections to ensure the end user knows what the current menu refers to.
+	</option>
+
+	<option type="string" name="popoverTitle" default="" since="2.0.0">
 		A text string to show at the top of a collection. This can be useful for multi-level collections to ensure the end user knows what the current menu refers to.
 	</option>
 

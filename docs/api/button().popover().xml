@@ -28,7 +28,8 @@
               * `-string two-colours` - Show content in two columns
               * `-string three-colours` - Show content in three columns
               * `-string four-colours` - Show content in four columns
-            * `-type string` `collectionTitle` - Title text to show at the top of the popover
+            * `-type string` `collectionTitle` - Deprecated in Favour of popoverTitle - will be removed version 3.0.0. Title text to show at the top of the popover
+            * `-type string` `popoverTitle` - Title text to show at the top of the popover
             * `-type boolean` `dropup` - Show popover above or below the button
               * `true` - Show above the button when visible
               * `false` - Show below the button (default)
@@ -59,7 +60,7 @@ var table = $('#myTable').DataTable({
         action: function(e) {
             e.stopPropagation();
             this.popover( '<div>I love popovers!</div>', {
-                collectionTitle: 'Hello world'
+                popoverTitle: 'Hello world'
             });
         }
     }]

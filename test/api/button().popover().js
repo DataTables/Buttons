@@ -35,7 +35,7 @@ describe('buttons - button().popover()', function() {
 						action: function(e) {
 							e.stopPropagation();
 							this.popover('<div>unittest text</div>', {
-								collectionTitle: 'unittest title'
+								popoverTitle: 'unittest title'
 							});
 						}
 					}

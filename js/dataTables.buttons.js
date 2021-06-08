@@ -1073,6 +1073,7 @@ $.extend( Buttons.prototype, {
 			collectionTitle: '',
 			dropup: false,
 			fade: 400,
+			popoverTitle: '',
 			rightAlignClassName: 'dt-button-right',
 			splitRightAlignClassName: 'dt-button-split-right',
 			splitLeftAlignClassName: 'dt-button-split-left',
@@ -1127,7 +1128,10 @@ $.extend( Buttons.prototype, {
 			hostNode = document.body.lastChild;
 		}
 
-		if ( options.collectionTitle ) {
+		if ( options.popoverTitle ) {
+			display.prepend('<div class="dt-button-collection-title">'+options.popoverTitle+'</div>');
+		}
+		else if ( options.collectionTitle ) {
 			display.prepend('<div class="dt-button-collection-title">'+options.collectionTitle+'</div>');
 		}
 
