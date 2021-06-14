@@ -589,6 +589,7 @@ var excelStrings = {
 				'<numFmt numFmtId="167" formatCode="0.0%"/>'+
 				'<numFmt numFmtId="168" formatCode="#,##0;(#,##0)"/>'+
 				'<numFmt numFmtId="169" formatCode="#,##0.00;(#,##0.00)"/>'+
+				'<numFmt numFmtId="170" formatCode="yyyy/mm/dd;@"/>' +
 			'</numFmts>'+
 			'<fonts count="5" x14ac:knownFonts="1">'+
 				'<font>'+
@@ -751,7 +752,9 @@ var excelStrings = {
 				'<xf numFmtId="167" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
 				'<xf numFmtId="168" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
 				'<xf numFmtId="169" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
-				'<xf numFmtId="3" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+				'<xf numFmtId="170" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
+				
+	'<xf numFmtId="3" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
 				'<xf numFmtId="4" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
 				'<xf numFmtId="1" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
 				'<xf numFmtId="2" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'+
@@ -783,7 +786,7 @@ var _excelSpecials = [
 	{ match: /^\([\d,]+\.\d{2}\)$/,         style: 62, fmt: function (d) { return -1 * d.replace(/[\(\)]/g, ''); } },  // Negative numbers indicated by brackets - 2d.p.
 	{ match: /^\-?[\d,]+$/,                 style: 63 }, // Numbers with thousand separators
 	{ match: /^\-?[\d,]+\.\d{2}$/,          style: 64 },
-	{ match: /^[\d]{4}\-[\d]{2}\-[\d]{2}$/, style: 67, fmt: function (d) {return Math.round(25569 + (Date.parse(d) / (86400 * 1000)));}} //Date yyyy-mm-dd
+	{ match: /^\d{4}\-\d{2}\-\d{2}$/, style: 67, fmt: function (d) {return d.replace(/\-/g, "/"); } } // Dates
 ];
 
 
