@@ -210,6 +210,26 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
+	 * Clear buttons from a collection and then insert new buttons
+	 */
+	collectionRebuild: function ( node, newButtons )
+	{
+		var button = this._nodeToButton( node );
+		var i;
+
+		// Need to reverse the array
+		for (i=button.buttons.length-1; i>=0; i--) {
+			this.remove(button.buttons[i].node);
+		}
+
+		for (i=0; i<newButtons.length; i++) {
+			this._expandButton( button.buttons, newButtons[i], true, i );
+		}
+
+		this._draw(button.collection, button.buttons);
+	},
+
+	/**
 	 * Get the container node for the buttons
 	 * @return {jQuery} Buttons node
 	 */
@@ -1909,6 +1929,13 @@ DataTable.Api.registerPlural( 'buttons().action()', 'button().action()', functio
 
 	return this.each( function ( set ) {
 		set.inst.action( set.node, action );
+	} );
+} );
+
+// Collection control
+DataTable.Api.registerPlural( 'buttons().collectionRebuild()', 'button().collectionRebuild()', function ( buttons ) {
+	return this.each( function ( set ) {
+		set.inst.collectionRebuild( set.node, buttons );
 	} );
 } );
 
