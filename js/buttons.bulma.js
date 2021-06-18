@@ -54,6 +54,17 @@ $.extend( true, DataTable.Buttons.defaults, {
 				active: 'is-active',
 				disabled: 'is-disabled'
 			}
+		},
+		splitWrapper: {
+			tag: 'div',
+			className: 'dropdown-trigger buttons has-addons'
+		},
+		splitDropdown: {
+			tag: 'button',
+			text: '&#x25BC;',
+			className: 'button is-light',
+			align: 'split-left',
+			splitAlignClass: 'dt-button-split-left'
 		}
 	},
 	buttonCreated: function ( config, button ) {

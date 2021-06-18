@@ -510,7 +510,7 @@ $.extend( Buttons.prototype, {
 	 * @param  {boolean} inCollection true if the button is in a collection
 	 * @private
 	 */
-	_expandButton: function ( attachTo, button, split, inCollection, inSplit, attachPoint )
+	_expandButton: function ( attachTo, button, split, inCollection, inSplit, attachPoint, parentConf )
 	{
 		var dt = this.s.dt;
 		var buttonCounter = 0;
@@ -536,14 +536,21 @@ $.extend( Buttons.prototype, {
 				continue;
 			}
 
+			if( conf.config !== undefined && conf.config.split) {
+				isSplit = true;
+			}
+			else {
+				isSplit = false;
+			}
+			
 			// If the configuration is an array, then expand the buttons at this
 			// point
 			if ( Array.isArray( conf ) ) {
-				this._expandButton( attachTo, conf, built !== undefined && built.conf !== undefined ? built.conf.split : undefined, inCollection, true, attachPoint );
+				this._expandButton( attachTo, conf, built !== undefined && built.conf !== undefined ? built.conf.split : undefined, inCollection, true, attachPoint, parentConf );
 				continue;
 			}
 
-			var built = this._buildButton( conf, inCollection, conf.split !== undefined, inSplit );
+			var built = this._buildButton( conf, inCollection, conf.split !== undefined || (conf.config !== undefined && conf.config.split !== undefined), inSplit );
 			if ( ! built ) {
 				continue;
 			}
@@ -556,6 +563,7 @@ $.extend( Buttons.prototype, {
 				attachTo.push( built );
 			}
 
+			
 			if ( built.conf.buttons || built.conf.split ) {
 				built.collection = $('<'+(isSplit ? this.c.dom.splitCollection.tag : this.c.dom.collection.tag)+'/>');
 
@@ -564,6 +572,7 @@ $.extend( Buttons.prototype, {
 				if(built.conf.split) {
 					for(var j = 0; j < built.conf.split.length; j++) {
 						if(typeof built.conf.split[j] === "object") {
+							built.conf.split[i].parent = parentConf;
 							if(built.conf.split[j].collectionLayout === undefined) {
 								built.conf.split[j].collectionLayout = built.conf.collectionLayout;
 							}
@@ -577,8 +586,9 @@ $.extend( Buttons.prototype, {
 					}
 				}
 
-				this._expandButton( built.buttons, built.conf.buttons, built.conf.split, !isSplit, isSplit, attachPoint );
+				this._expandButton( built.buttons, built.conf.buttons, built.conf.split, !isSplit, isSplit, attachPoint, built.conf );
 			}
+			built.conf.parent = parentConf;
 
 			// init call is made here, rather than buildButton as it needs to
 			// be selectable, and for that it needs to be in the buttons array
@@ -715,6 +725,10 @@ $.extend( Buttons.prototype, {
 	
 			if ( ! config.namespace ) {
 				config.namespace = '.dt-button-'+(_buttonCounter++);
+			}
+
+			if  ( config.config !== undefined && config.config.split ) {
+				config.split = config.config.split;
 			}
 		}
 		else {
@@ -1013,6 +1027,10 @@ $.extend( Buttons.prototype, {
 
 			// Stash the current class name
 			var originalClassName = objArray.className;
+
+			if (conf.config !== undefined && objArray.config !== undefined) {
+				conf.config = $.extend({}, objArray.config, conf.config)
+			}
 
 			conf = $.extend( {}, objArray, conf );
 
