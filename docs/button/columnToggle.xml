@@ -72,7 +72,7 @@ new $.fn.dataTable.Buttons( table, {
 	buttons: [
 		{
 			extend: 'columnToggle',
-			columns: ':gt(4)'
+			columns: 'th:nth-child(n+5)'
 		}
 	]
 } );

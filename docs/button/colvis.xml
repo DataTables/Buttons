@@ -57,7 +57,7 @@ new $.fn.dataTable.Buttons( table, {
 	buttons: [
 		{
 			extend: 'colvis',
-			columns: ':gt(0)'
+			columns: 'th:nth-child(n+2)'
 		}
 	]
 } );
