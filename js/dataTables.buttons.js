@@ -821,6 +821,10 @@ $.extend( Buttons.prototype, {
 					}
 				} );
 
+			if(config.split.length === 0) {
+				dropButton.addClass('dtb-hide-drop');
+			}
+
 			splitDiv.append(dropButton).attr(dropButtonConfig.attr);
 		}
 
