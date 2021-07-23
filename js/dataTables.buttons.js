@@ -1253,12 +1253,13 @@ $.extend( Buttons.prototype, {
 				display.hasClass( options.splitAlignClass ) ||
 				options.align === 'dt-container'
 			){
-				var splitButtonLeft = 0;
-				var splitButtonWidth = 0;
-				var splitButtonRight = 0;
+				// default to the other buttons values
+				var splitButtonLeft = buttonsLeft;
+				var splitButtonWidth = buttonsWidth;
+				var splitButtonRight = buttonsRight;
 
 				// If the button is a split button then need to calculate some more values
-				if (hostNode.hasClass('dt-btn-split-wrapper')) {
+				if (hostNode.hasClass('dt-btn-split-wrapper') && hostNode.children('button.dt-btn-split-drop').length > 0) {
 					splitButtonLeft = hostNode.children('button.dt-btn-split-drop').offset().left;
 					splitButtonWidth = hostNode.children('button.dt-btn-split-drop').outerWidth();
 					splitButtonRight = splitButtonLeft + splitButtonWidth;
@@ -1714,7 +1715,7 @@ Buttons.defaults = {
 			text: '&#x25BC;',
 			className: 'dt-btn-split-drop',
 			align: 'split-right',
-			splitAlignClass: 'dt-button-split-right'
+			splitAlignClass: 'dt-button-split-left'
 		},
 		splitDropdownButton: {
 			tag: 'button',
