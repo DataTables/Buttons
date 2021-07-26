@@ -34,7 +34,7 @@ describe('buttons - collection', function() {
 			expect($('div.dt-button-collection button:eq(1)').offset().left).toBe(first.left);
 			expect($('div.dt-button-collection button:eq(1)').offset().top).toBeGreaterThan(first.left);
 		});
-		it('Contains the expected colection position', function() {
+		it('Contains the expected collection position', function() {
 			let first = $('div.dt-button-collection button:eq(0)').offset();
 			expect($('tbody tr:eq(0)').offset().top).toBeGreaterThan(first.left);
 		});
