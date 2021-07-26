@@ -52,7 +52,7 @@ $.extend( true, DataTable.Buttons.defaults, {
 		},
 		splitWrapper: {
 			tag: 'div',
-			className: 'dt-btn-split-wrapper dt-btn-split-wrapper ui-widget ui-controlgroup-item ui-button ui-corner-left',
+			className: 'dt-btn-split-wrapper dt-btn-split-wrapper ui-widget ui-controlgroup-item ui-corner-left',
 		},
 		splitDropdown: {
 			tag: 'button',
