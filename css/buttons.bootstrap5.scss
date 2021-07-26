@@ -5,11 +5,14 @@
 div.dt-button-collection {
 	position: absolute;
 	z-index: 2001;
+	width: 100%;
 
 	div.dropdown-menu {
 		display: block;
 		z-index: 2002;
 		min-width: 100%;
+		padding-left: 2px;
+		padding-right: 2px;
 	}
 
 	div.dt-button-collection-title {
@@ -26,6 +29,10 @@ div.dt-button-collection {
 		&:after {
 			display: none;
 		}
+	}
+
+	div.dt-btn-split-wrapper {
+		width: 100%;
 	}
 
 	button.dt-btn-split-drop-button {
