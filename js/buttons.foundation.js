@@ -86,6 +86,10 @@ $.extend( true, DataTable.Buttons.defaults, {
 			text: '',
 			className: 'button dt-btn-split-drop dropdown arrow-only',
 		},
+		splitDropdownButton: {
+			tag: 'button',
+			className: 'dt-btn-split-drop-button button small'
+		}
 	}
 } );
 

@@ -566,7 +566,7 @@ $.extend( Buttons.prototype, {
 			// If the configuration is an array, then expand the buttons at this
 			// point
 			if ( Array.isArray( conf ) ) {
-				this._expandButton( attachTo, conf, built !== undefined && built.conf !== undefined ? built.conf.split : undefined, inCollection, true, attachPoint, parentConf );
+				this._expandButton( attachTo, conf, built !== undefined && built.conf !== undefined ? built.conf.split : undefined, inCollection, parentConf !== undefined && parentConf.split !== undefined, attachPoint, parentConf );
 				continue;
 			}
 
@@ -634,6 +634,7 @@ $.extend( Buttons.prototype, {
 		var collectionDom = this.c.dom.collection;
 		var splitDom = this.c.dom.split;
 		var splitCollectionDom = this.c.dom.splitCollection;
+		var splitDropdownButton = this.c.dom.splitDropdownButton;
 		var dt = this.s.dt;
 		var text = function ( opt ) {
 			return typeof opt === 'function' ?
@@ -641,24 +642,18 @@ $.extend( Buttons.prototype, {
 				opt;
 		};
 
-		if ( inCollection && collectionDom.button ) {
+		if ( !isSplit && inSplit && splitCollectionDom ) {
+			buttonDom = splitDropdownButton;
+		}
+		else if ( !isSplit && inCollection && collectionDom.button ) {
 			buttonDom = collectionDom.button;
-		}
-		else if ( isSplit && splitDom.button ) {
-			buttonDom = splitDom.button;
-		}
-		else if ( inSplit && splitCollectionDom.button ) {
-			buttonDom = splitCollectionDom.button;
-		}
+		} 
 
-		if ( inCollection && collectionDom.buttonLiner ) {
-			linerDom = collectionDom.buttonLiner;
-		}
-		else if ( isSplit && splitDom.buttonLiner ) {
-			linerDom = splitDom.buttonLiner;
-		}
-		else if ( inSplit && splitCollectionDom.buttonLiner ) {
+		if ( !isSplit && inSplit && splitCollectionDom.buttonLiner ) {
 			linerDom = splitCollectionDom.buttonLiner
+		}
+		else if ( !isSplit && inCollection && collectionDom.buttonLiner ) {
+			linerDom = collectionDom.buttonLiner;
 		}
 
 		// Make sure that the button is available based on whatever requirements
@@ -676,7 +671,7 @@ $.extend( Buttons.prototype, {
 					dt.button( button ), dt, button, config 
 				] );
 			};
-	
+
 			var tag = config.tag || buttonDom.tag;
 			var clickBlurs = config.clickBlurs === undefined ? true : config.clickBlurs
 			button = $('<'+tag+'/>')
@@ -1127,6 +1122,7 @@ $.extend( Buttons.prototype, {
 			splitLeftAlignClassName: 'dt-button-split-left',
 			tag: buttonsSettings.dom.collection.tag
 		}, inOpts );
+
 		var hostNode = hostButton.node();
 
 		var close = function () {

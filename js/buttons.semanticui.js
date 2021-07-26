@@ -58,6 +58,10 @@ $.extend( true, DataTable.Buttons.defaults, {
 			text: '&#x25BC;',
 			className: 'ui floating button dt-btn-split-drop dropdown icon',
 		},
+		splitDropdownButton: {
+			tag: 'button',
+			className: 'dt-btn-split-drop-button ui button'
+		}
 	}
 } );
 

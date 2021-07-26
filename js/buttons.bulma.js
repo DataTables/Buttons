@@ -59,6 +59,10 @@ $.extend( true, DataTable.Buttons.defaults, {
 			tag: 'div',
 			className: 'dropdown-trigger buttons has-addons'
 		},
+		splitDropdownButton: {
+			tag: 'a',
+			className: 'dt-btn-split-drop-button dropdown-item'
+		},
 		splitDropdown: {
 			tag: 'button',
 			text: '&#x25BC;',
