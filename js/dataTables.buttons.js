@@ -605,6 +605,9 @@ $.extend( Buttons.prototype, {
 						}
 					}
 				}
+				else {
+					$(built.node).append($('<span class="dt-down-arrow">'+this.c.dom.splitDropdown.text+'</span>'))
+				}
 
 				this._expandButton( built.buttons, built.conf.buttons, built.conf.split, !isSplit, isSplit, attachPoint, built.conf );
 			}
@@ -1715,7 +1718,7 @@ Buttons.defaults = {
 		},
 		splitDropdownButton: {
 			tag: 'button',
-			className: 'dt-btn-split-drop-button',
+			className: 'dt-btn-split-drop-button dt-button',
 		},
 		splitCollection: {
 			tag: 'div',
