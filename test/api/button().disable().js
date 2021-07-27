@@ -169,7 +169,7 @@ describe('buttons - button().disable()', function() {
 			expect($('.dt-button').length).toBe(1);
 			expect($('button.disabled').length).toBe(1);
 			expect($('button.disabled').attr('disabled')).toBe('disabled');
-			expect($('button.disabled').text()).toBe('Table control');
+			expect($('button.disabled span:first').text()).toBe('Table control');
 		});
 	});
 

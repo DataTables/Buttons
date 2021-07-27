@@ -31,7 +31,7 @@ describe('Buttons - options - buttons.text', function() {
 			expect($('button.dt-button:eq(1)').text()).toBe('button2');
 		});
 		it('Extending uses original text', function() {
-			expect($('button.dt-button:eq(2)').text()).toBe('Show 10 rows');
+			expect($('button.dt-button:eq(2) span:first').text()).toBe('Show 10 rows');
 		});
 		it('Can also be a function', function() {
 			expect($('button.dt-button:eq(3)').text()).toBe('unit test');

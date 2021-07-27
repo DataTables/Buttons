@@ -23,7 +23,7 @@ describe('buttons - collection', function() {
 			expect($('button.buttons-collection').length).toBe(1);
 		});
 		it('Contains the expected text', function() {
-			expect($('button.dt-button span').text()).toBe('Collection');
+			expect($('button.dt-button span:first').text()).toBe('Collection');
 		});
 		it('Contains the expected buttons', function() {
 			$('button.dt-button').click();
@@ -551,7 +551,7 @@ describe('buttons - collection', function() {
 					}
 				]
 			});
-			expect($('button.dt-button span').text()).toBe('Collection Text');
+			expect($('button.dt-button span:first').text()).toBe('Collection Text');
 		});
 	});
 

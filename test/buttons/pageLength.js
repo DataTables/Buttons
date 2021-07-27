@@ -8,7 +8,7 @@ describe('buttons - pageLength', function() {
 
 	function checkOptions(count, text, options = []) {
 		expect($('.buttons-page-length').length).toBe(1);
-		expect($('button.buttons-collection').text()).toBe(text);
+		expect($('button.buttons-collection span:first').text()).toBe(text);
 		if (options.length > 0) {
 			for (let i = 0; i < options.length; i++) {
 				expect($('div.dt-button-collection button.button-page-length:eq(' + i + ')').text()).toBe(options[i]);

@@ -58,7 +58,7 @@ describe('buttons - button().add()', function() {
 		it('Insert button with a string based button', function() {
 			table.button().add(0, 'pageLength');
 			expect(table.buttons().count()).toBe(8);
-			expect($('.dt-button:first').text()).toBe('Show 10 rows');
+			expect($('.dt-button:first span:first').text()).toBe('Show 10 rows');
 		});
 		it('Insert function based button', function() {
 			table.button().add(0, function() {
