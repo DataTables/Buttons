@@ -23,7 +23,7 @@ describe('buttons - collection', function() {
 			expect($('button.buttons-collection').length).toBe(1);
 		});
 		it('Contains the expected text', function() {
-			expect($('button.dt-button span').text()).toBe('Collection');
+			expect($('button.dt-button span:first').text()).toBe('Collection');
 		});
 		it('Contains the expected buttons', function() {
 			$('button.dt-button').click();
@@ -372,7 +372,7 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('collectionLayout with collectionTitle', function() {
+		it('collectionLayout with popoverTitle', function() {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -386,7 +386,7 @@ describe('buttons - collection', function() {
 							{ text: 'four', action: function() {} }
 						],
 						collectionLayout: 'two-column',
-						collectionTitle: 'test title'
+						popoverTitle: 'test title'
 					}
 				]
 			});
@@ -395,7 +395,7 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('collectionTitle', function() {
+		it('popoverTitle', function() {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -403,7 +403,7 @@ describe('buttons - collection', function() {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [{ text: 'null', action: function() {} }],
-						collectionTitle: 'test title'
+						popoverTitle: 'test title'
 					}
 				]
 			});
@@ -551,7 +551,7 @@ describe('buttons - collection', function() {
 					}
 				]
 			});
-			expect($('button.dt-button span').text()).toBe('Collection Text');
+			expect($('button.dt-button span:first').text()).toBe('Collection Text');
 		});
 	});
 
@@ -568,7 +568,7 @@ describe('buttons - collection', function() {
 							{ text: 'one', action: function() {} },
 							{
 								fade: 0, // saves having to sleep in the tests
-								collectionTitle: 'Visibility control',
+								popoverTitle: 'Visibility control',
 								extend: 'colvis'
 							}
 						]

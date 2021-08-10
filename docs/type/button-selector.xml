@@ -72,6 +72,8 @@ buttons: [
 
 The top level _Export_ button can be selected using `table.button( 3 )`, while the _CSV_ button can be selected using `table.button( '3-0' )`.
 
+It is worth noting here that there is no limit to the depth of the collections. If there was a structure in place along the lines of `collection button > sub-collection > sub-sub-collection` then to select the first button in the sub-sub-collection the selector would take the form `{\d}-{\d}-{\d}`, or with real numbers, `0-0-0`.
+
 
 ## {string}:name
 

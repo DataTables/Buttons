@@ -10,7 +10,6 @@ The Buttons extension for DataTables provides a common set of options, API metho
 There are four plug-ins that are part of the core Buttons software providing various utilities:
 
 * HTML5 export buttons - Copy to clipboard, Save to Excel, CSV and PDF
-* Flash export buttons for older browsers - Copy to clipboard, Save to Excel, CSV and PDF 
 * Print view
 * Column visibility buttons
 

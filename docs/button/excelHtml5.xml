@@ -18,7 +18,7 @@
 
 		At this time, although an XLSX file is created, data formatting, colours, etc are not retained. Only the raw data from the table is included in the exported file. For complete control over the generated file, a custom button could be constructed using the [SheetJS](http://sheetjs.com/) library.
 
-		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported). For older browsers, the `b-button excelFlash` button provides similar file creation and save options using the Flash plug-in. The `b-button excel` button can be used to automatically select between this and the `b-button excelFlash` buttons based on the browser's capabilities.
+		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported).
 
 		In addition to this, the [JSZip](https://stuk.github.io/jszip/) library must also be available on the page. This MIT licensed library provides the ability to create a ZIP file in the browser, which is required to build a valid XLSX file.
 
@@ -250,7 +250,7 @@ $('#myTable').DataTable( {
 
 ]]></example>
 
-	<example title="DataTables initialisation: Use the `b-button excel` button type to automatically select between the Flash and HTML button options."><![CDATA[
+	<example title="DataTables initialisation: Use the `b-button excel` button type to alias the HTML button options."><![CDATA[
 
 $('#myTable').DataTable( {
 	buttons: [

@@ -17,6 +17,10 @@ div.dt-button-collection {
 		border: 1px solid rgba(0, 0, 0, 0.15);
 	}
 
+	div.dt-btn-split-wrapper {
+		width: 100%;
+	}
+
 	@include dtb-fixed-collection();
 
 	&.fixed {

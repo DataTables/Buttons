@@ -18,7 +18,7 @@ describe('buttons - colvis', function() {
 			expect($('button.buttons-colvis').length).toBe(1);
 		});
 		it('Contains the expected text', function() {
-			expect($('button.buttons-colvis').text()).toBe('Column visibility');
+			expect($('button.buttons-colvis span:first').text()).toBe('Column visibility');
 		});
 		it('Pressing button shows the collection', function() {
 			$('button.buttons-colvis').click();
@@ -80,7 +80,7 @@ describe('buttons - colvis', function() {
 			expect($('button.buttons-colvis').length).toBe(1);
 		});
 		it('Contains the expected text', function() {
-			expect($('button.buttons-colvis').text()).toBe('Unit Test');
+			expect($('button.buttons-colvis span:first').text()).toBe('Unit Test');
 		});
 		it('Contains the expected class', function() {
 			expect($('button.buttons-colvis').hasClass('unit_test')).toBe(true);

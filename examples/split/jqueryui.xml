@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="5" framework="jqueryui">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print buttons-colvis">
+<![CDATA[
+
+$(document).ready(function() {
+	var table = $('#example').DataTable( {
+		lengthChange: false,
+		buttons: [
+			{
+				extend: 'csv',
+				split: [ 'pdf', 'excel'],
+			}
+		]
+	} );
+
+	table.buttons().container()
+		.insertBefore( '#example_filter' );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">jQuery UI styling</title>
+
+<info><![CDATA[
+
+The `-init butttons.buttons.split` option allows for "split dropdown buttons" to be introduced into DataTables. This allows the main button to perform a primary action while the drop down is able to provide a number of secondary options in a popover. 
+
+This example shows DataTables and Buttons being used to create split buttons, with [jQuery UI](http://jqueryui.com/) providing the base styling information.
+
+]]></info>
+
+</dt-example>
+

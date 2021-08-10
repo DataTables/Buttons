@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="Buttons">
+	<name>button().collectionRebuild()</name>
+	<summary>Rebuild a buttons collection</summary>
+	<since>2.0.0</since>
+
+	<type type="function">
+		<signature>button().collectionRebuild( buttons )</signature>
+		<parameter type="array" name="buttons" default="undefined">
+            An array that is full of objects, strings or functions that are used to create buttons. Please refer to `b-init buttons.buttons` for full details of the configuration options available here.
+		</parameter>
+		<returns type="DataTables.Api">
+			DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
+		</returns>
+		<description>
+			Rebuild the contents of the buttons collection based on the array that is passed in.
+		</description>
+	</type>
+
+	<description>
+        This function is used to change, or update the contents of a collection button. This makes it possible to effortlessly add buttons to collections without having to redeclare the collection button.
+	</description>
+
+	<example title="Add excel button to collection"><![CDATA[
+
+var table = $('#myTable').DataTable({
+    buttons: [{
+        extend: 'collection',
+        text: 'print',
+        buttons: ['csv', 'pdf']
+    }]
+});
+
+table.button( 0 ).collectionRebuild(['csv', 'pdf', 'excel']);
+
+]]></example>
+
+	<example title="Remove csv button from collection"><![CDATA[
+
+var table = $('#myTable').DataTable({
+    buttons: [{
+        extend: 'collection',
+        text: 'print',
+        buttons: ['csv', 'pdf']
+    }]
+});
+
+table.button( 0 ).collectionRebuild(['pdf']);
+
+]]></example>
+
+	<example title="Empty collection"><![CDATA[
+
+var table = $('#myTable').DataTable({
+    buttons: [{
+        extend: 'collection',
+        text: 'print',
+        buttons: ['csv', 'pdf']
+    }]
+});
+
+table.button( 0 ).collectionRebuild([]);
+
+]]></example>
+
+
+</dt-api>

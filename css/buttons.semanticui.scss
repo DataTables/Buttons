@@ -52,3 +52,7 @@ div.dt-buttons {
 		@include dtb-processing();
 	}
 }
+
+span.dt-down-arrow {
+	display: none;
+}

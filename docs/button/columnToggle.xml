@@ -9,7 +9,7 @@
 	</requires>
 
 	<description>
-		The `b-buttons columnToggle` button type is very similar to the `b-buttons columnsToggle` button, but instead of being expanded to show a single button for each column in the table, it is a single button that will toggle the visibility of one or more columns in the table (based on the `columns` parameter).
+		The `b-button columnToggle` button type is very similar to the `b-button columnsToggle` button, but instead of being expanded to show a single button for each column in the table, it is a single button that will toggle the visibility of one or more columns in the table (based on the `columns` parameter).
 
 		For multiple columns, the button should be given a title using the `b-init buttons.buttons.text` option, which can also be used for a single column control button, although it will automatically be given the column's title text if not otherwise supplied.
 	</description>
