@@ -374,6 +374,8 @@ $.extend( Buttons.prototype, {
 			}
 		}
 
+		button.conf.destroying = true;
+
 		// Allow the button to remove event handlers, etc
 		if ( button.conf.destroy ) {
 			button.conf.destroy.call( dt.button(node), dt, $(node), button.conf );

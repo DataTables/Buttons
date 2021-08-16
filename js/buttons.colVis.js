@@ -40,6 +40,15 @@ var DataTable = $.fn.dataTable;
 $.extend( DataTable.ext.buttons, {
 	// A collection of column visibility buttons
 	colvis: function ( dt, conf ) {
+		// Rebuild the collection with the new column structure if columns are reordered
+		dt.on( 'column-reorder.dt'+conf.namespace, function (e, settings, details) {
+			dt.button(null, 0).collectionRebuild([{
+				extend: 'columnsToggle',
+				columns: conf.columns,
+				columnText: conf.columnText
+			}]);
+		});
+
 		return {
 			extend: 'collection',
 			text: function ( dt ) {
@@ -117,6 +126,11 @@ $.extend( DataTable.ext.buttons, {
 					}
 				} )
 				.on( 'column-reorder.dt'+conf.namespace, function (e, settings, details) {
+					// Button has been removed from the DOM
+					if ( conf.destroying ) {
+						return;
+					}
+
 					if ( dt.columns( conf.columns ).count() !== 1 ) {
 						return;
 					}
