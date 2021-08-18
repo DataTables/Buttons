@@ -120,7 +120,7 @@ div.dt-button-collection {
 	left: 0;
 	width: 200px;
 	margin-top: 3px;
-	padding: 8px 8px 4px 8px;
+	padding: 4px 4px 0 4px;
 	border: 1px solid #ccc;
 	border: 1px solid rgba( 0, 0, 0, 0.4 );
 	background-color: white;
@@ -147,6 +147,16 @@ div.dt-button-collection {
 		&.active:not(.disabled) {
 			@include dtb-two-stop-gradient(#f0f0f0, #dadada);
 			box-shadow: inset 1px 1px 3px #666;
+		}
+
+		&:first-child {
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
+		}
+
+		&:last-child {
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
 		}
 	}
 
