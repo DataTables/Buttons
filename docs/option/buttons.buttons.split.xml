@@ -17,7 +17,7 @@ This option allows for split button functionality with all DataTables buttons.
 
 To implement split buttons simply extend any existing button type to include the `-init buttons.buttons.split` config option, or include it within your custom buttons initialisation. The value of this option is an array that contains further buttons which are to be added as secondary buttons. The buttons within this array can be declared in the same form as the `-init buttons.buttons` option, please read that documentation for full details.
 
-As of Buttons 2.0.0 it is possible to add custom html to collections. Simply include a string containing the html into the `-init buttons.buttons.split` array and it will be inserted in that order into the collection popover. [This example](datatables.net/extensions/Buttons/examples/initialisation/customHTMLButtons.html) shows how this can be used to create more powerful popovers.
+As of Buttons 2.0.0 it is possible to add custom html to collections. Simply include a string containing the html into the `-init buttons.buttons.split` array and it will be inserted in that order into the collection popover. [This example](//datatables.net/extensions/Buttons/examples/initialisation/customHTMLButtons.html) shows how this can be used to create more powerful popovers.
 
 Note: Bulma does not support split button dropdowns at the time of creating the styling integrations. Because of this, split buttons are not supported in Bulma. This will be updated in the future if Bulma begin supporting split buttons.
 	</description>

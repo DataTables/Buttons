@@ -30,6 +30,17 @@ div.dt-button-collection {
 			display: none;
 		}
 	}
+
+	div.dt-btn-split-wrapper {
+		a.button {
+			flex-grow: 1;
+		}
+		a.button,
+		button.button {
+			height: 40px;
+			flex-basis: auto;
+		}
+	}
 }
 
 div.dt-button-background {
