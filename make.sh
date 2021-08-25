@@ -37,7 +37,6 @@ js_frameworks buttons $OUT_DIR/js
 
 js_compress $OUT_DIR/js/buttons.colVis.js
 js_compress $OUT_DIR/js/buttons.html5.js
-js_compress $OUT_DIR/js/buttons.flash.js
 js_compress $OUT_DIR/js/buttons.print.js
 
 # Copy Types
