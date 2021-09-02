@@ -1370,22 +1370,6 @@ $.extend( Buttons.prototype, {
 		// required to make it work...
 		$('div.dt-button-background').on( 'click.dtb-collection', function () {} );
 
-		$('body')
-			.on( 'click.dtb-collection', function (e) {
-				// andSelf is deprecated in jQ1.8, but we want 1.7 compat
-				var back = $.fn.addBack ? 'addBack' : 'andSelf';
-				var parent = $(e.target).parent()[0];
-
-				if (( ! $(e.target).parents()[back]().filter( content ).length  && !$(parent).hasClass('dt-buttons')) || $(e.target).hasClass('dt-button-background')) {
-					close();
-				}
-			} )
-			.on( 'keyup.dtb-collection', function (e) {
-				if ( e.keyCode === 27 ) {
-					close();
-				}
-			} );
-
 		if ( options.autoClose ) {
 			setTimeout( function () {
 				dt.on( 'buttons-action.b-internal', function (e, btn, dt, node) {
@@ -1396,8 +1380,26 @@ $.extend( Buttons.prototype, {
 				} );
 			}, 0);
 		}
-
+		
 		$(display).trigger('buttons-popover.dt');
+		
+		setTimeout(function() {
+			$('body')
+				.on( 'click.dtb-collection', function (e) {
+					// andSelf is deprecated in jQ1.8, but we want 1.7 compat
+					var back = $.fn.addBack ? 'addBack' : 'andSelf';
+					var parent = $(e.target).parent()[0];
+	
+					if (( ! $(e.target).parents()[back]().filter( content ).length  && !$(parent).hasClass('dt-buttons')) || $(e.target).hasClass('dt-button-background')) {
+						close();
+					}
+				} )
+				.on( 'keyup.dtb-collection', function (e) {
+					if ( e.keyCode === 27 ) {
+						close();
+					}
+				} );
+		}, 100);
 	}
 } );
 
@@ -1747,8 +1749,6 @@ $.extend( _dtButtons, {
 			button.attr( 'aria-expanded', false );
 		},
 		action: function ( e, dt, button, config ) {
-			e.stopPropagation();
-
 			if ( config._collection.parents('body').length ) {
 				this.popover(false, config);
 			}
@@ -1770,7 +1770,6 @@ $.extend( _dtButtons, {
 			return button.attr( 'aria-expanded', false );
 		},
 		action: function ( e, dt, button, config ) {
-			e.stopPropagation();
 			this.popover(config._collection, config);
 		},
 		attr: {
