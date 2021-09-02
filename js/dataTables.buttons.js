@@ -1108,9 +1108,10 @@ $.extend( Buttons.prototype, {
 	 * @param {DataTable.Api} hostButton DT API instance of the button
 	 * @param {object} inOpts Options (see object below for all options)
 	 */
-	_popover: function ( content, hostButton, inOpts ) {
+	_popover: function ( content, hostButton, inOpts, e ) {
 		var dt = hostButton;
 		var buttonsSettings = this.c;
+		var closed = false;
 		var options = $.extend( {
 			align: 'button-left', // button-right, dt-container, split-left, split-right
 			autoClose: false,
@@ -1131,6 +1132,8 @@ $.extend( Buttons.prototype, {
 		var hostNode = hostButton.node();
 
 		var close = function () {
+			closed = true;
+
 			_fadeOut(
 				$('.dt-button-collection'),
 				options.fade,
@@ -1147,6 +1150,7 @@ $.extend( Buttons.prototype, {
 
 			$('body').off( '.dtb-collection' );
 			dt.off( 'buttons-action.b-internal' );
+			dt.off( 'destroy' );
 		};
 
 		if (content === false) {
@@ -1382,10 +1386,16 @@ $.extend( Buttons.prototype, {
 		}
 		
 		$(display).trigger('buttons-popover.dt');
-		
+
+		dt.on('destroy', close);
+
 		setTimeout(function() {
 			$('body')
 				.on( 'click.dtb-collection', function (e) {
+					if (closed) {
+						return;
+					}
+
 					// andSelf is deprecated in jQ1.8, but we want 1.7 compat
 					var back = $.fn.addBack ? 'addBack' : 'andSelf';
 					var parent = $(e.target).parent()[0];
@@ -1399,7 +1409,7 @@ $.extend( Buttons.prototype, {
 						close();
 					}
 				} );
-		}, 100);
+		}, 0);
 	}
 } );
 
