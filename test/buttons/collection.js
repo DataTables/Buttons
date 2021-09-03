@@ -80,13 +80,10 @@ describe('buttons - collection', function () {
 			$('button.dt-button').click();
 			$('div.dt-button-collection button.dt-button').click();
 			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
-
 		});
-
 
 		dt.html('basic');
 		it('autoClose - default (false)', function (done) {
-		// it('autoClose - default (false)', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -96,26 +93,21 @@ describe('buttons - collection', function () {
 						buttons: [
 							{
 								text: 'test',
-								action: function () {
-									;
-								}
+								action: function () {}
 							}
 						]
 					}
 				]
 			});
 
-
 			$('button.dt-button').click();
 
-			setTimeout(function () {
-				$('div.dt-button-collection button.dt-button').click();
+			$('div.dt-button-collection button.dt-button').click();
 
-				setTimeout(function () {
-					expect($('button.dt-button').length).toBe(2);
-					done();
-				}, 100);
-			}, 100);
+			setTimeout(function () {
+				expect($('button.dt-button').length).toBe(2);
+				done();
+			}, 50);
 		});
 
 		dt.html('basic');
@@ -143,8 +135,8 @@ describe('buttons - collection', function () {
 				setTimeout(function () {
 					expect($('button.dt-button').length).toBe(1);
 					done();
-				}, 100);
-			}, 100);
+				}, 50);
+			}, 50);
 		});
 
 		dt.html('basic');
