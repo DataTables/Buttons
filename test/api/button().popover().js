@@ -53,9 +53,12 @@ describe('buttons - button().popover()', function() {
 			expect($('div.dt-button-collection-title').text()).toBe('unittest title');
 			expect($('div.dt-button-collection div:eq(1)').text()).toBe('unittest text');
 		});
-		it('Popover can be removed', function() {
-			$('table').click();
-			expect($('div.dt-button-collection').length).toBe(0);
+		it('Popover can be removed', function(done) {
+			setTimeout(function() {
+				$('table').click();
+				expect($('div.dt-button-collection').length).toBe(0);
+				done();
+			}, 100)
 		});
 	});
 });
