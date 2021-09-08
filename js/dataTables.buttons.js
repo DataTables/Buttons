@@ -215,15 +215,17 @@ $.extend( Buttons.prototype, {
 	collectionRebuild: function ( node, newButtons )
 	{
 		var button = this._nodeToButton( node );
-		var i;
-
-		// Need to reverse the array
-		for (i=button.buttons.length-1; i>=0; i--) {
-			this.remove(button.buttons[i].node);
-		}
-
-		for (i=0; i<newButtons.length; i++) {
-			this._expandButton( button.buttons, newButtons[i], true, i );
+		
+		if(newButtons !== undefined) {
+			var i;
+			// Need to reverse the array
+			for (i=button.buttons.length-1; i>=0; i--) {
+				this.remove(button.buttons[i].node);
+			}
+	
+			for (i=0; i<newButtons.length; i++) {
+				this._expandButton( button.buttons, newButtons[i], true, i );
+			}
 		}
 
 		this._draw(button.collection, button.buttons);
@@ -1390,6 +1392,7 @@ $.extend( Buttons.prototype, {
 		dt.on('destroy', close);
 
 		setTimeout(function() {
+			closed = false;
 			$('body')
 				.on( 'click.dtb-collection', function (e) {
 					if (closed) {
