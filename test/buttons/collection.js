@@ -59,7 +59,7 @@ describe('buttons - collection', function () {
 
 	describe('Functional tests - basic', function () {
 		dt.html('basic');
-		it('action', function () {
+		it('action', function (done) {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -79,7 +79,10 @@ describe('buttons - collection', function () {
 			});
 			$('button.dt-button').click();
 			$('div.dt-button-collection button.dt-button').click();
-			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
+			setTimeout(function() {
+				expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
+				done();
+			}, 50)
 		});
 
 		dt.html('basic');
