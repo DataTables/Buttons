@@ -45,11 +45,11 @@
 	</type>
 
 	<description>
-		Buttons are great for quick user interactions and decisions, but there are also cases where you want to hide away advanced controls, or other screens which require user input and then show them on button click. This `-api button().popover()` method provides that via an easy to use API method. It's not a full fledged modal, so you may wish to use a full modal library for certain cases, but if you just want to get some extra information from the user, this method is super easy to use.
+Buttons are great for quick user interactions and decisions, but there are also cases where you want to hide away advanced controls, or other screens which require user input and then show them on button click. This `-api button().popover()` method provides that via an easy to use API method. It's not a full fledged modal, so you may wish to use a full modal library for certain cases, but if you just want to get some extra information from the user, this method is super easy to use.
 
-    Simply pass in the content you want to display and any configuration options you might need (see above). That's it - you can then use the popover for search input, Editor form input, more buttons or anything else.
+Simply pass in the content you want to display and any configuration options you might need (see above). That's it - you can then use the popover for search input, Editor form input, more buttons or anything else.
 
-    Important - if you use this method in a button `action` function, you will need to call `e.stopPropagation();` to stop the click event bubbling up the document and immediately causing the popover to close (it has a click event listener on the `body` to know when to hide the popover).
+Important - if you use this method in a button `action` function, you will need to call `e.stopPropagation();` to stop the click event bubbling up the document and immediately causing the popover to close (it has a click event listener on the `body` to know when to hide the popover).
 	</description>
 
 	<example title="Show a simple popover"><![CDATA[
