@@ -83,3 +83,13 @@ span.dt-down-arrow {
 	font-size: 10px;
 	padding-left: 10px;
 }
+
+div.dataTables_wrapper {
+	div.dt-buttons.btn-group {
+		button.btn{
+			&:last-of-type:first-of-type{
+				border-radius: 4px !important;
+			}
+		}
+	}
+}

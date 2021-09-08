@@ -680,7 +680,7 @@ $.extend( Buttons.prototype, {
 			};
 
 			var tag = config.tag || buttonDom.tag;
-			var clickBlurs = config.clickBlurs === undefined ? true : config.clickBlurs
+			var clickBlurs = config.clickBlurs === undefined ? false : config.clickBlurs
 			button = $('<'+tag+'/>')
 				.addClass( buttonDom.className )
 				.addClass( inSplit ? this.c.dom.splitDropdownButton.className : '')
