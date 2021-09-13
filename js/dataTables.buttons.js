@@ -47,6 +47,7 @@ function _fadeIn(el, duration, fn) {
 		el
 			.stop()
 			.fadeIn( duration, fn );
+
 	}
 	else {
 		el.css('display', 'block');
@@ -818,11 +819,12 @@ $.extend( Buttons.prototype, {
 			var dropButton = $('<button class="' + this.c.dom.splitDropdown.className + ' dt-button"><span class="dt-btn-split-drop-arrow">'+this.c.dom.splitDropdown.text+'</span></button>')
 				.on( 'click.dtb', function (e) {
 					e.preventDefault();
+					e.stopPropagation();
 
 					if ( ! dropButton.hasClass( buttonDom.disabled ) && dropButtonConfig.action ) {
 						splitAction( e, dt, dropButton, dropButtonConfig );
 					}
-					if( clickBlurs ) {
+					if ( clickBlurs ) {
 						dropButton.trigger('blur');
 					}
 				} )
@@ -1399,6 +1401,7 @@ $.extend( Buttons.prototype, {
 		}
 		
 		$(display).trigger('buttons-popover.dt');
+
 
 		dt.on('destroy', close);
 
