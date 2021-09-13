@@ -95,3 +95,13 @@ div.dt-btn-split-wrapper {
 		border-bottom-right-radius: .25rem !important;
 	}
 }
+
+div.dataTables_wrapper {
+	div.dt-buttons.btn-group {
+		button.btn{
+			&:last-of-type:first-of-type{
+				border-radius: 4px !important;
+			}
+		}
+	}
+}

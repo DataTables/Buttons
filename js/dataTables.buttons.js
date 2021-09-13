@@ -224,7 +224,15 @@ $.extend( Buttons.prototype, {
 			}
 	
 			for (i=0; i<newButtons.length; i++) {
-				this._expandButton( button.buttons, newButtons[i], true, i );
+				this._expandButton(
+					button.buttons,
+					newButtons[i],
+					newButtons[i] !== undefined && newButtons[i].config !== undefined && newButtons[i].config.split !== undefined,
+					true,
+					newButtons[i].parentConf !== undefined && newButtons[i].parentConf.split !== undefined,
+					i,
+					newButtons[i].parentConf
+				);
 			}
 		}
 
@@ -683,7 +691,7 @@ $.extend( Buttons.prototype, {
 			};
 
 			var tag = config.tag || buttonDom.tag;
-			var clickBlurs = config.clickBlurs === undefined ? true : config.clickBlurs
+			var clickBlurs = config.clickBlurs === undefined ? false : config.clickBlurs
 			button = $('<'+tag+'/>')
 				.addClass( buttonDom.className )
 				.addClass( inSplit ? this.c.dom.splitDropdownButton.className : '')
@@ -1956,6 +1964,11 @@ DataTable.Api.registerPlural( 'buttons().action()', 'button().action()', functio
 // Collection control
 DataTable.Api.registerPlural( 'buttons().collectionRebuild()', 'button().collectionRebuild()', function ( buttons ) {
 	return this.each( function ( set ) {
+		for(var i = 0; i < buttons.length; i++) {
+			if(typeof buttons[i] === 'object') {
+				buttons[i].parentConf = set;
+			}
+		}
 		set.inst.collectionRebuild( set.node, buttons );
 	} );
 } );
