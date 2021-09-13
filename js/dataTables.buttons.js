@@ -425,7 +425,10 @@ $.extend( Buttons.prototype, {
 		button.conf.text = label;
 
 		if ( linerTag ) {
-			jqNode.children( linerTag ).html( text(label) );
+			jqNode
+				.children( linerTag )
+				.filter(':not(.dt-down-arrow)')
+				.html( text(label) );
 		}
 		else {
 			jqNode.html( text(label) );
