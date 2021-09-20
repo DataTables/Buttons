@@ -103,5 +103,22 @@ div.dataTables_wrapper {
 				border-radius: 4px !important;
 			}
 		}
+		div.btn-group {
+			button.btn{
+				&:last-of-type{
+					border-top-left-radius: 0px !important;
+					border-bottom-left-radius: 0px !important;
+				}
+				&:first-of-type{
+					border-top-right-radius: 0px !important;
+					border-bottom-right-radius: 0px !important;
+				}
+			}
+			&:last-child {
+				border: 1px solid rgb(108, 117, 125);
+				border-top-right-radius: 4px !important;
+				border-bottom-right-radius: 4px !important;
+			}
+		}
 	}
 }
