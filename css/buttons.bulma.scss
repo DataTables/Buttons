@@ -64,4 +64,11 @@ div.dt-buttons {
 	a.btn.processing {
 		@include dtb-processing();
 	}
+
+	button.button {
+		margin-left: 5px;
+		&:first-child {
+			margin-left: 0px;
+		}
+	}
 }

@@ -99,7 +99,7 @@ div.dt-btn-split-wrapper {
 div.dataTables_wrapper {
 	div.dt-buttons.btn-group {
 		button.btn{
-			&:last-of-type:first-of-type{
+			&:last-child:first-of-type{
 				border-radius: 4px !important;
 			}
 		}
