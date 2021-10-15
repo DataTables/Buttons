@@ -1181,7 +1181,10 @@ $.extend( Buttons.prototype, {
 
 		var existingExpanded = $(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes());
 		if ( existingExpanded.length ) {
-			hostNode = existingExpanded.eq(0);
+			// Reuse the current position if the button that was triggered is inside an existing collection
+			if (hostNode.closest('div.dt-button-collection').length) {
+				hostNode = existingExpanded.eq(0);
+			}
 
 			close();
 		}
