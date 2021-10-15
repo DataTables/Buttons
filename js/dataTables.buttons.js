@@ -692,7 +692,10 @@ $.extend( Buttons.prototype, {
 			};
 
 			var tag = config.tag || buttonDom.tag;
-			var clickBlurs = config.clickBlurs === undefined ? false : config.clickBlurs
+			var clickBlurs = config.clickBlurs === undefined
+				? true :
+				config.clickBlurs;
+
 			button = $('<'+tag+'/>')
 				.addClass( buttonDom.className )
 				.addClass( inSplit ? this.c.dom.splitDropdownButton.className : '')
@@ -708,8 +711,10 @@ $.extend( Buttons.prototype, {
 						button.trigger('blur');
 					}
 				} )
-				.on( 'keyup.dtb', function (e) {
+				.on( 'keypress.dtb', function (e) {
 					if ( e.keyCode === 13 ) {
+						e.preventDefault();
+
 						if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
 							action( e, dt, button, config );
 						}
@@ -828,8 +833,10 @@ $.extend( Buttons.prototype, {
 						dropButton.trigger('blur');
 					}
 				} )
-				.on( 'keyup.dtb', function (e) {
+				.on( 'keypress.dtb', function (e) {
 					if ( e.keyCode === 13 ) {
+						e.preventDefault();
+
 						if ( ! dropButton.hasClass( buttonDom.disabled ) && dropButtonConfig.action ) {
 							splitAction( e, dt, dropButton, dropButtonConfig );
 						}
