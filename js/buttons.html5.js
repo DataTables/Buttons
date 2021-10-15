@@ -1098,7 +1098,7 @@ DataTable.ext.buttons.excelHtml5 = {
 				if ( ! cell ) {
 					if ( typeof row[i] === 'number' || (
 						row[i].match &&
-						row[i].match(/^-?\d+(\.\d+)?$/) &&
+						row[i].match(/^-?\d+(\.\d+)?([eE]\-?\d+)?$/) && // Includes exponential format
 						! row[i].match(/^0\d+/) )
 					) {
 						// Detect numbers - don't match numbers with leading zeros
