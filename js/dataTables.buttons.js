@@ -1177,6 +1177,7 @@ $.extend( Buttons.prototype, {
 
 		if (content === false) {
 			close();
+			return;
 		}
 
 		var existingExpanded = $(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes());
