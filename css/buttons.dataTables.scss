@@ -87,6 +87,7 @@ input.dt-button {
 		color: rgba(70, 70, 70, 0.75);
 		font-size: 8px;
 		padding-left: 10px;
+		line-height: 1em;
 	}
 }
 
@@ -166,7 +167,7 @@ div.dt-button-collection {
 		flex-wrap: wrap;
 		justify-content: flex-start;
 		align-content: flex-start;
-		align-items: flex-start;
+		align-items: stretch;
 
 		button.dt-button {
 			margin-right: 0px;
@@ -215,14 +216,16 @@ a.dt-button.processing {
 
 button.dt-btn-split-drop {
 	margin-left: calc(-1px - 0.333em);
-	padding-left: 0.333em;
-	padding-right: 0.333em;
 	padding-bottom: calc(0.5em - 1px);
 	border-radius: 0px 1px 1px 0px;
 	color: rgba(70, 70, 70, 0.9);
+	border-left: none;
 	
 	span.dt-btn-split-drop-arrow {
-		font-size: 10px;
+		position: relative;
+		top: -1px;
+		left: -2px;
+		font-size: 8px;
 	}
 
 	&:hover {
