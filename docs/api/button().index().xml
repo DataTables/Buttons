@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-api library="Buttons">
+	<name>button().index()</name>
+	<summary>Get the index of a node</summary>
+	<since>2.1.0</since>
+
+	<type type="function">
+		<signature>button().index()</signature>
+		<returns type="string">
+			A Buttons index that can be used with `-api button()` or `-api button().add()` to determine the index of a given button node. Returns `null` if not matched.
+		</returns>
+		<description>
+			Gets the index of a button in a Buttons instance.
+		</description>
+	</type>
+
+	<description>
+		This method can be used to determine the index of a button, which can be useful when inserting new buttons into a list, particularly for a plug-in where you can't hardcode indexes.
+	</description>
+</dt-api>
