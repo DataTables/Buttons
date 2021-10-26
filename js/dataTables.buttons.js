@@ -328,6 +328,40 @@ $.extend( Buttons.prototype, {
 	},
 
 	/**
+	 * Get a button's index
+	 * 
+	 * This is internally recursive
+	 * @param {element} node Button to get the index of
+	 * @return {string} Button index
+	 */
+	index: function ( node, nested, buttons )
+	{
+		if ( ! nested ) {
+			nested = '';
+			buttons = this.s.buttons;
+		}
+
+		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
+			var inner = buttons[i].buttons;
+
+			if (buttons[i].node === node) {
+				return nested + i;
+			}
+
+			if ( inner && inner.length ) {
+				var match = this.index(node, i + '-', inner);
+
+				if (match !== null) {
+					return match;
+				}
+			}
+		}
+
+		return null;
+	},
+
+
+	/**
 	 * Get the instance name for the button set selector
 	 * @return {string} Instance name
 	 */
@@ -2007,6 +2041,21 @@ DataTable.Api.register( ['buttons().disable()', 'button().disable()'], function 
 	return this.each( function ( set ) {
 		set.inst.disable( set.node );
 	} );
+} );
+
+// Button index
+DataTable.Api.register( 'button().index()', function () {
+	var idx = null;
+
+	this.each( function ( set ) {
+		var res = set.inst.index( set.node );
+
+		if (res !== null) {
+			idx = res;
+		}
+	} );
+
+	return idx;
 } );
 
 // Get button nodes
