@@ -231,14 +231,16 @@ $.extend( Buttons.prototype, {
 			}
 	
 			for (i=0; i<newButtons.length; i++) {
+				var newBtn = newButtons[i];
+
 				this._expandButton(
 					button.buttons,
-					newButtons[i],
-					newButtons[i] !== undefined && newButtons[i].config !== undefined && newButtons[i].config.split !== undefined,
+					newBtn,
+					newBtn !== undefined && newBtn.config !== undefined && newBtn.config.split !== undefined,
 					true,
-					newButtons[i].parentConf !== undefined && newButtons[i].parentConf.split !== undefined,
+					newBtn.parentConf !== undefined && newBtn.parentConf.split !== undefined,
 					i,
-					newButtons[i].parentConf
+					newBtn.parentConf
 				);
 			}
 		}
