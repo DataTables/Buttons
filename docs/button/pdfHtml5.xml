@@ -16,7 +16,7 @@
 	<description>
 		This button will create and save a PDF file from the table's data.
 
-		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported). For older browsers, the `b-button pdfFlash` button provides similar file creation and save options using the Flash plug-in. The `b-button pdf` button can be used to automatically select between this and the `b-button pdfFlash` buttons based on the browser's capabilities.
+		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported).
 
 		In addition to this, the [PDFMake](http://pdfmake.org/) library must also be available on the page and a suitable font-size. [PDFMake provides Roboto in `vfs_fonts.js`](http://pdfmake.org/#/gettingstarted) or a [custom font](https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side) can be used. This MIT licensed library provides the ability to create a PDF file in the browser and it utilised by this button.
 
@@ -83,7 +83,7 @@
 	</option>
 
 	<option type="string" name="pageSize" default="A4">
-		Paper size for the created PDF. This can be `-string A3`, `-string A4`, `-string A5`, `-string LEGAL`, `-string LETTER` or `-string TABLOID`. Other options are available [see the PDFMake documentation](http://pdfmake.org/#/gettingstarted) - although this subset is fully compatible with the options for the `b-button pdfFlash` button.
+		Paper size for the created PDF. This can be `-string A3`, `-string A4`, `-string A5`, `-string LEGAL`, `-string LETTER` or `-string TABLOID`. Other options are available [see the PDFMake documentation](http://pdfmake.org/#/gettingstarted).
 	</option>
 
 	<option type="string|function" name="message" default="">
@@ -121,7 +121,7 @@ $('#myTable').DataTable( {
 
 ]]></example>
 
-	<example title="DataTables initialisation: Use the `b-button pdf` button type to automatically select between the Flash and HTML button options."><![CDATA[
+	<example title="DataTables initialisation: Use the `b-button pdf` button type to alias the HTML button options."><![CDATA[
 
 $('#myTable').DataTable( {
 	buttons: [

@@ -5,25 +5,17 @@
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _HTML5 export button_ plug-in (`-button csvHtml5`) **and / or**
-		* Buttons' _Flash export button_ plug-in (`-button csvFlash`).
+		* Buttons' _HTML5 export button_ plug-in (`-button csvHtml5`)
 
 		To ensure that all files required for CSV export are included, the [DataTables download builder](/download) is recommend.
 	</requires>
 
 	<description>
-		This button type serves as a proxy that will automatically detect if the `b-button csvHtml5` or `b-button csvFlash` buttons can be used based on the browser's capabilities and the libraries available on the page.
+		This button type serves as a proxy that will automatically detect if the `b-button csvHtml5` buttons can be used based on the browser's capabilities and the libraries available on the page.
 
 		This is provided as an option since the HTML5 button type requires a reasonably modern browser which may not always be available to the end user.
 
-		The order of selection, in priority order is:
-
-		* `b-button csvHtml5`
-		* `b-button csvFlash`
-
-		If the requirements of both buttons are not satisfied, no button will be presented to the end user. For the requirements of each button type, please refer to its own documentation.
-
-		The options available to the HTML5 and Flash buttons are common between them to ensure that no additional logic is required by the developer based on which button type is selected - e.g. if you set the `fieldSeparator` option, it will be used by the HTML5 and Flash button types.
+		If the requirements of the `b-button csvHtml5` button are not satisfied, no button will be presented to the end user. For the requirements of each button type, please refer to its own documentation.
 	</description>
 
 

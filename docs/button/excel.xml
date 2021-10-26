@@ -5,25 +5,17 @@
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _HTML5 export button_ plug-in (`-button excelHtml5`) **and / or**
-		* Buttons' _Flash export button_ plug-in (`-button excelFlash`).
+		* Buttons' _HTML5 export button_ plug-in (`-button excelHtml5`)
 
 		To ensure that all files required for Excel export are included, the [DataTables download builder](/download) is recommend.
 	</requires>
 
 	<description>
-		This button type serves as a proxy that will automatically detect if the `b-button excelHtml5` or `b-button excelFlash` buttons can be used based on the browser's capabilities and the libraries available on the page.
+		This button type serves as a proxy that will automatically detect if the `b-button excelHtml5` button can be used based on the browser's capabilities and the libraries available on the page.
 
 		This is provided as an option since the HTML5 button type requires a reasonably modern browser which may not always be available to the end user.
 
-		The order of selection, in priority order is:
-
-		* `b-button excelHtml5`
-		* `b-button excelFlash`
-
-		If the requirements of both buttons are not satisfied, no button will be presented to the end user. For the requirements of each button type, please refer to its own documentation.
-
-		The options available to the HTML5 and Flash buttons are common between them to ensure that no additional logic is required by the developer based on which button type is selected - e.g. if you set the `exportOptions` option, it will be used by the HTML5 and Flash button types.
+		If the requirements of the `b-button excelHtml5` button are not satisfied, no button will be presented to the end user. For the requirements of each button type, please refer to its own documentation.
 
 
 		### Styling and customisation
@@ -95,7 +87,7 @@
 	</option>
 
 
-	<example title="DataTables initialisation: Use the `b-button excel` button type to automatically select between the Flash and HTML button options."><![CDATA[
+	<example title="DataTables initialisation: Use the `b-button excel` button type to automatically alias the HTML button options."><![CDATA[
 
 $('#myTable').DataTable( {
 	buttons: [

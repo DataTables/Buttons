@@ -76,7 +76,20 @@ $.extend( true, DataTable.Buttons.defaults, {
 		buttonLiner: {
 			tag: null
 		},
-		collection: collection
+		collection: collection,
+		splitWrapper: {
+			tag: 'div',
+			className: 'dt-btn-split-wrapper button-group',
+		},
+		splitDropdown: {
+			tag: 'button',
+			text: '',
+			className: 'button dt-btn-split-drop dropdown arrow-only',
+		},
+		splitDropdownButton: {
+			tag: 'button',
+			className: 'dt-btn-split-drop-button button small'
+		}
 	}
 } );
 

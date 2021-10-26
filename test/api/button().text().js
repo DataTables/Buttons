@@ -63,7 +63,7 @@ describe('buttons - button().node()', function() {
 			table.button(0).text('Collection');
 
 			expect(table.button(0).text()).toBe('Collection');
-			expect($('.dt-button:first').text()).toBe('Collection');
+			expect($('.dt-button:first span:first').text()).toBe('Collection');
 		});
 		it('Can text of item in collection', function() {
 			table.button('0-1').text('Middle');

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="13">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'Blfrtip'
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Page length (select)</title>
+
+<info><![CDATA[
+
+DataTables has a built in page length control which is often replaced in many of the Buttons examples at the top left of the table with the buttons for the example. However, you may wish to keep the length list, which you can do by adding the `l` option back into `dt-init dom` which is shown in this example.
+
+Additionally, you might wish to consider using the `b-button pageLength` button which provides the same page length control, but does so as an integrated part of Buttons. An example of that [is available here](./pageLength.html).
+
+]]></info>
+
+</dt-example>
+

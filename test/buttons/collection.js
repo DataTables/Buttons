@@ -1,4 +1,4 @@
-describe('buttons - collection', function() {
+describe('buttons - collection', function () {
 	dt.libs({
 		js: ['jquery', 'datatables', 'buttons', 'buttons-colVis'],
 		css: ['datatables', 'buttons']
@@ -6,57 +6,60 @@ describe('buttons - collection', function() {
 
 	let table;
 
-	describe('Functional tests - Check the defaults', function() {
+	describe('Functional tests - Check the defaults', function () {
 		dt.html('basic');
-		it('Ensure collection button is as expected', function() {
+		it('Ensure collection button is as expected', function () {
 			$('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{ text: 'one', action: function() {} }, { text: 'two', action: function() {} }]
+						buttons: [
+							{text: 'one', action: function () {}},
+							{text: 'two', action: function () {}}
+						]
 					}
 				]
 			});
 			expect($('button.dt-button').length).toBe(1);
 			expect($('button.buttons-collection').length).toBe(1);
 		});
-		it('Contains the expected text', function() {
-			expect($('button.dt-button span').text()).toBe('Collection');
+		it('Contains the expected text', function () {
+			expect($('button.dt-button span:first').text()).toBe('Collection');
 		});
-		it('Contains the expected buttons', function() {
+		it('Contains the expected buttons', function () {
 			$('button.dt-button').click();
 			expect($('button.dt-button').length).toBe(3);
 		});
-		it('Contains the expected button positioning', function() {
+		it('Contains the expected button positioning', function () {
 			let first = $('div.dt-button-collection button:eq(0)').offset();
 			expect($('div.dt-button-collection button:eq(1)').offset().left).toBe(first.left);
 			expect($('div.dt-button-collection button:eq(1)').offset().top).toBeGreaterThan(first.left);
 		});
-		it('Contains the expected colection position', function() {
+		it('Contains the expected collection position', function () {
 			let first = $('div.dt-button-collection button:eq(0)').offset();
 			expect($('tbody tr:eq(0)').offset().top).toBeGreaterThan(first.left);
 		});
-		it('Contains the expected background', function() {
+		it('Contains the expected background', function () {
 			expect($('div.dt-button-background').length).toBe(1);
 		});
-		it('Contains the expected title', function() {
+		it('Contains the expected title', function () {
 			expect($('div.dt-button-collection-title').text()).toBe('');
 		});
-		it('Clicking the button keeps the collection open', function() {
+		it('Clicking the button keeps the collection open', function () {
 			$('div.dt-button-collection button.dt-button').click();
 			expect($('button.dt-button').length).toBe(3);
 		});
-		it('Collection can be closed', function() {
+		it('Collection can be closed', function () {
 			$('button.dt-button').click();
 			expect($('button.dt-button').length).toBe(1);
 		});
 	});
 
-	describe('Functional tests - basic', function() {
+	describe('Functional tests - basic', function () {
 		dt.html('basic');
-		it('action', function() {
+		it('action', function (done) {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -66,7 +69,7 @@ describe('buttons - collection', function() {
 						buttons: [
 							{
 								text: 'search',
-								action: function() {
+								action: function () {
 									table.search('cox').draw();
 								}
 							}
@@ -76,11 +79,14 @@ describe('buttons - collection', function() {
 			});
 			$('button.dt-button').click();
 			$('div.dt-button-collection button.dt-button').click();
-			expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
+			setTimeout(function() {
+				expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
+				done();
+			}, 50)
 		});
 
 		dt.html('basic');
-		it('autoClose - default (false)', function() {
+		it('autoClose - default (false)', function (done) {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -89,22 +95,26 @@ describe('buttons - collection', function() {
 						extend: 'collection',
 						buttons: [
 							{
-								text: 'null',
-								action: function() {
-									let a = table.rows().count();
-								}
+								text: 'test',
+								action: function () {}
 							}
 						]
 					}
 				]
 			});
+
 			$('button.dt-button').click();
+
 			$('div.dt-button-collection button.dt-button').click();
-			expect($('button.dt-button').length).toBe(2);
+
+			setTimeout(function () {
+				expect($('button.dt-button').length).toBe(2);
+				done();
+			}, 50);
 		});
 
 		dt.html('basic');
-		it('autoClose - true', function(done) {
+		it('autoClose - true', function (done) {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -114,9 +124,7 @@ describe('buttons - collection', function() {
 						buttons: [
 							{
 								text: 'null',
-								action: function() {
-									let a = table.rows().count();
-								}
+								action: function () {}
 							}
 						],
 						autoClose: true
@@ -125,18 +133,17 @@ describe('buttons - collection', function() {
 			});
 			$('button.dt-button').click();
 
-			setTimeout( function () {
+			setTimeout(function () {
 				$('div.dt-button-collection button.dt-button').click();
-
-				setTimeout( function () {
+				setTimeout(function () {
 					expect($('button.dt-button').length).toBe(1);
 					done();
 				}, 50);
-			}, 50 );
+			}, 50);
 		});
 
 		dt.html('basic');
-		it('autoClose - false', function(done) {
+		it('autoClose - false', function (done) {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -146,9 +153,7 @@ describe('buttons - collection', function() {
 						buttons: [
 							{
 								text: 'null',
-								action: function() {
-									let a = table.rows().count();
-								}
+								action: function () {}
 							}
 						],
 						autoClose: false
@@ -157,25 +162,24 @@ describe('buttons - collection', function() {
 			});
 			$('button.dt-button').click();
 
-			setTimeout( function () {
+			setTimeout(function () {
 				$('div.dt-button-collection button.dt-button').click();
-
-				setTimeout( function () {
+				setTimeout(function () {
 					expect($('button.dt-button').length).toBe(2);
 					done();
 				}, 50);
-			}, 50 );
+			}, 50);
 		});
 
 		dt.html('basic');
-		it('background', function() {
+		it('background', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{ text: 'null', action: function() {} }],
+						buttons: [{text: 'null', action: function () {}}],
 						background: false
 					}
 				]
@@ -185,14 +189,14 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('backgroundClassName', function() {
+		it('backgroundClassName', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{ text: 'null', action: function() {} }],
+						buttons: [{text: 'null', action: function () {}}],
 						backgroundClassName: 'test-background-class'
 					}
 				]
@@ -203,27 +207,27 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('className - applies to collection button', function() {
+		it('className - applies to collection button', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{ text: 'null', action: function() {} }],
+						buttons: [{text: 'null', action: function () {}}],
 						className: 'test-class'
 					}
 				]
 			});
 			expect($('button.test-class').length).toBe(1);
 		});
-		it('className - does not apply to buttons in the collection', function() {
+		it('className - does not apply to buttons in the collection', function () {
 			$('button.dt-button').click();
 			expect($('button.test-class').length).toBe(1);
 		});
 
 		dt.html('basic');
-		it('collectionLayout - fixed', function() {
+		it('collectionLayout - fixed', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -231,10 +235,10 @@ describe('buttons - collection', function() {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{ text: 'one', action: function() {} },
-							{ text: 'two', action: function() {} },
-							{ text: 'three', action: function() {} },
-							{ text: 'four', action: function() {} }
+							{text: 'one', action: function () {}},
+							{text: 'two', action: function () {}},
+							{text: 'three', action: function () {}},
+							{text: 'four', action: function () {}}
 						],
 						collectionLayout: 'fixed'
 					}
@@ -246,7 +250,7 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('collectionLayout - two-column', function() {
+		it('collectionLayout - two-column', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -254,10 +258,10 @@ describe('buttons - collection', function() {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{ text: 'one', action: function() {} },
-							{ text: 'two', action: function() {} },
-							{ text: 'three', action: function() {} },
-							{ text: 'four', action: function() {} }
+							{text: 'one', action: function () {}},
+							{text: 'two', action: function () {}},
+							{text: 'three', action: function () {}},
+							{text: 'four', action: function () {}}
 						],
 						collectionLayout: 'two-column'
 					}
@@ -266,7 +270,7 @@ describe('buttons - collection', function() {
 			$('button.dt-button').click();
 			expect($('div.dt-button-collection.two-column').length).toBe(1);
 		});
-		it('collectionLayout - two-column - horizontal position', function() {
+		it('collectionLayout - two-column - horizontal position', function () {
 			let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
 			expect($('div.dt-button-collection button:eq(1)').offset().left).toBe(firstColumn.left);
 
@@ -275,7 +279,7 @@ describe('buttons - collection', function() {
 
 			expect(firstColumn.left).toBeLessThan(secondColumn.left);
 		});
-		it('collectionLayout - two-column - vertical position', function() {
+		it('collectionLayout - two-column - vertical position', function () {
 			let firstRow = $('div.dt-button-collection button:eq(0)').offset();
 			expect($('div.dt-button-collection button:eq(2)').offset().top).toBe(firstRow.top);
 
@@ -286,7 +290,7 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('collectionLayout - three-column', function() {
+		it('collectionLayout - three-column', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -294,11 +298,11 @@ describe('buttons - collection', function() {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{ text: 'one', action: function() {} },
-							{ text: 'two', action: function() {} },
-							{ text: 'three', action: function() {} },
-							{ text: 'four', action: function() {} },
-							{ text: 'five', action: function() {} }
+							{text: 'one', action: function () {}},
+							{text: 'two', action: function () {}},
+							{text: 'three', action: function () {}},
+							{text: 'four', action: function () {}},
+							{text: 'five', action: function () {}}
 						],
 						collectionLayout: 'three-column'
 					}
@@ -307,7 +311,7 @@ describe('buttons - collection', function() {
 			$('button.dt-button').click();
 			expect($('div.dt-button-collection.three-column').length).toBe(1);
 		});
-		it('collectionLayout - three-column - horizontal position', function() {
+		it('collectionLayout - three-column - horizontal position', function () {
 			let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
 			let secondColumn = $('div.dt-button-collection button:eq(2)').offset();
 			expect($('div.dt-button-collection button:eq(2)').offset().left).toBe(secondColumn.left);
@@ -317,7 +321,7 @@ describe('buttons - collection', function() {
 			expect(secondColumn.left).toBeLessThan(thirdColumn.left);
 			expect(secondColumn.left - firstColumn.left).toBe(thirdColumn.left - secondColumn.left);
 		});
-		it('collectionLayout - three-column - vertical position', function() {
+		it('collectionLayout - three-column - vertical position', function () {
 			let firstRow = $('div.dt-button-collection button:eq(0)').offset();
 			expect($('div.dt-button-collection button:eq(2)').offset().top).toBe(firstRow.top);
 			expect($('div.dt-button-collection button:eq(4)').offset().top).toBe(firstRow.top);
@@ -327,7 +331,7 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('collectionLayout - four-column', function() {
+		it('collectionLayout - four-column', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -335,13 +339,13 @@ describe('buttons - collection', function() {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{ text: 'one', action: function() {} },
-							{ text: 'two', action: function() {} },
-							{ text: 'three', action: function() {} },
-							{ text: 'four', action: function() {} },
-							{ text: 'five', action: function() {} },
-							{ text: 'six', action: function() {} },
-							{ text: 'seven', action: function() {} }
+							{text: 'one', action: function () {}},
+							{text: 'two', action: function () {}},
+							{text: 'three', action: function () {}},
+							{text: 'four', action: function () {}},
+							{text: 'five', action: function () {}},
+							{text: 'six', action: function () {}},
+							{text: 'seven', action: function () {}}
 						],
 						collectionLayout: 'four-column'
 					}
@@ -350,7 +354,7 @@ describe('buttons - collection', function() {
 			$('button.dt-button').click();
 			expect($('div.dt-button-collection.four-column').length).toBe(1);
 		});
-		it('collectionLayout - four-column - horizontal position', function() {
+		it('collectionLayout - four-column - horizontal position', function () {
 			let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
 			let secondColumn = $('div.dt-button-collection button:eq(2)').offset();
 			expect($('div.dt-button-collection button:eq(2)').offset().left).toBe(secondColumn.left);
@@ -362,7 +366,7 @@ describe('buttons - collection', function() {
 			expect(secondColumn.left - firstColumn.left).toBe(thirdColumn.left - secondColumn.left);
 			expect(thirdColumn.left).toBeLessThan(fourthColumn.left);
 		});
-		it('collectionLayout - four-column - vertical position', function() {
+		it('collectionLayout - four-column - vertical position', function () {
 			let firstRow = $('div.dt-button-collection button:eq(0)').offset();
 			expect($('div.dt-button-collection button:eq(2)').offset().top).toBe(firstRow.top);
 			expect($('div.dt-button-collection button:eq(4)').offset().top).toBe(firstRow.top);
@@ -372,7 +376,7 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('collectionLayout with collectionTitle', function() {
+		it('collectionLayout with popoverTitle', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -380,13 +384,13 @@ describe('buttons - collection', function() {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{ text: 'one', action: function() {} },
-							{ text: 'two', action: function() {} },
-							{ text: 'three', action: function() {} },
-							{ text: 'four', action: function() {} }
+							{text: 'one', action: function () {}},
+							{text: 'two', action: function () {}},
+							{text: 'three', action: function () {}},
+							{text: 'four', action: function () {}}
 						],
 						collectionLayout: 'two-column',
-						collectionTitle: 'test title'
+						popoverTitle: 'test title'
 					}
 				]
 			});
@@ -395,15 +399,15 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('collectionTitle', function() {
+		it('popoverTitle', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{ text: 'null', action: function() {} }],
-						collectionTitle: 'test title'
+						buttons: [{text: 'null', action: function () {}}],
+						popoverTitle: 'test title'
 					}
 				]
 			});
@@ -412,7 +416,7 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('dropup - false', function() {
+		it('dropup - false', function () {
 			$('#dt-test-loader-container').prepend('<div style="height: 300px;"></div>');
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
@@ -420,7 +424,7 @@ describe('buttons - collection', function() {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{ text: 'null', action: function() {} }],
+						buttons: [{text: 'null', action: function () {}}],
 						dropup: false
 					}
 				]
@@ -430,7 +434,7 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('dropup - true', function() {
+		it('dropup - true', function () {
 			$('#dt-test-loader-container').prepend('<div style="height: 300px;"></div>');
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
@@ -438,7 +442,7 @@ describe('buttons - collection', function() {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{ text: 'null', action: function() {} }],
+						buttons: [{text: 'null', action: function () {}}],
 						dropup: true
 					}
 				]
@@ -448,13 +452,13 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('fade', async function() {
+		it('fade', async function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					{
 						extend: 'collection',
-						buttons: [{ text: 'null', action: function() {} }],
+						buttons: [{text: 'null', action: function () {}}],
 						fade: 500
 					}
 				]
@@ -474,15 +478,15 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('postfixButtons', async function() {
+		it('postfixButtons', async function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{ text: 'one', action: function() {} }],
-						postfixButtons: [{ text: 'post', action: function() {} }]
+						buttons: [{text: 'one', action: function () {}}],
+						postfixButtons: [{text: 'post', action: function () {}}]
 					}
 				]
 			});
@@ -495,15 +499,15 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('prefixButtons', async function() {
+		it('prefixButtons', async function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{ text: 'one', action: function() {} }],
-						prefixButtons: [{ text: 'pre', action: function() {} }]
+						buttons: [{text: 'one', action: function () {}}],
+						prefixButtons: [{text: 'pre', action: function () {}}]
 					}
 				]
 			});
@@ -516,16 +520,16 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('prefixButtons and postFixButtons', async function() {
+		it('prefixButtons and postFixButtons', async function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{ text: 'one', action: function() {} }],
-						postfixButtons: [{ text: 'post', action: function() {} }],
-						prefixButtons: [{ text: 'pre', action: function() {} }]
+						buttons: [{text: 'one', action: function () {}}],
+						postfixButtons: [{text: 'post', action: function () {}}],
+						prefixButtons: [{text: 'pre', action: function () {}}]
 					}
 				]
 			});
@@ -539,25 +543,28 @@ describe('buttons - collection', function() {
 		});
 
 		dt.html('basic');
-		it('Text', function() {
+		it('Text', function () {
 			$('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{ text: 'button1', action: function() {} }, { text: 'button2', action: function() {} }],
+						buttons: [
+							{text: 'button1', action: function () {}},
+							{text: 'button2', action: function () {}}
+						],
 						text: 'Collection Text'
 					}
 				]
 			});
-			expect($('button.dt-button span').text()).toBe('Collection Text');
+			expect($('button.dt-button span:first').text()).toBe('Collection Text');
 		});
 	});
 
-	describe('Functional tests - multi-level collections', function() {
+	describe('Functional tests - multi-level collections', function () {
 		dt.html('basic');
-		it('Only one button initially', function() {
+		it('Only one button initially', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -565,10 +572,10 @@ describe('buttons - collection', function() {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{ text: 'one', action: function() {} },
+							{text: 'one', action: function () {}},
 							{
 								fade: 0, // saves having to sleep in the tests
-								collectionTitle: 'Visibility control',
+								popoverTitle: 'Visibility control',
 								extend: 'colvis'
 							}
 						]
@@ -577,17 +584,22 @@ describe('buttons - collection', function() {
 			});
 			expect($('button.dt-button').length).toBe(1);
 		});
-		it('Top level buttons shown', function() {
+		it('Top level buttons shown', function () {
 			$('button.dt-button').click();
 			expect($('button.dt-button').length).toBe(3);
 		});
-		it('Second level buttons shown', function() {
+		it('Second level buttons shown', function () {
 			$('button.buttons-colvis').click();
 			expect($('button.dt-button').length).toBe(7);
 		});
-		it('Clicking away hides all collections', function() {
-			$('div.dataTables_filter').click();
-			expect($('button.dt-button').length).toBe(1);
+		it('Clicking away hides all collections', function (done) {
+			setTimeout(function () {
+				$('div.dataTables_filter').click();
+				setTimeout(function () {
+					expect($('button.dt-button').length).toBe(1);
+					done();
+				}, 100);
+			}, 100);
 		});
 	});
 });

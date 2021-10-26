@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="13">
+
+<css lib="datatables buttons">
+div.dt-button-collection {
+	width: 400px;
+}
+
+div.dt-button-collection button.dt-button {
+	display: inline-block;
+	width: 32%;
+}
+div.dt-button-collection button.buttons-colvis {
+	display: inline-block;
+	width: 49%;
+}
+div.dt-button-collection h3 {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-weight: 100;
+	border-bottom: 1px solid #9f9f9f;
+	font-size: 1em;
+}
+div.dt-button-collection h3.not-top-heading {
+	margin-top: 10px;
+}
+</css>
+<js lib="jquery datatables buttons pdfmake vfsfonts jszip buttons-html5 buttons-colvis">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			{
+				extend: 'collection',
+				className: 'custom-html-collection',
+				buttons: [
+					'<h3>Export</h3>',
+					'pdf',
+					'csv',
+					'excel',
+					'<h3 class="not-top-heading">Column Visibility</h3>',
+					'colvis',
+					'colvis'
+				]
+			}
+		]
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Custom HTML in Buttons Collection</title>
+
+<info><![CDATA[
+
+This example shows how custom HTML can be used to break up buttons. This has a wide variety of use cases, here we are using it in the popover to add relevant headings to better describe the buttons functionality.
+
+There is nothing to limit you here, you can create whatever you please and display it within the buttons collection.
+
+]]></info>
+
+</dt-example>
+

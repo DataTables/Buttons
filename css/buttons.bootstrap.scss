@@ -5,6 +5,7 @@
 div.dt-button-collection {
 	position: absolute;
 	z-index: 2001;
+	width: 100%;
 
 	ul.dropdown-menu {
 		position: relative;
@@ -15,6 +16,26 @@ div.dt-button-collection {
 
 	div.dt-button-collection-title {
 		background-color: white;
+	}
+
+	div.dt-btn-split-wrapper {
+		width: 100%;
+		display: inline-flex;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+
+	button.dt-btn-split-drop-button {
+		width: 100%;
+		border: none;
+		border-radius: 0px;
+		margin-left: 0px !important;
+
+		&:focus {
+			border: none;
+			border-radius: 0px;
+			outline: none;
+		}
 	}
 
 	@include dtb-fixed-collection();
@@ -47,5 +68,28 @@ div.dt-buttons {
 	div.btn.processing,
 	a.btn.processing {
 		@include dtb-processing();
+	}
+}
+
+div.dt-btn-split-wrapper {
+	button.dt-btn-split-drop {
+		border-top-right-radius: 4px !important;
+		border-bottom-right-radius: 4px !important;
+	}
+}
+
+span.dt-down-arrow {
+	color: rgba(70, 70, 70, 0.9);
+	font-size: 10px;
+	padding-left: 10px;
+}
+
+div.dataTables_wrapper {
+	div.dt-buttons.btn-group {
+		button.btn{
+			&:last-of-type:first-of-type{
+				border-radius: 4px !important;
+			}
+		}
 	}
 }

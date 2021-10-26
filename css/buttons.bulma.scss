@@ -17,6 +17,13 @@ div.dt-button-collection {
 		border: 1px solid rgba(0, 0, 0, 0.15);
 	}
 
+	div.dt-btn-split-wrapper {
+		width: 100%;
+		padding-left: 5px;
+		padding-right: 5px;
+		margin-bottom: 0px;
+	}
+
 	@include dtb-fixed-collection();
 
 	&.fixed {
@@ -56,5 +63,12 @@ div.dt-buttons {
 	div.btn.processing,
 	a.btn.processing {
 		@include dtb-processing();
+	}
+
+	button.button {
+		margin-left: 5px;
+		&:first-child {
+			margin-left: 0px;
+		}
 	}
 }

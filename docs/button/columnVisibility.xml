@@ -9,7 +9,7 @@
 	</requires>
 
 	<description>
-		This button type creates a single button that can control the visibility of one or more columns in a DataTale (its counterpart `b-buttons columnsVisibility` will be expanded to a single button for each column). This provides the ability to have show all / hide all buttons that control all of the table's columns or a subset of those columns.
+		This button type creates a single button that can control the visibility of one or more columns in a DataTale (its counterpart `b-button columnsVisibility` will be expanded to a single button for each column). This provides the ability to have show all / hide all buttons that control all of the table's columns or a subset of those columns.
 
 		For multiple columns, the button should be given a title using the `b-init buttons.buttons.text` option, which can also be used for a single column control button, although it will automatically be given the column's title text if not otherwise supplied.
 	</description>

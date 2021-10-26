@@ -1,14 +1,12 @@
-describe('buttons - pageLength', function() {
+describe('buttons - pageLength', function () {
 	dt.libs({
 		js: ['jquery', 'datatables', 'buttons'],
 		css: ['datatables', 'buttons']
 	});
 
-	let table;
-
 	function checkOptions(count, text, options = []) {
 		expect($('.buttons-page-length').length).toBe(1);
-		expect($('button.buttons-collection').text()).toBe(text);
+		expect($('button.buttons-collection span:first').text()).toBe(text);
 		if (options.length > 0) {
 			for (let i = 0; i < options.length; i++) {
 				expect($('div.dt-button-collection button.button-page-length:eq(' + i + ')').text()).toBe(options[i]);
@@ -16,9 +14,9 @@ describe('buttons - pageLength', function() {
 		}
 	}
 
-	describe('Check the defaults', function() {
+	describe('Check the defaults', function () {
 		dt.html('basic');
-		it('Ensure looks as expected', function() {
+		it('Ensure looks as expected', function () {
 			$.fx.off = true; // disables lightbox animation
 			$('#example').DataTable({
 				dom: 'Bfrtip',
@@ -26,14 +24,18 @@ describe('buttons - pageLength', function() {
 			});
 			checkOptions(1, 'Show 10 rows');
 		});
-		it('Contains the expected pages', function() {
+		it('Contains the expected pages', function () {
 			$('.buttons-page-length').click();
 			checkOptions(5, 'Show 10 rows', ['10', '25', '50', '100']);
 		});
-		it('Clicking button changes the length', function() {
+		it('Clicking button changes the length', function () {
 			$('div.dt-button-collection button.button-page-length:eq(1)').click();
 			expect($('tbody tr').length).toBe(25);
 			checkOptions(1, 'Show 25 rows');
+		});
+		it('Ensure full button text is correct', function () {
+			$('div.dt-button-collection button:eq(2)').click();
+			expect($('button.buttons-collection').text()).toBe('Show 50 rows▼');
 		});
 	});
 
