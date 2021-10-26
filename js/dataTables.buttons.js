@@ -179,9 +179,11 @@ $.extend( Buttons.prototype, {
 	 * Add a new button
 	 * @param {object} config Button configuration object, base string name or function
 	 * @param {int|string} [idx] Button index for where to insert the button
+	 * @param {boolean} [draw=true] Trigger a draw. Set a false when adding
+	 *   lots of buttons, until the last button.
 	 * @return {Buttons} Self for chaining
 	 */
-	add: function ( config, idx )
+	add: function ( config, idx, draw )
 	{
 		var buttons = this.s.buttons;
 
@@ -198,7 +200,10 @@ $.extend( Buttons.prototype, {
 		}
 
 		this._expandButton( buttons, config, base !== undefined, idx );
-		this._draw();
+
+		if (draw === undefined || draw === true) {
+			this._draw();
+		}
 
 		return this;
 	},
@@ -1816,7 +1821,7 @@ DataTable.Api.register( 'buttons().container()', function () {
 } );
 
 // Add a new button
-DataTable.Api.register( 'button().add()', function ( idx, conf ) {
+DataTable.Api.register( 'button().add()', function ( idx, conf, draw ) {
 	var ctx = this.context;
 
 	// Don't use `this` as it could be empty - select the instances directly
@@ -1824,7 +1829,7 @@ DataTable.Api.register( 'button().add()', function ( idx, conf ) {
 		var inst = Buttons.instanceSelector( this._groupSelector, ctx[0]._buttons );
 
 		if ( inst.length ) {
-			inst[0].add( conf, idx );
+			inst[0].add( conf, idx , draw);
 		}
 	}
 

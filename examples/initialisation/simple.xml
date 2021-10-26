@@ -5,14 +5,86 @@
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
 <![CDATA[
 
+
+function myAction(x) {
+	alert("Hello Button " + x);
+}
+
+function add_buttons(bcnt) {
+
+	var table = $('#example').DataTable();
+	var btn = table.button();
+
+	for (var ix=0; ix<bcnt; ix++) {
+		btn.add(
+			"0-" + ix,
+			{
+				text: "Button " + ix.toString(),
+				action: function (e, dt, node, config) {
+					this.active(!this.active());
+					myAction(this.text());
+				}
+			},
+			ix === bcnt-1
+		);
+	};
+
+}
+
 $(document).ready(function() {
-	$('#example').DataTable( {
+	
+	var table = $('#example').DataTable( {
+
+		//dom: 'Bfrtip',
 		dom: 'Bfrtip',
+
+		//scrollY: true,
+		   //scrollX: true,
+		scrollCollapse: true,
+		paging: false,
+		
+		colReorder: true,
+
 		buttons: [
-			'copy', 'csv', 'excel', 'pdf', 'print'
+
+			{extend: 'collection',
+			text: 'Collection',
+			buttons: [],
+			},
+
+			{	
+				text: "Add 10 Buttons To Collection",
+				action: function (e, dt, node, config) {
+					var bcnt = 10;
+					add_buttons(bcnt);
+				}
+			},
+			{	
+				text: "Remove 2 Buttons From Collection",
+				action: function (e, dt, node, config) {
+					table.button("0-0").remove();
+					table.button("0-0").remove();
+				}
+			},
+			{
+				text: "Add 100 Buttons To Collection",
+				action: function (e, dt, node, config) {
+					var bcnt = 100;
+					add_buttons(bcnt);
+				},
+			},
+			{
+				text: "Add 500 Buttons To Collection",
+				action: function (e, dt, node, config) {
+					var bcnt = 500;
+					add_buttons(bcnt);
+				}
+			}
 		]
-	} );
-} );
+
+	});
+	
+});		
 
 ]]>
 </js>
@@ -30,4 +102,3 @@ This example shows the `b-button copy`, `b-button csv`, `b-button excel`, `b-but
 ]]></info>
 
 </dt-example>
-

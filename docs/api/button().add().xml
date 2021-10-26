@@ -5,7 +5,7 @@
 	<since>1.0.0</since>
 
 	<type type="function">
-		<signature>button().add( index, config )</signature>
+		<signature>button().add( index, config, draw )</signature>
 		<parameter type="int|string|null" name="index">
 			Insert index for the button. This option can be one of:
 
@@ -15,6 +15,9 @@
 		</parameter>
 		<parameter type="object|string|function" name="config">
 			Button configuration. Please refer to `b-init buttons.buttons` for full details of the configuration options available here.
+		</parameter>
+		<parameter type="boolean" name="draw" default="true" since="2.0.2">
+			Indicate if Buttons should immediately draw the new button (`true`) or not (`false`). This can be useful when added a large number of buttons, as disabling the draw until the last item can significantly improve performance.
 		</parameter>
 		<returns type="DataTables.Api">
 			New DataTables API instance with the result set containing the newly created button. This means it is possible to immediately using the chaining API to manipulate the button.
