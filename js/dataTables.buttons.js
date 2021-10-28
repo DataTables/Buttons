@@ -1649,10 +1649,12 @@ Buttons.buttonSelector = function ( insts, selector )
 		}
 		else if ( typeof selector === 'number' ) {
 			// Main button index selector
-			ret.push( {
-				inst: inst,
-				node: inst.s.buttons[ selector ].node
-			} );
+			if (inst.s.buttons[ selector ]) {
+				ret.push( {
+					inst: inst,
+					node: inst.s.buttons[ selector ].node
+				} );
+			}
 		}
 		else if ( typeof selector === 'string' ) {
 			if ( selector.indexOf( ',' ) !== -1 ) {
