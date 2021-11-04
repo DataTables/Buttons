@@ -28,7 +28,7 @@ $(document).ready(function() {
 
 <info><![CDATA[
 
-The `-init butttons.buttons.split` option allows for "split dropdown buttons" to be introduced into DataTables. This allows the main button to perform a primary action while the drop down is able to provide a number of secondary options in a popover. 
+The `-init buttons.buttons.split` option allows for "split dropdown buttons" to be introduced into DataTables. This allows the main button to perform a primary action while the drop down is able to provide a number of secondary options in a popover. 
 
 This example shows DataTables and the Buttons extension being used to create split buttons, with the [Bulma](https://bulma.io/) framework providing the styling.
 
