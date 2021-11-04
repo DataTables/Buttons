@@ -1053,6 +1053,7 @@ $.extend( Buttons.prototype, {
 	 */
 	_resolveExtends: function ( conf )
 	{
+		var that = this;
 		var dt = this.s.dt;
 		var i, ien;
 		var toConfObject = function ( base ) {
@@ -1067,7 +1068,7 @@ $.extend( Buttons.prototype, {
 				}
 
 				if ( typeof base === 'function' ) {
-					base = base( dt, conf );
+					base = base.call( that, dt, conf );
 
 					if ( ! base ) {
 						return false;
@@ -1576,6 +1577,10 @@ Buttons.instanceSelector = function ( group, buttons )
 		else if ( typeof input === 'number' ) {
 			// Index selector
 			ret.push( buttons[ input ].inst );
+		}
+		else if ( typeof input === 'object' ) {
+			// Actual instance selector
+			ret.push( input );
 		}
 	};
 	
