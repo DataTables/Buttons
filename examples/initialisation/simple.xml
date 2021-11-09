@@ -9,49 +9,7 @@ $(document).ready(function() {
 	$('#example').DataTable( {
 		dom: 'Bfrtip',
 		buttons: [
-			'copy',
-			{
-				text: 'Title',
-				extend: 'spacer'
-			},
-			'csv',
-			'excel',
-			{
-				style: 'bar',
-				extend: 'spacer'
-			},
-			'pdf',
-			'pdf',
-			{
-				style: 'bar',
-				extend: 'spacer',
-				text: 'Non-export'
-			},
-			'print',
-			{
-				extend: 'collection',
-				buttons: [
-					{
-						text: 'Title',
-						extend: 'spacer'
-					},
-					'copy',
-					'csv',
-					{
-						style: 'bar',
-						extend: 'spacer'
-					},
-					'excel',
-					'excel',
-					{
-						style: 'bar',
-						extend: 'spacer',
-						text: 'Non-export'
-					},
-					'pdf',
-					'print',
-				]
-			}
+			'copy', 'csv', 'excel', 'pdf', 'print'
 		]
 	} );
 } );
