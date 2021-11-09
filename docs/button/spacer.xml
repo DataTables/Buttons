@@ -15,7 +15,41 @@
 	</option>
 
 	<option type="string" name="style" default="empty">
-		This option can be 
+		This option can be set to:
+
+		* `empty`: No background or border is shown - i.e. the spacing element is fully transparent.
+		* `bar`: A 1 pixel bar is shown.
+
+		Typically the `bar` option would not be used with a text value as well.
 	</option>
 
+	<example title="Add a spacer between buttons"><![CDATA[
+
+$('#myTable').DataTable( {
+	dom: 'Bfrtip',
+	buttons: [
+		'csv', 'excel', 'pdf', 'spacer', 'copy', 'print'
+	]
+} );
+
+]]></example>
+
+	<example title="Show with a bar"><![CDATA[
+
+$('#myTable').DataTable( {
+	dom: 'Bfrtip',
+	buttons: [
+		'csv',
+		'excel',
+		'pdf',
+		{
+			extend: 'spacer',
+			style: 'bar'
+		},
+		'copy',
+		'print'
+	]
+} );
+
+]]></example>
 </dt-button>
