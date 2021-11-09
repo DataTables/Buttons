@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="20">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
+<![CDATA[
+
+$(document).ready(function() {
+	$('#example').DataTable( {
+		dom: 'Bfrtip',
+		buttons: [
+			'csv', 'excel', 'pdf', 'spacer', 'copy', 'print'
+		]
+	} );
+} );
+
+]]>
+</js>
+
+<title lib="Buttons">Space between buttons</title>
+
+<info><![CDATA[
+
+The `-button spacer` button type is unique in Buttons in that it doesn't actually display a button or anything the end user can interact with. Rather it simply introduces a space between buttons, allowing easy visual grouping.
+
+]]></info>
+
+</dt-example>

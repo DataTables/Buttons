@@ -703,6 +703,24 @@ $.extend( Buttons.prototype, {
 				opt;
 		};
 
+		// Spacers don't do much other than insert an element into the DOM
+		if (config.spacer) {
+			var spacer = $('<span></span>')
+				.addClass('dt-button-spacer ' + config.style)
+				.text(text(config.text));
+
+			return {
+				conf:         config,
+				node:         spacer,
+				inserter:     spacer,
+				buttons:      [],
+				inCollection: inCollection,
+				isSplit:	  isSplit,
+				inSplit:	  inSplit,
+				collection:   null
+			};
+		}
+
 		if ( !isSplit && inSplit && splitCollectionDom ) {
 			buttonDom = splitDropdownButton;
 		}
@@ -1952,6 +1970,13 @@ $.extend( _dtButtons, {
 				dt.off( 'length.dt'+conf.namespace );
 			}
 		};
+	},
+	spacer: {
+		style: 'empty',
+		spacer: true,
+		text: function ( dt ) {
+			return dt.i18n( 'buttons.spacer', '' );
+		}
 	}
 } );
 

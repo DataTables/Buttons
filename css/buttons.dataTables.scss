@@ -13,7 +13,8 @@ input.dt-button {
 	position: relative;
 	display: inline-block;
 	box-sizing: border-box;
-	margin-right: 0.333em;
+	margin-left: 0.167em;
+	margin-right: 0.167em;
 	margin-bottom: 0.333em;
 	padding: 0.5em 1em;
 	border: $dtb-button-border;
@@ -36,6 +37,10 @@ input.dt-button {
 	text-decoration: none;
 	outline: none;
 	text-overflow: ellipsis;
+
+	&:first-child {
+		margin-left: 0;
+	}
 
 	&.disabled {
 		cursor: default;
@@ -141,8 +146,7 @@ div.dt-button-collection {
 
 		display: block;
 		float: none;
-		margin-bottom: 4px;
-		margin-right: 0;
+		margin: 2px 0 2px 0;
 
 		&:active:not(.disabled),
 		&.active:not(.disabled) {
@@ -151,6 +155,7 @@ div.dt-button-collection {
 		}
 
 		&:first-child {
+			margin-top: 0;
 			border-top-left-radius: 3px;
 			border-top-right-radius: 3px;
 		}

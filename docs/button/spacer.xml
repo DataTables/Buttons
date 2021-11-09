@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="Buttons">
+	<name>spacer</name>
+	<summary>A special "button" which provides visual grouping between buttons.</summary>
+	<since>2.1.0</since>
+
+	<description>
+		This button type is unique in Buttons in that it doesn't actually display a button or anything the end user can interact with. Rather it simply introduces a space between buttons, allowing easy visual grouping.
+
+		As a result the majority of options such as `action`, `init` and so on **do not apply** to this button. Only the options specified below are available.
+	</description>
+
+	<option type="string" name="text" default="Empty string">
+		The button's display text. The text can be configured using this option (see `b-init buttons.buttons.text`) or the `buttons.spacer` option of the DataTables `dt-init language` object. if specified it can be used to group options with a visual title, which is particularly effective inside collections.
+	</option>
+
+	<option type="string" name="style" default="empty">
+		This option can be 
+	</option>
+
+</dt-button>
