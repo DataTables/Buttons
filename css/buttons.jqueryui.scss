@@ -116,3 +116,7 @@ div.dt-button.processing,
 a.dt-button.processing {
 	@include dtb-processing();
 }
+
+span.dt-down-arrow {
+	display: none;
+}

@@ -707,7 +707,7 @@ $.extend( Buttons.prototype, {
 		// Spacers don't do much other than insert an element into the DOM
 		if (config.spacer) {
 			var spacer = $('<span></span>')
-				.addClass('dt-button-spacer ' + config.style)
+				.addClass('dt-button-spacer ' + config.style + ' ' + buttonDom.spacerClass)
 				.html(text(config.text));
 
 			return {
@@ -1805,7 +1805,8 @@ Buttons.defaults = {
 			tag: 'button',
 			className: 'dt-button',
 			active: 'active',
-			disabled: 'disabled'
+			disabled: 'disabled',
+			spacerClass: ''
 		},
 		buttonLiner: {
 			tag: 'span',

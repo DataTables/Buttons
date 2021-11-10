@@ -72,3 +72,28 @@ div.dt-buttons {
 		}
 	}
 }
+
+span.dt-down-arrow {
+	display: none;
+}
+
+span.dt-button-spacer {
+	display: inline-flex;
+	margin: 0.5em;
+	white-space: nowrap;
+	align-items: center;
+	font-size: 1rem;
+
+	&.bar {
+		&:empty {
+			height: inherit;
+		}
+	}
+}
+
+
+div.dt-button-collection span.dt-button-spacer {
+	text-align: left;
+	font-size: .875rem;
+	padding-left: 1rem !important;
+}

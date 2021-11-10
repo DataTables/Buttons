@@ -43,7 +43,8 @@ $.extend( true, DataTable.Buttons.defaults, {
 		},
 		button: {
 			tag: 'button',
-			className: 'ui button'
+			className: 'ui button',
+			spacerClass: 'ui button'
 		},
 		collection: {
 			tag: 'div',

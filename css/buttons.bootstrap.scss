@@ -93,3 +93,22 @@ div.dataTables_wrapper {
 		}
 	}
 }
+
+span.dt-down-arrow {
+	display: none;
+}
+
+span.dt-button-spacer {
+	float: left;
+
+	&.bar {
+		&:empty {
+			height: inherit;
+		}
+	}
+}
+
+div.dt-button-collection span.dt-button-spacer {
+	padding-left: 1rem !important;
+	text-align: left;
+}

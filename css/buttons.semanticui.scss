@@ -74,3 +74,28 @@ div.dt-buttons {
 span.dt-down-arrow {
 	display: none;
 }
+
+span.dt-button-spacer {
+	cursor: inherit;
+
+	&.bar {
+		padding-left: 1.5em;
+
+		&:empty {
+			height: inherit;
+		}
+	}
+}
+
+div.dt-button-collection span.dt-button-spacer {
+	border-top: 1px solid rgba(34,36,38,.15);
+
+	&.bar {
+		border-bottom: none;
+		padding-left: 1.5em;
+	}
+}
+
+.ui.basic.buttons .button.dt-button-spacer {
+	background-color: rgba(34,36,38,.05) !important;
+}
