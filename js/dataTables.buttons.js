@@ -478,6 +478,7 @@ $.extend( Buttons.prototype, {
 		if ( linerTag ) {
 			jqNode
 				.children( linerTag )
+				.eq(0)
 				.filter(':not(.dt-down-arrow)')
 				.html( text(label) );
 		}
@@ -707,7 +708,7 @@ $.extend( Buttons.prototype, {
 		if (config.spacer) {
 			var spacer = $('<span></span>')
 				.addClass('dt-button-spacer ' + config.style)
-				.text(text(config.text));
+				.html(text(config.text));
 
 			return {
 				conf:         config,
