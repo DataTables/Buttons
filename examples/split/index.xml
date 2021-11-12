@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example order="0">
+
+<title lib="Buttons">Split Buttons</title>
+
+<info><![CDATA[
+
+Split dropdown buttons allow the main button to perform a primary action while the drop down is able to provide a number of secondary options in a popover.
+
+The examples in this section explore the options available for the split buttons.
+
+]]></info>
+
+</dt-example>
