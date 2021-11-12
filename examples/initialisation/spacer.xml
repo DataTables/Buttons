@@ -9,7 +9,17 @@ $(document).ready(function() {
 	$('#example').DataTable( {
 		dom: 'Bfrtip',
 		buttons: [
-			'csv', 'excel', 'pdf', 'spacer', 'copy', 'print'
+			'copy',
+			'print',
+			{
+				extend: 'spacer',
+				style: 'bar',
+				text: 'export files'
+			},
+			'csv',
+			'excel',
+			'spacer',
+			'pdf'
 		]
 	} );
 } );
