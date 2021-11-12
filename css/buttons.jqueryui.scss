@@ -72,8 +72,9 @@ div.dt-button-collection {
 
 div.dt-btn-split-wrapper {
 	padding: 0px !important;
+	background-color: transparent !important;
 	display: flex;
-	border: none;
+	border: none !important;
 	margin: 0px;
 
 	&:hover {
