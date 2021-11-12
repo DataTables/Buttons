@@ -120,6 +120,18 @@ div.dataTables_layout_cell div.dt-buttons {
 	}
 }
 
+div.dt-btn-split-wrapper {
+	display: inline-block;
+	button {
+		margin: 0px;
+		height: 35px;
+	}
+
+	button.dt-btn-split-drop {
+		margin-left: -1px;
+	}
+}
+
 div.dt-button-collection {
 	position: absolute;
 	top: 0;
@@ -256,10 +268,6 @@ button.dt-btn-split-drop {
 	&:hover {
 		z-index: 2;
 	}
-}
-
-div.dt-btn-split-wrapper {
-	display: inline-block;
 }
 
 button.buttons-split {
