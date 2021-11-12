@@ -99,3 +99,18 @@ div.dt-buttons {
 		border-bottom-color: white;
 	}
 }
+
+div.dt-btn-split-wrapper {
+	&:active:not(.disabled),
+	&.secondary:not(.disabled){
+		button.dt-btn-split-drop {
+			box-shadow: none;
+			background-color: #1779ba;
+			border-color: transparent;
+			&:hover {
+				background-color: #14679e;
+				border-color: transparent;
+			}
+		}
+	}
+}

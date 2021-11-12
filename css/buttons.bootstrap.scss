@@ -76,6 +76,25 @@ div.dt-btn-split-wrapper {
 		border-top-right-radius: 4px !important;
 		border-bottom-right-radius: 4px !important;
 	}
+
+	&:active:not(.disabled),
+	&.active:not(.disabled) {
+		button {
+			background-color: #e6e6e6;
+			border-color: #adadad;
+		}
+		button.dt-btn-split-drop {
+			box-shadow: none;
+			background-color: #fff;
+			border-color: rgb(173, 173, 173);
+		}
+		button {
+			&:hover {
+				background-color: #e6e6e6;
+				border-color: #adadad;
+			}
+		}
+	}
 }
 
 span.dt-down-arrow {

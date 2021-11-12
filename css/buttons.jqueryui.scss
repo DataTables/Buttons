@@ -90,6 +90,26 @@ div.dt-btn-split-wrapper {
 		border-radius: 0px;
 		margin-left: -1px;
 	}
+
+	&:active:not(.disabled),
+	&.ui-state-active:not(.disabled),
+	&.is-active:not(.disabled) {
+		button.dt-button {
+			background-color: #007fff;
+			border-color: #003eff;
+		}
+		button.dt-btn-split-drop {
+			box-shadow: none;
+			background-color: #f6f6f6;
+			border-color: #c5c5c5;
+		}
+		button {
+			&:hover {
+				background-color: #ededed;
+				border-color: #cccccc;
+			}
+		}
+	}
 }
 
 div.dt-button-background {

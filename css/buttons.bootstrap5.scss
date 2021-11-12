@@ -94,6 +94,24 @@ div.dt-btn-split-wrapper {
 		border-top-right-radius: .25rem !important;
 		border-bottom-right-radius: .25rem !important;
 	}
+	&:active:not(.disabled),
+	&.active:not(.disabled) {
+		button {
+			background-color: #5a6268;
+			border-color: #545b62;
+		}
+		button.dt-btn-split-drop {
+			box-shadow: none;
+			background-color: #6c757d;
+			border-color: #6c757d;
+		}
+		button {
+			&:hover {
+				background-color: #5a6268;
+				border-color: #545b62;
+			}
+		}
+	}
 }
 
 div.dataTables_wrapper {

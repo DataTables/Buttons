@@ -113,3 +113,21 @@ div.dt-button-collection span.dt-button-spacer {
 .ui.basic.buttons .button.dt-button-spacer {
 	background-color: rgba(34,36,38,.05) !important;
 }
+
+div.dt-btn-split-wrapper {
+	&:active:not(.disabled),
+	&.active:not(.disabled) {
+		button.button {
+			background-color: #f8f8f8 !important;
+		}
+		button.dt-btn-split-drop {
+			box-shadow: none;
+			background-color: transparent !important;
+		}
+		button.button {
+			&:hover {
+				background-color: transparent !important;
+			}
+		}
+	}
+}

@@ -159,4 +159,24 @@ div.dt-btn-split-wrapper {
 		padding: 0px;
 	}
 	margin-bottom: 0px !important;
+
+	&:active:not(.disabled),
+	&.active:not(.disabled),
+	&.is-active:not(.disabled) {
+		button {
+			background-color: #eee;
+			border-color: transparent;
+		}
+		button.dt-button {
+			box-shadow: none;
+			background-color: rgb(245,245,245);
+			border-color: transparent;
+		}
+		button {
+			&:hover {
+				background-color: #eee;
+				border-color: transparent;
+			}
+		}
+	}
 }
