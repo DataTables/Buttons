@@ -887,7 +887,7 @@ $.extend( Buttons.prototype, {
 					e.preventDefault();
 					e.stopPropagation();
 
-					if ( ! dropButton.hasClass( buttonDom.disabled ) && dropButtonConfig.action ) {
+					if ( ! dropButton.hasClass( buttonDom.disabled )) {
 						splitAction( e, dt, dropButton, dropButtonConfig );
 					}
 					if ( clickBlurs ) {
@@ -898,7 +898,7 @@ $.extend( Buttons.prototype, {
 					if ( e.keyCode === 13 ) {
 						e.preventDefault();
 
-						if ( ! dropButton.hasClass( buttonDom.disabled ) && dropButtonConfig.action ) {
+						if ( ! dropButton.hasClass( buttonDom.disabled ) ) {
 							splitAction( e, dt, dropButton, dropButtonConfig );
 						}
 					}
