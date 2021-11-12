@@ -37,8 +37,12 @@ div.dt-button-collection {
 		}
 		a.button,
 		button.button {
+			display: inline-block !important;
+			white-space: nowrap;
 			height: 40px;
 			flex-basis: auto;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 }
