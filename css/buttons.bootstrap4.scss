@@ -90,10 +90,6 @@ div.dt-buttons {
 }
 
 div.dt-btn-split-wrapper {
-	button.dt-btn-split-drop {
-		border-top-right-radius: .25rem !important;
-		border-bottom-right-radius: .25rem !important;
-	}
 	&:active:not(.disabled),
 	&.active:not(.disabled) {
 		button {
@@ -116,30 +112,57 @@ div.dt-btn-split-wrapper {
 
 div.dataTables_wrapper {
 	div.dt-buttons.btn-group {
-		button.btn{
-			&:last-child:first-of-type{
-				border-radius: 4px !important;
-			}
-		}
 		div.btn-group {
-			button.btn{
-				&:last-of-type{
-					border-top-left-radius: 0px !important;
-					border-bottom-left-radius: 0px !important;
-				}
-				&:first-of-type{
-					border-top-right-radius: 0px !important;
-					border-bottom-right-radius: 0px !important;
-				}
+			border-radius: 4px !important;
+			&:last-child{
+				border-top-left-radius: 0px !important;
+				border-bottom-left-radius: 0px !important;
+			}
+			&:first-child{
+				border-top-right-radius: 0px !important;
+				border-bottom-right-radius: 0px !important;
+			}
+			&:last-child:first-child{
+				border-top-left-radius: 4px !important;
+				border-bottom-left-radius: 4px !important;
+				border-top-right-radius: 4px !important;
+				border-bottom-right-radius: 4px !important;
 			}
 			button.dt-btn-split-drop:last-child {
 				border: 1px solid rgb(108, 117, 125);
-				border-top-right-radius: 4px !important;
-				border-bottom-right-radius: 4px !important;
 			}
 			div.dt-btn-split-wrapper {
 				border: none;
 			}
+		}
+	}
+}
+
+div.dt-button-collection {
+	div.btn-group {
+		border-radius: 4px !important;
+		button {
+			border-radius: 4px;
+		}
+		button:last-child{
+			border-top-left-radius: 0px !important;
+			border-bottom-left-radius: 0px !important;
+		}
+		button:first-child{
+			border-top-right-radius: 0px !important;
+			border-bottom-right-radius: 0px !important;
+		}
+		button:last-child:first-child{
+			border-top-left-radius: 4px !important;
+			border-bottom-left-radius: 4px !important;
+			border-top-right-radius: 4px !important;
+			border-bottom-right-radius: 4px !important;
+		}
+		button.dt-btn-split-drop:last-child {
+			border: 1px solid rgb(108, 117, 125);
+		}
+		div.dt-btn-split-wrapper {
+			border: none;
 		}
 	}
 }
