@@ -30,6 +30,10 @@
 		Class name to add to the background element if it is enabled.
 	</option>
 
+	<option type="string|node" name="backgroundHost" since="2.1.1">
+		This property can be used to insert the background into a specific location in the document. Please note that it will insert the background _after_ the element selected.
+	</option>
+
 	<option type="array" name="buttons" default="[]">
 		The buttons to show in the collection. The elements in this array follow the same rules as the `b-init buttons.buttons` array - i.e. it can contain strings, objects and functions that describe buttons. As of Buttons 1.1 this can also include buttons that trigger other collections to be shown (i.e. nested collections).
 	</option>

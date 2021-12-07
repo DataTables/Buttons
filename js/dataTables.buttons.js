@@ -1,4 +1,4 @@
-/*! Buttons for DataTables 2.1.0
+/*! Buttons for DataTables 2.1.1
  * ©2016-2021 SpryMedia Ltd - datatables.net/license
  */
 
@@ -1453,7 +1453,12 @@ $.extend( Buttons.prototype, {
 		}
 
 		if ( options.background ) {
-			Buttons.background( true, options.backgroundClassName, options.fade, hostNode );
+			Buttons.background(
+				true,
+				options.backgroundClassName,
+				options.fade,
+				options.backgroundHost || hostNode
+			);
 		}
 
 		// This is bonkers, but if we don't have a click listener on the
@@ -1843,7 +1848,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '2.1.0';
+Buttons.version = '2.1.1';
 
 
 $.extend( _dtButtons, {
