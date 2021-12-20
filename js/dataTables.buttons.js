@@ -651,7 +651,7 @@ $.extend( Buttons.prototype, {
 				if(built.conf.split) {
 					for(var j = 0; j < built.conf.split.length; j++) {
 						if(typeof built.conf.split[j] === "object") {
-							built.conf.split[i].parent = parentConf;
+							built.conf.split[j].parent = parentConf;
 							if(built.conf.split[j].collectionLayout === undefined) {
 								built.conf.split[j].collectionLayout = built.conf.collectionLayout;
 							}
