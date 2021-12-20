@@ -1201,6 +1201,7 @@ $.extend( Buttons.prototype, {
 			autoClose: false,
 			background: true,
 			backgroundClassName: 'dt-button-background',
+			closeButton: true,
 			contentClassName: buttonsSettings.dom.collection.className,
 			collectionLayout: '',
 			collectionTitle: '',
@@ -1274,6 +1275,10 @@ $.extend( Buttons.prototype, {
 		}
 		else if ( options.collectionTitle ) {
 			display.prepend('<div class="dt-button-collection-title">'+options.collectionTitle+'</div>');
+		}
+
+		if (options.closeButton) {
+			display.prepend('<div class="dtb-popover-close">x</div>').addClass('dtb-collection-closeable')
 		}
 
 		_fadeIn( display.insertAfter( hostNode ), options.fade );
