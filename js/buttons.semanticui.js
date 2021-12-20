@@ -48,7 +48,8 @@ $.extend( true, DataTable.Buttons.defaults, {
 		},
 		collection: {
 			tag: 'div',
-			className: 'ui basic vertical buttons'
+			className: 'ui basic vertical buttons',
+			closeButton: false
 		},
 		splitWrapper: {
 			tag: 'div',

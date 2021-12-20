@@ -1862,6 +1862,7 @@ $.extend( _dtButtons, {
 			return dt.i18n( 'buttons.collection', 'Collection' );
 		},
 		className: 'buttons-collection',
+		closeButton: false,
 		init: function ( dt, button, config ) {
 			button.attr( 'aria-expanded', false );
 		},

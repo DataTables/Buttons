@@ -47,6 +47,7 @@ var collection = DataTable.ext.foundationVersion === 6 ?
 	{
 		tag: 'ul',
 		className: 'f-dropdown open dropdown-pane is-open',
+		closeButton: false,
 		button: {
 			tag: 'li',
 			className: 'small',
