@@ -862,6 +862,7 @@ $.extend( Buttons.prototype, {
 			var dropButtonConfig = $.extend(config, {
 				text: this.c.dom.splitDropdown.text,
 				className: this.c.dom.splitDropdown.className,
+				closeButton: false,
 				attr: {
 					'aria-haspopup': true,
 					'aria-expanded': false
@@ -1277,6 +1278,7 @@ $.extend( Buttons.prototype, {
 			display.prepend('<div class="dt-button-collection-title">'+options.collectionTitle+'</div>');
 		}
 
+		console.log(options.closeButton)
 		if (options.closeButton) {
 			display.prepend('<div class="dtb-popover-close">x</div>').addClass('dtb-collection-closeable')
 		}
@@ -1884,6 +1886,7 @@ $.extend( _dtButtons, {
 			return dt.i18n( 'buttons.split', 'Split' );
 		},
 		className: 'buttons-split',
+		closeButton: false,
 		init: function ( dt, button, config ) {
 			return button.attr( 'aria-expanded', false );
 		},

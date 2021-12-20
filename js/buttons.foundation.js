@@ -81,15 +81,18 @@ $.extend( true, DataTable.Buttons.defaults, {
 		splitWrapper: {
 			tag: 'div',
 			className: 'dt-btn-split-wrapper button-group',
+			closeButton: false,
 		},
 		splitDropdown: {
 			tag: 'button',
 			text: '',
 			className: 'button dt-btn-split-drop dropdown arrow-only',
+			closeButton: false,
 		},
 		splitDropdownButton: {
 			tag: 'button',
-			className: 'dt-btn-split-drop-button button small'
+			className: 'dt-btn-split-drop-button button small',
+			closeButton: false
 		}
 	}
 } );
