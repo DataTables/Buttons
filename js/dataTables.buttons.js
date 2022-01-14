@@ -1,5 +1,5 @@
-/*! Buttons for DataTables 2.1.1
- * ©2016-2021 SpryMedia Ltd - datatables.net/license
+/*! Buttons for DataTables 2.2.0
+ * ©2016-2022 SpryMedia Ltd - datatables.net/license
  */
 
 (function( factory ){
@@ -1459,10 +1459,6 @@ $.extend( Buttons.prototype, {
 					top = half;
 				}
 
-				// if (half - top < 0) {
-				// 	top = 0;
-				// }
-
 				display.css( 'marginTop', top*-1 );
 			};
 
@@ -1869,7 +1865,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '2.1.1';
+Buttons.version = '2.2.0';
 
 
 $.extend( _dtButtons, {
