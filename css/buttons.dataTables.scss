@@ -237,7 +237,7 @@ div.dt-button-collection {
 			margin-bottom: 0.333em !important;
 			
 			&:first-child {
-				margin-top: 4px;
+				margin-top: 0;
 				border-top-left-radius: 0;
 				border-top-right-radius: 0;
 			}
@@ -245,6 +245,12 @@ div.dt-button-collection {
 			&:last-child {
 				border-bottom-left-radius: 0;
 				border-bottom-right-radius: 0;
+			}
+		}
+
+		&.columns {
+			.dt-button:first-child {
+				margin-top: 4px;
 			}
 		}
 	}
