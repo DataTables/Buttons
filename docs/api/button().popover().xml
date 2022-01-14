@@ -23,6 +23,7 @@
               * `true` to show the background,
               * `false` to keep it from showing.
             * `-type string` `dt-button-background` - Class name to use for the background styling
+            * 1-type boolean` `closeButton` - Boolean indicating whether the close button should be included at the top right of the modal.
             * `-type string` `contentClassName` - Class name to use for the content container
             * `-type string` `collectionLayout` - Class name for additional styling to be applied
               * `-string two-colours` - Show content in two columns

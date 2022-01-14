@@ -651,7 +651,7 @@ $.extend( Buttons.prototype, {
 				if(built.conf.split) {
 					for(var j = 0; j < built.conf.split.length; j++) {
 						if(typeof built.conf.split[j] === "object") {
-							built.conf.split[i].parent = parentConf;
+							built.conf.split[j].parent = parentConf;
 							if(built.conf.split[j].collectionLayout === undefined) {
 								built.conf.split[j].collectionLayout = built.conf.collectionLayout;
 							}
@@ -862,6 +862,7 @@ $.extend( Buttons.prototype, {
 			var dropButtonConfig = $.extend(config, {
 				text: this.c.dom.splitDropdown.text,
 				className: this.c.dom.splitDropdown.className,
+				closeButton: false,
 				attr: {
 					'aria-haspopup': true,
 					'aria-expanded': false
@@ -1201,6 +1202,7 @@ $.extend( Buttons.prototype, {
 			autoClose: false,
 			background: true,
 			backgroundClassName: 'dt-button-background',
+			closeButton: true,
 			contentClassName: buttonsSettings.dom.collection.className,
 			collectionLayout: '',
 			collectionTitle: '',
@@ -1275,6 +1277,10 @@ $.extend( Buttons.prototype, {
 		}
 		else if ( options.collectionTitle ) {
 			display.prepend('<div class="dt-button-collection-title">'+options.collectionTitle+'</div>');
+		}
+
+		if (options.closeButton) {
+			display.prepend('<div class="dtb-popover-close">x</div>').addClass('dtb-collection-closeable')
 		}
 
 		_fadeIn( display.insertAfter( hostNode ), options.fade );
@@ -1872,6 +1878,7 @@ $.extend( _dtButtons, {
 			return dt.i18n( 'buttons.collection', 'Collection' );
 		},
 		className: 'buttons-collection',
+		closeButton: false,
 		init: function ( dt, button, config ) {
 			button.attr( 'aria-expanded', false );
 		},
@@ -1893,6 +1900,7 @@ $.extend( _dtButtons, {
 			return dt.i18n( 'buttons.split', 'Split' );
 		},
 		className: 'buttons-split',
+		closeButton: false,
 		init: function ( dt, button, config ) {
 			return button.attr( 'aria-expanded', false );
 		},

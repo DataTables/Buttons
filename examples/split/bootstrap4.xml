@@ -12,7 +12,8 @@ $(document).ready(function() {
 			{
 				extend: 'csv',
 				split: [ 'pdf', 'excel'],
-			}
+			},
+			'colvis'
 		]
 	} );
 

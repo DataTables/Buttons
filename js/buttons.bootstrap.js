@@ -47,6 +47,7 @@ $.extend( true, DataTable.Buttons.defaults, {
 		collection: {
 			tag: 'ul',
 			className: 'dropdown-menu',
+			closeButton: false,
 			button: {
 				tag: 'li',
 				className: 'dt-button',
@@ -61,17 +62,20 @@ $.extend( true, DataTable.Buttons.defaults, {
 		splitWrapper: {
 			tag: 'div',
 			className: 'dt-btn-split-wrapper btn-group',
+			closeButton: false,
 		},
 		splitDropdown: {
 			tag: 'button',
 			text: '&#x25BC;',
 			className: 'btn btn-default dt-btn-split-drop dropdown-toggle',
+			closeButton: false,
 			align: 'split-left',
 			splitAlignClass: 'dt-button-split-left'
 		},
 		splitDropdownButton: {
 			tag: 'button',
-			className: 'dt-btn-split-drop-button btn btn-default'
+			className: 'dt-btn-split-drop-button btn btn-default',
+			closeButton: false
 		}
 	}
 } );

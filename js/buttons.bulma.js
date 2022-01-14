@@ -47,6 +47,7 @@ $.extend( true, DataTable.Buttons.defaults, {
 		},
 		collection: {
 			tag: 'div',
+			closeButton: false,
 			className: 'dropdown-content',
 			button: {
 				tag: 'a',
@@ -57,16 +58,19 @@ $.extend( true, DataTable.Buttons.defaults, {
 		},
 		splitWrapper: {
 			tag: 'div',
-			className: 'dt-btn-split-wrapper dropdown-trigger buttons has-addons'
+			className: 'dt-btn-split-wrapper dropdown-trigger buttons has-addons',
+			closeButton: false
 		},
 		splitDropdownButton: {
 			tag: 'button',
-			className: 'dt-btn-split-drop-button button is-light'
+			className: 'dt-btn-split-drop-button button is-light',
+			closeButton: false
 		},
 		splitDropdown: {
 			tag: 'button',
 			text: '&#x25BC;',
 			className: 'button is-light',
+			closeButton: false,
 			align: 'split-left',
 			splitAlignClass: 'dt-button-split-left'
 		}

@@ -50,6 +50,7 @@ $.extend( DataTable.ext.buttons, {
 				return dt.i18n( 'buttons.colvis', 'Column visibility' );
 			},
 			className: 'buttons-colvis',
+			closeButton: false,
 			buttons: [ {
 				extend: 'columnsToggle',
 				columns: conf.columns,
