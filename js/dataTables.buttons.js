@@ -1232,6 +1232,7 @@ $.extend( Buttons.prototype, {
 			$('div.dt-button-background').off( 'click.dtb-collection' );
 			Buttons.background( false, options.backgroundClassName, options.fade, hostNode );
 
+			$(window).off('resize.resize.dtb-collection');
 			$('body').off( '.dtb-collection' );
 			dt.off( 'buttons-action.b-internal' );
 			dt.off( 'destroy' );
@@ -1444,12 +1445,26 @@ $.extend( Buttons.prototype, {
 		}
 		else {
 			// Fix position - centre on screen
-			var top = display.height() / 2;
-			if ( top > $(window).height() / 2 ) {
-				top = $(window).height() / 2;
-			}
+			var position = function () {
+				var half = $(window).height() / 2;
 
-			display.css( 'marginTop', top*-1 );
+				var top = display.height() / 2;
+				if ( top > half ) {
+					top = half;
+				}
+
+				// if (half - top < 0) {
+				// 	top = 0;
+				// }
+
+				display.css( 'marginTop', top*-1 );
+			};
+
+			position();
+
+			$(window).on('resize.dtb-collection', function () {
+				position();
+			});
 		}
 
 		if ( options.background ) {

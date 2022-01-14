@@ -10,7 +10,8 @@ $(document).ready(function() {
 		buttons: [
 			{
 				extend: 'colvis',
-				collectionLayout: 'fixed two-column'
+				collectionLayout: 'fixed columns',
+				collectionTitle: 'Column visibility control'
 			}
 		]
 	} );
@@ -24,7 +25,7 @@ $(document).ready(function() {
 
 The `b-button collection` button has a `collectionLayout` option that can be used to control the layout of the buttons shown in the collection. As the `b-button colvis` button extends the collection button, this option is also available for the column visibility controls.
 
-This example shows a fixed, two column layout. Please see the `collectionLayout` option in the `b-button collection` button documentation for the full list of options.
+This example shows a fixed, automatic column layout. Please see the `collectionLayout` option in the `b-button collection` button documentation for the full list of options.
 
 ]]></info>
 

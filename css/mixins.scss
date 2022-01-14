@@ -35,7 +35,9 @@
 		top: 50%;
 		left: 50%;
 		margin-left: -75px;
-		border-radius: 0;
+		border-radius: 5px;
+		max-height: 100vh;
+		overflow: auto;
 
 		&.two-column {
 			margin-left: -200px;
@@ -48,9 +50,28 @@
 		&.four-column {
 			margin-left: -300px;
 		}
+
+		&.columns {
+			// Four column
+			margin-left: -412px;
+
+			@media screen and (max-width: 1024px) {
+				margin-left: -309px;
+			}
+
+			@media screen and (max-width: 640px) {
+				margin-left: -205px;
+			}
+
+			@media screen and (max-width: 460px) {
+				margin-left: -100px;
+			}
+		}
 	}
 
-	> :last-child {
+	&.two-column > :last-child,
+	&.three-column > :last-child,
+	&.four-column > :last-child {
 		> * {
 			-webkit-column-break-inside: avoid;
 			break-inside: avoid;
@@ -70,11 +91,6 @@
 
 		> :last-child {
 			padding-bottom: 1px;
-
-			-webkit-column-count: 2;
-				-moz-column-count: 2;
-				-ms-column-count: 2;
-					-o-column-count: 2;
 			column-count: 2;
 		}
 	}
@@ -84,11 +100,6 @@
 
 		> :last-child {
 			padding-bottom: 1px;
-
-			-webkit-column-count: 3;
-				-moz-column-count: 3;
-				-ms-column-count: 3;
-					-o-column-count: 3;
 			column-count: 3;
 		}
 	}
@@ -98,11 +109,6 @@
 
 		> :last-child {
 			padding-bottom: 1px;
-
-			-webkit-column-count: 4;
-				-moz-column-count: 4;
-				-ms-column-count: 4;
-					-o-column-count: 4;
 			column-count: 4;
 		}
 	}
@@ -110,6 +116,46 @@
 	// Chrome fix - 531528
 	.dt-button {
 		border-radius: 0;
+	}
+
+	&.columns {
+		// Four column layout
+		width: auto;
+
+		> :last-child {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			align-items: center;
+
+			width: 818px;
+			padding-bottom: 1px;
+			
+			.dt-button {
+				width: 200px;
+			}
+		}
+
+		@media screen and (max-width: 1024px) {
+			// Three column layout
+			> :last-child {
+				width: 614px;
+			}
+		}
+
+		@media screen and (max-width: 640px) {
+			// Two column layout
+			> :last-child {
+				width: 410px;
+			}
+		}
+
+		@media screen and (max-width: 460px) {
+			// Single column
+			> :last-child {
+				width: 200px;
+			}
+		}
 	}
 }
 

@@ -49,14 +49,16 @@
 	<option type="string" name="collectionLayout" default="">
 		Layout options for the buttons shown in the collection. This is a string which can have:
 
-		* Fixed position layout - centred over the window:
-			* Use `-string fixed`
-		* Multi-column layout:
-			* Use one of `-string two-column`, `-string three-column` or `-string four-column`.
+		* Position:
+			* `-string dropdown` - Drop the collection down from the host button
+			* `-string fixed` - Display the collection centred over the window
+		* Column layout:
+			* `-string columns` - Automatic column display (based on screen size)
+			* `-string two-column` - Display in two columns
+			* `-string three-column` - Display in three columns
+			* `-string three-column` - Display in three columns
 
-		The multi-column layout can be use with the default absolute positioning of the drop down, or with the fixed position layout option. To use fixed positioning and multi-column layout, simply space separate the options - e.g. `fixed two-column`.
-
-		These options can be used with the default DataTables styling, Bootstrap, Foundation and jQuery UI.
+		The column layout can be use with the default absolute positioning of the drop down, or with the fixed position layout option. To use fixed positioning and multi-column layout, simply space separate the options - e.g. `fixed columns`.
 	</option>
 
 	<option type="integer" name="autoClose" default="false" since="1.1.2">

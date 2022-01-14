@@ -222,10 +222,29 @@ div.dt-button-collection {
 		&.active:not(.disabled) {
 			button.dt-button {
 				@include dtb-two-stop-gradient(#f0f0f0, #dadada);
-				box-shadow: inset 0px 0px 3px #666;
+				box-shadow: inset 0px 0px 4px #666;
 			}
 			button.dt-btn-split-drop {
 				box-shadow: none;
+			}
+		}
+	}
+
+	&.fixed {
+		.dt-button {
+			margin-left: 0.167em !important;
+			margin-right: 0.167em !important;
+			margin-bottom: 0.333em !important;
+			
+			&:first-child {
+				margin-top: 4px;
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+
+			&:last-child {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
 			}
 		}
 	}
