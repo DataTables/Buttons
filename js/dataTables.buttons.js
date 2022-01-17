@@ -1255,10 +1255,25 @@ $.extend( Buttons.prototype, {
 			close();
 		}
 
+		// Try to be smart about the layout
+		var cnt = $('.dt-button', content).length;
+		var mod = '';
+
+		if (cnt === 3) {
+			mod = 'dtb-b3';
+		}
+		else if (cnt === 2) {
+			mod = 'dtb-b2';
+		}
+		else if (cnt === 1) {
+			mod = 'dtb-b1';
+		}
+
 		var display = $('<div/>')
 			.addClass('dt-button-collection')
 			.addClass(options.collectionLayout)
 			.addClass(options.splitAlignClass)
+			.addClass(mod)
 			.css('display', 'none');
 
 		content = $(content)
