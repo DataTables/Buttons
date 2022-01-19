@@ -36,8 +36,7 @@
 		left: 50%;
 		margin-left: -75px;
 		border-radius: 5px;
-		max-height: 100vh;
-		overflow: auto;
+		background-color: white;
 
 		&.two-column {
 			margin-left: -200px;
@@ -53,19 +52,24 @@
 
 		&.columns {
 			// Four column
-			margin-left: -412px;
+			margin-left: -409px;
 
 			@media screen and (max-width: 1024px) {
-				margin-left: -309px;
+				margin-left: -308px;
 			}
 
 			@media screen and (max-width: 640px) {
-				margin-left: -205px;
+				margin-left: -203px;
 			}
 
 			@media screen and (max-width: 460px) {
-				margin-left: -102px;
+				margin-left: -100px;
 			}
+		}
+
+		> :last-child {
+			max-height: 100vh;
+			overflow: auto;
 		}
 	}
 
@@ -127,13 +131,15 @@
 			flex-wrap: wrap;
 			justify-content: flex-start;
 			align-items: center;
+			gap: 6px;
 
-			width: 819px;
+			width: 818px;
 			padding-bottom: 1px;
 			
 			.dt-button {
 				min-width: 200px;
 				flex: 0 1;
+				margin: 0;
 			}
 		}
 
@@ -158,14 +164,14 @@
 		@media screen and (max-width: 1024px) {
 			// Three column layout
 			> :last-child {
-				width: 615px;
+				width: 612px;
 			}
 		}
 
 		@media screen and (max-width: 640px) {
 			// Two column layout
 			> :last-child {
-				width: 410px;
+				width: 406px;
 			}
 
 			&.dtb-b3 .dt-button {
@@ -176,7 +182,7 @@
 		@media screen and (max-width: 460px) {
 			// Single column
 			> :last-child {
-				width: 205px;
+				width: 200px;
 			}
 		}
 	}

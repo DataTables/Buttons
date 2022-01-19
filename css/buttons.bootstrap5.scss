@@ -15,15 +15,24 @@ div.dt-button-collection {
 		padding-right: 2px;
 	}
 
-	div.dt-button-collection-title {
-		background-color: white;
-		border: 1px solid rgba(0, 0, 0, 0.15);
-	}
-
 	@include dtb-fixed-collection();
 
 	&.fixed {
+		background-color: white;
+		border: 1px solid rgba(0,0,0,.15);
+		border-radius: 4px;
+		box-shadow: 0 6px 12px rgba(0,0,0,.175);
+		padding: 0.5rem 0;
 		max-width: none;
+
+		.dropdown-menu {
+			position: relative;
+			background-color: transparent;
+			border: none;
+			box-shadow: none;
+			padding: 0;
+			border-radius: 0;
+		}
 
 		&:before,
 		&:after {

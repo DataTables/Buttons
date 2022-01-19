@@ -1388,7 +1388,8 @@ $.extend( Buttons.prototype, {
 				var popoverShuffle = 0;
 				if ( display.hasClass( options.rightAlignClassName )) {
 					popoverShuffle = buttonsRight - popoverRight;
-					if(tableLeft > (popoverLeft + popoverShuffle)){
+
+					if (tableLeft > (popoverLeft + popoverShuffle)) {
 						var leftGap = tableLeft - (popoverLeft + popoverShuffle);
 						var rightGap = tableRight - (popoverRight + popoverShuffle);
 		
@@ -1402,7 +1403,8 @@ $.extend( Buttons.prototype, {
 				}
 				else if ( display.hasClass( options.splitRightAlignClassName )) {
 					popoverShuffle = splitButtonRight - popoverRight;
-					if(tableLeft > (popoverLeft + popoverShuffle)){
+
+					if (tableLeft > (popoverLeft + popoverShuffle)) {
 						var leftGap = tableLeft - (popoverLeft + popoverShuffle);
 						var rightGap = tableRight - (popoverRight + popoverShuffle);
 		
@@ -1417,7 +1419,7 @@ $.extend( Buttons.prototype, {
 				else if ( display.hasClass( options.splitLeftAlignClassName )) {
 					popoverShuffle = splitButtonLeft - popoverLeft;
 
-					if(tableRight < (popoverRight + popoverShuffle) || tableLeft > (popoverLeft + popoverShuffle)){
+					if (tableRight < (popoverRight + popoverShuffle) || tableLeft > (popoverLeft + popoverShuffle)) {
 						var leftGap = tableLeft - (popoverLeft + popoverShuffle);
 						var rightGap = tableRight - (popoverRight + popoverShuffle);
 	
@@ -1427,7 +1429,6 @@ $.extend( Buttons.prototype, {
 						else {
 							popoverShuffle += leftGap;
 						}
-	
 					}
 				}
 				// else attempt to left align the popover to the button. Similar to above, if the popover's right goes past the table container's right,
@@ -1435,7 +1436,7 @@ $.extend( Buttons.prototype, {
 				else {
 					popoverShuffle = tableLeft - popoverLeft;
 	
-					if(tableRight < (popoverRight + popoverShuffle)){
+					if (tableRight < (popoverRight + popoverShuffle)) {
 						var leftGap = tableLeft - (popoverLeft + popoverShuffle);
 						var rightGap = tableRight - (popoverRight + popoverShuffle);
 	
@@ -1445,7 +1446,6 @@ $.extend( Buttons.prototype, {
 						else {
 							popoverShuffle += leftGap;
 						}
-	
 					}
 				}
 	

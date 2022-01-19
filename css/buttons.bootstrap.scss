@@ -14,10 +14,6 @@ div.dt-button-collection {
 		min-width: 100%;
 	}
 
-	div.dt-button-collection-title {
-		background-color: white;
-	}
-
 	div.dt-btn-split-wrapper {
 		width: 100%;
 		display: inline-flex;
@@ -39,6 +35,22 @@ div.dt-button-collection {
 	}
 
 	@include dtb-fixed-collection();
+
+	&.fixed {
+		background-color: white;
+		border: 1px solid rgba(0,0,0,.15);
+		border-radius: 4px;
+		box-shadow: 0 6px 12px rgba(0,0,0,.175);
+		padding: 0.5rem 0;
+
+		.dropdown-menu {
+			background-color: transparent;
+			border: none;
+			box-shadow: none;
+			padding: 0;
+			border-radius: 0;
+		}
+	}
 }
 
 div.dt-button-background {
