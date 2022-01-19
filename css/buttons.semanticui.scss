@@ -13,6 +13,25 @@ div.dt-button-collection {
 
 	@include dtb-fixed-collection();
 
+	div.dt-button-collection-title {
+		font-size: 1rem;
+	}
+
+	&.fixed {
+		border: 1px solid rgba(34,36,38,.15);
+		font-size: 1em;
+		padding: 0.5rem;
+
+		.ui.vertical.buttons {
+			flex-direction: row;
+			border: none;
+		}
+
+		button.dt-button {
+			border: 1px solid rgba(34, 36, 38, 0.15) !important;
+		}
+	}
+
 	div.dt-btn-split-wrapper {
 		display: flex;
 		button {

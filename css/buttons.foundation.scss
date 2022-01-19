@@ -25,10 +25,19 @@ div.dt-button-collection {
 
 	&.fixed {
 		max-width: none;
+		border: 1px solid #cacaca;
+		padding: 0.5rem;
 
-		&:before,
-		&:after {
-			display: none;
+		.button-group.stacked {
+			position: relative;
+			flex-direction: row;
+			border: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.dt-button {
+			flex-basis: 200px;
 		}
 	}
 
