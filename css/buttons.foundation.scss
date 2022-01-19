@@ -19,6 +19,7 @@ ul.dt-buttons.button-group a {
 
 div.dt-button-collection {
 	position: absolute;
+	z-index: 2002;
 
 	@include dtb-fixed-collection();
 
