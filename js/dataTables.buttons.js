@@ -1357,7 +1357,6 @@ $.extend( Buttons.prototype, {
 					left = -buttonPosition.left;
 				}
 
-				console.log('allan',popoverSizes, tableSizes, left)
 				if (left + popoverSizes.width > tableSizes.width) {
 					left = tableSizes.width - popoverSizes.width;
 				}
