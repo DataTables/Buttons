@@ -32,6 +32,7 @@
 	// Fixed positioning feature
 	&.fixed {
 		position: fixed;
+		display: block;
 		top: 50%;
 		left: 50%;
 		margin-left: -75px;

@@ -7,33 +7,29 @@ div.dt-button-collection {
 	z-index: 2001;
 	width: 100%;
 
+	// Recreate the dropdown menu styling - we nest it
+	background-color: white;
+	border: 1px solid rgba(0,0,0,.15);
+	border-radius: 4px;
+	box-shadow: 0 6px 12px rgba(0,0,0,.175);
+	padding: 0.5rem 0;
+	max-width: none;
+
 	div.dropdown-menu {
+		position: relative;
 		display: block;
+		background-color: transparent;
+		border: none;
+		box-shadow: none;
+		padding: 0;
+		border-radius: 0;
 		z-index: 2002;
 		min-width: 100%;
-		padding-left: 2px;
-		padding-right: 2px;
 	}
 
 	@include dtb-fixed-collection();
 
 	&.fixed {
-		background-color: white;
-		border: 1px solid rgba(0,0,0,.15);
-		border-radius: 4px;
-		box-shadow: 0 6px 12px rgba(0,0,0,.175);
-		padding: 0.5rem 0;
-		max-width: none;
-
-		.dropdown-menu {
-			position: relative;
-			background-color: transparent;
-			border: none;
-			box-shadow: none;
-			padding: 0;
-			border-radius: 0;
-		}
-
 		&:before,
 		&:after {
 			display: none;

@@ -20,20 +20,24 @@ ul.dt-buttons.button-group a {
 div.dt-button-collection {
 	position: absolute;
 	z-index: 2002;
+	max-width: none;
+	border: 1px solid #cacaca;
+	padding: 0.5rem;
+	background-color: white;
 
 	@include dtb-fixed-collection();
 
-	&.fixed {
-		max-width: none;
-		border: 1px solid #cacaca;
-		padding: 0.5rem;
+	.button-group.stacked {
+		position: relative;
+		border: none;
+		padding: 0;
+		margin: 0;
+	}
 
+	&.columns {
 		.button-group.stacked {
-			position: relative;
 			flex-direction: row;
-			border: none;
 			padding: 0;
-			margin: 0;
 		}
 
 		.dt-button {
