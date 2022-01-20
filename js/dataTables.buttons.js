@@ -1310,13 +1310,15 @@ $.extend( Buttons.prototype, {
 		// Useful for wide popovers such as SearchPanes
 		if (position === 'absolute') {
 			// Align relative to the host button
+			var offsetParent = $(hostNode[0].offsetParent);
 			var buttonPosition = hostNode.position();
 			var buttonOffset = hostNode.offset();
-			var tableSizes = tableContainer.offset();
-			var containerPosition = tableContainer.position();
+			var tableSizes = offsetParent.offset();
+			var containerPosition = offsetParent.position();
+			var computed = window.getComputedStyle(offsetParent[0]);
 
-			tableSizes.height = tableContainer.height();
-			tableSizes.width = tableContainer.width();
+			tableSizes.height = offsetParent.outerHeight();
+			tableSizes.width = offsetParent.width() + parseFloat(computed.paddingLeft);
 			tableSizes.right = tableSizes.left + tableSizes.width;
 			tableSizes.bottom = tableSizes.top + tableSizes.height;
 
@@ -1330,7 +1332,7 @@ $.extend( Buttons.prototype, {
 			} );
 
 			// Get the popover position
-			var computed = window.getComputedStyle(display[0]);
+			computed = window.getComputedStyle(display[0]);
 			var popoverSizes = display.offset();
 
 			popoverSizes.height = display.outerHeight();
@@ -1352,10 +1354,12 @@ $.extend( Buttons.prototype, {
 			// Container alignment - make sure it doesn't overflow the table container
 			if (options.align === 'dt-container' || options.align === 'container') {
 				if (left < buttonPosition.left) {
-					left += buttonPosition.left - left;
+					left = -buttonPosition.left;
 				}
-				else if (left + popoverSizes.width > tableSizes.right) {
-					left -= (left + popoverSizes.width) - tableSizes.right;
+
+				console.log('allan',popoverSizes, tableSizes, left)
+				if (left + popoverSizes.width > tableSizes.width) {
+					left = tableSizes.width - popoverSizes.width;
 				}
 			}
 

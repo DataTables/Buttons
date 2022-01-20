@@ -5,7 +5,6 @@
 div.dt-button-collection {
 	position: absolute;
 	z-index: 2001;
-	width: 100%;
 
 	// Recreate the dropdown menu styling - we nest it
 	background-color: white;
@@ -93,6 +92,10 @@ div.dt-buttons {
 	div.btn.processing,
 	a.btn.processing {
 		@include dtb-processing();
+	}
+
+	div.btn-group {
+		position: initial;
 	}
 }
 
