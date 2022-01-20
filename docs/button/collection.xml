@@ -87,7 +87,13 @@
 		The horizontal alignment of the popover relative to the button. It may be one of:
 		* `-string button-left` - Align to the left of the activation button.
 		* `-string button-right` - Align to the right of the activation button.
-		* `-string dt-container` - Align to the left of the DataTables' container and span its full width (good for large content areas).
+		* `-string container` - Align to the left or right of the DataTables' container (since 2.2.2)
+		* `-string dt-container` - Align to the left of the DataTables' container and span its full width - deprecated, use `container` and the `span` option.
+	</option>
+
+	<option type="string" name="span" default="dt-container" since="2.2.2">
+		Specifically set the width of the container:
+		* `-string container` - Span its full width of the DataTables' container (good for large content areas).
 	</option>
 
 	<example title="DataTables initialisation: Create an export collection"><![CDATA[

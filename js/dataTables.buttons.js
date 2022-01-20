@@ -1210,8 +1210,6 @@ $.extend( Buttons.prototype, {
 			fade: 400,
 			popoverTitle: '',
 			rightAlignClassName: 'dt-button-right',
-			splitRightAlignClassName: 'dt-button-split-right',
-			splitLeftAlignClassName: 'dt-button-split-left',
 			tag: buttonsSettings.dom.collection.tag
 		}, inOpts );
 
@@ -1303,7 +1301,7 @@ $.extend( Buttons.prototype, {
 		var tableContainer = $( hostButton.table().container() );
 		var position = display.css( 'position' );
 
-		if ( options.align === 'dt-container' ) {
+		if ( options.span === 'container' || options.align === 'dt-container' ) {
 			hostNode = hostNode.parent();
 			display.css('width', tableContainer.width());
 		}
@@ -1395,36 +1393,6 @@ $.extend( Buttons.prototype, {
 		
 						if(leftGap > rightGap){
 							popoverShuffle += rightGap; 
-						}
-						else {
-							popoverShuffle += leftGap;
-						}
-					}
-				}
-				else if ( display.hasClass( options.splitRightAlignClassName )) {
-					popoverShuffle = splitButtonRight - popoverRight;
-
-					if (tableLeft > (popoverLeft + popoverShuffle)) {
-						var leftGap = tableLeft - (popoverLeft + popoverShuffle);
-						var rightGap = tableRight - (popoverRight + popoverShuffle);
-		
-						if(leftGap > rightGap){
-							popoverShuffle += rightGap; 
-						}
-						else {
-							popoverShuffle += leftGap;
-						}
-					}
-				}
-				else if ( display.hasClass( options.splitLeftAlignClassName )) {
-					popoverShuffle = splitButtonLeft - popoverLeft;
-
-					if (tableRight < (popoverRight + popoverShuffle) || tableLeft > (popoverLeft + popoverShuffle)) {
-						var leftGap = tableLeft - (popoverLeft + popoverShuffle);
-						var rightGap = tableRight - (popoverRight + popoverShuffle);
-	
-						if(leftGap > rightGap ){
-							popoverShuffle += rightGap;
 						}
 						else {
 							popoverShuffle += leftGap;
