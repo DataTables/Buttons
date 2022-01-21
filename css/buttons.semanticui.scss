@@ -138,8 +138,14 @@ div.dt-button-collection span.dt-button-spacer {
 	}
 }
 
-.ui.basic.buttons .button.dt-button-spacer {
-	background-color: rgba(34,36,38,.05) !important;
+div.dt-buttons.ui.basic.buttons .button.dt-button-spacer {
+	background: rgba(34,36,38,.05) !important;
+	box-shadow: none;
+	cursor: initial;
+
+	&:hover {
+		background-color: rgba(34,36,38,.05) !important;
+	}
 }
 
 div.dt-btn-split-wrapper {
