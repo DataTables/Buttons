@@ -22,6 +22,19 @@ div.dt-button-collection {
 		font-size: 1rem;
 	}
 
+	&.columns {
+		div.ui.basic.buttons {
+			span.dt-button-spacer {
+				background: transparent !important;
+				border: none;
+				flex: 1 1 100%;
+
+				&:hover {
+					background: transparent !important;
+				}
+			}
+		}
+	}
 
 	&:not(.columns) {
 		.ui.vertical.buttons {
