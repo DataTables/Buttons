@@ -19,15 +19,29 @@ ul.dt-buttons.button-group a {
 
 div.dt-button-collection {
 	position: absolute;
+	z-index: 2002;
+	max-width: none;
+	border: 1px solid #cacaca;
+	padding: 0.5rem;
+	background-color: white;
 
 	@include dtb-fixed-collection();
 
-	&.fixed {
-		max-width: none;
+	.button-group.stacked {
+		position: relative;
+		border: none;
+		padding: 0;
+		margin: 0;
+	}
 
-		&:before,
-		&:after {
-			display: none;
+	&.columns {
+		.button-group.stacked {
+			flex-direction: row;
+			padding: 0;
+		}
+
+		.dt-button {
+			flex-basis: 200px;
 		}
 	}
 

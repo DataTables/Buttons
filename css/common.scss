@@ -1,4 +1,12 @@
 
+div.dataTables_wrapper {
+	position: relative;
+}
+
+div.dt-buttons {
+	position: initial;
+}
+
 div.dt-button-info {
 	position: fixed;
 	top: 50%;
@@ -47,6 +55,8 @@ button.dtb-hide-drop {
 div.dt-button-collection-title {
 	text-align: center;
 	padding: 0.3em 0 0.5em;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
 	font-size: 0.9em;
 }
 

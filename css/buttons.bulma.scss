@@ -6,16 +6,12 @@ div.dt-button-collection {
 	position: absolute;
 	z-index: 2001;
 	min-width: 200px;
+	background: white;
 
 	div.dropdown-menu {
 		display: block;
 		z-index: 2002;
 		min-width: 100%;
-	}
-
-	div.dt-button-collection-title {
-		background-color: white;
-		border: 1px solid rgba(0, 0, 0, 0.15);
 	}
 
 	div.dt-btn-split-wrapper {
@@ -61,9 +57,20 @@ div.dt-button-collection {
 
 	@include dtb-fixed-collection();
 
-	&.fixed {
-		max-width: none;
+	// We need the dropdown stylings on the container, not the dropdown content
+	max-width: none;
+	display: block;
+	box-shadow: 0 .5em 1em -.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+	border-radius: 4;
+	padding: .5rem;
 
+	.dropdown-content {
+		box-shadow: none;
+		padding-top: 0;
+		border-radius: 0;
+	}
+
+	&.fixed {
 		&:before,
 		&:after {
 			display: none;

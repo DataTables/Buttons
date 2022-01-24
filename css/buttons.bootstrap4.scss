@@ -5,28 +5,42 @@
 div.dt-button-collection {
 	position: absolute;
 	z-index: 2001;
-	width: 100%;
+
+	// Recreate the dropdown menu styling - we nest it
+	background-color: white;
+	border: 1px solid rgba(0,0,0,.15);
+	border-radius: 4px;
+	box-shadow: 0 6px 12px rgba(0,0,0,.175);
+	padding: 0.5rem;
+	width: 200px;
 
 	div.dropdown-menu {
+		position: relative;
 		display: block;
 		z-index: 2002;
 		min-width: 100%;
-	}
-
-	div.dt-button-collection-title {
-		background-color: white;
-		border: 1px solid rgba(0, 0, 0, 0.15);
+		background-color: transparent;
+		border: none;
+		box-shadow: none;
+		padding: 0;
+		border-radius: 0;
 	}
 
 	@include dtb-fixed-collection();
 
 	&.fixed {
-		max-width: none;
-
 		&:before,
 		&:after {
 			display: none;
 		}
+	}
+
+	.btn-group {
+		flex: 1 1 auto;
+	}
+
+	.dt-button {
+		min-width: 200px;
 	}
 
 	div.dt-btn-split-wrapper {
@@ -86,6 +100,10 @@ div.dt-buttons {
 	div.btn.processing,
 	a.btn.processing {
 		@include dtb-processing();
+	}
+
+	div.btn-group {
+		position: initial;
 	}
 }
 
