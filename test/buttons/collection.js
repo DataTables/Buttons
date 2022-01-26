@@ -59,6 +59,91 @@ describe('buttons - collection', function () {
 
 	describe('Functional tests - basic', function () {
 		dt.html('basic');
+		it('align - button-left', function () {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [{text: 'test', action: function () {}}],
+						align: 'button-left'
+					}
+				]
+			});
+			$('button.dt-button').click();
+
+			let button = $('button.buttons-collection').offset();
+			let collection = $('div.dt-button-collection').offset();
+
+			expect(button.left).toBe(collection.left);
+		});
+
+		dt.html('basic');
+		it('align - button-right', function () {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [{text: 'test', action: function () {}}],
+						align: 'button-right'
+					}
+				]
+			});
+			$('button.dt-button').click();
+
+			let collection = $('div.dt-button-collection').offset();
+
+			expect(collection.left).toBe(0);
+		});
+
+		dt.html('basic');
+		it('align - container', function () {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [{text: 'test', action: function () {}}],
+						align: 'container'
+					}
+				]
+			});
+			$('button.dt-button').click();
+
+			let button = $('button.buttons-collection').offset();
+			let collection = $('div.dt-button-collection').offset();
+
+			expect(button.left).toBe(collection.left);
+		});
+
+		dt.html('basic');
+		it('align - dt-container', function () {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [{text: 'test', action: function () {}}],
+						align: 'dt-container'
+					}
+				]
+			});
+			$('button.dt-button').click();
+
+			let button = $('button.buttons-collection').offset();
+			let collection = $('div.dt-button-collection').offset();
+			let width = $('div.dt-button-collection').width();
+
+			expect(button.left).toBe(collection.left);
+			expect(width).toBeGreaterThan(100);
+		});
+
+		dt.html('basic');
 		it('action', function (done) {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
@@ -79,10 +164,10 @@ describe('buttons - collection', function () {
 			});
 			$('button.dt-button').click();
 			$('div.dt-button-collection button.dt-button').click();
-			setTimeout(function() {
+			setTimeout(function () {
 				expect($('tbody tr:eq(0) td:eq(0)').text()).toBe('Ashton Cox');
 				done();
-			}, 50)
+			}, 50);
 		});
 
 		dt.html('basic');
@@ -353,6 +438,7 @@ describe('buttons - collection', function () {
 			});
 			$('button.dt-button').click();
 			expect($('div.dt-button-collection.four-column').length).toBe(1);
+			expect($('div.dt-button-collection.four-column').offset().top).toBeLessThan($('tbody tr:eq(5)').offset().top);
 		});
 		it('collectionLayout - four-column - horizontal position', function () {
 			let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
@@ -371,6 +457,96 @@ describe('buttons - collection', function () {
 			expect($('div.dt-button-collection button:eq(2)').offset().top).toBe(firstRow.top);
 			expect($('div.dt-button-collection button:eq(4)').offset().top).toBe(firstRow.top);
 			let secondRow = $('div.dt-button-collection button:eq(1)').offset();
+
+			expect(firstRow.top).toBeLessThan(secondRow.top);
+		});
+
+		dt.html('basic');
+		it('collectionLayout - four-column fixed', function () {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [
+							{text: 'one', action: function () {}},
+							{text: 'two', action: function () {}},
+							{text: 'three', action: function () {}},
+							{text: 'four', action: function () {}},
+							{text: 'five', action: function () {}},
+							{text: 'six', action: function () {}},
+							{text: 'seven', action: function () {}}
+						],
+						collectionLayout: 'fixed four-column'
+					}
+				]
+			});
+			$('button.dt-button').click();
+			expect($('div.dt-button-collection.four-column').length).toBe(1);
+			expect($('div.dt-button-collection.four-column').offset().top).toBeGreaterThan($('tbody tr:eq(5)').offset().top);
+		});
+		it('collectionLayout - four-column - horizontal position', function () {
+			let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
+			let secondColumn = $('div.dt-button-collection button:eq(2)').offset();
+			expect($('div.dt-button-collection button:eq(2)').offset().left).toBe(secondColumn.left);
+			let thirdColumn = $('div.dt-button-collection button:eq(4)').offset();
+			let fourthColumn = $('div.dt-button-collection button:eq(6)').offset();
+
+			expect(firstColumn.left).toBeLessThan(secondColumn.left);
+			expect(secondColumn.left).toBeLessThan(thirdColumn.left);
+			expect(secondColumn.left - firstColumn.left).toBe(thirdColumn.left - secondColumn.left);
+			expect(thirdColumn.left).toBeLessThan(fourthColumn.left);
+		});
+		it('collectionLayout - four-column - vertical position', function () {
+			let firstRow = $('div.dt-button-collection button:eq(0)').offset();
+			expect($('div.dt-button-collection button:eq(2)').offset().top).toBe(firstRow.top);
+			expect($('div.dt-button-collection button:eq(4)').offset().top).toBe(firstRow.top);
+			let secondRow = $('div.dt-button-collection button:eq(1)').offset();
+
+			expect(firstRow.top).toBeLessThan(secondRow.top);
+		});
+
+		dt.html('basic');
+		it('collectionLayout - responsive (columns) fixed', function () {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [
+							{text: 'one', action: function () {}},
+							{text: 'two', action: function () {}},
+							{text: 'three', action: function () {}},
+							{text: 'four', action: function () {}},
+							{text: 'five', action: function () {}},
+							{text: 'six', action: function () {}},
+							{text: 'seven', action: function () {}}
+						],
+						collectionLayout: 'fixed columns'
+					}
+				]
+			});
+			$('button.dt-button').click();
+			expect($('div.dt-button-collection').length).toBe(1);
+			expect($('div.dt-button-collection').offset().top).toBeGreaterThan($('tbody tr:eq(5)').offset().top);
+		});
+		it('collectionLayout - responsive three-column - horizontal position', function () {
+			// DD-2428 - note currently the buttons go across (normally they're down)
+			let firstColumn = $('div.dt-button-collection button:eq(0)').offset();
+			let secondColumn = $('div.dt-button-collection button:eq(1)').offset();
+			let thirdColumn = $('div.dt-button-collection button:eq(2)').offset();
+
+			expect(firstColumn.left).toBeLessThan(secondColumn.left);
+			expect(secondColumn.left).toBeLessThan(thirdColumn.left);
+			expect(secondColumn.left - firstColumn.left).toBe(thirdColumn.left - secondColumn.left);
+		});
+		it('collectionLayout - responsive three-column - vertical position', function () {
+			let firstRow = $('div.dt-button-collection button:eq(0)').offset();
+			expect($('div.dt-button-collection button:eq(1)').offset().top).toBe(firstRow.top);
+			expect($('div.dt-button-collection button:eq(2)').offset().top).toBe(firstRow.top);
+			let secondRow = $('div.dt-button-collection button:eq(3)').offset();
 
 			expect(firstRow.top).toBeLessThan(secondRow.top);
 		});
@@ -540,6 +716,29 @@ describe('buttons - collection', function () {
 			expect($('div.dt-button-collection button:eq(0)').text()).toBe('pre');
 			expect($('div.dt-button-collection button:eq(1)').text()).toBe('one');
 			expect($('div.dt-button-collection button:eq(2)').text()).toBe('post');
+		});
+
+		dt.html('basic');
+		it('align - button-right', function () {
+			table = $('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						fade: 0, // saves having to sleep in the tests
+						extend: 'collection',
+						buttons: [{text: 'test', action: function () {}}],
+						span: 'container'
+					}
+				]
+			});
+			$('button.dt-button').click();
+
+			let button = $('button.buttons-collection').offset();
+			let collection = $('div.dt-button-collection').offset();
+			let width = $('div.dt-button-collection').width();
+
+			expect(button.left).toBe(collection.left);
+			expect(width).toBeGreaterThan(100);
 		});
 
 		dt.html('basic');
