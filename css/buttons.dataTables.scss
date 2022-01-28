@@ -47,8 +47,7 @@ input.dt-button {
 		opacity: 0.4;
 	}
 
-	&:active:not(.disabled),
-	&.active:not(.disabled) {
+	&:active:not(.disabled) {
 		@include dtb-two-stop-gradient(
 			lighten($dtb-button-colour, 70%),
 			darken($dtb-button-colour, 20%)
@@ -84,6 +83,10 @@ input.dt-button {
 			lighten($dtb-button-focus-colour, 20%),
 			$dtb-button-focus-colour
 		);
+	}
+
+	&.active:focus:not(.disabled) {
+		background: linear-gradient(to bottom, lighten($dtb-button-focus-colour, 20%) 0%, $dtb-button-focus-colour 100%) !important;
 	}
 
 	span.dt-down-arrow {

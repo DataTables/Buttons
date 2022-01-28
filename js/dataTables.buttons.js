@@ -1460,6 +1460,34 @@ $.extend( Buttons.prototype, {
 					if ( e.keyCode === 27 ) {
 						close();
 					}
+				} )
+				.on( 'keydown.dtb-collection', function (e) {
+					// Focus trap for tab key
+					var elements = $('a, button', content);
+					var active = document.activeElement;
+
+					if (e.keyCode !== 9) { // tab
+						return;
+					}
+
+					if (elements.index(active) === -1) {
+						// If current focus is not inside the popover
+						elements.first().focus();
+						e.preventDefault();
+					}
+					else if (e.shiftKey) {
+						// Reverse tabbing order when shift key is pressed
+						if (active === elements[0]) {
+							elements.last().focus();
+							e.preventDefault();
+						}
+					}
+					else {
+						if (active === elements.last()[0]) {
+							elements.first().focus();
+							e.preventDefault();
+						}
+					}
 				} );
 		}, 0);
 	}
@@ -1819,6 +1847,7 @@ $.extend( _dtButtons, {
 			button.attr( 'aria-expanded', false );
 		},
 		action: function ( e, dt, button, config ) {
+			console.log('button', e, config);
 			if ( config._collection.parents('body').length ) {
 				this.popover(false, config);
 			}
