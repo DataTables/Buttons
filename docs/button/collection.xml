@@ -30,10 +30,6 @@
 		Class name to add to the background element if it is enabled.
 	</option>
 
-	<option type="string|node" name="backgroundHost" since="2.1.1">
-		This property can be used to insert the background into a specific location in the document. Please note that it will insert the background _after_ the element selected.
-	</option>
-
 	<option type="array" name="buttons" default="[]">
 		The buttons to show in the collection. The elements in this array follow the same rules as the `b-init buttons.buttons` array - i.e. it can contain strings, objects and functions that describe buttons. As of Buttons 1.1 this can also include buttons that trigger other collections to be shown (i.e. nested collections).
 	</option>
@@ -85,14 +81,17 @@
 
 	<option type="string" name="align" default="dt-container" since="1.6.0">
 		The horizontal alignment of the popover relative to the button. It may be one of:
+
 		* `-string button-left` - Align to the left of the activation button.
 		* `-string button-right` - Align to the right of the activation button.
-		* `-string container` - Align to the left or right of the DataTables' container (since 2.2.2)
+		* `-string container` - Align to the left and right of the DataTables' container (since 2.2.2)
 		* `-string dt-container` - Align to the left of the DataTables' container and span its full width - deprecated, use `container` and the `span` option.
 	</option>
 
-	<option type="string" name="span" default="dt-container" since="2.2.2">
-		Specifically set the width of the container:
+	<option type="string" name="span" default="container" since="2.2.2">
+		Match the width of the dropdown to the datatables container.:
+
+		* `default` - width of the collection dropdown is defined by the CSS.
 		* `-string container` - Span its full width of the DataTables' container (good for large content areas).
 	</option>
 
