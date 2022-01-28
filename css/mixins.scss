@@ -9,21 +9,12 @@
 
 @mixin dtb-two-stop-gradient($fromColor, $toColor) {
 	background-color: $toColor; /* Fallback */
-	background: -webkit-linear-gradient(top, $fromColor 0%, $toColor 100%); /* Chrome 10+, Saf5.1+, iOS 5+ */
-	background:    -moz-linear-gradient(top, $fromColor 0%, $toColor 100%); /* FF3.6 */
-	background:     -ms-linear-gradient(top, $fromColor 0%, $toColor 100%); /* IE10 */
-	background:      -o-linear-gradient(top, $fromColor 0%, $toColor 100%); /* Opera 11.10+ */
-	background:         linear-gradient(to bottom, $fromColor 0%, $toColor 100%);
+	background: linear-gradient(to bottom, $fromColor 0%, $toColor 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#{nth( $fromColor, 1 )}', EndColorStr='#{nth( $toColor, 1 )}');
 }
 
 @mixin dtb-radial-gradient ($fromColor, $toColor ) {
 	background: $toColor; /* Fallback */
-	background:     -ms-radial-gradient(center, ellipse farthest-corner, $fromColor 0%, $toColor 100%); /* IE10 Consumer Preview */ 
-	background:    -moz-radial-gradient(center, ellipse farthest-corner, $fromColor 0%, $toColor 100%); /* Firefox */ 
-	background:      -o-radial-gradient(center, ellipse farthest-corner, $fromColor 0%, $toColor 100%); /* Opera */ 
-	background: -webkit-gradient(radial, center center, 0, center center, 497, color-stop(0, $fromColor), color-stop(1, $toColor)); /* Webkit (Safari/Chrome 10) */ 
-	background: -webkit-radial-gradient(center, ellipse farthest-corner, $fromColor 0%, $toColor 100%); /* Webkit (Chrome 11+) */ 
 	background: radial-gradient(ellipse farthest-corner at center, $fromColor 0%, $toColor 100%); /* W3C Markup, IE10 Release Preview */ 
 }
 
