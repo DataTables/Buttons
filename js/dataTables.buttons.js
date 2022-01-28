@@ -1825,6 +1825,12 @@ $.extend( _dtButtons, {
 			else {
 				this.popover(config._collection, config);
 			}
+
+			// When activated using a key - auto focus on the
+			// first item in the popover
+			if (e.type === 'keypress') {
+				$('a, button', config._collection).eq(0).focus();
+			}
 		},
 		attr: {
 			'aria-haspopup': true
