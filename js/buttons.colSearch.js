@@ -37,9 +37,11 @@
 var DataTable = $.fn.dataTable;
 
 var getColumnsSearchability = function ( dt, columns ) {
-	return dt.columns( columns ).indexes().map( function ( idx ) {
-			return dt.column( idx ).searchable();
-		} ).toArray();
+	var columnSearchability = {};
+	dt.columns( columns ).indexes().toArray().forEach(function ( val ) {
+		columnSearchability[val] = dt.column( val ).searchable();
+	});
+	return columnSearchability;
 }
 
 $.extend( DataTable.ext.buttons, {
@@ -144,18 +146,23 @@ $.extend( DataTable.ext.buttons, {
 			var searchable = conf.searchability !== undefined ?
 				conf.searchability :
 				! (curr.length ? curr[0] : false);
-			var searchableCurrent = getColumnsSearchability( dt, conf.allColumns );
 
-			var searchableCnt = searchableCurrent.reduce( function (previousValue, currentValue) {
-				return currentValue ? previousValue + 1 : previousValue;
-			}, 0);
+			var currSearchability = getColumnsSearchability( dt, conf.allColumns );
+
+			var searchableCnt = 0;
+
+			for (const [key, value] of Object.entries(currSearchability)) {
+ 				if (value) {
+					searchableCnt += 1;
+				}
+			}
 
 			// Do not allow the last searchable to get deselected
 			if ( !searchable && searchableCnt === 1 ) {
 				return;
 			}
 
-			var allSearchable = searchableCurrent.every( function(value) { return value === true; });
+			var allSearchable = searchableCnt === Object.keys(currSearchability).length;
 			//If all columns are searchable then turn the first deselection to clear + select
 			if (allSearchable && !searchable) {
 				dt.columns().every( function () {
@@ -238,21 +245,20 @@ $.extend( DataTable.ext.buttons, {
 
 		init: function ( dt, button, conf ) {
 			if (!conf._searchableOriginal) {
-				conf._searchableOriginal = getColumnsSearchability( dt , conf.columns );
+				conf._searchableOriginal = getColumnsSearchability( dt );
 			}
 		},
 
 		action: function ( e, dt, button, conf ) {
 			var settings = dt.settings()[0];
-			dt.columns( conf.columns ).every( function ( i ) {
-				// Take into account that ColReorder might have disrupted our
-				// indexes
+
+			for (const [i, searchable] of Object.entries(conf._searchableOriginal)) {
 				var idx = dt.colReorder && dt.colReorder.transpose ?
 					dt.colReorder.transpose( i, 'toOriginal' ) :
 					i;
 
-				this.searchable( conf._searchableOriginal[ idx ], true );
-			} );
+				dt.column( idx ).searchable( searchable, true );
+			}
 			DataTable.ext.internal._fnCallbackFire( settings, null, 'column-searchability', [settings] );
 		}
 	},
