@@ -1847,7 +1847,6 @@ $.extend( _dtButtons, {
 			button.attr( 'aria-expanded', false );
 		},
 		action: function ( e, dt, button, config ) {
-			console.log('button', e, config);
 			if ( config._collection.parents('body').length ) {
 				this.popover(false, config);
 			}
