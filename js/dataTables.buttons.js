@@ -1272,7 +1272,11 @@ $.extend( Buttons.prototype, {
 			.addClass(options.collectionLayout)
 			.addClass(options.splitAlignClass)
 			.addClass(mod)
-			.css('display', 'none');
+			.css('display', 'none')
+			.attr({
+				'aria-modal': true,
+				role: 'dialog'
+			});
 
 		content = $(content)
 			.addClass(options.contentClassName)
