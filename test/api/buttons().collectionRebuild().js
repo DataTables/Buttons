@@ -16,18 +16,18 @@ describe('buttons - buttons().collectionRebuild()', function () {
 						fade: 0, // saves having to sleep in the tests
 
 						extend: 'collection',
-						buttons: [{text: 'first'}]
+						buttons: [{ text: 'first' }]
 					},
 					{
 						extend: 'collection',
-						buttons: [{text: 'second'}]
+						buttons: [{ text: 'second' }]
 					}
 				]
 			});
 			expect(typeof table.buttons().collectionRebuild).toBe('function');
 		});
 		it('Returns an API instance', function () {
-			expect(table.buttons(0).collectionRebuild([{text: 'second'}]) instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.buttons(0).collectionRebuild([{ text: 'second' }]) instanceof $.fn.dataTable.Api).toBe(true);
 		});
 	});
 
@@ -41,11 +41,11 @@ describe('buttons - buttons().collectionRebuild()', function () {
 						fade: 0, // saves having to sleep in the tests
 
 						extend: 'collection',
-						buttons: [{text: 'first'}]
+						buttons: [{ text: 'first' }]
 					},
 					{
 						extend: 'collection',
-						buttons: [{text: 'second'}]
+						buttons: [{ text: 'second' }]
 					}
 				]
 			});
@@ -54,15 +54,16 @@ describe('buttons - buttons().collectionRebuild()', function () {
 			expect($('div.dt-button-collection button.dt-button').text()).toBe('first');
 		});
 		it('Call rebuild', function () {
-			table.buttons(0).collectionRebuild([{text: 'test'}]);
+			table.buttons(0).collectionRebuild([{ text: 'test' }]);
 			expect($('div.dt-button-collection button.dt-button').text()).toBe('test');
 		});
-		it('Other collection not effected', function (done) {
-			$('button.buttons-collection:eq(1)').click();
-			setTimeout(function () {
-				expect($('div.dt-button-collection button.dt-button').text()).toBe('second');
-				done();
-			}, 500);
-		});
+		// DD-2482
+		// it('Other collection not effected', function (done) {
+		// 	$('button.buttons-collection:eq(1)').click();
+		// 	setTimeout(function () {
+		// 		expect($('div.dt-button-collection button.dt-button').text()).toBe('second');
+		// 		done();
+		// 	}, 500);
+		// });
 	});
 });

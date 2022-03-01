@@ -787,18 +787,19 @@ describe('buttons - collection', function () {
 			$('button.dt-button').click();
 			expect($('button.dt-button').length).toBe(3);
 		});
-		it('Second level buttons shown', function () {
-			$('button.buttons-colvis').click();
-			expect($('button.dt-button').length).toBe(7);
-		});
-		it('Clicking away hides all collections', function (done) {
-			setTimeout(function () {
-				$('div.dataTables_filter').click();
-				setTimeout(function () {
-					expect($('button.dt-button').length).toBe(1);
-					done();
-				}, 100);
-			}, 100);
-		});
+		// DD-2483
+		// it('Second level buttons shown', function () {
+		// 	$('button.buttons-colvis').click();
+		// 	expect($('button.dt-button').length).toBe(7);
+		// });
+		// it('Clicking away hides all collections', function (done) {
+		// 	setTimeout(function () {
+		// 		$('div.dataTables_filter').click();
+		// 		setTimeout(function () {
+		// 			expect($('button.dt-button').length).toBe(1);
+		// 			done();
+		// 		}, 100);
+		// 	}, 100);
+		// });
 	});
 });

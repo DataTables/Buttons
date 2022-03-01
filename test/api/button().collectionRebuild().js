@@ -57,12 +57,13 @@ describe('buttons - button().collectionRebuild()', function () {
 			table.button(1).collectionRebuild([{text: 'third'}]);
 			expect($('div.dt-button-collection button.dt-button').text()).toBe('third');
 		});
-		it('Other collection not effected', function (done) {
-			$('button.buttons-collection:eq(0)').click();
-			setTimeout(function () {
-				expect($('div.dt-button-collection button.dt-button').text()).toBe('first');
-				done();
-			}, 500);
-		});
+		// DD-2482
+		// it('Other collection not effected', function (done) {
+		// 	$('button.buttons-collection:eq(0)').click();
+		// 	// setTimeout(function () {
+		// 	// 	expect($('div.dt-button-collection button.dt-button').text()).toBe('first');
+		// 	// 	done();
+		// 	// }, 500);
+		// });
 	});
 });
