@@ -1226,7 +1226,7 @@ $.extend( Buttons.prototype, {
 				}
 			);
 
-			$(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes())
+			$(dt.buttons( '[aria-haspopup="dialog"][aria-expanded="true"]' ).nodes())
 				.attr('aria-expanded', 'false');
 
 			$('div.dt-button-background').off( 'click.dtb-collection' );
@@ -1243,7 +1243,7 @@ $.extend( Buttons.prototype, {
 			return;
 		}
 
-		var existingExpanded = $(dt.buttons( '[aria-haspopup="true"][aria-expanded="true"]' ).nodes());
+		var existingExpanded = $(dt.buttons( '[aria-haspopup="dialog"][aria-expanded="true"]' ).nodes());
 		if ( existingExpanded.length ) {
 			// Reuse the current position if the button that was triggered is inside an existing collection
 			if (hostNode.closest('div.dt-button-collection').length) {
