@@ -864,7 +864,7 @@ $.extend( Buttons.prototype, {
 				className: this.c.dom.splitDropdown.className,
 				closeButton: false,
 				attr: {
-					'aria-haspopup': true,
+					'aria-haspopup': 'dialog',
 					'aria-expanded': false
 				},
 				align: this.c.dom.splitDropdown.align,
@@ -1882,7 +1882,7 @@ $.extend( _dtButtons, {
 			this.popover(config._collection, config);
 		},
 		attr: {
-			'aria-haspopup': true
+			'aria-haspopup': 'dialog'
 		}
 		// Also the popover options, defined in Buttons.popover
 	},
