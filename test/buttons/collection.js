@@ -796,7 +796,7 @@ describe('buttons - collection', function () {
 			$('button.buttons-colvis').click();
 			expect($('button.dt-button').length).toBe(7);
 		});
-		it('Clicking away hides all collections', function () {
+		it('Clicking away hides all collections', function (done) {
 			setTimeout(function () {
 				$('div.dataTables_filter').click();
 				setTimeout(function () {
