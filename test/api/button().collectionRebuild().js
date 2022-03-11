@@ -16,24 +16,25 @@ describe('buttons - button().collectionRebuild()', function () {
 						fade: 0, // saves having to sleep in the tests
 
 						extend: 'collection',
-						buttons: [{text: 'first'}]
+						buttons: [{ text: 'first' }]
 					},
 					{
 						extend: 'collection',
-						buttons: [{text: 'second'}]
+						buttons: [{ text: 'second' }]
 					}
 				]
 			});
 			expect(typeof table.button().collectionRebuild).toBe('function');
 		});
 		it('Returns an API instance', function () {
-			expect(table.button(1).collectionRebuild([{text: 'third'}]) instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.button(1).collectionRebuild([{ text: 'third' }]) instanceof $.fn.dataTable.Api).toBe(true);
 		});
 	});
 
 	describe('Functional tests - basic', function () {
 		dt.html('basic');
 		it('Confirm original button', function () {
+			$.fx.off = true; // disables lightbox animation
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -41,11 +42,11 @@ describe('buttons - button().collectionRebuild()', function () {
 						fade: 0, // saves having to sleep in the tests
 
 						extend: 'collection',
-						buttons: [{text: 'first'}]
+						buttons: [{ text: 'first' }]
 					},
 					{
 						extend: 'collection',
-						buttons: [{text: 'second'}]
+						buttons: [{ text: 'second' }]
 					}
 				]
 			});
@@ -54,16 +55,12 @@ describe('buttons - button().collectionRebuild()', function () {
 			expect($('div.dt-button-collection button.dt-button').text()).toBe('second');
 		});
 		it('Call rebuild', function () {
-			table.button(1).collectionRebuild([{text: 'third'}]);
+			table.button(1).collectionRebuild([{ text: 'third' }]);
 			expect($('div.dt-button-collection button.dt-button').text()).toBe('third');
 		});
-		// DD-2482
-		// it('Other collection not effected', function (done) {
-		// 	$('button.buttons-collection:eq(0)').click();
-		// 	// setTimeout(function () {
-		// 	// 	expect($('div.dt-button-collection button.dt-button').text()).toBe('first');
-		// 	// 	done();
-		// 	// }, 500);
-		// });
+		it('Other collection not effected', function () {
+			$('button.buttons-collection:eq(0)').click();
+			expect($('div.dt-button-collection button.dt-button').text()).toBe('first');
+		});
 	});
 });
