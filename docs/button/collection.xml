@@ -49,10 +49,10 @@
 			* `-string dropdown` - Drop the collection down from the host button
 			* `-string fixed` - Display the collection centred over the window
 		* Column layout:
-			* `-string columns` - Automatic column display (based on screen size)
+			* `-string columns` - Automatic column display (based on screen size), upto maximum of four columns
 			* `-string two-column` - Display in two columns
 			* `-string three-column` - Display in three columns
-			* `-string three-column` - Display in three columns
+			* `-string four-column` - Display in four columns
 
 		The column layout can be use with the default absolute positioning of the drop down, or with the fixed position layout option. To use fixed positioning and multi-column layout, simply space separate the options - e.g. `fixed columns`.
 	</option>
