@@ -99,7 +99,6 @@ describe('buttons - buttons.exportData()', function() {
 		});
 		it('trim - false - modified (DOM source)', function() {
 			var data = table.buttons.exportData({ trim: false });
-			//  See DD-868 - spaces always removed from DOM when table initialised
 			expect(data.body[57][3]).toBe('99');
 		});
 		it('trim - true - modified (DOM source)', function() {

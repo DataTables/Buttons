@@ -16,8 +16,8 @@ describe('buttons - collection', function () {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{text: 'one', action: function () {}},
-							{text: 'two', action: function () {}}
+							{ text: 'one', action: function () { } },
+							{ text: 'two', action: function () { } }
 						]
 					}
 				]
@@ -66,7 +66,7 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'test', action: function () {}}],
+						buttons: [{ text: 'test', action: function () { } }],
 						align: 'button-left'
 					}
 				]
@@ -87,7 +87,7 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'test', action: function () {}}],
+						buttons: [{ text: 'test', action: function () { } }],
 						align: 'button-right'
 					}
 				]
@@ -107,7 +107,7 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'test', action: function () {}}],
+						buttons: [{ text: 'test', action: function () { } }],
 						align: 'container'
 					}
 				]
@@ -128,7 +128,7 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'test', action: function () {}}],
+						buttons: [{ text: 'test', action: function () { } }],
 						align: 'dt-container'
 					}
 				]
@@ -181,7 +181,7 @@ describe('buttons - collection', function () {
 						buttons: [
 							{
 								text: 'test',
-								action: function () {}
+								action: function () { }
 							}
 						]
 					}
@@ -209,7 +209,7 @@ describe('buttons - collection', function () {
 						buttons: [
 							{
 								text: 'null',
-								action: function () {}
+								action: function () { }
 							}
 						],
 						autoClose: true
@@ -238,7 +238,7 @@ describe('buttons - collection', function () {
 						buttons: [
 							{
 								text: 'null',
-								action: function () {}
+								action: function () { }
 							}
 						],
 						autoClose: false
@@ -264,7 +264,7 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'null', action: function () {}}],
+						buttons: [{ text: 'null', action: function () { } }],
 						background: false
 					}
 				]
@@ -281,7 +281,7 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'null', action: function () {}}],
+						buttons: [{ text: 'null', action: function () { } }],
 						backgroundClassName: 'test-background-class'
 					}
 				]
@@ -299,7 +299,7 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'null', action: function () {}}],
+						buttons: [{ text: 'null', action: function () { } }],
 						className: 'test-class'
 					}
 				]
@@ -320,10 +320,10 @@ describe('buttons - collection', function () {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{text: 'one', action: function () {}},
-							{text: 'two', action: function () {}},
-							{text: 'three', action: function () {}},
-							{text: 'four', action: function () {}}
+							{ text: 'one', action: function () { } },
+							{ text: 'two', action: function () { } },
+							{ text: 'three', action: function () { } },
+							{ text: 'four', action: function () { } }
 						],
 						collectionLayout: 'fixed'
 					}
@@ -343,10 +343,10 @@ describe('buttons - collection', function () {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{text: 'one', action: function () {}},
-							{text: 'two', action: function () {}},
-							{text: 'three', action: function () {}},
-							{text: 'four', action: function () {}}
+							{ text: 'one', action: function () { } },
+							{ text: 'two', action: function () { } },
+							{ text: 'three', action: function () { } },
+							{ text: 'four', action: function () { } }
 						],
 						collectionLayout: 'two-column'
 					}
@@ -383,11 +383,11 @@ describe('buttons - collection', function () {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{text: 'one', action: function () {}},
-							{text: 'two', action: function () {}},
-							{text: 'three', action: function () {}},
-							{text: 'four', action: function () {}},
-							{text: 'five', action: function () {}}
+							{ text: 'one', action: function () { } },
+							{ text: 'two', action: function () { } },
+							{ text: 'three', action: function () { } },
+							{ text: 'four', action: function () { } },
+							{ text: 'five', action: function () { } }
 						],
 						collectionLayout: 'three-column'
 					}
@@ -424,13 +424,13 @@ describe('buttons - collection', function () {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{text: 'one', action: function () {}},
-							{text: 'two', action: function () {}},
-							{text: 'three', action: function () {}},
-							{text: 'four', action: function () {}},
-							{text: 'five', action: function () {}},
-							{text: 'six', action: function () {}},
-							{text: 'seven', action: function () {}}
+							{ text: 'one', action: function () { } },
+							{ text: 'two', action: function () { } },
+							{ text: 'three', action: function () { } },
+							{ text: 'four', action: function () { } },
+							{ text: 'five', action: function () { } },
+							{ text: 'six', action: function () { } },
+							{ text: 'seven', action: function () { } }
 						],
 						collectionLayout: 'four-column'
 					}
@@ -470,13 +470,13 @@ describe('buttons - collection', function () {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{text: 'one', action: function () {}},
-							{text: 'two', action: function () {}},
-							{text: 'three', action: function () {}},
-							{text: 'four', action: function () {}},
-							{text: 'five', action: function () {}},
-							{text: 'six', action: function () {}},
-							{text: 'seven', action: function () {}}
+							{ text: 'one', action: function () { } },
+							{ text: 'two', action: function () { } },
+							{ text: 'three', action: function () { } },
+							{ text: 'four', action: function () { } },
+							{ text: 'five', action: function () { } },
+							{ text: 'six', action: function () { } },
+							{ text: 'seven', action: function () { } }
 						],
 						collectionLayout: 'fixed four-column'
 					}
@@ -509,6 +509,8 @@ describe('buttons - collection', function () {
 
 		dt.html('basic');
 		it('collectionLayout - responsive (columns) fixed', function () {
+			$('#dt-test-loader-container').width(1000);
+
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -516,18 +518,21 @@ describe('buttons - collection', function () {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{text: 'one', action: function () {}},
-							{text: 'two', action: function () {}},
-							{text: 'three', action: function () {}},
-							{text: 'four', action: function () {}},
-							{text: 'five', action: function () {}},
-							{text: 'six', action: function () {}},
-							{text: 'seven', action: function () {}}
+							{ text: 'one', action: function () { } },
+							{ text: 'two', action: function () { } },
+							{ text: 'three', action: function () { } },
+							{ text: 'four', action: function () { } },
+							{ text: 'five', action: function () { } },
+							{ text: 'six', action: function () { } },
+							{ text: 'seven', action: function () { } }
 						],
 						collectionLayout: 'fixed columns'
 					}
 				]
 			});
+
+			$('#dt-test-loader-container').width(1000);
+
 			$('button.dt-button').click();
 			expect($('div.dt-button-collection').length).toBe(1);
 			expect($('div.dt-button-collection').offset().top).toBeGreaterThan($('tbody tr:eq(5)').offset().top);
@@ -560,10 +565,10 @@ describe('buttons - collection', function () {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{text: 'one', action: function () {}},
-							{text: 'two', action: function () {}},
-							{text: 'three', action: function () {}},
-							{text: 'four', action: function () {}}
+							{ text: 'one', action: function () { } },
+							{ text: 'two', action: function () { } },
+							{ text: 'three', action: function () { } },
+							{ text: 'four', action: function () { } }
 						],
 						collectionLayout: 'two-column',
 						popoverTitle: 'test title'
@@ -582,7 +587,7 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'null', action: function () {}}],
+						buttons: [{ text: 'null', action: function () { } }],
 						popoverTitle: 'test title'
 					}
 				]
@@ -600,7 +605,7 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'null', action: function () {}}],
+						buttons: [{ text: 'null', action: function () { } }],
 						dropup: false
 					}
 				]
@@ -618,7 +623,7 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'null', action: function () {}}],
+						buttons: [{ text: 'null', action: function () { } }],
 						dropup: true
 					}
 				]
@@ -634,7 +639,7 @@ describe('buttons - collection', function () {
 				buttons: [
 					{
 						extend: 'collection',
-						buttons: [{text: 'null', action: function () {}}],
+						buttons: [{ text: 'null', action: function () { } }],
 						fade: 500
 					}
 				]
@@ -661,8 +666,8 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'one', action: function () {}}],
-						postfixButtons: [{text: 'post', action: function () {}}]
+						buttons: [{ text: 'one', action: function () { } }],
+						postfixButtons: [{ text: 'post', action: function () { } }]
 					}
 				]
 			});
@@ -682,8 +687,8 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'one', action: function () {}}],
-						prefixButtons: [{text: 'pre', action: function () {}}]
+						buttons: [{ text: 'one', action: function () { } }],
+						prefixButtons: [{ text: 'pre', action: function () { } }]
 					}
 				]
 			});
@@ -703,9 +708,9 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'one', action: function () {}}],
-						postfixButtons: [{text: 'post', action: function () {}}],
-						prefixButtons: [{text: 'pre', action: function () {}}]
+						buttons: [{ text: 'one', action: function () { } }],
+						postfixButtons: [{ text: 'post', action: function () { } }],
+						prefixButtons: [{ text: 'pre', action: function () { } }]
 					}
 				]
 			});
@@ -726,7 +731,7 @@ describe('buttons - collection', function () {
 					{
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
-						buttons: [{text: 'test', action: function () {}}],
+						buttons: [{ text: 'test', action: function () { } }],
 						span: 'container'
 					}
 				]
@@ -750,8 +755,8 @@ describe('buttons - collection', function () {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{text: 'button1', action: function () {}},
-							{text: 'button2', action: function () {}}
+							{ text: 'button1', action: function () { } },
+							{ text: 'button2', action: function () { } }
 						],
 						text: 'Collection Text'
 					}
@@ -787,19 +792,18 @@ describe('buttons - collection', function () {
 			$('button.dt-button').click();
 			expect($('button.dt-button').length).toBe(3);
 		});
-		// DD-2483
-		// it('Second level buttons shown', function () {
-		// 	$('button.buttons-colvis').click();
-		// 	expect($('button.dt-button').length).toBe(7);
-		// });
-		// it('Clicking away hides all collections', function (done) {
-		// 	setTimeout(function () {
-		// 		$('div.dataTables_filter').click();
-		// 		setTimeout(function () {
-		// 			expect($('button.dt-button').length).toBe(1);
-		// 			done();
-		// 		}, 100);
-		// 	}, 100);
-		// });
+		it('Second level buttons shown', function () {
+			$('button.buttons-colvis').click();
+			expect($('button.dt-button').length).toBe(7);
+		});
+		it('Clicking away hides all collections', function (done) {
+			setTimeout(function () {
+				$('div.dataTables_filter').click();
+				setTimeout(function () {
+					expect($('button.dt-button').length).toBe(1);
+					done();
+				}, 100);
+			}, 100);
+		});
 	});
 });

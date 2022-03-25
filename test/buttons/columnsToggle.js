@@ -87,23 +87,24 @@ describe('buttons - columnsToggle', function() {
 			expect($('thead th:eq(3)').text()).toBe('Start date');
 		});
 
-		// DD-861 raised - seems whatever the visibility value, it just toggles
-		// dt.html('basic');
-		// it('Visibility - false (hides)', function() {
-		// 	$('#example').DataTable({
-		// 		dom: 'Bfrtip',
-		// 		buttons: [
-		// 			{
-		// 				extend: 'columnsToggle',
-		// 				visibility: false
-		// 			}
-		// 		]
-		// 	});
-		// 	expect($('button.buttons-columnVisibility').length).toBe(6);
-		// 	expect($('button.active').length).toBe(6);
-		// });
-		// it('Contains the expected text', function() {
-		// 	checkButtons(['Name', 'Position', 'Office', 'Age', 'Start date', 'Salary']);
-		// });
+		// DD-861 raised - seems whatever the visibility value, it just toggles.
+		// Once fixed, add test to click on it and confirm it doesn't toggle
+		dt.html('basic');
+		it('Visibility - false (hides)', function() {
+			$('#example').DataTable({
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						extend: 'columnsToggle',
+						visibility: false
+					}
+				]
+			});
+			expect($('button.buttons-columnVisibility').length).toBe(6);
+			expect($('button.active').length).toBe(6);
+		});
+		it('Contains the expected text', function() {
+			checkButtons(['Name', 'Position', 'Office', 'Age', 'Start date', 'Salary']);
+		});
 	});
 });

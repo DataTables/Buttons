@@ -34,6 +34,7 @@ describe('buttons - buttons().collectionRebuild()', function () {
 	describe('Functional tests - basic', function () {
 		dt.html('basic');
 		it('Confirm original button', function () {
+			$.fx.off = true; // disables lightbox animation
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
@@ -57,13 +58,9 @@ describe('buttons - buttons().collectionRebuild()', function () {
 			table.buttons(0).collectionRebuild([{ text: 'test' }]);
 			expect($('div.dt-button-collection button.dt-button').text()).toBe('test');
 		});
-		// DD-2482
-		// it('Other collection not effected', function (done) {
-		// 	$('button.buttons-collection:eq(1)').click();
-		// 	setTimeout(function () {
-		// 		expect($('div.dt-button-collection button.dt-button').text()).toBe('second');
-		// 		done();
-		// 	}, 500);
-		// });
+		it('Other collection not effected', function () {
+			$('button.buttons-collection:eq(1)').click();
+			expect($('div.dt-button-collection button.dt-button').text()).toBe('second');
+		});
 	});
 });
