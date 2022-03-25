@@ -39,7 +39,7 @@ div.dt-button-collection {
 		flex: 1 1 auto;
 	}
 
-	.dt-button {
+	.dt-button:not(.dt-btn-split-drop) {
 		min-width: 200px;
 	}
 
