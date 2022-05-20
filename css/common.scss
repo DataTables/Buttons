@@ -5,6 +5,11 @@ div.dataTables_wrapper {
 
 div.dt-buttons {
 	position: initial;
+
+	.dt-button {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }
 
 div.dt-button-info {
