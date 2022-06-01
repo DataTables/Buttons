@@ -875,7 +875,7 @@ $.extend( Buttons.prototype, {
 			this._addKey(dropButtonConfig);
 
 			var splitAction = function ( e, dt, button, config ) {
-				_dtButtons.split.action.call( dt.button($('div.dt-btn-split-wrapper')[0] ), e, dt, button, config );
+				_dtButtons.split.action.call( dt.button(splitDiv), e, dt, button, config );
 	
 				$(dt.table().node()).triggerHandler( 'buttons-action.dt', [
 					dt.button( button ), dt, button, config 
