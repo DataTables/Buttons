@@ -1252,6 +1252,7 @@ DataTable.ext.buttons.excelHtml5 = {
 		var jszip = _jsZip();
 		var zip = new jszip();
 		var zipConfig = {
+			compression: "DEFLATE",
 			type: 'blob',
 			mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 		};
