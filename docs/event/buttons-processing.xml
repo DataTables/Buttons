@@ -36,7 +36,7 @@
 	<example title="Insert an element into the document when a button is processing"><![CDATA[
 
 var table = $('#example').DataTable();
-var overlay = $('<div class="ui-blocker">Please wait...</div>'
+var overlay = $('<div class="ui-blocker">Please wait...</div>');
 
 table.on( 'buttons-processing', function ( e, indicator ) {
     if ( indicator ) {
