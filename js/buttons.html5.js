@@ -1259,12 +1259,21 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		_addToZip( zip, xlsx );
 
+		// Modern Excel has a 218 character limit on the file name + path of the file (why!?)
+		// https://support.microsoft.com/en-us/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
+		// So we truncate to allow for this.
+		var filename = exportInfo.filename;
+
+		if (filename > 175) {
+			filename = filename.substr(0, 175);
+		}
+
 		if ( zip.generateAsync ) {
 			// JSZip 3+
 			zip
 				.generateAsync( zipConfig )
 				.then( function ( blob ) {
-					_saveAs( blob, exportInfo.filename );
+					_saveAs( blob, filename );
 					that.processing( false );
 				} );
 		}
@@ -1272,7 +1281,7 @@ DataTable.ext.buttons.excelHtml5 = {
 			// JSZip 2.5
 			_saveAs(
 				zip.generate( zipConfig ),
-				exportInfo.filename
+				filename
 			);
 			this.processing( false );
 		}
