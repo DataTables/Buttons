@@ -32,12 +32,12 @@ css_frameworks buttons $OUT_DIR/css
 
 # Copy JS
 rsync -r js $OUT_DIR
-js_compress $OUT_DIR/js/dataTables.buttons.js
-js_frameworks buttons $OUT_DIR/js
+js_wrap $OUT_DIR/js/dataTables.buttons.js "jquery datatables.net"
+js_frameworks buttons $OUT_DIR/js "jquery datatables.net-FW datatables.net-buttons"
 
-js_compress $OUT_DIR/js/buttons.colVis.js
-js_compress $OUT_DIR/js/buttons.html5.js
-js_compress $OUT_DIR/js/buttons.print.js
+js_wrap $OUT_DIR/js/buttons.colVis.js "jquery datatables.net datatables.net-buttons"
+js_wrap $OUT_DIR/js/buttons.html5.js "jquery datatables.net datatables.net-buttons"
+js_wrap $OUT_DIR/js/buttons.print.js "jquery datatables.net datatables.net-buttons"
 
 # Copy Types
 if [ -d $OUT_DIR/types ]; then

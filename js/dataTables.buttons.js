@@ -2,36 +2,6 @@
  * ©2016-2022 SpryMedia Ltd - datatables.net/license
  */
 
-(function( factory ){
-	if ( typeof define === 'function' && define.amd ) {
-		// AMD
-		define( ['jquery', 'datatables.net'], function ( $ ) {
-			return factory( $, window, document );
-		} );
-	}
-	else if ( typeof exports === 'object' ) {
-		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				root = window;
-			}
-
-			if ( ! $ || ! $.fn.dataTable ) {
-				$ = require('datatables.net')(root, $).$;
-			}
-
-			return factory( $, root, root.document );
-		};
-	}
-	else {
-		// Browser
-		factory( jQuery, window, document );
-	}
-}(function( $, window, document, undefined ) {
-'use strict';
-var DataTable = $.fn.dataTable;
-
-
 // Used for namespacing events added to the document by each instance, so they
 // can be removed on destroy
 var _instCounter = 0;
@@ -2510,7 +2480,3 @@ DataTable.ext.feature.push( {
 if ( DataTable.ext.features ) {
 	DataTable.ext.features.register( 'buttons', _init );
 }
-
-
-return Buttons;
-}));
