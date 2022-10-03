@@ -237,7 +237,7 @@ $.extend( Buttons.prototype, {
 
 		$(button.node)
 			.addClass( this.c.dom.button.disabled )
-			.attr('disabled', true);
+			.prop('disabled', true);
 
 		return this;
 	},
@@ -292,7 +292,7 @@ $.extend( Buttons.prototype, {
 		var button = this._nodeToButton( node );
 		$(button.node)
 			.removeClass( this.c.dom.button.disabled )
-			.removeAttr('disabled');
+			.prop('disabled', false);
 
 		return this;
 	},
