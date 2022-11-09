@@ -8,25 +8,28 @@
 
 // Allow the constructor to pass in JSZip and PDFMake from external requires.
 // Otherwise, use globally defined variables, if they are available.
+var useJszip;
+var usePdfmake;
+
 function _jsZip () {
-	return jszip || window.JSZip;
+	return useJszip || window.JSZip;
 }
 function _pdfMake () {
-	return pdfmake || window.pdfMake;
+	return usePdfmake || window.pdfMake;
 }
 
 DataTable.Buttons.pdfMake = function (_) {
 	if ( ! _ ) {
 		return _pdfMake();
 	}
-	pdfmake = _;
+	usePdfmake = _;
 }
 
 DataTable.Buttons.jszip = function (_) {
 	if ( ! _ ) {
 		return _jsZip();
 	}
-	jszip = _;
+	useJszip = _;
 }
 
 
