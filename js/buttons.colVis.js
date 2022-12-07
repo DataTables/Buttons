@@ -7,6 +7,10 @@ $.extend( DataTable.ext.buttons, {
 	// A collection of column visibility buttons
 	colvis: function ( dt, conf ) {
 		var node = null;
+        var _visOriginal = dt.columns().indexes().map( function ( idx ) {
+			return dt.column( idx ).visible();
+		} ).toArray();
+
 		var buttonConf = {
 			extend: 'collection',
 			init: function ( dt, n ) {
@@ -20,19 +24,23 @@ $.extend( DataTable.ext.buttons, {
 			buttons: [ {
 				extend: 'columnsToggle',
 				columns: conf.columns,
-				columnText: conf.columnText
+				columnText: conf.columnText,
+                _visOriginal: _visOriginal
 			} ]
 		};
 
 		// Rebuild the collection with the new column structure if columns are reordered
 		dt.on( 'column-reorder.dt'+conf.namespace, function (e, settings, details) {
-			// console.log(node);
-			// console.log('node', dt.button(null, node).node());
-			dt.button(null, dt.button(null, node).node()).collectionRebuild([{
+			var buttons = [{
 				extend: 'columnsToggle',
 				columns: conf.columns,
-				columnText: conf.columnText
-			}]);
+				columnText: conf.columnText,
+				prefixButtons: conf.prefixButtons,
+				postfixButtons: conf.postfixButtons,
+				_visOriginal: _visOriginal
+			}];
+
+			dt.button(null, dt.button(null, node).node()).collectionRebuild(buttons);
 		});
 
 		return buttonConf;
@@ -40,7 +48,11 @@ $.extend( DataTable.ext.buttons, {
 
 	// Selected columns with individual buttons - toggle column visibility
 	columnsToggle: function ( dt, conf ) {
-		var columns = dt.columns( conf.columns ).indexes().map( function ( idx ) {
+		var allButtons = [];
+		var prefixButtons;
+		var postfixButtons;
+
+		var buttons = dt.columns( conf.columns ).indexes().map( function ( idx ) {
 			return {
 				extend: 'columnToggle',
 				columns: idx,
@@ -48,7 +60,29 @@ $.extend( DataTable.ext.buttons, {
 			};
 		} ).toArray();
 
-		return columns;
+		function addOriginalVisible (buttons) {
+			var res = buttons.map( function (config) {
+				if (config.extend === 'visibleRestore') {
+					config._visOriginal = conf._visOriginal;
+				}
+				return config;
+			})
+			return res;
+		}
+
+        if (conf.prefixButtons) {
+			prefixButtons = addOriginalVisible(conf.prefixButtons);
+			allButtons.push(...prefixButtons);
+		}
+
+		allButtons.push(...buttons);
+
+		if (conf.postfixButtons) {
+			postfixButtons = addOriginalVisible(conf.postfixButtons);
+			allButtons.push(...postfixButtons);
+		}
+
+		return allButtons;
 	},
 
 	// Single button to toggle column visibility
@@ -161,9 +195,11 @@ $.extend( DataTable.ext.buttons, {
 		},
 
 		init: function ( dt, button, conf ) {
-			conf._visOriginal = dt.columns().indexes().map( function ( idx ) {
-				return dt.column( idx ).visible();
-			} ).toArray();
+            if (!conf._visOriginal) {
+                conf._visOriginal = dt.columns().indexes().map( function ( idx ) {
+                    return dt.column( idx ).visible();
+                } ).toArray();
+            }
 		},
 
 		action: function ( e, dt, button, conf ) {
