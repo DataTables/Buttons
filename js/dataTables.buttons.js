@@ -199,7 +199,16 @@ $.extend( Buttons.prototype, {
 			for (i=button.buttons.length-1; i>=0; i--) {
 				this.remove(button.buttons[i].node);
 			}
-	
+
+			// If the collection has prefix and / or postfix buttons we need to add them in
+			if (button.conf.prefixButtons) {
+				newButtons.unshift.apply(newButtons, button.conf.prefixButtons);
+			}
+
+			if (button.conf.postfixButtons) {
+				newButtons.push.apply(newButtons, button.conf.postfixButtons);
+			}
+
 			for (i=0; i<newButtons.length; i++) {
 				var newBtn = newButtons[i];
 
@@ -209,7 +218,7 @@ $.extend( Buttons.prototype, {
 					newBtn !== undefined && newBtn.config !== undefined && newBtn.config.split !== undefined,
 					true,
 					newBtn.parentConf !== undefined && newBtn.parentConf.split !== undefined,
-					i,
+					null,
 					newBtn.parentConf
 				);
 			}
@@ -1120,38 +1129,34 @@ $.extend( Buttons.prototype, {
 				conf.className = originalClassName+' '+conf.className;
 			}
 
-			// Buttons to be added to a collection  -gives the ability to define
-			// if buttons should be added to the start or end of a collection
-			var postfixButtons = conf.postfixButtons;
-			if ( postfixButtons ) {
-				if ( ! conf.buttons ) {
-					conf.buttons = [];
-				}
-
-				for ( i=0, ien=postfixButtons.length ; i<ien ; i++ ) {
-					conf.buttons.push( postfixButtons[i] );
-				}
-
-				conf.postfixButtons = null;
-			}
-
-			var prefixButtons = conf.prefixButtons;
-			if ( prefixButtons ) {
-				if ( ! conf.buttons ) {
-					conf.buttons = [];
-				}
-
-				for ( i=0, ien=prefixButtons.length ; i<ien ; i++ ) {
-					conf.buttons.splice( i, 0, prefixButtons[i] );
-				}
-
-				conf.prefixButtons = null;
-			}
-
 			// Although we want the `conf` object to overwrite almost all of
 			// the properties of the object being extended, the `extend`
 			// property should come from the object being extended
 			conf.extend = objArray.extend;
+		}
+
+		// Buttons to be added to a collection  -gives the ability to define
+		// if buttons should be added to the start or end of a collection
+		var postfixButtons = conf.postfixButtons;
+		if ( postfixButtons ) {
+			if ( ! conf.buttons ) {
+				conf.buttons = [];
+			}
+
+			for ( i=0, ien=postfixButtons.length ; i<ien ; i++ ) {
+				conf.buttons.push( postfixButtons[i] );
+			}
+		}
+
+		var prefixButtons = conf.prefixButtons;
+		if ( prefixButtons ) {
+			if ( ! conf.buttons ) {
+				conf.buttons = [];
+			}
+
+			for ( i=0, ien=prefixButtons.length ; i<ien ; i++ ) {
+				conf.buttons.splice( i, 0, prefixButtons[i] );
+			}
 		}
 
 		return conf;

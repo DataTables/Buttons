@@ -26,8 +26,6 @@ $.extend( DataTable.ext.buttons, {
 
 		// Rebuild the collection with the new column structure if columns are reordered
 		dt.on( 'column-reorder.dt'+conf.namespace, function (e, settings, details) {
-			// console.log(node);
-			// console.log('node', dt.button(null, node).node());
 			dt.button(null, dt.button(null, node).node()).collectionRebuild([{
 				extend: 'columnsToggle',
 				columns: conf.columns,
