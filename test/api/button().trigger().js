@@ -53,7 +53,7 @@ describe('buttons - button().trigger()', function() {
 					{
 						extend: 'collection',
 						text: 'Table control',
-						buttons: [{ text: 'first' }, { text: 'second' }, , { text: 'third' }]
+						buttons: [{ text: 'first' }, { text: 'second' }, { text: 'third' }]
 					}
 				]
 			});

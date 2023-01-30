@@ -1,4 +1,4 @@
-describe('buttons - button().remove()', function() {
+describe('buttons - button().remove()', function () {
 	dt.libs({
 		js: ['jquery', 'datatables', 'buttons'],
 		css: ['datatables', 'buttons']
@@ -6,16 +6,16 @@ describe('buttons - button().remove()', function() {
 
 	let table;
 
-	describe('Check the defaults', function() {
+	describe('Check the defaults', function () {
 		dt.html('basic');
-		it('Ensure its a function', function() {
+		it('Ensure its a function', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: []
 			});
 			expect(typeof table.button().remove).toBe('function');
 		});
-		it('Returns an API instance', function() {
+		it('Returns an API instance', function () {
 			table.button().add(null, {
 				text: '1'
 			});
@@ -23,9 +23,9 @@ describe('buttons - button().remove()', function() {
 		});
 	});
 
-	describe('Single Group', function() {
+	describe('Single Group', function () {
 		dt.html('basic');
-		it('Single button added at initialisation', function() {
+		it('Single button added at initialisation', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [{ text: 'first' }]
@@ -37,7 +37,7 @@ describe('buttons - button().remove()', function() {
 		});
 
 		dt.html('basic');
-		it('Two buttons added at initialisation', function() {
+		it('Two buttons added at initialisation', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [{ text: 'first' }, { text: 'second' }]
@@ -53,7 +53,7 @@ describe('buttons - button().remove()', function() {
 		});
 
 		dt.html('basic');
-		it('Single button added by API', function() {
+		it('Single button added by API', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: []
@@ -66,7 +66,7 @@ describe('buttons - button().remove()', function() {
 		});
 
 		dt.html('basic');
-		it('Single button added by API', function() {
+		it('Single button added by API', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: []
@@ -85,16 +85,16 @@ describe('buttons - button().remove()', function() {
 		});
 	});
 
-	describe('Collections', function() {
+	describe('Collections', function () {
 		dt.html('basic');
-		it('Added at initialisation', function() {
+		it('Added at initialisation', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
 					{
 						extend: 'collection',
 						text: 'Table control',
-						buttons: [{ text: 'first' }, { text: 'second' }, , { text: 'third' }]
+						buttons: [{ text: 'first' }, { text: 'second' }, { text: 'third' }]
 					}
 				]
 			});
@@ -109,7 +109,7 @@ describe('buttons - button().remove()', function() {
 		});
 
 		dt.html('basic');
-		it('Added by API', function() {
+		it('Added by API', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: []
@@ -118,7 +118,7 @@ describe('buttons - button().remove()', function() {
 			table.button().add(null, {
 				extend: 'collection',
 				text: 'Table control',
-				buttons: [{ text: 'first' }, { text: 'second' }, , { text: 'third' }]
+				buttons: [{ text: 'first' }, { text: 'second' }, { text: 'third' }]
 			});
 
 			expect(table.buttons().count()).toBe(4);
@@ -131,26 +131,23 @@ describe('buttons - button().remove()', function() {
 		});
 	});
 
-	describe('Multiple Groups', function() {
+	describe('Multiple Groups', function () {
 		dt.html('basic');
-		it('Added at initialisation', function() {
+		it('Added at initialisation', function () {
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: {
-					buttons: [{ text: 'first' }, { text: 'second' }, , { text: 'third' }],
+					buttons: [{ text: 'first' }, { text: 'second' }, { text: 'third' }],
 					name: 'first'
 				}
 			});
 
 			new $.fn.dataTable.Buttons(table, {
 				name: 'second',
-				buttons: [{ text: 'one' }, { text: 'two' }, , { text: 'three' }]
+				buttons: [{ text: 'one' }, { text: 'two' }, { text: 'three' }]
 			});
 
-			table
-				.buttons('second', null)
-				.container()
-				.appendTo('body');
+			table.buttons('second', null).container().appendTo('body');
 
 			expect(table.buttons('first', null).count()).toBe(3);
 			expect(table.button('first', 0).text()).toBe('first');
@@ -158,7 +155,7 @@ describe('buttons - button().remove()', function() {
 			expect(table.buttons('second', null).count()).toBe(3);
 			expect(table.button('second', 0).text()).toBe('one');
 		});
-		it('Remove a button from the second group', function() {
+		it('Remove a button from the second group', function () {
 			table.button('second', 0).remove();
 
 			expect(table.buttons('first', null).count()).toBe(3);
@@ -167,7 +164,7 @@ describe('buttons - button().remove()', function() {
 			expect(table.buttons('second', null).count()).toBe(2);
 			expect(table.button('second', 0).text()).toBe('two');
 		});
-		it('Remove a button from the first group', function() {
+		it('Remove a button from the first group', function () {
 			table.button('first', 0).remove();
 
 			expect(table.buttons('first', null).count()).toBe(2);
@@ -177,7 +174,7 @@ describe('buttons - button().remove()', function() {
 			expect(table.button('second', 0).text()).toBe('two');
 		});
 
-		it('Destroy the table so that the defaults will be reset', function() {
+		it('Destroy the table so that the defaults will be reset', function () {
 			table.destroy();
 		});
 	});
