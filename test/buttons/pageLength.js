@@ -34,6 +34,7 @@ describe('buttons - pageLength', function () {
 			checkOptions(1, 'Show 25 rows');
 		});
 		it('Ensure full button text is correct', function () {
+			$('.buttons-page-length').click();
 			$('div.dt-button-collection button:eq(2)').click();
 			expect($('button.buttons-collection').text()).toBe('Show 50 rows▼');
 		});
