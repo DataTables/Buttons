@@ -776,7 +776,7 @@ describe('buttons - collection', function () {
 						fade: 0, // saves having to sleep in the tests
 						extend: 'collection',
 						buttons: [
-							{text: 'one', action: function () {}},
+							{ text: 'one', action: function () {} },
 							{
 								fade: 0, // saves having to sleep in the tests
 								popoverTitle: 'Visibility control',
@@ -796,14 +796,11 @@ describe('buttons - collection', function () {
 			$('button.buttons-colvis').click();
 			expect($('button.dt-button').length).toBe(7);
 		});
-		it('Clicking away hides all collections', function (done) {
-			setTimeout(function () {
-				$('div.dataTables_filter').click();
-				setTimeout(function () {
-					expect($('button.dt-button').length).toBe(1);
-					done();
-				}, 100);
-			}, 100);
+		it('Clicking away hides all collections', async function () {
+			await dt.sleep(250);
+			$('div.dataTables_filter').click();
+			await dt.sleep(250);
+			expect($('button.dt-button').length).toBe(1);
 		});
 	});
 });
