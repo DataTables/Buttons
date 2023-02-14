@@ -53,11 +53,13 @@ describe('buttons - pageLength', function () {
 			});
 			checkOptions('Show 2 rows');
 		});
-		it('Contains the expected pages', function () {
+		it('Contains the expected pages', async function () {
+			await dt.sleep(250);
 			$('.buttons-page-length').click();
 			checkOptions('Show 2 rows', ['2', '4', '8']);
 		});
-		it('Clicking button changes the length', function () {
+		it('Clicking button changes the length', async function () {
+			await dt.sleep(250);
 			$('div.dt-button-collection button.button-page-length:eq(1)').click();
 			expect($('tbody tr').length).toBe(4);
 			checkOptions('Show 4 rows');
