@@ -386,6 +386,13 @@ declare module 'datatables.net' {
 		action?: FunctionButtonAction;
 
 		/**
+		 * Button HTML attributes
+		 */
+		attr?: {
+			[key: string]: string | number
+		};
+
+		/**
 		 * Ensure that any requirements have been satisfied before initialising a button
 		 */
 		available?: FunctionButtonAvailable;
