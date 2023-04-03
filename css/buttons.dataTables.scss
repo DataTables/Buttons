@@ -47,7 +47,7 @@ input.dt-button {
 		opacity: 0.4;
 	}
 
-	&:active:not(.disabled) {
+	&.active:not(.disabled) {
 		@include dtb-two-stop-gradient(
 			lighten($dtb-button-colour, 70%),
 			darken($dtb-button-colour, 20%)

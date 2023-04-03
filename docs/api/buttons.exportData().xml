@@ -61,7 +61,7 @@
 
 		As of Buttons 1.5.0 the exported data from this method will automatically attempt to determine if any rows in the table are selected. If they are, the export will be restricted to those rows. If no rows are selected, the full data set will be exported.
 
-		If this behaviour is not what you desire, set the `selected` option of the `modifier` object to be `null`. It will then include all rows in the export, regardless of any rows being selected. Equally, if you want to force the export to include only exported rows, even if no rows are selected (i.e. none would be exported), set this parameter to be `true`.
+		If this behaviour is not what you desire, set the `selected` option of the `modifier` object to be `null`. It will then include all rows in the export, regardless of any rows being selected. Equally, if you want to force the export to include only selected rows, even if no rows are selected (i.e. none would be exported), set this parameter to be `true`.
 	</description>
 
 	<example title="Get all data in the table for export"><![CDATA[

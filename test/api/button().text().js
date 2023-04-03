@@ -1,4 +1,4 @@
-describe('buttons - button().node()', function() {
+describe('buttons - button().text()', function() {
 	dt.libs({
 		js: ['jquery', 'datatables', 'buttons'],
 		css: ['datatables', 'buttons']
@@ -55,7 +55,7 @@ describe('buttons - button().node()', function() {
 					{
 						extend: 'collection',
 						text: 'Table control',
-						buttons: [{ text: 'first' }, { text: 'second' }, , { text: 'third' }]
+						buttons: [{ text: 'first' }, { text: 'second' }, { text: 'third' }]
 					}
 				]
 			});
