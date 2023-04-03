@@ -44,11 +44,11 @@
 	</option>
 
 	<option type="string" name="fieldSeparator" default=",">
-		The character(s) used to separate fields in the plain text representation of the table that is copied to the system's clipboard.		
+		The character(s) used to separate fields in the plain text representation of the table that is saved in the CSV file.		
 	</option>
 
 	<option type="string" name="fieldBoundary" default='"'>
-		The character(s) used to enclose each field in the plain text representation of the table that is copied to the system's clipboard. This is automatically added at the start and end of each cell's data.
+		The character(s) used to enclose each field in the plain text representation of the table that is saved in th CSV file. This is automatically added at the start and end of each cell's data.
 	</option>
 
 	<option type="string" name="newline" default="\n">
