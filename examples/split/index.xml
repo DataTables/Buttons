@@ -3,6 +3,7 @@
 
 <title lib="Buttons">Split Buttons</title>
 
+<js lib="jquery" />
 <info><![CDATA[
 
 Split dropdown buttons allow the main button to perform a primary action while the drop down is able to provide a number of secondary options in a popover.

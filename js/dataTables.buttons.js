@@ -862,7 +862,7 @@ $.extend( Buttons.prototype, {
 				button.attr('aria-expanded', true)
 			};
 			
-			var dropButton = $('<button class="' + this.c.dom.splitDropdown.className + ' dt-button"><span class="dt-btn-split-drop-arrow">'+this.c.dom.splitDropdown.text+'</span></button>')
+			var dropButton = $('<button class="' + this.c.dom.splitDropdown.className + ' dt-button"><span class="dt-down-arrow">'+this.c.dom.splitDropdown.text+'</span></button>')
 				.on( 'click.dtb', function (e) {
 					e.preventDefault();
 					e.stopPropagation();

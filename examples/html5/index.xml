@@ -3,6 +3,7 @@
 
 <title lib="Buttons">HTML5 export buttons</title>
 
+<js lib="jquery" />
 <info><![CDATA[
 
 The HTML5 export buttons make use of the local file saving features of modern browsers (IE10+, Chrome, Safari, Firefox and Opera) to create files on the client-side and then download them without any server interaction required.

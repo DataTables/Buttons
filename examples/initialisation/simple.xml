@@ -5,17 +5,24 @@
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			'copy', 'csv', 'excel', 'pdf', 'print'
-		]
-	} );
-} );
+$('#example').DataTable({
+	dom: 'Bfrtip',
+	buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	dom: 'Bfrtip',
+	buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Basic initialisation</title>
 

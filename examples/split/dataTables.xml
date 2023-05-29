@@ -2,7 +2,7 @@
 <dt-example table-type="html" order="0">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons pdfmake vfsfonts jszip buttons-html5">
+<js lib="jquery datatables buttons pdfmake vfsfonts jszip buttons-html5 buttons-colvis">
 <![CDATA[
 
 $(document).ready(function() {
@@ -12,7 +12,10 @@ $(document).ready(function() {
 			{
 				extend: 'csv',
 				split: [ 'pdf', 'excel'],
-			}
+			},
+			'colvis',
+			'excel',
+			'copy'
 		]
 	} );
 } );

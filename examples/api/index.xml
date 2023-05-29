@@ -3,6 +3,7 @@
 
 <title lib="Buttons">API</title>
 
+<js lib="jquery" />
 <info><![CDATA[
 
 The Buttons API is tightly integrated with DataTables own API, building on the same style and interaction. With the API it is possible to manipulate individual buttons and groups of buttons, altering their characteristics and behaviour.

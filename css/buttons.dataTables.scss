@@ -6,10 +6,28 @@ $dtb-button-colour: rgba(0, 0, 0, 0.1) !default;
 $dtb-button-focus-colour: rgba(121, 172, 233, 1) !default;
 $dtb-button-border: 1px solid dtb-shade(transparent, 30%) !default;
 
-button.dt-button,
-div.dt-button,
-a.dt-button,
-input.dt-button {
+$dtb-dark-button-colour: rgba(255, 255, 255, 0.15);
+// $dtb-dark-button-focus-colour: 
+$dtb-dark-button-border: 1px solid rgb(89, 91, 94);
+
+div.dt-buttons {
+	float: left;
+
+	&.buttons-right {
+		float: right;
+	}
+}
+
+// DT2 layout does not need or want a float
+div.dataTables_layout_cell div.dt-buttons {
+	float: none;
+
+	&.buttons-right {
+		float: none;
+	}
+}
+
+.dt-button {
 	position: relative;
 	display: inline-block;
 	box-sizing: border-box;
@@ -22,8 +40,7 @@ input.dt-button {
 	cursor: pointer;
 	font-size: 0.88em;
 	line-height: 1.6em;
-	color: black;
-	//box-shadow: 1px 1px 3px #ccc;
+	color: inherit;
 	white-space: nowrap;
 	overflow: hidden;
 	@include dtb-two-stop-gradient(
@@ -76,54 +93,54 @@ input.dt-button {
 	}
 
 	&:focus:not(.disabled) {
-		border: 1px solid #426c9e;
-		text-shadow: 0 1px 0 #c4def1;
-		outline: none;
-		@include dtb-two-stop-gradient(
-			lighten($dtb-button-focus-colour, 20%),
-			$dtb-button-focus-colour
-		);
+		outline: 2px solid rgb(53, 132, 228);
 	}
-
-	&.active:focus:not(.disabled) {
-		background: linear-gradient(to bottom, lighten($dtb-button-focus-colour, 20%) 0%, $dtb-button-focus-colour 100%) !important;
+	
+	embed { 
+		outline: none;
 	}
 
 	span.dt-down-arrow {
 		position: relative;
 		top: -2px;
-		color: rgba(70, 70, 70, 0.75);
-		font-size: 8px;
+		font-size: 10px;
 		padding-left: 10px;
 		line-height: 1em;
-	}
-}
-
-
-.dt-button embed { 
-	outline: none;
-}
-
-
-div.dt-buttons {
-	float: left;
-
-	&.buttons-right {
-		float: right;
-	}
-}
-
-// DT2 layout does not need or want a float
-div.dataTables_layout_cell div.dt-buttons {
-	float: none;
-
-	&.buttons-right {
-		float: none;
+		opacity: 0.6;
 	}
 }
 
 div.dt-btn-split-wrapper {
 	display: inline-block;
+
+	.dt-button:first-child {
+		margin-right: 0;
+		border-right: 1px solid rgba(0, 0, 0, 0.15);
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+
+		&:hover {
+			border-right: 1px solid #666;
+		}
+	}
+
+	.dt-button:last-child {
+		margin-left: -1px;
+		padding-left: 0.75em;
+		padding-right: 0.75em;
+		border-left: 1px solid transparent; // Allows hover on border
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		z-index: 2;
+
+		&:hover {
+			border-left: 1px solid #666;
+		}
+		
+		span {
+			padding-left: 0;
+		}
+	}
 }
 
 div.dt-button-collection {
@@ -134,7 +151,6 @@ div.dt-button-collection {
 	margin-top: 3px;
 	margin-bottom: 3px;
 	padding: 4px 4px 2px 4px;
-	border: 1px solid #ccc;
 	border: 1px solid rgba( 0, 0, 0, 0.4 );
 	background-color: white;
 	overflow: hidden;
@@ -143,9 +159,42 @@ div.dt-button-collection {
 	box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.3);
 	box-sizing: border-box;
 
-	button.dt-button,
-	div.dt-button,
-	a.dt-button {
+	div[role="menu"] {
+		> .dt-button:first-child {
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
+			margin-top: 0;
+		}
+
+		> .dt-button:last-child {
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
+		}
+
+		.dt-btn-split-wrapper:first-child {
+			margin-top: 0;
+
+			button:first-child {
+				border-top-left-radius: 3px;
+			}
+
+			button:last-child {
+				border-top-right-radius: 3px;
+			}
+		}
+
+		.dt-btn-split-wrapper:last-child {
+			button:first-child {
+				border-bottom-left-radius: 3px;
+			}
+
+			button:last-child {
+				border-bottom-right-radius: 3px;
+			}
+		}
+	}
+
+	.dt-button {
 		position: relative;
 		left: 0;
 		right: 0;
@@ -159,17 +208,6 @@ div.dt-button-collection {
 		&.active:not(.disabled) {
 			@include dtb-two-stop-gradient(#f0f0f0, #dadada);
 			box-shadow: inset 1px 1px 3px #666;
-		}
-
-		&:first-child {
-			margin-top: 0;
-			border-top-left-radius: 3px;
-			border-top-right-radius: 3px;
-		}
-
-		&:last-child {
-			border-bottom-left-radius: 3px;
-			border-bottom-right-radius: 3px;
 		}
 	}
 
@@ -189,47 +227,11 @@ div.dt-button-collection {
 			flex-grow: 1;
 			flex-shrink: 0;
 			flex-basis: 50px;
-			border-radius: 0;
 		}
 
 		button.dt-btn-split-drop {
-			min-width: 20px;
-			flex-grow: 0;
-			flex-shrink: 0;
-			flex-basis: 0;
-		}
-
-		&:first-child {
-			margin-top: 0;
-
-			button.dt-button {
-				border-top-left-radius: 3px;
-			}
-
-			button.dt-btn-split-drop {
-				border-top-right-radius: 3px;
-			}
-		}
-
-		&:last-child {
-			button.dt-button {
-				border-bottom-left-radius: 3px;
-			}
-
-			button.dt-btn-split-drop {
-				border-bottom-right-radius: 3px;
-			}
-		}
-
-		&:active:not(.disabled),
-		&.active:not(.disabled) {
-			button.dt-button {
-				@include dtb-two-stop-gradient(#f0f0f0, #dadada);
-				box-shadow: inset 0px 0px 4px #666;
-			}
-			button.dt-btn-split-drop {
-				box-shadow: none;
-			}
+			min-width: 33px;
+			flex: 0;
 		}
 	}
 
@@ -263,6 +265,10 @@ div.dt-button-background {
 	z-index: 2001;
 }
 
+.dt-button.processing {
+	@include dtb-processing();
+}
+
 @media screen and (max-width: 640px) {
 	div.dt-buttons {
 		float: none !important;
@@ -270,40 +276,57 @@ div.dt-button-background {
 	}
 }
 
-button.dt-button.processing,
-div.dt-button.processing,
-a.dt-button.processing {
-	@include dtb-processing();
-}
-
-button.dt-btn-split-drop {
-	margin-left: calc(-1px - 0.333em);
-	padding-bottom: calc(0.5em - 1px);
-	border-radius: 0px 1px 1px 0px;
-	color: rgba(70, 70, 70, 0.9);
-	border-left: none;
+html.dark {
+	.dt-button {
+		border: $dtb-dark-button-border;
+		background: $dtb-dark-button-colour;
+		
+		&.active:not(.disabled) {
+			background: darken($dtb-dark-button-colour, 30%);
+			box-shadow: inset 1px 1px 2px black;
 	
-	span.dt-btn-split-drop-arrow {
-		position: relative;
-		top: -1px;
-		left: -2px;
-		font-size: 8px;
+			&:hover:not(.disabled) {
+				background: darken($dtb-dark-button-colour, 50%);
+				box-shadow: inset 1px 1px 3px black;
+			}
+		}
+	
+		&:hover:not(.disabled) {
+			background: darken($dtb-dark-button-colour, 30%);
+		}
+
+		&:focus:not(.disabled) {
+			outline: 2px solid rgb(110, 168, 254);
+		}
 	}
 
-	&:hover {
-		z-index: 2;
+	div.dt-btn-split-wrapper {
+		.dt-button:first-child {
+			border-right: 1px solid rgba(255, 255, 255, 0.1);
+
+			&:hover {
+				border-right: $dtb-dark-button-border;
+			}
+		}
+	
+		.dt-button:last-child {
+			&:hover {
+				border-left: $dtb-dark-button-border;
+			}
+		}
 	}
-}
 
-button.buttons-split {
-	border-right: 1px solid rgba( 70, 70, 70, -0.3);
-	border-radius: 1px 0px 0px 1px;
-}
+	div.dt-button-collection {
+		border: $dtb-dark-button-border;
+		background-color: rgb(33, 37, 41);
+		box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.8);
 
-button.dt-btn-split-drop-button {
-	background-color: rgba(255, 255, 255, 1);
-
-	&:hover {
-		background-color: rgba(255, 255, 255, 1);
+		.dt-button {
+			&:active:not(.disabled),
+			&.active:not(.disabled) {
+				background: darken($dtb-dark-button-colour, 30%);
+				box-shadow: inset 1px 1px 3px black;
+			}
+		}
 	}
 }
