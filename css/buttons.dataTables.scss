@@ -100,7 +100,7 @@ div.dataTables_layout_cell div.dt-buttons {
 		outline: none;
 	}
 
-	span.dt-down-arrow {
+	span.dt-button-down-arrow {
 		position: relative;
 		top: -2px;
 		font-size: 10px;
@@ -110,7 +110,7 @@ div.dataTables_layout_cell div.dt-buttons {
 	}
 }
 
-div.dt-btn-split-wrapper {
+div.dt-button-split {
 	display: inline-block;
 
 	.dt-button:first-child {
@@ -160,37 +160,9 @@ div.dt-button-collection {
 	box-sizing: border-box;
 
 	div[role="menu"] {
-		> .dt-button:first-child {
-			border-top-left-radius: 3px;
-			border-top-right-radius: 3px;
+		> .dt-button:first-child,
+		.dt-button-split:first-child {
 			margin-top: 0;
-		}
-
-		> .dt-button:last-child {
-			border-bottom-left-radius: 3px;
-			border-bottom-right-radius: 3px;
-		}
-
-		.dt-btn-split-wrapper:first-child {
-			margin-top: 0;
-
-			button:first-child {
-				border-top-left-radius: 3px;
-			}
-
-			button:last-child {
-				border-top-right-radius: 3px;
-			}
-		}
-
-		.dt-btn-split-wrapper:last-child {
-			button:first-child {
-				border-bottom-left-radius: 3px;
-			}
-
-			button:last-child {
-				border-bottom-right-radius: 3px;
-			}
 		}
 	}
 
@@ -211,7 +183,7 @@ div.dt-button-collection {
 		}
 	}
 
-	div.dt-btn-split-wrapper {
+	div.dt-button-split {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -229,7 +201,7 @@ div.dt-button-collection {
 			flex-basis: 50px;
 		}
 
-		button.dt-btn-split-drop {
+		button.dt-button-split-drop {
 			min-width: 33px;
 			flex: 0;
 		}
@@ -300,7 +272,7 @@ html.dark {
 		}
 	}
 
-	div.dt-btn-split-wrapper {
+	div.dt-button-split {
 		.dt-button:first-child {
 			border-right: 1px solid rgba(255, 255, 255, 0.1);
 

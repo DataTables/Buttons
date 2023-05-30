@@ -5,7 +5,7 @@
 $.extend( true, DataTable.Buttons.defaults, {
 	dom: {
 		container: {
-			className: 'dt-buttons ui basic buttons'
+			className: 'dt-buttons ui buttons'
 		},
 		button: {
 			tag: 'button',
@@ -14,24 +14,29 @@ $.extend( true, DataTable.Buttons.defaults, {
 		},
 		collection: {
 			tag: 'div',
-			className: 'ui basic vertical buttons',
-			closeButton: false
+			className: 'ui vertical buttons',
+			closeButton: false,
+			button: {
+
+			}
 		},
-		splitWrapper: {
-			tag: 'div',
-			className: 'dt-btn-split-wrapper buttons',
-			closeButton: false
-		},
-		splitDropdown: {
-			tag: 'button',
-			text: '&#x25BC;',
-			className: 'ui floating button dt-btn-split-drop dropdown icon',
-			closeButton: false
-		},
-		splitDropdownButton: {
-			tag: 'button',
-			className: 'dt-btn-split-drop-button ui button',
-			closeButton: false
+		split: {
+			button: {
+				tag: 'button',
+				className: 'dt-button-split-drop-button ui button',
+				closeButton: false
+			},
+			dropdown: {
+				tag: 'button',
+				text: '&#x25BC;',
+				className: 'ui floating button dt-button-split-drop dropdown icon',
+				closeButton: false
+			},
+			wrapper: {
+				tag: 'div',
+				className: 'dt-button-split buttons',
+				closeButton: false
+			}
 		}
 	}
 } );

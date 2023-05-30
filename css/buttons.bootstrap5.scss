@@ -4,6 +4,7 @@
 
 div.dt-button-collection {
 	position: absolute;
+	margin-top: 3px;
 	z-index: 2001;
 
 	// Recreate the dropdown menu styling - we nest it
@@ -24,6 +25,40 @@ div.dt-button-collection {
 		border-radius: 0;
 		z-index: 2002;
 		min-width: 100%;
+
+		div.dt-button-split {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			align-content: flex-start;
+			align-items: stretch;
+
+			a:first-child {
+				margin: 0;
+				display: inline-block;
+				width: 0;
+				min-width: auto;
+				flex-grow: 1;
+				flex-shrink: 0;
+				flex-basis: 50px;
+			}
+
+			button:last-child {
+				min-width: 33px;
+				flex: 0;
+				background: transparent;
+				border: none;
+				line-height: 1rem;
+				color: var(--bs-dropdown-link-color);
+				padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+
+				&:hover {
+					color: var(--bs-dropdown-link-hover-color);
+					background-color: var(--bs-dropdown-link-hover-bg);
+				}
+			}
+		}
 	}
 
 	@include dtb-fixed-collection();
@@ -41,33 +76,6 @@ div.dt-button-collection {
 
 	.dt-button:not(.dt-btn-split-drop) {
 		min-width: 200px;
-	}
-
-	div.dt-btn-split-wrapper {
-		width: 100%;
-	}
-
-	button.dt-btn-split-drop-button {
-		width: 100%;
-		color: #212529;
-		border: none;
-		background-color: white;
-		border-radius: 0px;
-		margin-left: 0px !important;
-
-		&:focus {
-			border: none;
-			border-radius: 0px;
-			outline: none;
-		}
-
-		&:hover {
-			background-color: #e9ecef;
-		}
-
-		&:active {
-			background-color: #007bff !important;
-		}
 	}
 }
 
@@ -103,30 +111,9 @@ div.dt-buttons {
 	div.btn-group {
 		position: initial;
 	}
-}
 
-div.dt-btn-split-wrapper {
-	button.dt-btn-split-drop {
-		border-top-right-radius: .25rem !important;
-		border-bottom-right-radius: .25rem !important;
-	}
-	&:active:not(.disabled),
-	&.active:not(.disabled) {
-		button {
-			background-color: #5a6268;
-			border-color: #545b62;
-		}
-		button.dt-btn-split-drop {
-			box-shadow: none;
-			background-color: #6c757d;
-			border-color: #6c757d;
-		}
-		button {
-			&:hover {
-				background-color: #5a6268;
-				border-color: #545b62;
-			}
-		}
+	span.dt-button-down-arrow {
+		display: none;
 	}
 }
 
@@ -147,12 +134,6 @@ div.dataTables_wrapper {
 				border-bottom-left-radius: 4px !important;
 				border-top-right-radius: 4px !important;
 				border-bottom-right-radius: 4px !important;
-			}
-			button.dt-btn-split-drop:last-child {
-				border: 1px solid rgb(108, 117, 125);
-			}
-			div.dt-btn-split-wrapper {
-				border: none;
 			}
 		}
 	}
@@ -178,12 +159,6 @@ div.dt-button-collection {
 			border-top-right-radius: 4px !important;
 			border-bottom-right-radius: 4px !important;
 		}
-		button.dt-btn-split-drop:last-child {
-			border: 1px solid rgb(108, 117, 125);
-		}
-		div.dt-btn-split-wrapper {
-			border: none;
-		}
 	}
 }
 
@@ -198,4 +173,11 @@ span.dt-button-spacer {
 div.dt-button-collection span.dt-button-spacer {
 	padding-left: 1rem !important;
 	text-align: left;
+}
+
+html.dark {
+	div.dt-button-collection {
+		background-color: rgb(33, 37, 41);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+	}
 }

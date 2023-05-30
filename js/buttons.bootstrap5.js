@@ -21,23 +21,25 @@ $.extend( true, DataTable.Buttons.defaults, {
 				disabled: 'disabled'
 			}
 		},
-		splitWrapper: {
-			tag: 'div',
-			className: 'dt-btn-split-wrapper btn-group',
-			closeButton: false,
-		},
-		splitDropdown: {
-			tag: 'button',
-			text: '',
-			className: 'btn btn-secondary dt-btn-split-drop dropdown-toggle dropdown-toggle-split',
-			closeButton: false,
-			align: 'split-left',
-			splitAlignClass: 'dt-button-split-left'
-		},
-		splitDropdownButton: {
-			tag: 'button',
-			className: 'dt-btn-split-drop-button btn btn-secondary',
-			closeButton: false
+		split: {
+			button: {
+				tag: 'a',
+				className: 'btn btn-secondary dt-button-split-drop-button',
+				closeButton: false
+			},
+			dropdown: {
+				tag: 'button',
+				text: '',
+				className: 'btn btn-secondary dt-button-split-drop dropdown-toggle dropdown-toggle-split',
+				closeButton: false,
+				align: 'split-left',
+				splitAlignClass: 'dt-button-split-left'
+			},
+			wrapper: {
+				tag: 'div',
+				className: 'dt-button-split btn-group',
+				closeButton: false,
+			}
 		}
 	},
 	buttonCreated: function ( config, button ) {

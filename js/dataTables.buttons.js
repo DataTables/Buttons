@@ -1,4 +1,4 @@
-/*! Buttons for DataTables 2.3.6
+/*! Buttons for DataTables 3.0.0-dev
  * ©2016-2023 SpryMedia Ltd - datatables.net/license
  */
 
@@ -436,10 +436,7 @@ $.extend( Buttons.prototype, {
 	text: function ( node, label )
 	{
 		var button = this._nodeToButton( node );
-		var buttonLiner = this.c.dom.collection.buttonLiner;
-		var linerTag = button.inCollection && buttonLiner && buttonLiner.tag ?
-			buttonLiner.tag :
-			this.c.dom.buttonLiner.tag;
+		var textNode = button.textNode;
 		var dt = this.s.dt;
 		var jqNode = $(button.node);
 		var text = function ( opt ) {
@@ -453,17 +450,7 @@ $.extend( Buttons.prototype, {
 		}
 
 		button.conf.text = label;
-
-		if ( linerTag ) {
-			jqNode
-				.children( linerTag )
-				.eq(0)
-				.filter(':not(.dt-down-arrow)')
-				.html( text(label) );
-		}
-		else {
-			jqNode.html( text(label) );
-		}
+		textNode.html(text(label));
 
 		return this;
 	},
@@ -571,22 +558,17 @@ $.extend( Buttons.prototype, {
 	_expandButton: function ( attachTo, button, split, inCollection, inSplit, attachPoint, parentConf )
 	{
 		var dt = this.s.dt;
-		var buttonCounter = 0;
 		var isSplit = false;
 		var buttons = ! Array.isArray( button ) ?
 			[ button ] :
 			button;
 		
-		if(button === undefined ) {
-			buttons = !Array.isArray(split) ?
+		if ( button === undefined ) {
+			buttons = ! Array.isArray(split) ?
 				[ split ] :
 				split;
 		}
 
-		if (button !== undefined && button.split !== undefined) {
-			isSplit = true;
-		}
-			
 		for ( var i=0, ien=buttons.length ; i<ien ; i++ ) {
 			var conf = this._resolveExtends( buttons[i] );
 
@@ -594,12 +576,9 @@ $.extend( Buttons.prototype, {
 				continue;
 			}
 
-			if( conf.config !== undefined && conf.config.split) {
-				isSplit = true;
-			}
-			else {
-				isSplit = false;
-			}
+			isSplit = conf.config && conf.config.split
+				? true
+				: false;
 			
 			// If the configuration is an array, then expand the buttons at this
 			// point
@@ -621,34 +600,45 @@ $.extend( Buttons.prototype, {
 				attachTo.push( built );
 			}
 
-			
-			if ( built.conf.buttons || built.conf.split ) {
-				built.collection = $('<'+(isSplit ? this.c.dom.splitCollection.tag : this.c.dom.collection.tag)+'/>');
-
+			// Create the dropdown for a collection
+			if ( built.conf.buttons ) {
+				built.collection = $('<'+(this.c.dom.collection.tag)+'/>');
 				built.conf._collection = built.collection;
 
-				if(built.conf.split) {
-					for(var j = 0; j < built.conf.split.length; j++) {
-						if(typeof built.conf.split[j] === "object") {
-							built.conf.split[j].parent = parentConf;
-							if(built.conf.split[j].collectionLayout === undefined) {
-								built.conf.split[j].collectionLayout = built.conf.collectionLayout;
-							}
-							if(built.conf.split[j].dropup === undefined) {
-								built.conf.split[j].dropup = built.conf.dropup;
-							}
-							if(built.conf.split[j].fade === undefined) {
-								built.conf.split[j].fade = built.conf.fade;
-							}
+				// TODO should this not be in _buildButton?
+				$(built.node).append($('<span class="dt-button-down-arrow">&#x25BC;</span>'));
+			
+				this._expandButton( built.buttons, built.conf.buttons, built.conf.split, !isSplit, isSplit, attachPoint, built.conf );
+			}
+
+			// And the split collection
+			if ( built.conf.split ) {
+				built.collection = $('<' + this.c.dom.collection.tag + '/>');
+				built.conf._collection = built.collection;
+
+				for ( var j = 0; j < built.conf.split.length; j++ ) {
+					var item = built.conf.split[j];
+
+					if ( typeof item === "object" ) {
+						item.parent = parentConf;
+
+						if ( item.collectionLayout === undefined ) {
+							item.collectionLayout = built.conf.collectionLayout;
+						}
+
+						if ( item.dropup === undefined ) {
+							item.dropup = built.conf.dropup;
+						}
+
+						if ( item.fade === undefined ) {
+							item.fade = built.conf.fade;
 						}
 					}
-				}
-				else {
-					$(built.node).append($('<span class="dt-down-arrow">'+this.c.dom.splitDropdown.text+'</span>'))
 				}
 
 				this._expandButton( built.buttons, built.conf.buttons, built.conf.split, !isSplit, isSplit, attachPoint, built.conf );
 			}
+
 			built.conf.parent = parentConf;
 
 			// init call is made here, rather than buildButton as it needs to
@@ -656,8 +646,6 @@ $.extend( Buttons.prototype, {
 			if ( conf.init ) {
 				conf.init.call( dt.button( built.node ), dt, $(built.node), conf );
 			}
-
-			buttonCounter++;
 		}
 	},
 
@@ -665,17 +653,13 @@ $.extend( Buttons.prototype, {
 	 * Create an individual button
 	 * @param  {object} config            Resolved button configuration
 	 * @param  {boolean} inCollection `true` if a collection button
-	 * @return {jQuery} Created button node (jQuery)
+	 * @return {object} Completed button description object
 	 * @private
 	 */
 	_buildButton: function ( config, inCollection, isSplit, inSplit )
 	{
-		var buttonDom = this.c.dom.button;
-		var linerDom = this.c.dom.buttonLiner;
-		var collectionDom = this.c.dom.collection;
-		var splitDom = this.c.dom.split;
-		var splitCollectionDom = this.c.dom.splitCollection;
-		var splitDropdownButton = this.c.dom.splitDropdownButton;
+		var configDom = this.c.dom;
+		var textNode;
 		var dt = this.s.dt;
 		var text = function ( opt ) {
 			return typeof opt === 'function' ?
@@ -683,10 +667,25 @@ $.extend( Buttons.prototype, {
 				opt;
 		};
 
+		// Create an object that describes the button which can be in `dom.button`, or
+		// `dom.collection.button` or `dom.split.button` or `dom.collection.split.button`!
+		// Each should extend from `dom.button`.
+		var dom = $.extend(true, {}, configDom.button);
+
+		if (inCollection && isSplit && configDom.collection.split) {
+			$.extend(true, dom, configDom.collection.split.button);
+		}
+		else if (inSplit || inCollection) {
+			$.extend(true, dom, configDom.collection.button);
+		}
+		else if (isSplit) {
+			$.extend(true, dom, configDom.split.button);
+		}
+
 		// Spacers don't do much other than insert an element into the DOM
 		if (config.spacer) {
 			var spacer = $('<span></span>')
-				.addClass('dt-button-spacer ' + config.style + ' ' + buttonDom.spacerClass)
+				.addClass('dt-button-spacer ' + config.style + ' ' + dom.spacerClass)
 				.html(text(config.text));
 
 			return {
@@ -696,23 +695,9 @@ $.extend( Buttons.prototype, {
 				buttons:      [],
 				inCollection: inCollection,
 				isSplit:	  isSplit,
-				inSplit:	  inSplit,
-				collection:   null
+				collection:   null,
+				textNode:     spacer
 			};
-		}
-
-		if ( !isSplit && inSplit && splitCollectionDom ) {
-			buttonDom = splitDropdownButton;
-		}
-		else if ( !isSplit && inCollection && collectionDom.button ) {
-			buttonDom = collectionDom.button;
-		} 
-
-		if ( !isSplit && inSplit && splitCollectionDom.buttonLiner ) {
-			linerDom = splitCollectionDom.buttonLiner
-		}
-		else if ( !isSplit && inCollection && collectionDom.buttonLiner ) {
-			linerDom = collectionDom.buttonLiner;
 		}
 
 		// Make sure that the button is available based on whatever requirements
@@ -722,7 +707,8 @@ $.extend( Buttons.prototype, {
 		}
 
 		var button;
-		if(!config.hasOwnProperty('html')) {
+
+		if (!config.hasOwnProperty('html')) {
 			var action = function ( e, dt, button, config ) {
 				config.action.call( dt.button( button ), e, dt, button, config );
 	
@@ -731,23 +717,23 @@ $.extend( Buttons.prototype, {
 				] );
 			};
 
-			var tag = config.tag || buttonDom.tag;
+			var tag = config.tag || dom.tag;
 			var clickBlurs = config.clickBlurs === undefined
 				? true :
 				config.clickBlurs;
 
 			button = $('<'+tag+'/>')
-				.addClass( buttonDom.className )
-				.addClass( inSplit ? this.c.dom.splitDropdownButton.className : '')
+				.addClass( dom.className )
 				.attr( 'tabindex', this.s.dt.settings()[0].iTabIndex )
 				.attr( 'aria-controls', this.s.dt.table().node().id )
 				.on( 'click.dtb', function (e) {
 					e.preventDefault();
 	
-					if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
+					if ( ! button.hasClass( dom.disabled ) && config.action ) {
 						action( e, dt, button, config );
 					}
-					if( clickBlurs ) {
+
+					if ( clickBlurs ) {
 						button.trigger('blur');
 					}
 				} )
@@ -755,7 +741,7 @@ $.extend( Buttons.prototype, {
 					if ( e.keyCode === 13 ) {
 						e.preventDefault();
 
-						if ( ! button.hasClass( buttonDom.disabled ) && config.action ) {
+						if ( ! button.hasClass( dom.disabled ) && config.action ) {
 							action( e, dt, button, config );
 						}
 					}
@@ -771,23 +757,25 @@ $.extend( Buttons.prototype, {
 				button.attr( 'type', 'button' );
 			}
 	
-			if ( linerDom.tag ) {
-				var liner = $('<'+linerDom.tag+'/>')
+			if ( dom.liner.tag ) {
+				var liner = $('<'+dom.liner.tag+'/>')
 					.html( text( config.text ) )
-					.addClass( linerDom.className );
+					.addClass( dom.liner.className );
 	
-				if ( linerDom.tag.toLowerCase() === 'a' ) {
+				if ( dom.liner.tag.toLowerCase() === 'a' ) {
 					liner.attr( 'href', '#' );
 				}
 	
 				button.append( liner );
+				textNode = liner;
 			}
 			else {
 				button.html( text( config.text ) );
+				textNode = button;
 			}
 	
 			if ( config.enabled === false ) {
-				button.addClass( buttonDom.disabled );
+				button.addClass( dom.disabled );
 			}
 	
 			if ( config.className ) {
@@ -830,26 +818,33 @@ $.extend( Buttons.prototype, {
 		// Style integration callback for DOM manipulation
 		// Note that this is _not_ documented. It is currently
 		// for style integration only
-		if( this.c.buttonCreated ) {
+		if ( this.c.buttonCreated ) {
 			inserter = this.c.buttonCreated( config, inserter );
 		}
 
 		var splitDiv;
-		if(isSplit) {
-			splitDiv = $('<div/>').addClass(this.c.dom.splitWrapper.className)
-			splitDiv.append(button);
+
+		if ( isSplit ) {
+			var dropdownConf = inCollection
+				? $.extend(true, this.c.dom.split, this.c.dom.collection.split)
+				: this.c.dom.split;
+			var wrapperConf = dropdownConf.wrapper;
+
+			splitDiv = $('<'+ wrapperConf.tag +'/>')
+				.addClass(wrapperConf.className)
+				.append(button);
+
 			var dropButtonConfig = $.extend(config, {
-				text: this.c.dom.splitDropdown.text,
-				className: this.c.dom.splitDropdown.className,
-				closeButton: false,
+				align: dropdownConf.dropdown.align,
 				attr: {
 					'aria-haspopup': 'dialog',
 					'aria-expanded': false
 				},
-				align: this.c.dom.splitDropdown.align,
-				splitAlignClass: this.c.dom.splitDropdown.splitAlignClass
-				
-			})
+				className: dropdownConf.dropdown.className,
+				closeButton: false,
+				splitAlignClass: dropdownConf.dropdown.splitAlignClass,
+				text: dropdownConf.dropdown.text
+			});
 
 			this._addKey(dropButtonConfig);
 
@@ -862,12 +857,12 @@ $.extend( Buttons.prototype, {
 				button.attr('aria-expanded', true)
 			};
 			
-			var dropButton = $('<button class="' + this.c.dom.splitDropdown.className + ' dt-button"><span class="dt-down-arrow">'+this.c.dom.splitDropdown.text+'</span></button>')
+			var dropButton = $('<button class="' + dropdownConf.dropdown.className + ' dt-button"><span class="dt-button-down-arrow">&#x25BC;</span></button>')
 				.on( 'click.dtb', function (e) {
 					e.preventDefault();
 					e.stopPropagation();
 
-					if ( ! dropButton.hasClass( buttonDom.disabled )) {
+					if ( ! dropButton.hasClass( dom.disabled )) {
 						splitAction( e, dt, dropButton, dropButtonConfig );
 					}
 					if ( clickBlurs ) {
@@ -878,13 +873,13 @@ $.extend( Buttons.prototype, {
 					if ( e.keyCode === 13 ) {
 						e.preventDefault();
 
-						if ( ! dropButton.hasClass( buttonDom.disabled ) ) {
+						if ( ! dropButton.hasClass( dom.disabled ) ) {
 							splitAction( e, dt, dropButton, dropButtonConfig );
 						}
 					}
 				} );
 
-			if(config.split.length === 0) {
+			if ( config.split.length === 0 ) {
 				dropButton.addClass('dtb-hide-drop');
 			}
 
@@ -899,7 +894,8 @@ $.extend( Buttons.prototype, {
 			inCollection: inCollection,
 			isSplit:	  isSplit,
 			inSplit:	  inSplit,
-			collection:   null
+			collection:   null,
+			textNode:     textNode
 		};
 	},
 
@@ -1769,40 +1765,39 @@ Buttons.defaults = {
 		collection: {
 			tag: 'div',
 			className: ''
+			// optionally
+			// , button: IButton
+			// , split: ISplit
 		},
 		button: {
 			tag: 'button',
 			className: 'dt-button',
-			active: 'active',
-			disabled: 'disabled',
-			spacerClass: ''
-		},
-		buttonLiner: {
-			tag: 'span',
-			className: ''
+			active: 'active', // class name
+			disabled: 'disabled', // class name
+			spacerClass: '',
+			liner: {
+				tag: 'span',
+				className: ''
+			}
 		},
 		split: {
-			tag: 'div',
+			button: { // action button
+				className: 'dt-button-split-drop-button dt-button',
+				tag: 'button'
+			},
 			className: 'dt-button-split',
-		},
-		splitWrapper: {
+			dropdown: { // button to trigger the dropdown
+				align: 'split-right',
+				className: 'dt-button-split-drop',
+				splitAlignClass: 'dt-button-split-left',
+				tag: 'button',
+				text: '&#x25BC;'
+			},
 			tag: 'div',
-			className: 'dt-btn-split-wrapper',
-		},
-		splitDropdown: {
-			tag: 'button',
-			text: '&#x25BC;',
-			className: 'dt-btn-split-drop',
-			align: 'split-right',
-			splitAlignClass: 'dt-button-split-left'
-		},
-		splitDropdownButton: {
-			tag: 'button',
-			className: 'dt-btn-split-drop-button dt-button',
-		},
-		splitCollection: {
-			tag: 'div',
-			className: 'dt-button-split-collection',
+			wrapper: { // wrap around both
+				className: 'dt-button-split',
+				tag: 'div'
+			}
 		}
 	}
 };
@@ -1812,7 +1807,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '2.3.6';
+Buttons.version = '3.0.0-dev';
 
 
 $.extend( _dtButtons, {
