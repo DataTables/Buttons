@@ -11,25 +11,34 @@ $.extend( true, DataTable.Buttons.defaults, {
 			className: 'btn btn-secondary'
 		},
 		collection: {
-			tag: 'div',
-			className: 'dropdown-menu',
+			action: {
+				dropHtml: ''
+			},
+			container: {
+				tag: 'div',
+				className: 'dropdown-menu'
+			},
 			closeButton: false,
 			button: {
 				tag: 'a',
 				className: 'dt-button dropdown-item',
 				active: 'active',
-				disabled: 'disabled'
+				disabled: 'disabled',
+				spacer: {
+					className: 'dropdown-divider',
+					tag: 'hr'
+				}
 			}
 		},
 		split: {
-			button: {
+			action: {
 				tag: 'a',
 				className: 'btn btn-secondary dt-button-split-drop-button',
 				closeButton: false
 			},
 			dropdown: {
 				tag: 'button',
-				text: '',
+				dropHtml: '',
 				className: 'btn btn-secondary dt-button-split-drop dropdown-toggle dropdown-toggle-split',
 				closeButton: false,
 				align: 'split-left',

@@ -13,29 +13,53 @@ $.extend( true, DataTable.Buttons.defaults, {
 			spacerClass: 'dt-button ui button'
 		},
 		collection: {
-			tag: 'div',
-			className: 'ui vertical buttons',
+			action: {
+				dropHtml: '<i class="dropdown icon"></i>'
+			},
+			container: {
+				tag: 'div',
+				className: 'ui dropdown active visible dt-button-collection',
+				content: {
+					className: 'menu transition visible'
+				},
+			},
 			closeButton: false,
 			button: {
-
+				tag: 'div',
+				className: 'item',
+				spacer: {
+					className: 'divider',
+					tag: 'div'
+				}
+			},
+			split: {
+				action: {
+					tag: 'div',
+					className: ''
+				},
+				dropdown: {
+					tag: 'span',
+					className: 'dt-button-split-drop dropdown icon',
+					dropHtml: '<i class="dropdown icon"></i>'
+				},
+				wrapper: {
+					tag: 'div',
+					className: 'dt-button-split'
+				}
 			}
 		},
 		split: {
-			button: {
+			action: {
 				tag: 'button',
-				className: 'dt-button-split-drop-button ui button',
-				closeButton: false
+				className: 'dt-button-split-drop-button ui button'
 			},
 			dropdown: {
 				tag: 'button',
-				text: '&#x25BC;',
-				className: 'ui floating button dt-button-split-drop dropdown icon',
-				closeButton: false
+				className: 'ui floating button dt-button-split-drop dropdown icon'
 			},
 			wrapper: {
 				tag: 'div',
-				className: 'dt-button-split buttons',
-				closeButton: false
+				className: 'dt-button-split buttons'
 			}
 		}
 	}

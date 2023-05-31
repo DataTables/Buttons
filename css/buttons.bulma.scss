@@ -5,8 +5,14 @@
 div.dt-button-collection {
 	position: absolute;
 	z-index: 2001;
-	min-width: 200px;
-	background: white;
+	// min-width: 200px;
+	// background: white;
+	// // We need the dropdown stylings on the container, not the dropdown content
+	// max-width: none;
+	// display: block;
+	// box-shadow: 0 .5em 1em -.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+	// border-radius: 4;
+	// padding: .5rem;
 
 	div.dropdown-menu {
 		display: block;
@@ -14,61 +20,44 @@ div.dt-button-collection {
 		min-width: 100%;
 	}
 
-	div.dt-btn-split-wrapper {
-		width: 100%;
-		padding-left: 5px;
-		padding-right: 5px;
-		margin-bottom: 0px;
+	div.dt-button-split {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: flex-start;
 		align-content: flex-start;
 		align-items: stretch;
+		padding: 0;
 
-		button {
-			margin-right: 0px;
+		a:first-child {
+			margin: 0;
 			display: inline-block;
 			width: 0;
+			min-width: auto;
 			flex-grow: 1;
 			flex-shrink: 0;
 			flex-basis: 50px;
-			margin-top: 0px;
-			border-bottom-left-radius: 3px;
-			border-top-left-radius: 3px;
-			border-top-right-radius: 0px;
-			border-bottom-right-radius: 0px;
-			overflow: hidden;
-			text-overflow: ellipsis;
+			padding: .375rem 1rem;
 		}
-		button.dt-button {
-			min-width: 30px;
-			margin-left: -1px;
-			flex-grow: 0;
-			flex-shrink: 0;
-			flex-basis: 0;
-			border-bottom-left-radius: 0px;
-			border-top-left-radius: 0px;
-			border-top-right-radius: 3px;
-			border-bottom-right-radius: 3px;
-			padding: 0px;
+
+		button:last-child {
+			min-width: 33px;
+			flex: 0;
+			background: transparent;
+			border: none;
+			padding: 0;
+			margin: 0;
+			font-size: .875rem;
+			line-height: 1.5;
+
+			&:hover {
+				background-color: #f5f5f5;
+				color: #0a0a0a;
+			}
 		}
 	}
 
 	@include dtb-fixed-collection();
-
-	// We need the dropdown stylings on the container, not the dropdown content
-	max-width: none;
-	display: block;
-	box-shadow: 0 .5em 1em -.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
-	border-radius: 4;
-	padding: .5rem;
-
-	.dropdown-content {
-		box-shadow: none;
-		padding-top: 0;
-		border-radius: 0;
-	}
 
 	&.fixed {
 		&:before,
@@ -115,10 +104,6 @@ div.dt-buttons {
 	}
 }
 
-span.dt-down-arrow {
-	display: none;
-}
-
 span.dt-button-spacer {
 	display: inline-flex;
 	margin: 0.5em;
@@ -140,7 +125,7 @@ div.dt-button-collection span.dt-button-spacer {
 	padding-left: 1rem !important;
 }
 
-div.dt-btn-split-wrapper {
+div.dt-button-split {
 	padding-left: 5px;
 	padding-right: 5px;
 	margin-bottom: 0px;

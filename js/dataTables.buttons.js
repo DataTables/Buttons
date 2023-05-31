@@ -559,6 +559,7 @@ $.extend( Buttons.prototype, {
 	{
 		var dt = this.s.dt;
 		var isSplit = false;
+		var domCollection = this.c.dom.collection;
 		var buttons = ! Array.isArray( button ) ?
 			[ button ] :
 			button;
@@ -602,18 +603,17 @@ $.extend( Buttons.prototype, {
 
 			// Create the dropdown for a collection
 			if ( built.conf.buttons ) {
-				built.collection = $('<'+(this.c.dom.collection.tag)+'/>');
+				built.collection = $('<'+(domCollection.container.tag)+'/>');
 				built.conf._collection = built.collection;
-
-				// TODO should this not be in _buildButton?
-				$(built.node).append($('<span class="dt-button-down-arrow">&#x25BC;</span>'));
+			
+				$(built.node).append(domCollection.action.dropHtml);
 			
 				this._expandButton( built.buttons, built.conf.buttons, built.conf.split, !isSplit, isSplit, attachPoint, built.conf );
 			}
 
 			// And the split collection
 			if ( built.conf.split ) {
-				built.collection = $('<' + this.c.dom.collection.tag + '/>');
+				built.collection = $('<' + domCollection.container.tag + '/>');
 				built.conf._collection = built.collection;
 
 				for ( var j = 0; j < built.conf.split.length; j++ ) {
@@ -673,7 +673,7 @@ $.extend( Buttons.prototype, {
 		var dom = $.extend(true, {}, configDom.button);
 
 		if (inCollection && isSplit && configDom.collection.split) {
-			$.extend(true, dom, configDom.collection.split.button);
+			$.extend(true, dom, configDom.collection.split.action);
 		}
 		else if (inSplit || inCollection) {
 			$.extend(true, dom, configDom.collection.button);
@@ -684,8 +684,8 @@ $.extend( Buttons.prototype, {
 
 		// Spacers don't do much other than insert an element into the DOM
 		if (config.spacer) {
-			var spacer = $('<span></span>')
-				.addClass('dt-button-spacer ' + config.style + ' ' + dom.spacerClass)
+			var spacer = $('<' + dom.spacer.tag + '/>')
+				.addClass('dt-button-spacer ' + config.style + ' ' + dom.spacer.className)
 				.html(text(config.text));
 
 			return {
@@ -857,7 +857,8 @@ $.extend( Buttons.prototype, {
 				button.attr('aria-expanded', true)
 			};
 			
-			var dropButton = $('<button class="' + dropdownConf.dropdown.className + ' dt-button"><span class="dt-button-down-arrow">&#x25BC;</span></button>')
+			var dropButton = $('<button class="' + dropdownConf.dropdown.className + ' dt-button"></button>')
+				.html(dropdownConf.dropdown.dropHtml)
 				.on( 'click.dtb', function (e) {
 					e.preventDefault();
 					e.stopPropagation();
@@ -1166,7 +1167,7 @@ $.extend( Buttons.prototype, {
 	 */
 	_popover: function ( content, hostButton, inOpts, e ) {
 		var dt = hostButton;
-		var buttonsSettings = this.c;
+		var c = this.c;
 		var closed = false;
 		var options = $.extend( {
 			align: 'button-left', // button-right, dt-container, split-left, split-right
@@ -1174,23 +1175,25 @@ $.extend( Buttons.prototype, {
 			background: true,
 			backgroundClassName: 'dt-button-background',
 			closeButton: true,
-			contentClassName: buttonsSettings.dom.collection.className,
+			containerClassName: c.dom.collection.container.className,
+			contentClassName: c.dom.collection.container.content.className,
 			collectionLayout: '',
 			collectionTitle: '',
 			dropup: false,
 			fade: 400,
 			popoverTitle: '',
 			rightAlignClassName: 'dt-button-right',
-			tag: buttonsSettings.dom.collection.tag
+			tag: c.dom.collection.container.tag
 		}, inOpts );
 
+		var containerSelector = options.tag + '.' + options.containerClassName.replace(/ /g, '.');
 		var hostNode = hostButton.node();
 
 		var close = function () {
 			closed = true;
 
 			_fadeOut(
-				$('.dt-button-collection'),
+				$(containerSelector),
 				options.fade,
 				function () {
 					$(this).detach();
@@ -1217,7 +1220,7 @@ $.extend( Buttons.prototype, {
 		var existingExpanded = $(dt.buttons( '[aria-haspopup="dialog"][aria-expanded="true"]' ).nodes());
 		if ( existingExpanded.length ) {
 			// Reuse the current position if the button that was triggered is inside an existing collection
-			if (hostNode.closest('div.dt-button-collection').length) {
+			if (hostNode.closest(containerSelector).length) {
 				hostNode = existingExpanded.eq(0);
 			}
 
@@ -1238,8 +1241,8 @@ $.extend( Buttons.prototype, {
 			mod = 'dtb-b1';
 		}
 
-		var display = $('<div/>')
-			.addClass('dt-button-collection')
+		var display = $('<' + options.tag + '/>')
+			.addClass(options.containerClassName)
 			.addClass(options.collectionLayout)
 			.addClass(options.splitAlignClass)
 			.addClass(mod)
@@ -1763,37 +1766,46 @@ Buttons.defaults = {
 			className: 'dt-buttons'
 		},
 		collection: {
-			tag: 'div',
-			className: ''
+			action: { // action button
+				dropHtml: '<span class="dt-button-down-arrow">&#x25BC;</span>'
+			},
+			container: { // The element used for the dropdown
+				className: 'dt-button-collection',
+				content: {
+					className: ''
+				},
+				tag: 'div',
+			},
 			// optionally
-			// , button: IButton
-			// , split: ISplit
+			// , button: IButton - buttons inside the collection container
+			// , split: ISplit - splits inside the collection container
 		},
 		button: {
 			tag: 'button',
 			className: 'dt-button',
 			active: 'active', // class name
 			disabled: 'disabled', // class name
-			spacerClass: '',
+			spacer: {
+				className: 'dt-button-spacer',
+				tag: 'span'
+			},
 			liner: {
 				tag: 'span',
 				className: ''
 			}
 		},
 		split: {
-			button: { // action button
+			action: { // action button
 				className: 'dt-button-split-drop-button dt-button',
 				tag: 'button'
 			},
-			className: 'dt-button-split',
 			dropdown: { // button to trigger the dropdown
 				align: 'split-right',
 				className: 'dt-button-split-drop',
+				dropHtml: '<span class="dt-button-down-arrow">&#x25BC;</span>',
 				splitAlignClass: 'dt-button-split-left',
 				tag: 'button',
-				text: '&#x25BC;'
 			},
-			tag: 'div',
 			wrapper: { // wrap around both
 				className: 'dt-button-split',
 				tag: 'div'

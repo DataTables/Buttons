@@ -3,18 +3,11 @@
 @import 'common.scss';
 
 div.dt-button-collection {
-	position: absolute;
-	top: 0;
-	left: 0;
+	position: absolute !important;
 	min-width: 200px;
 	margin-top: 3px !important;
-	margin-bottom: 3px !important;
 	z-index: 2002;
 	background: white;
-
-	border: 1px solid rgba(34,36,38,.15);
-	font-size: 1em;
-	padding: 0.5rem;
 
 	@include dtb-fixed-collection();
 
@@ -53,20 +46,42 @@ div.dt-button-collection {
 	div.dt-button-split {
 		display: flex;
 
-		button:first-child {
+		div:first-child {
 			flex-grow: 1 !important;
 			flex-basis: auto !important;
 			width: auto !important;
-			border-top-right-radius: 0px !important;
 			border-left: none !important;
+
+			position: relative;
+			cursor: pointer;
+			display: block;
+			border: none;
+			height: auto;
+			min-height: 2.57142857rem;
+			text-align: left;
+			line-height: 1em;
+			font-size: 1rem;
+			color: rgba(0,0,0,.87);
+			padding: .78571429rem 1.14285714rem;
+
+			&:hover {
+				background: rgba(0,0,0,.05);
+				color: rgba(0,0,0,.95);
+				z-index: 13;
+			}
 		}
 
 		button:last-child {
 			flex: 0 1 0 !important;
-			border-bottom-left-radius: 0px !important;
-			border-bottom-right-radius: 0px !important;
-			border-top-right-radius: 4px !important;
 			min-width: 32px;
+			border: none;
+			background: transparent;
+
+			&:hover {
+				background: rgba(0,0,0,.05);
+				color: rgba(0,0,0,.95);
+				z-index: 13;
+			}
 		}
 	}
 }
@@ -105,12 +120,6 @@ div.dt-buttons {
 
 	&.ui.buttons {
 		flex-wrap: wrap;
-		overflow: hidden;
-		border-radius: .28571429rem !important;
-		
-		.ui.button {
-			border-radius: 0 !important;
-		}
 	}
 
 	.button {
@@ -127,10 +136,6 @@ div.dt-buttons {
 	.dt-button-split-drop span.dt-button-down-arrow {
 		padding-left: 0;
 	}
-}
-
-span.dt-down-arrow {
-	display: none;
 }
 
 span.dt-button-spacer {

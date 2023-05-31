@@ -13,33 +13,48 @@ $.extend( true, DataTable.Buttons.defaults, {
 			disabled: 'is-disabled'
 		},
 		collection: {
-			tag: 'div',
-			closeButton: false,
-			className: 'dropdown-content',
+			action: {
+				tag: 'div',
+				className: 'dropdown-content',
+				dropHtml: '',
+			},
 			button: {
 				tag: 'a',
 				className: 'dt-button dropdown-item',
 				active: 'is-active',
-				disabled: 'is-disabled'
+				disabled: 'is-disabled',
+				spacer: {
+					className: 'dropdown-divider',
+					tag: 'hr'
+				}
+			},
+			closeButton: false,
+			container: {
+				className: 'dt-button-collection dropdown-menu',
+				content: {
+					className: 'dropdown-content'
+				}
 			}
 		},
-		splitWrapper: {
-			tag: 'div',
-			className: 'dt-btn-split-wrapper dropdown-trigger buttons has-addons',
-			closeButton: false
-		},
-		splitDropdownButton: {
-			tag: 'button',
-			className: 'dt-btn-split-drop-button button is-light',
-			closeButton: false
-		},
-		splitDropdown: {
-			tag: 'button',
-			text: '&#x25BC;',
-			className: 'button is-light',
-			closeButton: false,
-			align: 'split-left',
-			splitAlignClass: 'dt-button-split-left'
+		split: {
+			action: {
+				tag: 'button',
+				className: 'dt-button-split-drop-button button is-light',
+				closeButton: false
+			},
+			dropdown: {
+				tag: 'button',
+				dropHtml: '<i class="fa fa-angle-down" aria-hidden="true"></i>',
+				className: 'button is-light',
+				closeButton: false,
+				align: 'split-left',
+				splitAlignClass: 'dt-button-split-left'
+			},
+			wrapper: {
+				tag: 'div',
+				className: 'dt-button-split dropdown-trigger buttons has-addons',
+				closeButton: false
+			}
 		}
 	},
 	buttonCreated: function ( config, button ) {
