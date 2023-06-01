@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" order="13">
+<dt-example table-type="html" order="16">
 
 <css lib="datatables buttons">
 div.dt-button-collection {
@@ -18,8 +18,9 @@ div.dt-button-collection h3 {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	font-weight: 100;
-	border-bottom: 1px solid #9f9f9f;
+	border-bottom: 1px solid rgba(150, 150, 150, 0.5);
 	font-size: 1em;
+	padding: 0 1em;
 }
 div.dt-button-collection h3.not-top-heading {
 	margin-top: 10px;
@@ -41,8 +42,7 @@ $(document).ready(function() {
 					'csv',
 					'excel',
 					'<h3 class="not-top-heading">Column Visibility</h3>',
-					'colvis',
-					'colvis'
+					'columnsToggle'
 				]
 			}
 		]
