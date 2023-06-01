@@ -9,6 +9,11 @@ div.dt-button-collection {
 	z-index: 2002;
 	background: white;
 
+	> div.menu {
+		right: auto !important;
+		min-width: 150px !important;
+	}
+
 	@include dtb-fixed-collection();
 
 	div.dt-button-collection-title {

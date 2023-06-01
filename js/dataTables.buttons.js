@@ -603,7 +603,7 @@ $.extend( Buttons.prototype, {
 
 			// Create the dropdown for a collection
 			if ( built.conf.buttons ) {
-				built.collection = $('<'+(domCollection.container.tag)+'/>');
+				built.collection = $('<'+(domCollection.container.content.tag)+'/>');
 				built.conf._collection = built.collection;
 			
 				$(built.node).append(domCollection.action.dropHtml);
@@ -1772,7 +1772,8 @@ Buttons.defaults = {
 			container: { // The element used for the dropdown
 				className: 'dt-button-collection',
 				content: {
-					className: ''
+					className: '',
+					tag: 'div'
 				},
 				tag: 'div',
 			},
