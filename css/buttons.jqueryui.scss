@@ -7,6 +7,9 @@ div.dt-buttons {
 	float: left;
 
 	.dt-button {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		margin-right: 0;
 
 		span.ui-icon {
@@ -15,16 +18,15 @@ div.dt-buttons {
 			margin-top: -2px;
 		}
 
+		&.processing{
+			@include dtb-processing();
+		}
+
 		&:active {
 			outline: none;
 		}
-
-		&:hover > span {
-			background-color: rgba(0, 0, 0, 0.05);
-		}
 	}
 }
-
 
 div.dt-button-collection {
 	position: absolute;
@@ -54,60 +56,38 @@ div.dt-button-collection {
 		float: none;
 		margin-right: 0;
 		margin-bottom: 4px;
+	}
 
-		&:hover > span {
-			background-color: rgba(0, 0, 0, 0.05);
-		}
+	.dt-button-split {
+		width: 100%;
 	}
 
 	@include dtb-fixed-collection();
 
-	-webkit-column-gap: 0;
-	   -moz-column-gap: 0;
-	    -ms-column-gap: 0;
-	     -o-column-gap: 0;
 	column-gap: 0;
 
 }
 
-div.dt-btn-split-wrapper {
-	padding: 0px !important;
-	background-color: transparent !important;
-	display: flex;
-	border: none !important;
-	margin: 0px;
+div.dt-button-split {
+	display: inline-flex;
+	vertical-align: middle;
 
 	&:hover {
 		border: none;
 	}
 
-	button.dt-btn-split-drop {
-		width: 24px;
-		padding-left: 6px;
-		padding-right: 6px;
-		font-size: 10px;
-		height: 29.5px;
-		border-radius: 0px;
-		margin-left: -1px;
+	button:first-child {
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
 	}
 
-	&:active:not(.disabled),
-	&.ui-state-active:not(.disabled),
-	&.is-active:not(.disabled) {
-		button.dt-button {
-			background-color: #007fff;
-			border-color: #003eff;
-		}
-		button.dt-btn-split-drop {
-			box-shadow: none;
-			background-color: #f6f6f6;
-			border-color: #c5c5c5;
-		}
-		button {
-			&:hover {
-				background-color: #ededed;
-				border-color: #cccccc;
-			}
+	button:last-child {
+		padding: .4em 1em;
+		width: 24px;
+		margin-left: -1px;
+
+		span {
+			margin-left: -7px;
 		}
 	}
 }
@@ -132,12 +112,3 @@ div.dt-button-background {
 	}
 }
 
-button.dt-button.processing,
-div.dt-button.processing,
-a.dt-button.processing {
-	@include dtb-processing();
-}
-
-span.dt-down-arrow {
-	display: none;
-}
