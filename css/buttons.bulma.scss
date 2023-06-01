@@ -119,10 +119,17 @@ span.dt-button-spacer {
 }
 
 
-div.dt-button-collection span.dt-button-spacer {
-	text-align: left;
-	font-size: .875rem;
-	padding-left: 1rem !important;
+div.dt-button-collection {
+	.is-disabled {
+		cursor: default;
+		opacity: 0.4;
+	}
+
+	span.dt-button-spacer {
+		text-align: left;
+		font-size: .875rem;
+		padding-left: 1rem !important;
+	}
 }
 
 div.dt-button-split {

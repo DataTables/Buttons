@@ -8,9 +8,12 @@ $.extend( true, DataTable.Buttons.defaults, {
 			action: {
 				dropHtml: '<span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-s"/>'
 			},
+			button: {
+				active: 'dt-button-active'
+			}
 		},
 		container: {
-			className: 'dt-buttons ui-buttonset',
+			className: 'dt-buttons ui-buttonset'
 		},
 		button: {
 			className: 'dt-button ui-button ui-corner-all',

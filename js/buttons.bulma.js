@@ -21,7 +21,7 @@ $.extend( true, DataTable.Buttons.defaults, {
 			button: {
 				tag: 'a',
 				className: 'dt-button dropdown-item',
-				active: 'is-active',
+				active: 'dt-button-active',
 				disabled: 'is-disabled',
 				spacer: {
 					className: 'dropdown-divider',

@@ -66,7 +66,7 @@ div.dt-buttons {
 			opacity: 0.4;
 		}
 
-		&.active:not(.disabled) {
+		&.dt-button-active:not(.disabled) {
 			@include dtb-two-stop-gradient(
 				lighten($dtb-button-colour, 70%),
 				darken($dtb-button-colour, 20%)
@@ -188,18 +188,14 @@ div.dt-button-collection {
 		cursor: pointer;
 		color: inherit;
 
-		&.active {
+		&.dt-button-active {
 			background: none;
 			box-shadow: none;
-			padding-right: 3em;
+		}
 
-			&:after {
-				position: absolute;
-				right: 1em;
-				display: inline-block;
-				content: '\2713'; // utf8 tick
-				color: inherit;
-			}
+		&.disabled {
+			cursor: default;
+			opacity: 0.4;
 		}
 
 		&:hover:not(.disabled) {
@@ -272,7 +268,7 @@ html.dark {
 			border: $dtb-dark-button-border;
 			background: $dtb-dark-button-colour;
 			
-			&.active:not(.disabled) {
+			&.dt-button-active:not(.disabled) {
 				background: darken($dtb-dark-button-colour, 30%);
 				box-shadow: inset 1px 1px 2px black;
 		

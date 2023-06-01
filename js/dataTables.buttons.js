@@ -137,6 +137,14 @@ $.extend( Buttons.prototype, {
 		var klass = this.c.dom.button.active;
 		var jqNode = $(button.node);
 
+		if (
+			button.inCollection &&
+			this.c.dom.collection.button &&
+			this.c.dom.collection.button.active !== undefined
+		) {
+			klass = this.c.dom.collection.button.active;
+		} 
+
 		if ( flag === undefined ) {
 			return jqNode.hasClass( klass );
 		}
@@ -1784,7 +1792,7 @@ Buttons.defaults = {
 		button: {
 			tag: 'button',
 			className: 'dt-button',
-			active: 'active', // class name
+			active: 'dt-button-active', // class name
 			disabled: 'disabled', // class name
 			spacer: {
 				className: 'dt-button-spacer',

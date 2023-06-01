@@ -17,6 +17,10 @@ div.dt-buttons {
 			margin-top: 4px;
 			display: block;
 
+			li {
+				position: relative;
+			}
+
 			div.dt-button-split {
 				display: flex;
 				flex-direction: row;
