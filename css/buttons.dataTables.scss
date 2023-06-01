@@ -27,77 +27,102 @@ div.dataTables_layout_cell div.dt-buttons {
 	}
 }
 
-.dt-button {
-	position: relative;
-	display: inline-block;
-	box-sizing: border-box;
-	margin-left: 0.167em;
-	margin-right: 0.167em;
-	margin-bottom: 0.333em;
-	padding: 0.5em 1em;
-	border: $dtb-button-border;
-	border-radius: 2px;
-	cursor: pointer;
-	font-size: 0.88em;
-	line-height: 1.6em;
-	color: inherit;
-	white-space: nowrap;
-	overflow: hidden;
-	@include dtb-two-stop-gradient(
-		lighten($dtb-button-colour, 90%),
-		$dtb-button-colour
-	);
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	text-decoration: none;
-	outline: none;
-	text-overflow: ellipsis;
-
-	&:first-child {
-		margin-left: 0;
-	}
-
-	&.disabled {
-		cursor: default;
-		opacity: 0.4;
-	}
-
-	&.active:not(.disabled) {
+div.dt-buttons {
+	> .dt-button,
+	> div.dt-button-split .dt-button {
+		position: relative;
+		display: inline-block;
+		box-sizing: border-box;
+		margin-left: 0.167em;
+		margin-right: 0.167em;
+		margin-bottom: 0.333em;
+		padding: 0.5em 1em;
+		border: $dtb-button-border;
+		border-radius: 2px;
+		cursor: pointer;
+		font-size: 0.88em;
+		line-height: 1.6em;
+		color: inherit;
+		white-space: nowrap;
+		overflow: hidden;
 		@include dtb-two-stop-gradient(
-			lighten($dtb-button-colour, 70%),
-			darken($dtb-button-colour, 20%)
+			lighten($dtb-button-colour, 90%),
+			$dtb-button-colour
 		);
-		box-shadow: inset 1px 1px 3px #999999;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		text-decoration: none;
+		outline: none;
+		text-overflow: ellipsis;
+
+		&:first-child {
+			margin-left: 0;
+		}
+
+		&.disabled {
+			cursor: default;
+			opacity: 0.4;
+		}
+
+		&.active:not(.disabled) {
+			@include dtb-two-stop-gradient(
+				lighten($dtb-button-colour, 70%),
+				darken($dtb-button-colour, 20%)
+			);
+			box-shadow: inset 1px 1px 3px #999999;
+
+			&:hover:not(.disabled) {
+				box-shadow: inset 1px 1px 3px #999999;
+				@include dtb-two-stop-gradient(
+					lighten($dtb-button-colour, 50%),
+					darken($dtb-button-colour, 50%)
+				);
+			}
+		}
+
+		&:hover {
+			text-decoration: none;
+		}
 
 		&:hover:not(.disabled) {
-			box-shadow: inset 1px 1px 3px #999999;
+			border: 1px solid #666;
 			@include dtb-two-stop-gradient(
-				lighten($dtb-button-colour, 50%),
-				darken($dtb-button-colour, 50%)
+				lighten($dtb-button-colour, 60%),
+				darken($dtb-button-colour, 30%)
 			);
+		}
+
+		&:focus:not(.disabled) {
+			outline: 2px solid rgb(53, 132, 228);
+		}
+		
+		embed { 
+			outline: none;
 		}
 	}
 
-	&:hover {
-		text-decoration: none;
-	}
-
-	&:hover:not(.disabled) {
-		border: 1px solid #666;
-		@include dtb-two-stop-gradient(
-			lighten($dtb-button-colour, 60%),
-			darken($dtb-button-colour, 30%)
-		);
-	}
-
-	&:focus:not(.disabled) {
-		outline: 2px solid rgb(53, 132, 228);
-	}
+	> div.dt-button-split {
+		.dt-button:first-child {
+			border-right: 1px solid rgba(0, 0, 0, 0.15);
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
 	
-	embed { 
-		outline: none;
+			&:hover {
+				border-right: 1px solid #666;
+			}
+		}
+	
+		.dt-button:last-child {
+			border-left: 1px solid transparent; // Allows hover on border
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+	
+			&:hover {
+				border-left: 1px solid #666;
+			}
+		}
 	}
 
 	span.dt-button-down-arrow {
@@ -108,40 +133,27 @@ div.dataTables_layout_cell div.dt-buttons {
 		line-height: 1em;
 		opacity: 0.6;
 	}
-}
 
-div.dt-button-split {
-	display: inline-block;
+	div.dt-button-split {
+		display: inline-block;
 
-	.dt-button:first-child {
-		margin-right: 0;
-		border-right: 1px solid rgba(0, 0, 0, 0.15);
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
-
-		&:hover {
-			border-right: 1px solid #666;
+		.dt-button:first-child {
+			margin-right: 0;
 		}
-	}
 
-	.dt-button:last-child {
-		margin-left: -1px;
-		padding-left: 0.75em;
-		padding-right: 0.75em;
-		border-left: 1px solid transparent; // Allows hover on border
-		border-top-left-radius: 0;
-		border-bottom-left-radius: 0;
-		z-index: 2;
-
-		&:hover {
-			border-left: 1px solid #666;
-		}
-		
-		span {
-			padding-left: 0;
+		.dt-button:last-child {
+			margin-left: -1px;
+			padding-left: 0.75em;
+			padding-right: 0.75em;
+			z-index: 2;
+			
+			span {
+				padding-left: 0;
+			}
 		}
 	}
 }
+
 
 div.dt-button-collection {
 	position: absolute;
@@ -150,7 +162,7 @@ div.dt-button-collection {
 	width: 200px;
 	margin-top: 3px;
 	margin-bottom: 3px;
-	padding: 4px 4px 2px 4px;
+	padding: 0.75em 0;
 	border: 1px solid rgba( 0, 0, 0, 0.4 );
 	background-color: white;
 	overflow: hidden;
@@ -158,13 +170,6 @@ div.dt-button-collection {
 	border-radius: 5px;
 	box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.3);
 	box-sizing: border-box;
-
-	div[role="menu"] {
-		> .dt-button:first-child,
-		.dt-button-split:first-child {
-			margin-top: 0;
-		}
-	}
 
 	.dt-button {
 		position: relative;
@@ -174,12 +179,33 @@ div.dt-button-collection {
 
 		display: block;
 		float: none;
-		margin: 4px 0 2px 0;
 
-		&:active:not(.disabled),
-		&.active:not(.disabled) {
-			@include dtb-two-stop-gradient(#f0f0f0, #dadada);
-			box-shadow: inset 1px 1px 3px #666;
+		background: none;
+		margin: 0;
+		padding: 0.5em 1em;
+		border: none;
+		text-align: left;
+		cursor: pointer;
+		color: inherit;
+
+		&.active {
+			background: none;
+			box-shadow: none;
+			padding-right: 3em;
+
+			&:after {
+				position: absolute;
+				right: 1em;
+				display: inline-block;
+				content: '\2713'; // utf8 tick
+				color: inherit;
+			}
+		}
+
+		&:hover:not(.disabled) {
+			border: none;
+			background: rgba(153, 153, 153, 0.1);
+			box-shadow: none;
 		}
 	}
 
@@ -190,7 +216,6 @@ div.dt-button-collection {
 		justify-content: flex-start;
 		align-content: flex-start;
 		align-items: stretch;
-		margin: 4px 0 2px 0;
 
 		button.dt-button {
 			margin: 0;
@@ -209,16 +234,8 @@ div.dt-button-collection {
 
 	&.fixed {
 		.dt-button {
-			&:first-child {
-				margin-top: 0;
-				border-top-left-radius: 0;
-				border-top-right-radius: 0;
-			}
-
-			&:last-child {
-				border-bottom-left-radius: 0;
-				border-bottom-right-radius: 0;
-			}
+			border-radius: 0.25em;
+			background: rgba(255, 255, 255, 0.1);
 		}
 	}
 
@@ -249,41 +266,44 @@ div.dt-button-background {
 }
 
 html.dark {
-	.dt-button {
-		border: $dtb-dark-button-border;
-		background: $dtb-dark-button-colour;
+	div.dt-buttons {
+		> .dt-button,
+		> div.dt-button-split .dt-button {
+			border: $dtb-dark-button-border;
+			background: $dtb-dark-button-colour;
+			
+			&.active:not(.disabled) {
+				background: darken($dtb-dark-button-colour, 30%);
+				box-shadow: inset 1px 1px 2px black;
 		
-		&.active:not(.disabled) {
-			background: darken($dtb-dark-button-colour, 30%);
-			box-shadow: inset 1px 1px 2px black;
-	
+				&:hover:not(.disabled) {
+					background: darken($dtb-dark-button-colour, 50%);
+					box-shadow: inset 1px 1px 3px black;
+				}
+			}
+		
 			&:hover:not(.disabled) {
-				background: darken($dtb-dark-button-colour, 50%);
-				box-shadow: inset 1px 1px 3px black;
+				background: darken($dtb-dark-button-colour, 30%);
+			}
+
+			&:focus:not(.disabled) {
+				outline: 2px solid rgb(110, 168, 254);
 			}
 		}
-	
-		&:hover:not(.disabled) {
-			background: darken($dtb-dark-button-colour, 30%);
-		}
 
-		&:focus:not(.disabled) {
-			outline: 2px solid rgb(110, 168, 254);
-		}
-	}
+		> div.dt-button-split {
+			.dt-button:first-child {
+				border-right: 1px solid rgba(255, 255, 255, 0.1);
 
-	div.dt-button-split {
-		.dt-button:first-child {
-			border-right: 1px solid rgba(255, 255, 255, 0.1);
-
-			&:hover {
-				border-right: $dtb-dark-button-border;
+				&:hover {
+					border-right: $dtb-dark-button-border;
+				}
 			}
-		}
-	
-		.dt-button:last-child {
-			&:hover {
-				border-left: $dtb-dark-button-border;
+		
+			.dt-button:last-child {
+				&:hover {
+					border-left: $dtb-dark-button-border;
+				}
 			}
 		}
 	}
@@ -292,13 +312,5 @@ html.dark {
 		border: $dtb-dark-button-border;
 		background-color: rgb(33, 37, 41);
 		box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.8);
-
-		.dt-button {
-			&:active:not(.disabled),
-			&.active:not(.disabled) {
-				background: darken($dtb-dark-button-colour, 30%);
-				box-shadow: inset 1px 1px 3px black;
-			}
-		}
 	}
 }
