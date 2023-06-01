@@ -1,8 +1,8 @@
 /*! jQuery UI integration for DataTables' Buttons
- * ©2016 SpryMedia Ltd - datatables.net/license
+ * © SpryMedia Ltd - datatables.net/license
  */
 
-$.extend( true, DataTable.Buttons.defaults, {
+$.extend(true, DataTable.Buttons.defaults, {
 	dom: {
 		collection: {
 			action: {
@@ -32,13 +32,12 @@ $.extend( true, DataTable.Buttons.defaults, {
 			dropdown: {
 				tag: 'button',
 				dropHtml: '<span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-s"/>',
-				className: 'dt-button-split-drop ui-button ui-corner-right',
+				className: 'dt-button-split-drop ui-button ui-corner-right'
 			},
 			wrapper: {
 				tag: 'div',
-				className: 'dt-button-split',
+				className: 'dt-button-split'
 			}
 		}
 	}
-} );
-
+});

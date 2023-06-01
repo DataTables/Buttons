@@ -1,8 +1,8 @@
 /*! Foundation integration for DataTables' Buttons
- * ©2016 SpryMedia Ltd - datatables.net/license
+ * © SpryMedia Ltd - datatables.net/license
  */
 
-$.extend( true, DataTable.Buttons.defaults, {
+$.extend(true, DataTable.Buttons.defaults, {
 	dom: {
 		container: {
 			tag: 'div',
@@ -15,7 +15,7 @@ $.extend( true, DataTable.Buttons.defaults, {
 		},
 		collection: {
 			action: {
-				dropHtml: '',
+				dropHtml: ''
 			},
 			button: {
 				tag: 'li',
@@ -42,27 +42,26 @@ $.extend( true, DataTable.Buttons.defaults, {
 			dropdown: {
 				tag: 'button',
 				className: 'button dropdown arrow-only',
-				dropHtml: '',
+				dropHtml: ''
 			},
 			wrapper: {
 				tag: 'div',
-				className: 'button-group dt-button-split',
+				className: 'button-group dt-button-split'
 			}
 		}
 	}
-} );
-
+});
 
 DataTable.ext.buttons.collection.className = 'dropdown';
 
 $(document).on('buttons-popover.dt', function () {
 	var notButton = false;
-	$('.dtsp-panesContainer').each(function() {
-		if(!$(this).is('button')){
+	$('.dtsp-panesContainer').each(function () {
+		if (!$(this).is('button')) {
 			notButton = true;
 		}
 	});
-	if(notButton){
-		$('.dtsp-panesContainer').removeClass('button-group stacked')
+	if (notButton) {
+		$('.dtsp-panesContainer').removeClass('button-group stacked');
 	}
 });

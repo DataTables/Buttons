@@ -1,8 +1,8 @@
 /*! Bootstrap integration for DataTables' Buttons
- * ©2016 SpryMedia Ltd - datatables.net/license
+ * © SpryMedia Ltd - datatables.net/license
  */
 
-$.extend( true, DataTable.Buttons.defaults, {
+$.extend(true, DataTable.Buttons.defaults, {
 	dom: {
 		container: {
 			className: 'dt-buttons btn-group flex-wrap'
@@ -47,7 +47,8 @@ $.extend( true, DataTable.Buttons.defaults, {
 			dropdown: {
 				tag: 'button',
 				dropHtml: '<span class="caret"></span>',
-				className: 'btn btn-secondary dt-button-split-drop dropdown-toggle dropdown-toggle-split',
+				className:
+					'btn btn-secondary dt-button-split-drop dropdown-toggle dropdown-toggle-split',
 				closeButton: false,
 				align: 'split-left',
 				splitAlignClass: 'dt-button-split-left'
@@ -55,12 +56,8 @@ $.extend( true, DataTable.Buttons.defaults, {
 			wrapper: {
 				tag: 'div',
 				className: 'dt-button-split btn-group',
-				closeButton: false,
+				closeButton: false
 			}
 		}
 	}
-} );
-
-DataTable.ext.buttons.collection.text = function ( dt ) {
-	return dt.i18n('buttons.collection', 'Collection <span class="caret"/>');
-};
+});
