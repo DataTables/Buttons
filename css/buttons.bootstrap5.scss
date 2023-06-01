@@ -47,6 +47,10 @@ div.dt-buttons {
 	}
 
 	span.dt-button-spacer {
+		&.empty {
+			margin: 1px;
+		}
+
 		&.bar {
 			&:empty {
 				height: inherit;

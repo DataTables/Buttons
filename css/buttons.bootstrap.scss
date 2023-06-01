@@ -2,57 +2,87 @@
 @import 'mixins.scss';
 @import 'common.scss';
 
-div.dt-button-collection {
-	position: absolute;
-	z-index: 2001;
+div.dt-buttons {
+	div.btn-group {
+		position: initial;
+	}
 
-	// Recreate the dropdown menu styling - we nest it
-	background-color: white;
-	border: 1px solid rgba(0,0,0,.15);
-	border-radius: 4px;
-	box-shadow: 0 6px 12px rgba(0,0,0,.175);
-	padding: 0.5rem;
-	min-width: 200px;
-
-	div.dropdown-menu,
-	ul.dropdown-menu {
-		position: relative;
-		display: block;
+	div.dt-button-collection {
+		position: absolute !important;
+		min-width: 200px;
+		margin-top: 3px !important;
 		z-index: 2002;
-		min-width: 100%;
 
-		background-color: transparent;
-		border: none;
-		box-shadow: none;
-		margin: 2px 0;
-		padding: 0;
-		border-radius: 0;
-	}
+		.dropdown-menu {
+			margin-top: 4px;
+			display: block;
 
-	div.dt-btn-split-wrapper {
-		width: 100%;
-		display: inline-flex;
-		padding-left: 5px;
-		padding-right: 5px;
-	}
+			div.dt-button-split {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				justify-content: flex-start;
+				align-content: flex-start;
+				align-items: stretch;
 
-	button.dt-btn-split-drop-button {
-		width: 100%;
-		border: none;
-		border-radius: 0px;
-		margin-left: 0px !important;
+				> *:first-child {
+					min-width: auto;
+					flex: 1 0 50px;
+					padding: 3px 5px 3px 20px;
 
-		&:focus {
-			border: none;
-			border-radius: 0px;
-			outline: none;
+					a {
+						color: #333;
+						text-decoration: none;
+					}
+
+					&:hover {
+						color: #262626;
+						background-color: #f5f5f5;
+					}
+				}
+
+				button:last-child {
+					min-width: 33px;
+					flex: 0;
+					background: transparent;
+					border: none;
+					line-height: 1rem;
+					color: rgb(33, 37, 41);
+					padding: 0 16px;
+
+					&:hover {
+						color: #16181b;
+						background-color: #f8f9fa;
+					}
+				}
+			}
 		}
 	}
 
-	@include dtb-fixed-collection();
+	span.caret {
+		margin-left: 0.5em;
+	}
 
-	.dt-button {
-		min-width: 200px;
+	span.dt-button-spacer {
+		&.empty {
+			margin: 2px;
+		}
+
+		&.bar {
+			&:empty {
+				height: inherit;
+			}
+		}
+	}
+
+	.btn.processing {
+		@include dtb-processing();
+	}
+
+	div.dt-button-split {
+		button:last-child span {
+			margin-left: 0 !important;
+		}
 	}
 }
 
@@ -62,7 +92,7 @@ div.dt-button-background {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	z-index: 2001;
+	z-index: 999;
 }
 
 @media screen and (max-width: 767px) {
@@ -76,73 +106,4 @@ div.dt-button-background {
 			float: none;
 		}
 	}
-}
-
-div.dt-buttons {
-	button.btn.processing,
-	div.btn.processing,
-	a.btn.processing {
-		@include dtb-processing();
-	}
-}
-
-div.dt-btn-split-wrapper {
-	button.dt-btn-split-drop {
-		border-top-right-radius: 4px !important;
-		border-bottom-right-radius: 4px !important;
-	}
-
-	&:active:not(.disabled),
-	&.active:not(.disabled) {
-		button {
-			background-color: #e6e6e6;
-			border-color: #adadad;
-		}
-		button.dt-btn-split-drop {
-			box-shadow: none;
-			background-color: #fff;
-			border-color: rgb(173, 173, 173);
-		}
-		button {
-			&:hover {
-				background-color: #e6e6e6;
-				border-color: #adadad;
-			}
-		}
-	}
-}
-
-span.dt-down-arrow {
-	color: rgba(70, 70, 70, 0.9);
-	font-size: 10px;
-	padding-left: 10px;
-}
-
-div.dataTables_wrapper {
-	div.dt-buttons.btn-group {
-		button.btn{
-			&:last-of-type:first-of-type{
-				border-radius: 4px !important;
-			}
-		}
-	}
-}
-
-span.dt-down-arrow {
-	display: none;
-}
-
-span.dt-button-spacer {
-	float: left;
-
-	&.bar {
-		&:empty {
-			height: inherit;
-		}
-	}
-}
-
-div.dt-button-collection span.dt-button-spacer {
-	padding-left: 1rem !important;
-	text-align: left;
 }

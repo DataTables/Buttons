@@ -5,43 +5,57 @@
 $.extend( true, DataTable.Buttons.defaults, {
 	dom: {
 		container: {
-			className: 'dt-buttons btn-group'
+			className: 'dt-buttons btn-group flex-wrap'
 		},
 		button: {
-			className: 'btn btn-default'
+			className: 'btn btn-secondary'
 		},
 		collection: {
-			tag: 'ul',
-			className: 'dropdown-menu',
+			action: {
+				dropHtml: '<span class="caret"></span>'
+			},
+			container: {
+				tag: 'div',
+				className: 'dt-button-collection',
+				content: {
+					tag: 'ul',
+					className: 'dropdown-menu'
+				}
+			},
 			closeButton: false,
 			button: {
 				tag: 'li',
 				className: 'dt-button',
 				active: 'active',
-				disabled: 'disabled'
-			},
-			buttonLiner: {
-				tag: 'a',
-				className: ''
+				disabled: 'disabled',
+				liner: {
+					tag: 'a'
+				},
+				spacer: {
+					className: 'divider',
+					tag: 'li'
+				}
 			}
 		},
-		splitWrapper: {
-			tag: 'div',
-			className: 'dt-btn-split-wrapper btn-group',
-			closeButton: false,
-		},
-		splitDropdown: {
-			tag: 'button',
-			text: '&#x25BC;',
-			className: 'btn btn-default dt-btn-split-drop dropdown-toggle',
-			closeButton: false,
-			align: 'split-left',
-			splitAlignClass: 'dt-button-split-left'
-		},
-		splitDropdownButton: {
-			tag: 'button',
-			className: 'dt-btn-split-drop-button btn btn-default',
-			closeButton: false
+		split: {
+			action: {
+				tag: 'a',
+				className: 'btn btn-secondary dt-button-split-drop-button',
+				closeButton: false
+			},
+			dropdown: {
+				tag: 'button',
+				dropHtml: '<span class="caret"></span>',
+				className: 'btn btn-secondary dt-button-split-drop dropdown-toggle dropdown-toggle-split',
+				closeButton: false,
+				align: 'split-left',
+				splitAlignClass: 'dt-button-split-left'
+			},
+			wrapper: {
+				tag: 'div',
+				className: 'dt-button-split btn-group',
+				closeButton: false,
+			}
 		}
 	}
 } );
