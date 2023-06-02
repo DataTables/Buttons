@@ -15,21 +15,21 @@ describe('buttons - columnVisibility', function() {
 				buttons: ['columnVisibility']
 			});
 			expect($('button.buttons-columnVisibility').length).toBe(1);
-			expect($('button.active').length).toBe(1);
+			expect($('button.dt-button-active').length).toBe(1);
 		});
 		it('Contains the expected text', function() {
 			expect($('button.buttons-columnVisibility').text()).toBe('Name');
 		});
 		it('Pressing button makes it inactive', function() {
 			$('button.buttons-columnVisibility').click();
-			expect($('button.buttons-columnVisibility:not(.active)').text()).toBe('Name');
+			expect($('button.buttons-columnVisibility:not(.dt-button-active)').text()).toBe('Name');
 		});
 		it('And hides all columns', function() {
 			expect($('thead th').length).toBe(0);
 		});
 		it('Pressing again has the opposite effect', function() {
 			$('button.buttons-columnVisibility').click();
-			expect($('button.active').length).toBe(1);
+			expect($('button.dt-button-active').length).toBe(1);
 			expect($('thead th').length).toBe(6);
 		});
 	});
@@ -47,14 +47,14 @@ describe('buttons - columnVisibility', function() {
 				]
 			});
 			expect($('button.buttons-columnVisibility').length).toBe(1);
-			expect($('button.active').length).toBe(1);
+			expect($('button.dt-button-active').length).toBe(1);
 		});
 		it('Contains the expected text', function() {
 			expect($('button.buttons-columnVisibility').text()).toBe('Position');
 		});
 		it('Pressing button makes it inactive', function() {
 			$('button.buttons-columnVisibility').click();
-			expect($('button.active').length).toBe(0);
+			expect($('button.dt-button-active').length).toBe(0);
 		});
 		it('And hides the expected columns', function() {
 			expect($('thead th').length).toBe(4);
@@ -74,11 +74,11 @@ describe('buttons - columnVisibility', function() {
 				]
 			});
 			expect($('button.buttons-columnVisibility').text()).toBe('Position');
-			expect($('button.active').length).toBe(1);
+			expect($('button.dt-button-active').length).toBe(1);
 		});
 		it('Pressing button makes it inactive', function() {
 			$('button.buttons-columnVisibility').click();
-			expect($('button.active').length).toBe(0);
+			expect($('button.dt-button-active').length).toBe(0);
 		});
 		it('And hides the expected columns', function() {
 			expect($('thead th').length).toBe(5);
@@ -86,7 +86,7 @@ describe('buttons - columnVisibility', function() {
 		});
 		it('Pressing button again does nothing', function() {
 			$('button.buttons-columnVisibility').click();
-			expect($('button.active').length).toBe(0);
+			expect($('button.dt-button-active').length).toBe(0);
 			expect($('thead th').text()).toBe('NameOfficeAgeStart dateSalary');
 		});
 
@@ -111,11 +111,11 @@ describe('buttons - columnVisibility', function() {
 			expect($('button.buttons-columnVisibility').text()).toBe('Position');
 
 			// This is backwards, but no such a minor point not worth raising
-			expect($('button.active').length).toBe(0);
+			expect($('button.dt-button-active').length).toBe(0);
 		});
 		it('Pressing button makes it active', function() {
 			$('button.buttons-columnVisibility').click();
-			expect($('button.active').length).toBe(1);
+			expect($('button.dt-button-active').length).toBe(1);
 		});
 		it('And shows the expected column', function() {
 			expect($('thead th').length).toBe(5);
@@ -123,7 +123,7 @@ describe('buttons - columnVisibility', function() {
 		});
 		it('Pressing button again does nothing', function() {
 			$('button.buttons-columnVisibility').click();
-			expect($('button.active').length).toBe(1);
+			expect($('button.dt-button-active').length).toBe(1);
 			expect($('thead th').text()).toBe('NamePositionAgeStart dateSalary');
 		});
 	});

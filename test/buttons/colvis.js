@@ -25,7 +25,7 @@ describe('buttons - colvis', function() {
 			expect($('button.buttons-columnVisibility').length).toBe(6);
 		});
 		it('All buttons are active', function() {
-			expect($('button.buttons-columnVisibility.active').length).toBe(6);
+			expect($('button.buttons-columnVisibility.dt-button-active').length).toBe(6);
 		});
 		it('Button text is as expected', function() {
 			expect($('button.buttons-columnVisibility').text()).toBe('NamePositionOfficeAgeStart dateSalary');
@@ -35,8 +35,8 @@ describe('buttons - colvis', function() {
 			expect($('button.buttons-columnVisibility').length).toBe(6);
 		});
 		it('Pressed button no longer active', function() {
-			expect($('button.buttons-columnVisibility:not(.active)').length).toBe(1);
-			expect($('button.buttons-columnVisibility:not(.active)').text()).toBe('Position');
+			expect($('button.buttons-columnVisibility:not(.dt-button-active)').length).toBe(1);
+			expect($('button.buttons-columnVisibility:not(.dt-button-active)').text()).toBe('Position');
 		});
 		it('Pressing colvis closes the collection', function() {
 			$('button.buttons-colvis').click();

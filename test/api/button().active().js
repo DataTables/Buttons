@@ -9,7 +9,7 @@ describe('buttons - button().active()', function() {
 	function checkActive(active) {
 		for (let i = 0; i < active.length; i++) {
 			expect(table.button(i).active()).toBe(active[i]);
-			expect($('div.dt-buttons button.dt-button:eq(' + i + ')').hasClass('active')).toBe(active[i]);
+			expect($('div.dt-buttons button.dt-button:eq(' + i + ')').hasClass('dt-button-active')).toBe(active[i]);
 		}
 	}
 

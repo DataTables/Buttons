@@ -20,14 +20,14 @@ describe('buttons - columnsToggle', function() {
 				buttons: ['columnsToggle']
 			});
 			expect($('button.buttons-columnVisibility').length).toBe(6);
-			expect($('button.active').length).toBe(6);
+			expect($('button.dt-button-active').length).toBe(6);
 		});
 		it('Contains the expected text', function() {
 			checkButtons(['Name', 'Position', 'Office', 'Age', 'Start date', 'Salary']);
 		});
 		it('Pressing button makes it inactive', function() {
 			$('button.buttons-columnVisibility:eq(2)').click();
-			expect($('button.buttons-columnVisibility:not(.active)').text()).toBe('Office');
+			expect($('button.buttons-columnVisibility:not(.dt-button-active)').text()).toBe('Office');
 		});
 		it('And hides the expected column', function() {
 			expect($('thead th').length).toBe(5);
@@ -43,8 +43,8 @@ describe('buttons - columnsToggle', function() {
 			});
 
 			expect($('button.buttons-columnVisibility').length).toBe(6);
-			expect($('button.active').length).toBe(5);
-			expect($('button.buttons-columnVisibility:not(.active)').text()).toBe('Position');
+			expect($('button.dt-button-active').length).toBe(5);
+			expect($('button.buttons-columnVisibility:not(.dt-button-active)').text()).toBe('Position');
 		});
 
 		dt.html('basic');
@@ -73,14 +73,14 @@ describe('buttons - columnsToggle', function() {
 				]
 			});
 			expect($('button.buttons-columnVisibility').length).toBe(2);
-			expect($('button.active').length).toBe(2);
+			expect($('button.dt-button-active').length).toBe(2);
 		});
 		it('Contains the expected text', function() {
 			checkButtons(['Position', 'Age']);
 		});
 		it('Pressing button makes it inactive', function() {
 			$('button.buttons-columnVisibility:eq(1)').click();
-			expect($('button.buttons-columnVisibility:not(.active)').text()).toBe('Age');
+			expect($('button.buttons-columnVisibility:not(.dt-button-active)').text()).toBe('Age');
 		});
 		it('And hides the expected column', function() {
 			expect($('thead th').length).toBe(5);
@@ -101,7 +101,7 @@ describe('buttons - columnsToggle', function() {
 				]
 			});
 			expect($('button.buttons-columnVisibility').length).toBe(6);
-			expect($('button.active').length).toBe(6);
+			expect($('button.dt-button-active').length).toBe(6);
 		});
 		it('Contains the expected text', function() {
 			checkButtons(['Name', 'Position', 'Office', 'Age', 'Start date', 'Salary']);
