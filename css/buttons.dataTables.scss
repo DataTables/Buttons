@@ -305,7 +305,7 @@ html.dark {
 	}
 
 	div.dt-button-collection {
-		border: $dtb-dark-button-border;
+		border: 1px solid rgba(255, 255, 255, 0.15);
 		background-color: rgb(33, 37, 41);
 		box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.8);
 	}
