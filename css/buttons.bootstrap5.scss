@@ -10,6 +10,10 @@ div.dt-buttons {
 	div.dropdown-menu {
 		margin-top: 4px;
 
+		.dt-button {
+			position: relative;
+		}
+
 		div.dt-button-split {
 			display: flex;
 			flex-direction: row;
