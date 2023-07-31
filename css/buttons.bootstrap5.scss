@@ -48,6 +48,8 @@ div.dt-buttons {
 				}
 			}
 		}
+
+		@include dtb-fixed-collection();
 	}
 
 	span.dt-button-spacer {
@@ -86,5 +88,13 @@ div.dt-button-background {
 		a.btn {
 			float: none;
 		}
+	}
+}
+
+:root[data-bs-theme="dark"] {
+	div.dropdown-menu.dt-button-collection.fixed  {
+		background-color: rgb(33, 37, 41);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		border-radius: 8px;
 	}
 }
