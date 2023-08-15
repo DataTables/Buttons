@@ -11,6 +11,9 @@ var _buttonCounter = 0;
 
 var _dtButtons = DataTable.ext.buttons;
 
+// Custom entity decoder for data export
+var _entityDecoder = null;
+
 // Allow for jQuery slim
 function _fadeIn(el, duration, fn) {
 	if ($.fn.animate) {
@@ -1758,12 +1761,26 @@ Buttons.stripData = function (str, config) {
 	}
 
 	if (!config || config.decodeEntities) {
-		_exportTextarea.innerHTML = str;
-		str = _exportTextarea.value;
+		if (_entityDecoder) {
+			str = _entityDecoder(str);
+		}
+		else {
+			_exportTextarea.innerHTML = str;
+			str = _exportTextarea.value;
+		}
 	}
 
 	return str;
 };
+
+/**
+ * Provide a custom entity decoding function - e.g. a regex one, which can be
+ * much faster than the built in DOM option, but also larger code size.
+ * @param {function} fn
+ */
+Buttons.entityDecoder = function (fn) {
+	_entityDecoder = fn;
+}
 
 /**
  * Buttons defaults. For full documentation, please refer to the docs/option
