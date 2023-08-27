@@ -52,7 +52,7 @@ declare module 'datatables.net' {
 			/**
 			 * Create a new Buttons instance for the target DataTable
 			 */
-			new (dt: Api<any>, settings: boolean | ConfigButtons | Array<string | ButtonConfig>);
+			new (dt: Api<any>, settings: boolean | ConfigButtons | Array<string | ButtonConfig>):any;
 
 			/**
 			 * Buttons version
