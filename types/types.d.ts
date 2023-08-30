@@ -44,7 +44,7 @@ declare module 'datatables.net' {
 		buttons: ApiButtons<T>;
 	}
 
-	interface ApiStatic {
+	interface DataTablesStatic {
 		/**
 		 * Buttons class
 		 */
@@ -66,7 +66,7 @@ declare module 'datatables.net' {
 		}
 	}
 
-	interface ApiStaticExt {
+	interface DataTablesStaticExt {
 		buttons: ExtButtons;
 	}
 
