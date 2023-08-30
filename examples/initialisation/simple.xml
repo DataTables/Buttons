@@ -6,9 +6,8 @@
 <![CDATA[
 
 $('#example').DataTable({
-	layout: {
-		topLeft: 'buttons'
-	}
+	dom: 'Bfrtip',
+	buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
 });
 
 ]]>
@@ -18,9 +17,8 @@ $('#example').DataTable({
 <![CDATA[
 
 new DataTable('#example', {
-	layout: {
-		topLeft: 'buttons'
-	}
+	dom: 'Bfrtip',
+	buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
 });
 
 ]]>
