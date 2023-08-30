@@ -48,6 +48,8 @@ div.dt-buttons {
 				}
 			}
 		}
+
+		@include dtb-fixed-collection();
 	}
 
 	span.dt-button-spacer {

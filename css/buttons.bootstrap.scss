@@ -8,9 +8,9 @@ div.dt-buttons {
 	}
 
 	div.dt-button-collection {
-		position: absolute !important;
+		position: absolute;
 		min-width: 200px;
-		margin-top: 3px !important;
+		margin-top: 3px;
 		z-index: 2002;
 
 		.dropdown-menu {
@@ -61,6 +61,8 @@ div.dt-buttons {
 				}
 			}
 		}
+
+		@include dtb-fixed-collection();
 	}
 
 	span.caret {
