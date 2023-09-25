@@ -63,6 +63,18 @@ declare module 'datatables.net' {
 			 * Default configuration values
 			 */
 			defaults: ConfigButtons;
+
+			/**
+			 * Set the JSZip library that Buttons should use for Excel export
+			 * @param jszip JSZip library
+			 */
+			jszip: (jszip: any) => void;
+
+			/**
+			 * Set the PDFMake library that Buttons should use for PDF export
+			 * @param pdfMake PDFMake library
+			 */
+			pdfMake: (pdfMake: any) => void;
 		}
 	}
 
