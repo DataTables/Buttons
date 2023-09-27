@@ -430,6 +430,11 @@ declare module 'datatables.net' {
 		extend?: string;
 
 		/**
+		 * Define spacer button style
+		 */
+		style?: string;
+
+		/**
 		 * Initialisation function that can be used to add events specific to this button
 		 */
 		init?: FunctionButtonInit;
