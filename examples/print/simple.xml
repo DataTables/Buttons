@@ -5,17 +5,30 @@
 <js lib="jquery datatables buttons buttons-print">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			'print'
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: ['print']
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['print']
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Print button</title>
 

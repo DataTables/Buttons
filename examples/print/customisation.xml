@@ -5,30 +5,62 @@
 <js lib="jquery datatables buttons buttons-print">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'print',
-				customize: function ( win ) {
-					$(win.document.body)
-						.css( 'font-size', '10pt' )
-						.prepend(
-							'<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
-						);
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					customize: function (win) {
+						$(win.document.body)
+							.css('font-size', '10pt')
+							.prepend(
+								'<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
+							);
 
-					$(win.document.body).find( 'table' )
-						.addClass( 'compact' )
-						.css( 'font-size', 'inherit' );
+						$(win.document.body)
+							.find('table')
+							.addClass('compact')
+							.css('font-size', 'inherit');
+					}
 				}
-			}
-		]
-	} );
-} );
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					customize: function (win) {
+						$(win.document.body)
+							.css('font-size', '10pt')
+							.prepend(
+								'<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
+							);
+
+						$(win.document.body)
+							.find('table')
+							.addClass('compact')
+							.css('font-size', 'inherit');
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Customisation of the print view window</title>
 

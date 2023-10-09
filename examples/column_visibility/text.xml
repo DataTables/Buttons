@@ -4,19 +4,41 @@
 <css lib="datatables buttons" />
 <js lib="jquery datatables buttons buttons-colvis">
 <![CDATA[
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [ 'colvis' ],
-		language: {
-			buttons: {
-				colvis: 'Change columns'
-			}
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: ['colvis']
 		}
-	} );
-} );
+	},
+	language: {
+		buttons: {
+			colvis: 'Change columns'
+		}
+	}
+});
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['colvis']
+		}
+	},
+	language: {
+		buttons: {
+			colvis: 'Change columns'
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Internationalisation</title>
 

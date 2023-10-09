@@ -5,41 +5,84 @@
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-        ajax: '../../../../examples/ajax/data/objects.txt',
-        columns: [
-            { data: 'name' },
-            { data: 'position' },
-            { data: 'office' },
-            { data: 'extn' },
-            { data: 'start_date' },
-            { data: 'salary', render: function (data, type, row) {
-            	return type === 'export' ?
-            		data.replace( /[$,]/g, '' ) :
-            		data;
-            } }
-        ],
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'copyHtml5', 
-				exportOptions: { orthogonal: 'export' }
-			},
-			{
-				extend: 'excelHtml5', 
-				exportOptions: { orthogonal: 'export' }
-			},
-			{
-				extend: 'pdfHtml5', 
-				exportOptions: { orthogonal: 'export' }
+$('#example').DataTable({
+	ajax: '../../../../examples/ajax/data/objects.txt',
+	columns: [
+		{ data: 'name' },
+		{ data: 'position' },
+		{ data: 'office' },
+		{ data: 'extn' },
+		{ data: 'start_date' },
+		{
+			data: 'salary',
+			render: function (data, type, row) {
+				return type === 'export' ? data.replace(/[$,]/g, '') : data;
 			}
-		]
-	} );
-} );
+		}
+	],
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'copyHtml5',
+					exportOptions: { orthogonal: 'export' }
+				},
+				{
+					extend: 'excelHtml5',
+					exportOptions: { orthogonal: 'export' }
+				},
+				{
+					extend: 'pdfHtml5',
+					exportOptions: { orthogonal: 'export' }
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	ajax: '../../../../examples/ajax/data/objects.txt',
+	columns: [
+		{ data: 'name' },
+		{ data: 'position' },
+		{ data: 'office' },
+		{ data: 'extn' },
+		{ data: 'start_date' },
+		{
+			data: 'salary',
+			render: function (data, type, row) {
+				return type === 'export' ? data.replace(/[$,]/g, '') : data;
+			}
+		}
+	],
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'copyHtml5',
+					exportOptions: { orthogonal: 'export' }
+				},
+				{
+					extend: 'excelHtml5',
+					exportOptions: { orthogonal: 'export' }
+				},
+				{
+					extend: 'pdfHtml5',
+					exportOptions: { orthogonal: 'export' }
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Format output data - orthogonal data</title>
 

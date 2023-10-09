@@ -5,28 +5,65 @@
 <js lib="jquery datatables buttons jszip buttons-html5">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable({
-		dom: 'Bfrtip',
-		buttons: [{
-			extend: 'excelHtml5',
-			customize: function(xlsx) {
-				var sheet = xlsx.xl.worksheets['sheet1.xml'];
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'excelHtml5',
+					customize: function (xlsx) {
+						var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-				// Loop over the cells in column `C`
-				$('row c[r^="C"]', sheet).each( function () {
-					// Get the value
-					if ( $('is t', this).text() == 'New York' ) {
-						$(this).attr( 's', '20' );
+						// Loop over the cells in column `C`
+						$('row c[r^="C"]', sheet).each(function () {
+							// Get the value
+							if ($('is t', this).text() == 'New York') {
+								$(this).attr('s', '20');
+							}
+						});
 					}
-				});
-			}
-		}]
-	});
+				}
+			]
+		}
+	}
 });
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'excelHtml5',
+					customize: function (xlsx) {
+						var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+						// Loop over the cells in column `C`
+						sheet
+							.querySelectorAll('row c[r^="C"]')
+							.forEach((row) => {
+								// Get the value
+								let cell = row.querySelector('is t');
+
+								if (cell && cell.textContent === 'New York') {
+									row.setAttribute('s', '20');
+								}
+							});
+					}
+				}
+			]
+		}
+	}
+});
+
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Excel - Cell background</title>
 

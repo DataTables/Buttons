@@ -2529,13 +2529,13 @@ function _init(settings, options) {
 	return new Buttons(api, opts).container();
 }
 
-// DataTables `dom` feature option
+// DataTables 1 `dom` feature option
 DataTable.ext.feature.push({
 	fnInit: _init,
 	cFeature: 'B'
 });
 
 // DataTables 2 layout feature
-if (DataTable.ext.features) {
-	DataTable.ext.features.register('buttons', _init);
+if (DataTable.feature) {
+	DataTable.feature.register('buttons', _init);
 }

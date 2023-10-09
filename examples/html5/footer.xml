@@ -5,20 +5,40 @@
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{ extend: 'copyHtml5', footer: true },
-			{ extend: 'excelHtml5', footer: true },
-			{ extend: 'csvHtml5', footer: true },
-			{ extend: 'pdfHtml5', footer: true }
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{ extend: 'copyHtml5', footer: true },
+				{ extend: 'excelHtml5', footer: true },
+				{ extend: 'csvHtml5', footer: true },
+				{ extend: 'pdfHtml5', footer: true }
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{ extend: 'copyHtml5', footer: true },
+				{ extend: 'excelHtml5', footer: true },
+				{ extend: 'csvHtml5', footer: true },
+				{ extend: 'pdfHtml5', footer: true }
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Include footer in export</title>
 

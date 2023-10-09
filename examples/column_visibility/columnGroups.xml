@@ -4,32 +4,67 @@
 <css lib="datatables buttons" />
 <js lib="jquery datatables buttons buttons-colvis">
 <![CDATA[
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'colvisGroup',
-				text: 'Office info',
-				show: [ 1, 2 ],
-				hide: [ 3, 4, 5 ]
-			},
-			{
-				extend: 'colvisGroup',
-				text: 'HR info',
-				show: [ 3, 4, 5 ],
-				hide: [ 1, 2 ]
-			},
-			{
-				extend: 'colvisGroup',
-				text: 'Show all',
-				show: ':hidden'
-			}
-		]
-	} );
-} );
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvisGroup',
+					text: 'Office info',
+					show: [1, 2],
+					hide: [3, 4, 5]
+				},
+				{
+					extend: 'colvisGroup',
+					text: 'HR info',
+					show: [3, 4, 5],
+					hide: [1, 2]
+				},
+				{
+					extend: 'colvisGroup',
+					text: 'Show all',
+					show: ':hidden'
+				}
+			]
+		}
+	}
+});
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvisGroup',
+					text: 'Office info',
+					show: [1, 2],
+					hide: [3, 4, 5]
+				},
+				{
+					extend: 'colvisGroup',
+					text: 'HR info',
+					show: [3, 4, 5],
+					hide: [1, 2]
+				},
+				{
+					extend: 'colvisGroup',
+					text: 'Show all',
+					show: ':hidden'
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Column groups</title>
 

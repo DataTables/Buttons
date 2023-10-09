@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" order="16">
+<dt-example table-type="html" order="17">
 
 <css lib="datatables buttons">
 div.dt-button-collection {
@@ -29,28 +29,56 @@ div.dt-button-collection h3.not-top-heading {
 <js lib="jquery datatables buttons pdfmake vfsfonts jszip buttons-html5 buttons-colvis">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'collection',
-				className: 'custom-html-collection',
-				buttons: [
-					'<h3>Export</h3>',
-					'pdf',
-					'csv',
-					'excel',
-					'<h3 class="not-top-heading">Column Visibility</h3>',
-					'columnsToggle'
-				]
-			}
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'collection',
+					className: 'custom-html-collection',
+					buttons: [
+						'<h3>Export</h3>',
+						'pdf',
+						'csv',
+						'excel',
+						'<h3 class="not-top-heading">Column Visibility</h3>',
+						'columnsToggle'
+					]
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'collection',
+					className: 'custom-html-collection',
+					buttons: [
+						'<h3>Export</h3>',
+						'pdf',
+						'csv',
+						'excel',
+						'<h3 class="not-top-heading">Column Visibility</h3>',
+						'columnsToggle'
+					]
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Custom HTML in Buttons Collection</title>
 

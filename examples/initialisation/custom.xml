@@ -1,26 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" order="3">
+<dt-example table-type="html" order="6">
 
 <css lib="datatables buttons"/>
 <js lib="jquery datatables buttons">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				text: 'My button',
-				action: function ( e, dt, node, config ) {
-					alert( 'Button activated' );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			dom: 'Bfrtip',
+			buttons: [
+				{
+					text: 'My button',
+					action: function (e, dt, node, config) {
+						alert('Button activated');
+					}
 				}
-			}
-		]
-	} );
-} );
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			dom: 'Bfrtip',
+			buttons: [
+				{
+					text: 'My button',
+					action: function (e, dt, node, config) {
+						alert('Button activated');
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Custom button</title>
 

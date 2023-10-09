@@ -5,20 +5,42 @@
 <js lib="jquery datatables buttons buttons-print">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'print',
-				messageTop: 'This print was produced using the Print button for DataTables'
-			}
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					messageTop:
+						'This print was produced using the Print button for DataTables'
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					messageTop:
+						'This print was produced using the Print button for DataTables'
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Custom message</title>
 

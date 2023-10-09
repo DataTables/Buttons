@@ -5,33 +5,104 @@
 <js lib="jquery datatables buttons">
 <![CDATA[
 
-$(document).ready(function() {
-	var table = $('#example').DataTable();
-
-	new $.fn.dataTable.Buttons( table, {
-		buttons: [
-			{
-				text: 'Button 1',
-				action: function ( e, dt, node, conf ) {
-					console.log( 'Button 1 clicked on' );
-				}
-			},
-			{
-				text: 'Button 2',
-				action: function ( e, dt, node, conf ) {
-					console.log( 'Button 2 clicked on' );
-				}
+var table = $('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: {
+				name: 'first',
+				buttons: [
+					{
+						text: 'Button 1',
+						action: function (e, dt, node, conf) {
+							console.log('Button 1 clicked on');
+						}
+					},
+					{
+						text: 'Button 2',
+						action: function (e, dt, node, conf) {
+							console.log('Button 2 clicked on');
+						}
+					}
+				]
 			}
-		]
-	} );
+		},
+		bottom1Start: {
+			buttons: {
+				name: 'second',
+				buttons: [
+					{
+						text: 'Button 3',
+						action: function (e, dt, node, conf) {
+							alert('Button 3 clicked on');
+						}
+					},
+					{
+						text: 'Button 4',
+						action: function (e, dt, node, conf) {
+							alert('Button 4 clicked on');
+						}
+					}
+				]
+			}
+		}
+	}
+});
 
-	table.buttons( 0, null ).container().prependTo(
-		table.table().container()
-	);
-} );
+table.button('second', 0).text('Button 3 - API updated');
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+let table = new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: {
+				name: 'first',
+				buttons: [
+					{
+						text: 'Button 1',
+						action: function (e, dt, node, conf) {
+							console.log('Button 1 clicked on');
+						}
+					},
+					{
+						text: 'Button 2',
+						action: function (e, dt, node, conf) {
+							console.log('Button 2 clicked on');
+						}
+					}
+				]
+			}
+		},
+		bottom1Start: {
+			buttons: {
+				name: 'second',
+				buttons: [
+					{
+						text: 'Button 3',
+						action: function (e, dt, node, conf) {
+							alert('Button 3 clicked on');
+						}
+					},
+					{
+						text: 'Button 4',
+						action: function (e, dt, node, conf) {
+							alert('Button 4 clicked on');
+						}
+					}
+				]
+			}
+		}
+	}
+});
+
+table.button('second', 0).text('Button 3 - API updated');
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Group selection</title>
 
@@ -41,7 +112,7 @@ Multiple button sets can coexist together sharing the same DataTable as a host. 
 
 The group selector, and the individual button selector (`b-type button-selector`) give the ability to select any button or buttons in any group or groups of buttons. Actions can also be taken on a whole group of buttons.
 
-This example shows Buttons being constructed using the `new $.fn.dataTable.Buttons` construct and then the container node that holds all of the created buttons obtained via the `b-api buttons().container()` method. Note that the function is called with two parameters: `0` and `null`. The `0` is the `b-type button-group-selector` option (i.e. select Buttons instance 0) and the second parameter is the `b-type button-selector` option. This is important as if a single parameter is passed into the `b-api button()` or `b-api buttons()` methods it is treated as a `b-type button-selector`.
+This example shows Buttons multiple button groups being creating with the `-init layout` option and `-feature buttons` feature. We set `-feature buttons.name` to be able to easily address each group via the API (this is optional, an index can also be used), and then use the `-api button().text()` method to update the text for one button (simply as a demonstration of how to use the multi-feature API).
 
 ]]></info>
 

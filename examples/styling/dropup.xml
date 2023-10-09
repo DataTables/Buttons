@@ -5,28 +5,56 @@
 <js lib="jquery datatables buttons buttons-colvis">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-                extend: 'collection',
-                text: 'Pop up collection',
-				buttons: [
-                    { text: 1 },
-                    { text: 2 },
-                    { text: 3 },
-                    { text: 4 },
-                    { text: 5 }
-                ],
-				dropup: true
-			}
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'collection',
+					text: 'Pop up collection',
+					buttons: [
+						{ text: 1 },
+						{ text: 2 },
+						{ text: 3 },
+						{ text: 4 },
+						{ text: 5 }
+					],
+					dropup: true
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'collection',
+					text: 'Pop up collection',
+					buttons: [
+						{ text: 1 },
+						{ text: 2 },
+						{ text: 3 },
+						{ text: 4 },
+						{ text: 5 }
+					],
+					dropup: true
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Dropup collection</title>
 

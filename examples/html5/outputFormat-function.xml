@@ -5,47 +5,74 @@
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
-$(document).ready(function() {
-	var buttonCommon = {
-		exportOptions: {
-			format: {
-				body: function ( data, row, column, node ) {
-					// Strip $ from salary column to make it numeric
-					return column === 5 ?
-						data.replace( /[$,]/g, '' ) :
-						data;
-				}
-			}
+var exportFormatter = {
+	format: {
+		body: function (data, row, column, node) {
+			// Strip $ from salary column to make it numeric
+			return column === 5 ? data.replace(/[$,]/g, '') : data;
 		}
-	};
+	}
+};
 
-	$('#example').DataTable( {
-        ajax: '../../../../examples/ajax/data/objects.txt',
-        columns: [
-            { data: 'name' },
-            { data: 'position' },
-            { data: 'office' },
-            { data: 'extn' },
-            { data: 'start_date' },
-            { data: 'salary' }
-        ],
-		dom: 'Bfrtip',
-		buttons: [
-			$.extend( true, {}, buttonCommon, {
-				extend: 'copyHtml5'
-			} ),
-			$.extend( true, {}, buttonCommon, {
-				extend: 'excelHtml5'
-			} ),
-			$.extend( true, {}, buttonCommon, {
-				extend: 'pdfHtml5'
-			} )
-		]
-	} );
-} );
+$('#example').DataTable({
+	ajax: '../../../../examples/ajax/data/objects.txt',
+	columns: [
+		{ data: 'name' },
+		{ data: 'position' },
+		{ data: 'office' },
+		{ data: 'extn' },
+		{ data: 'start_date' },
+		{ data: 'salary' }
+	],
+	layout: {
+		topStart: {
+			buttons: [
+				{ extend: 'copyHtml5', exportOptions: exportFormatter },
+				{ extend: 'excelHtml5', exportOptions: exportFormatter },
+				{ extend: 'pdfHtml5', exportOptions: exportFormatter }
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+let exportFormatter = {
+	format: {
+		body: function (data, row, column, node) {
+			// Strip $ from salary column to make it numeric
+			return column === 5 ? data.replace(/[$,]/g, '') : data;
+		}
+	}
+};
+
+new DataTable('#example', {
+	ajax: '../../../../examples/ajax/data/objects.txt',
+	columns: [
+		{ data: 'name' },
+		{ data: 'position' },
+		{ data: 'office' },
+		{ data: 'extn' },
+		{ data: 'start_date' },
+		{ data: 'salary' }
+	],
+	layout: {
+		topStart: {
+			buttons: [
+				{ extend: 'copyHtml5', exportOptions: exportFormatter },
+				{ extend: 'excelHtml5', exportOptions: exportFormatter },
+				{ extend: 'pdfHtml5', exportOptions: exportFormatter }
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Format output data - export options</title>
 

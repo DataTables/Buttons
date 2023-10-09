@@ -4,19 +4,45 @@
 <css lib="datatables buttons" />
 <js lib="jquery datatables buttons buttons-colvis">
 <![CDATA[
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [ {
-			extend: 'colvis',
-			columnText: function ( dt, idx, title ) {
-				return (idx+1)+': '+title;
-			}
-		} ]
-	} );
-} );
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvis',
+					columnText: function (dt, idx, title) {
+						return idx + 1 + ': ' + title;
+					}
+				}
+			]
+		}
+	}
+});
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvis',
+					columnText: function (dt, idx, title) {
+						return idx + 1 + ': ' + title;
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Customisation of column button text</title>
 

@@ -5,20 +5,30 @@
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			'copyHtml5',
-			'excelHtml5',
-			'csvHtml5',
-			'pdfHtml5'
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">HTML5 export buttons</title>
 

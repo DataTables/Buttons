@@ -6,8 +6,11 @@
 <![CDATA[
 
 $('#example').DataTable({
-	dom: 'Bfrtip',
-	buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+	layout: {
+		topStart: {
+			buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+		}
+	}
 });
 
 ]]>
@@ -17,20 +20,23 @@ $('#example').DataTable({
 <![CDATA[
 
 new DataTable('#example', {
-	dom: 'Bfrtip',
-	buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+	layout: {
+		topStart: {
+			buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+		}
+	}
 });
 
 ]]>
 </js-vanilla>
 
-<title lib="Buttons">Basic initialisation</title>
+<title lib="Buttons">Initialisation: Basic</title>
 
 <info><![CDATA[
 
-Buttons can be initialised very easily though the `b-init buttons` object which can be given as an array of the buttons that you wish to display. The `-string B` option in the `dt-init dom` parameter will instruct DataTables where the buttons should be placed in the document - in this case, at the top left (CSS also plays a part).
+The most common usage of Buttons, and that which will be used in the majority of these examples, is to place the buttons around the table using the `-init layout` option of DataTables. Buttons creates the `-feature buttons` feature that can be used with `-init layout`, just as the DataTables defaults features of `info`, `paging` and others are.
 
-The simplest method of using buttons is to use [predefined button types](https://datatables.net/reference/buttons) which can be displayed simply by using their name in the `b-init buttons` array. Each button can also be [extended](custom.html) to provide customisation of that button.
+The Buttons feature can take either an array of buttons, or a `-init buttons` configuration object. Each button can also be [extended](custom.html) to provide customisation of that button.
 
 This example shows the `b-button copy`, `b-button csv`, `b-button excel`, `b-button pdf` and `b-button print` buttons being used to display data export options for the DataTable.
 

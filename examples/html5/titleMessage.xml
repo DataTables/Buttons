@@ -5,44 +5,94 @@
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
 <![CDATA[
 
-$(document).ready(function() {
-	var printCounter = 0;
+var printCounter = 0;
 
-	// Append a caption to the table before the DataTables initialisation
-	$('#example').append('<caption style="caption-side: bottom">A fictional company\'s staff table.</caption>');
-
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			'copy',
-			{
-				extend: 'excel',
-				messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
-			},
-			{
-				extend: 'pdf',
-				messageBottom: null
-			},
-			{
-				extend: 'print',
-				messageTop: function () {
-					printCounter++;
-
-					if ( printCounter === 1 ) {
-						return 'This is the first time you have printed this document.';
-					}
-					else {
-						return 'You have printed this document '+printCounter+' times';
-					}
+$('#example').DataTable({
+	caption: 'A fictional company\'s staff table.',
+	layout: {
+		topStart: {
+			buttons: [
+				'copy',
+				{
+					extend: 'excel',
+					messageTop:
+						'The information in this table is copyright to Sirius Cybernetics Corp.'
 				},
-				messageBottom: null
-			}
-		]
-	} );
-} );
+				{
+					extend: 'pdf',
+					messageBottom: null
+				},
+				{
+					extend: 'print',
+					messageTop: function () {
+						printCounter++;
+
+						if (printCounter === 1) {
+							return 'This is the first time you have printed this document.';
+						}
+						else {
+							return (
+								'You have printed this document ' +
+								printCounter +
+								' times'
+							);
+						}
+					},
+					messageBottom: null
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+var printCounter = 0;
+
+new DataTable('#example', {
+	caption: 'A fictional company\'s staff table.',
+	layout: {
+		topStart: {
+			buttons: [
+				'copy',
+				{
+					extend: 'excel',
+					messageTop:
+						'The information in this table is copyright to Sirius Cybernetics Corp.'
+				},
+				{
+					extend: 'pdf',
+					messageBottom: null
+				},
+				{
+					extend: 'print',
+					messageTop: function () {
+						printCounter++;
+
+						if (printCounter === 1) {
+							return 'This is the first time you have printed this document.';
+						}
+						else {
+							return (
+								'You have printed this document ' +
+								printCounter +
+								' times'
+							);
+						}
+					},
+					messageBottom: null
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Export titles and messages</title>
 

@@ -5,24 +5,48 @@
 <js lib="jquery datatables buttons">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				text: 'My button',
-				action: function ( e, dt, node, config ) {
-					this.text( 'My button ('+config.counter+')' );
-					config.counter++;
-				},
-				counter: 1
-			}
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'My button',
+					action: function (e, dt, node, config) {
+						this.text('My button (' + config.counter + ')');
+						config.counter++;
+					},
+					counter: 1
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'My button',
+					action: function (e, dt, node, config) {
+						this.text('My button (' + config.counter + ')');
+						config.counter++;
+					},
+					counter: 1
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Dynamic text</title>
 
