@@ -36,27 +36,23 @@
 	</description>
 
 	<example title="Display a notification message for 3 seconds"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons.info( 'Notification', 'This is a notification message!', 3000 );
-
+table.buttons.info('Notification', 'This is a notification message!', 3000);
 ]]></example>
 
 	<example title="Set a button's action to show a loading message, and then a done message when an Ajax process completes"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
+table.button(0).action(function () {
+	table.buttons.info('Please wait', 'Processing data...');
 
-table.button( 0 ).action( function () {
-	table.buttons.info( 'Please wait', 'Processing data...' );
-
-	$.ajax( {
-		...
+	$.ajax({
+		// ...
 		success: function () {
-			table.buttons.info( 'Complete', 'Data processing complete', 2000 );
+			table.buttons.info('Complete', 'Data processing complete', 2000);
 		}
-	} );
-} );
-
+	});
+});
 ]]></example>
 </dt-api>

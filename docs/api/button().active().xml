@@ -39,30 +39,26 @@
 	</description>
 
 	<example title="Show button index 0 as active"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.button( 0 ).active( true );
-
+table.button(0).active(true);
 ]]></example>
 
 	<example title="Toggle between buttons"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.button( 0 ).action( function () {
-	this.active( true );
-	table.button( 1 ).active( false );
+table.button(0).action(function () {
+	this.active(true);
+	table.button(1).active(false);
 
 	// ... set button index 0's mode of operation
-} );
+});
 
-table.button( 1 ).action( function () {
-	this.active( true );
-	table.button( 0 ).active( false );
+table.button(1).action(function () {
+	this.active(true);
+	table.button(0).active(false);
 
 	// ... set button index 1's mode of operation
-} );
-
+});
 ]]></example>
 </dt-api>

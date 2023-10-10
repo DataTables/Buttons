@@ -241,53 +241,57 @@
 
 
 	<example title="DataTables initialisation: Use the HTML5 Excel button"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'excelHtml5'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['excelHtml5']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `b-button excel` button type to alias the HTML button options."><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'excel'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['excel']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `exportOptions` to save only the data shown on the current DataTable page"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'excelHtml5',
-			text: 'Save current page',
-			exportOptions: {
-				modifier: {
-					page: 'current'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'excelHtml5',
+					text: 'Save current page',
+					exportOptions: {
+						modifier: {
+							page: 'current'
+						}
+					}
 				}
-			}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 
 	<example title="Enable the auto filter option in Excel"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'excelHtml5',
-			autoFilter: true
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'excelHtml5',
+					autoFilter: true
+				}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 </dt-button>

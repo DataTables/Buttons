@@ -38,44 +38,37 @@
 
 
 	<example title="DataTables initialisation: Toggle the visibility of column index 1 only"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [ {
-		extend: 'columnToggle',
-		columns: 1
-	} ]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'columnToggle',
+					columns: 1
+				}
+			]
+		}
+	}
+});
 ]]></example>
 
 
 	<example title="DataTables initialisation: Two buttons, which toggle the visibility of all columns with the class `primary` and `secondary`"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'columnToggle',
-			columns: '.primary'
-		},
-		{
-			extend: 'columnToggle',
-			columns: '.secondary'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'columnToggle',
+					columns: '.primary'
+				},
+				{
+					extend: 'columnToggle',
+					columns: '.secondary'
+				}
+			]
 		}
-	]
-} );
-
-]]></example>
-
-	<example title="Direct initialisation: A single button that will toggle the visibility of columns with an index greater than 4"><![CDATA[
-
-new $.fn.dataTable.Buttons( table, {
-	buttons: [
-		{
-			extend: 'columnToggle',
-			columns: 'th:nth-child(n+5)'
-		}
-	]
-} );
-
+	}
+});
 ]]></example>
 </dt-button>

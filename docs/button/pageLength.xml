@@ -30,45 +30,44 @@
 
 
 	<example title="DataTables initialisation: Show the `pageLength` button with default options"><![CDATA[
-
-$('#myTable').DataTable( {
-	dom: 'Bfrtip',
-	buttons: [ 'pageLength' ]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['pageLength']
+		}
+	}
+});
 ]]></example>
 
 	<example title="Page length button with `dt-init lengthMenu` specified"><![CDATA[
-
-$('#myTable').DataTable( {
-	dom: 'Bfrtip',
-	lengthMenu: [
-		[ 10, 25, 50, -1 ],
-		[ '10 rows', '25 rows', '50 rows', 'Show all' ]
-	],
-	buttons: [
-		'pageLength'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			lengthMenu: [
+				[10, 25, 50, -1],
+				['10 rows', '25 rows', '50 rows', 'Show all']
+			]
+		}
+	},
+	buttons: ['pageLength']
+});
 ]]></example>
 
 	<example title="Custom language string for the collection button (note the use of an object to allow the `-1` value (i.e. show all) to be specified as a language string)"><![CDATA[
-
-$('#myTable').DataTable( {
-	dom: 'Bfrtip',
+new DataTable('#myTable', {
 	language: {
 		buttons: {
 			pageLength: {
-				_: "Afficher %d éléments",
-				'-1': "Tout afficher"
+				_: 'Afficher %d éléments',
+				'-1': 'Tout afficher'
 			}
 		}
 	},
-	buttons: [
-		'pageLength'
-	]
-} );
-
+	layout: {
+		topStart: {
+			buttons: ['pageLength']
+		}
+	}
+});
 ]]></example>
 </dt-button>

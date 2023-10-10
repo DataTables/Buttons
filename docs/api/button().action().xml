@@ -47,13 +47,11 @@
 	</description>
 
 	<example title="Set a simple action function for button index 0"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.button( 0 ).action( function( e, dt, button, config ) {
-	console.log( 'Button '+this.text()+' activated' );
+table.button(0).action(function (e, dt, button, config) {
+	console.log('Button ' + this.text() + ' activated');
 	this.disable();
-} );
-
+});
 ]]></example>
 </dt-api>

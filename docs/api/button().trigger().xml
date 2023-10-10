@@ -21,10 +21,8 @@
 	</description>
 
 	<example title="Trigger the button at index 2-1"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.button( '2-1' ).trigger();
-
+table.button('2-1').trigger();
 ]]></example>
 </dt-api>

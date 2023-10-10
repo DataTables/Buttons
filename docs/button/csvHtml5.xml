@@ -101,40 +101,42 @@
 
 
 	<example title="DataTables initialisation: Use the HTML5 CSV button"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'csvHtml5'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['csvHtml5']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `b-button csv` button type to alias the HTML button options."><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'csv'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['csv']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `exportOptions` to save all data, regardless of filtering"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'csvHtml5',
-			text: 'Copy all data',
-			exportOptions: {
-				modifier: {
-					search: 'none'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'csvHtml5',
+					text: 'Copy all data',
+					exportOptions: {
+						modifier: {
+							search: 'none'
+						}
+					}
 				}
-			}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 </dt-button>

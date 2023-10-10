@@ -54,18 +54,21 @@ Important - if you use this method in a button `action` function, you will need 
 	</description>
 
 	<example title="Show a simple popover"><![CDATA[
-
-var table = $('#myTable').DataTable({
-    dom: 'Bt',
-    buttons: [{
-        action: function(e) {
-            e.stopPropagation();
-            this.popover( '<div>I love popovers!</div>', {
-                popoverTitle: 'Hello world'
-            });
-        }
-    }]
+var table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					action: function (e) {
+						e.stopPropagation();
+						this.popover('<div>I love popovers!</div>', {
+							popoverTitle: 'Hello world'
+						});
+					}
+				}
+			]
+		}
+	}
 });
-
 ]]></example>
 </dt-api>

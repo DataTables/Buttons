@@ -22,9 +22,8 @@
 	</description>
 
 	<example title="Add excel button to collection buttons"><![CDATA[
-
-var table = $('#myTable').DataTable({
-    buttons: [
+var table = new DataTable('#myTable', {
+	buttons: [
 		{
 			extend: 'collection',
 			text: 'print',
@@ -38,14 +37,12 @@ var table = $('#myTable').DataTable({
 	]
 });
 
-table.buttons( [0, 1] ).collectionRebuild(['csv', 'pdf', 'excel']);
-
+table.buttons([0, 1]).collectionRebuild(['csv', 'pdf', 'excel']);
 ]]></example>
 
 	<example title="Remove csv button from collections"><![CDATA[
-
-var table = $('#myTable').DataTable({
-    buttons: [
+var table = new DataTable('#myTable', {
+	buttons: [
 		{
 			extend: 'collection',
 			text: 'print',
@@ -59,14 +56,12 @@ var table = $('#myTable').DataTable({
 	]
 });
 
-table.buttons( [0, 1] ).collectionRebuild(['pdf']);
-
+table.buttons([0, 1]).collectionRebuild(['pdf']);
 ]]></example>
 
 	<example title="Empty collections"><![CDATA[
-
-var table = $('#myTable').DataTable({
-    buttons: [
+var table = new DataTable('#myTable', {
+	buttons: [
 		{
 			extend: 'collection',
 			text: 'print',
@@ -80,8 +75,7 @@ var table = $('#myTable').DataTable({
 	]
 });
 
-table.button( [0, 1] ).collectionRebuild([]);
-
+table.button([0, 1]).collectionRebuild([]);
 ]]></example>
 
 

@@ -26,35 +26,28 @@
 
 
 	<example title="DataTables initialisation: Show a button for every column"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [ 'columnsToggle' ]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['columnsToggle']
+		}
+	}
+});
 ]]></example>
 
 
 	<example title="DataTables initialisation: Show buttons for columns with the class name 'toggle' only"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [ {
-		extend: 'columnsToggle',
-		columns: '.toggle'
-	} ]
-} );
-
-]]></example>
-
-	<example title="Direct initialisation: Show a button for every column in a collection (this is the same as the `colvis` button type)"><![CDATA[
-
-new $.fn.dataTable.Buttons( table, {
-	buttons: [
-		{
-			extend: 'collection',
-			buttons: [ 'columnsToggle' ]
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'columnsToggle',
+					columns: '.toggle'
+				}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 </dt-button>

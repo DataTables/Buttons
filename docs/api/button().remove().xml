@@ -21,10 +21,8 @@
 	</description>
 
 	<example title="Remove button index 2-4"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.button( '2-4' ).remove();
-
+table.button('2-4').remove();
 ]]></example>
 </dt-api>

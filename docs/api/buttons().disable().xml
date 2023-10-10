@@ -23,24 +23,20 @@
 	</description>
 
 	<example title="Disable all buttons"><![CDATA[
-
-var table = $('#myTable').DataTable();
+var table = new DataTable('#myTable');
 
 table.buttons().disable();
-
 ]]></example>
 
 	<example title="Set enabled state on a logic condition"><![CDATA[
+var table = new DataTable('#myTable');
+var buttons = table.buttons(['.edit', '.delete']);
 
-var table = $('#myTable').DataTable();
-var buttons = table.buttons( ['.edit', '.delete'] );
-
-if ( table.rows( { selected: true } ).indexes().length === 0 ) {
+if (table.rows({ selected: true }).indexes().length === 0) {
 	buttons.disable();
 }
 else {
 	buttons.enable();
 }
-
 ]]></example>
 </dt-api>

@@ -23,18 +23,14 @@
 	</description>
 
 	<example title="Destroy all button instances"><![CDATA[
-
-var table = $('#myTable').DataTable();
+var table = new DataTable('#myTable');
 
 table.buttons().destroy();
-
 ]]></example>
 
 	<example title="Destroy button instance 0 only"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons( 0, null ).destroy();
-
+table.buttons(0, null).destroy();
 ]]></example>
 </dt-api>

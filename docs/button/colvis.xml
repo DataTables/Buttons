@@ -44,38 +44,45 @@
 
 
 	<example title="DataTables initialisation: Show the `colvis` button with default options"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [ 'colvis' ]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['colvis']
+		}
+	}
+});
 ]]></example>
 
-	<example title="Direct initialisation: Show the `colvis` button, but do not include the first column in the list of columns"><![CDATA[
-
-new $.fn.dataTable.Buttons( table, {
-	buttons: [
-		{
-			extend: 'colvis',
-			columns: 'th:nth-child(n+2)'
+	<example title="Show the `colvis` button, but do not include the first column in the list of columns"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvis',
+					columns: 'th:nth-child(n+2)'
+				}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 
 	<example title="Customisation of the button text for the individual columns"><![CDATA[
-
-$('#myTable').DataTable( {
-	dom: 'Bfrtip',
-	buttons: [ {
-		extend: 'colvis',
-		columnText: function ( dt, idx, title ) {
-			return (idx+1)+': '+title;
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvis',
+					columnText: function (dt, idx, title) {
+						return idx + 1 + ': ' + title;
+					}
+				}
+			]
 		}
-	} ]
-} );
-
+	}
+});
 ]]></example>
 
 

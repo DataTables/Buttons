@@ -26,14 +26,13 @@
 
 
 	<example title="DataTables initialisation: Show column visibility and restore buttons"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [ 
-		'colvis',
-		'colvisRestore'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['colvis', 'colvisRestore']
+		}
+	}
+});
 ]]></example>
 
 </dt-button>

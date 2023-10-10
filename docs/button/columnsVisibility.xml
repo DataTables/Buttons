@@ -26,23 +26,25 @@
 
 
 	<example title="DataTables initialisation: Individual button collections to show / hide columns"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'collection',
-			text: 'Show columns',
-			buttons: [ 'columnsVisibility' ],
-			visibility: true
-		},
-		{
-			extend: 'collection',
-			text: 'Hide columns',
-			buttons: [ 'columnsVisibility' ],
-			visibility: false
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'collection',
+					text: 'Show columns',
+					buttons: ['columnsVisibility'],
+					visibility: true
+				},
+				{
+					extend: 'collection',
+					text: 'Hide columns',
+					buttons: ['columnsVisibility'],
+					visibility: false
+				}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 </dt-button>

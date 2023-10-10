@@ -106,56 +106,58 @@
 
 
 	<example title="DataTables initialisation: Use the Html copy button"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'copyHtml5'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['copyHtml5']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `b-button copy` button type to alias the HTML button options."><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'copy'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['copy']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `exportOptions` to copy only the current DataTable page"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'copyHtml5',
-			text: 'Copy current page',
-			exportOptions: {
-				modifier: {
-					page: 'current'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'copyHtml5',
+					text: 'Copy current page',
+					exportOptions: {
+						modifier: {
+							page: 'current'
+						}
+					}
 				}
-			}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `dt-init language` object to set the information displayed when activated"><![CDATA[
-
-$('#myTable').DataTable( {
-	language: 
+new DataTable('#myTable', {
+	language: {
 		buttons: {
 			copyTitle: 'Data copied',
 			copyKeys: 'Use your keyboard or menu to select the copy command'
 		}
 	},
-	buttons: [
-		'copyHtml5'
-	]
-} );
-
+	layout: {
+		topStart: {
+			buttons: ['copyHtml5']
+		}
+	}
+});
 ]]></example>
 </dt-button>

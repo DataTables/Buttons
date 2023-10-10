@@ -65,50 +65,42 @@
 	</description>
 
 	<example title="Get all data in the table for export"><![CDATA[
-
-var table = $('#myTable').DataTable();
+var table = new DataTable('#myTable');
 
 var data = table.buttons.exportData();
 // Do something with the 'data' variable
-
 ]]></example>
 
 	<example title="Export only selected rows (with the _Select_ extension)"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-var data = table.buttons.exportData( {
+var data = table.buttons.exportData({
 	modifier: {
 		selected: true
 	}
-} );
+});
 // Do something with the 'data' variable
-
 ]]></example>
 
 	<example title="Get the data for the visible columns only"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-var data = table.buttons.exportData( {
+var data = table.buttons.exportData({
 	columns: ':visible'
-} );
+});
 // Do something with the 'data' variable
-
 ]]></example>
 
 	<example title="Format the header cells - adding the column index"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-var data = table.buttons.exportData( {
+var data = table.buttons.exportData({
 	format: {
-		header: function ( data, columnIdx ) {
-			return columnIdx +': '+ data;
+		header: function (data, columnIdx) {
+			return columnIdx + ': ' + data;
 		}
 	}
-} );
+});
 // Do something with the 'data' variable
-
 ]]></example>
 </dt-api>

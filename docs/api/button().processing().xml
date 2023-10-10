@@ -34,26 +34,20 @@
 	</description>
 
 	<example title="Show button index 1 as processing"><![CDATA[
-
-var table = $('#myTable').DataTable();
-table.button( 1 ).processing( true );
-
+var table = new DataTable('#myTable');
+table.button(1).processing(true);
 ]]></example>
 
 	<example title="Use the processing method inside an action function"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
+table.button(0).action(function () {
+	this.processing(true);
 
-table
-	.button( 0 )
-	.action( function () {
-		this.processing( true );
+	// Do something...
 
-		// Do something...
-
-		this.processing( false );
-	} );
-
+	this.processing(false);
+});
 ]]></example>
 
     <related>-event buttons-processing</related>
