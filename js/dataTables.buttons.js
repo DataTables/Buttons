@@ -47,6 +47,10 @@ function _fadeOut(el, duration, fn) {
  * @param {[type]}
  */
 var Buttons = function (dt, config) {
+	if ( ! DataTable.versionCheck( '2' ) ) {
+		throw( "Warning: AutoFill requires DataTables 2 or newer");
+	}
+
 	// If not created with a `new` keyword then we return a wrapper function that
 	// will take the settings object for a DT. This allows easy use of new instances
 	// with the `layout` option - e.g. `topLeft: $.fn.dataTable.Buttons( ... )`.
@@ -2486,7 +2490,9 @@ var _exportData = function (dt, inOpts) {
 
 	var data = {
 		header: header,
+		headerStructure: dt.table().header.structure(config.columns),
 		footer: footer,
+		footerStructure: dt.table().footer.structure(config.columns),
 		body: body
 	};
 

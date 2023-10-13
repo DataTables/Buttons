@@ -56,8 +56,8 @@
 		Indicate if the table header should be included in the exported data or not.
 	</option>
 
-	<option type="boolean" name="footer" default="false">
-		Indicate if the table footer should be included in the exported data or not.
+	<option type="boolean" name="footer" default="true">
+		Indicate if the table footer should be included in the exported data or not. Please note that the default for this parameter was updated in Buttons 3.0 to be `true`. In earlier versions it was `false`.
 	</option>
 
 	<option type="string|function" name="filename" default="*">
@@ -82,8 +82,10 @@
 		Paper orientation for the created PDF. This can be `-string portrait` or `-string landscape`.
 	</option>
 
-	<option type="string" name="pageSize" default="A4">
+	<option type="string" name="pageSize" default="A4 or LETTER">
 		Paper size for the created PDF. This can be `-string A3`, `-string A4`, `-string A5`, `-string LEGAL`, `-string LETTER` or `-string TABLOID`. Other options are available [see the PDFMake documentation](http://pdfmake.org/#/gettingstarted).
+
+		As of Buttons 3.0 this option will default to `LETTER` for USA and Canadian locales (`navigator.language`). All other locales will default to `A4`.
 	</option>
 
 	<option type="string|function" name="message" default="">

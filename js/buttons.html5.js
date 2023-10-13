@@ -1324,6 +1324,57 @@ DataTable.ext.buttons.excelHtml5 = {
 //
 // PDF export - using pdfMake - http://pdfmake.org
 //
+function _pdfFindFirstEmpty(row) {
+	for (var i=0 ; i<row.length ; i++) {
+		if (! row[i]) {
+			return i;
+		}
+	}
+
+	return row.length;
+}
+
+// Expand the DT header structure to have empty objects for where a
+// row / col span from another cell covers it, as needed by pdfmake
+function _pdfHeader(rows, structure) {
+	var existingRows = rows.length;
+
+	// Setup an empty array per row
+	structure.forEach(function () {
+		rows.push([]);
+	});
+
+	structure.forEach(function (rowStructure, i) {
+		var row = rows[i + existingRows];
+
+		rowStructure.forEach(function (cell) {
+			var insert = _pdfFindFirstEmpty(row);
+
+			// The actual cell
+			row[insert] = {
+				text: cell.title,
+				colSpan: cell.colspan,
+				rowSpan: cell.rowspan,
+				style: 'tableHeader'
+			};
+
+			// Add empty objects for colspan
+			for (let colspan=1 ; colspan<cell.colspan ; colspan++) {
+				row[insert + colspan] = {};
+			}
+
+			// And for rowspan, plus any colspan
+			for (let rowspan=1 ; rowspan<cell.rowspan ; rowspan++) {
+				for (let colspan=0 ; colspan<cell.colspan ; colspan++) {
+					rows[i + existingRows + rowspan][insert + colspan] = {};
+				}
+			}
+		});
+	});
+}
+
+
+
 DataTable.ext.buttons.pdfHtml5 = {
 	className: 'buttons-pdf buttons-html5',
 
@@ -1338,45 +1389,30 @@ DataTable.ext.buttons.pdfHtml5 = {
 	action: function (e, dt, button, config) {
 		this.processing(true);
 
-		var that = this;
 		var data = dt.buttons.exportData(config.exportOptions);
 		var info = dt.buttons.exportInfo(config);
 		var rows = [];
 
 		if (config.header) {
-			rows.push(
-				$.map(data.header, function (d) {
-					return {
-						text: typeof d === 'string' ? d : d + '',
-						style: 'tableHeader'
-					};
-				})
-			);
+			_pdfHeader(rows, data.headerStructure);
 		}
 
 		for (var i = 0, ien = data.body.length; i < ien; i++) {
 			rows.push(
-				$.map(data.body[i], function (d) {
-					if (d === null || d === undefined) {
-						d = '';
-					}
+				data.body[i].map(function (d) {
 					return {
-						text: typeof d === 'string' ? d : d + '',
-						style: i % 2 ? 'tableBodyEven' : 'tableBodyOdd'
+						text: d === null || d === undefined
+							? ''
+							: typeof d === 'string'
+								? d
+								: d.toString()
 					};
 				})
 			);
 		}
 
-		if (config.footer && data.footer) {
-			rows.push(
-				$.map(data.footer, function (d) {
-					return {
-						text: typeof d === 'string' ? d : d + '',
-						style: 'tableFooter'
-					};
-				})
-			);
+		if (config.footer) {
+			_pdfHeader(rows, data.footerStructure);
 		}
 
 		var doc = {
@@ -1384,34 +1420,58 @@ DataTable.ext.buttons.pdfHtml5 = {
 			pageOrientation: config.orientation,
 			content: [
 				{
+					style: 'table',
 					table: {
-						headerRows: 1,
+						headerRows: data.headerStructure.length,
+						footerRows: data.footerStructure.length, // Used for styling, doesn't do anything in pdfmake
 						body: rows
 					},
-					layout: 'noBorders'
+					layout: {
+						hLineWidth: function(i, node) {
+							if (i === 0 || i === node.table.body.length) {
+								return 0;
+							}
+							return 0.5;
+						},
+						vLineWidth: function(i) {
+							return 0;
+						},
+						hLineColor: function(i, node) {
+							return i === node.table.headerRows || i === node.table.body.length - node.table.footerRows
+								? '#333'
+								: '#ddd';
+						},
+						fillColor: function (rowIndex, node, columnIndex) {
+							if (rowIndex < data.headerStructure.length) {
+								return '#fff';
+							}
+							return (rowIndex % 2 === 0) ? '#f3f3f3' : null;
+						},
+						paddingTop: function() {
+							return 5;
+						},
+						paddingBottom: function() {
+							return 5;
+						}
+					}
 				}
 			],
 			styles: {
 				tableHeader: {
 					bold: true,
 					fontSize: 11,
-					color: 'white',
-					fillColor: '#2d4154',
 					alignment: 'center'
-				},
-				tableBodyEven: {},
-				tableBodyOdd: {
-					fillColor: '#f3f3f3'
 				},
 				tableFooter: {
 					bold: true,
-					fontSize: 11,
-					color: 'white',
-					fillColor: '#2d4154'
+					fontSize: 11
+				},
+				table: {
+					margin: [0, 5, 0, 5]
 				},
 				title: {
 					alignment: 'center',
-					fontSize: 15
+					fontSize: 13
 				},
 				message: {}
 			},
@@ -1470,11 +1530,14 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 	orientation: 'portrait',
 
-	pageSize: 'A4',
+	// This isn't perfect, but it is close
+	pageSize: navigator.language === 'en-US' || navigator.language === 'en-CA' 
+		? 'LETTER'
+		: 'A4',
 
 	header: true,
 
-	footer: false,
+	footer: true,
 
 	messageTop: '*',
 

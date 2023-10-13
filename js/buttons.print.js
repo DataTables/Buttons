@@ -12,9 +12,7 @@ var _link = document.createElement('a');
  * @param  {node}     el Element to convert
  */
 var _styleToAbs = function (el) {
-	var url;
 	var clone = $(el).clone()[0];
-	var linkHost;
 
 	if (clone.nodeName.toLowerCase() === 'link') {
 		clone.href = _relToAbs(clone.href);
@@ -56,11 +54,13 @@ DataTable.ext.buttons.print = {
 			$.extend({ decodeEntities: false }, config.exportOptions) // XSS protection
 		);
 		var exportInfo = dt.buttons.exportInfo(config);
+
+		// Get the classes for the columns from the header cells
 		var columnClasses = dt
 			.columns(config.exportOptions.columns)
-			.flatten()
-			.map(function (idx) {
-				return dt.settings()[0].aoColumns[dt.column(idx).index()].sClass;
+			.nodes()
+			.map(function (n) {
+				return n.className;
 			})
 			.toArray();
 
@@ -82,6 +82,7 @@ DataTable.ext.buttons.print = {
 		var html = '<table class="' + dt.table().node().className + '">';
 
 		if (config.header) {
+			// TODO header structure not header
 			html += '<thead>' + addRow(data.header, 'th') + '</thead>';
 		}
 
@@ -160,13 +161,7 @@ DataTable.ext.buttons.print = {
 			}
 		};
 
-		if (navigator.userAgent.match(/Trident\/\d.\d/)) {
-			// IE needs to call this without a setTimeout
-			autoPrint();
-		}
-		else {
-			win.setTimeout(autoPrint, 1000);
-		}
+		win.setTimeout(autoPrint, 1000);
 	},
 
 	title: '*',
