@@ -43,7 +43,8 @@ var _saveAs = (function (view) {
 	// IE <10 is explicitly unsupported
 	if (
 		typeof view === 'undefined' ||
-		(typeof navigator !== 'undefined' && /MSIE [1-9]\./.test(navigator.userAgent))
+		(typeof navigator !== 'undefined' &&
+			/MSIE [1-9]\./.test(navigator.userAgent))
 	) {
 		return;
 	}
@@ -103,7 +104,9 @@ var _saveAs = (function (view) {
 					blob.type
 				)
 			) {
-				return new Blob([String.fromCharCode(0xfeff), blob], { type: blob.type });
+				return new Blob([String.fromCharCode(0xfeff), blob], {
+					type: blob.type
+				});
 			}
 			return blob;
 		},
@@ -117,17 +120,26 @@ var _saveAs = (function (view) {
 				force = type === force_saveable_type,
 				object_url,
 				dispatch_all = function () {
-					dispatch(filesaver, 'writestart progress write writeend'.split(' '));
+					dispatch(
+						filesaver,
+						'writestart progress write writeend'.split(' ')
+					);
 				},
 				// on any filesys errors revert to saving with object URLs
 				fs_error = function () {
-					if ((is_chrome_ios || (force && is_safari)) && view.FileReader) {
+					if (
+						(is_chrome_ios || (force && is_safari)) &&
+						view.FileReader
+					) {
 						// Safari doesn't allow downloading of blob urls
 						var reader = new FileReader();
 						reader.onloadend = function () {
 							var url = is_chrome_ios
 								? reader.result
-								: reader.result.replace(/^data:[^;]*;/, 'data:attachment/file;');
+								: reader.result.replace(
+										/^data:[^;]*;/,
+										'data:attachment/file;'
+								  );
 							var popup = view.open(url, '_blank');
 							if (!popup) view.location.href = url;
 							url = undefined; // release reference before dispatching
@@ -175,7 +187,11 @@ var _saveAs = (function (view) {
 		},
 		FS_proto = FileSaver.prototype,
 		saveAs = function (blob, name, no_auto_bom) {
-			return new FileSaver(blob, name || blob.name || 'download', no_auto_bom);
+			return new FileSaver(
+				blob,
+				name || blob.name || 'download',
+				no_auto_bom
+			);
 		};
 	// IE 10+ (native saveAs)
 	if (typeof navigator !== 'undefined' && navigator.msSaveOrOpenBlob) {
@@ -240,7 +256,11 @@ var _sheetname = function (config) {
  * @return {string}				Newline character
  */
 var _newLine = function (config) {
-	return config.newline ? config.newline : navigator.userAgent.match(/Windows/) ? '\r\n' : '\n';
+	return config.newline
+		? config.newline
+		: navigator.userAgent.match(/Windows/)
+		? '\r\n'
+		: '\n';
 };
 
 /**
@@ -269,7 +289,9 @@ var _exportData = function (dt, config) {
 			}
 
 			s += boundary
-				? boundary + ('' + a[i]).replace(reBoundary, escapeChar + boundary) + boundary
+				? boundary +
+				  ('' + a[i]).replace(reBoundary, escapeChar + boundary) +
+				  boundary
 				: a[i];
 		}
 
@@ -277,7 +299,8 @@ var _exportData = function (dt, config) {
 	};
 
 	var header = config.header ? join(data.header) + newLine : '';
-	var footer = config.footer && data.footer ? newLine + join(data.footer) : '';
+	var footer =
+		config.footer && data.footer ? newLine + join(data.footer) : '';
 	var body = [];
 
 	for (var i = 0, ien = data.body.length; i < ien; i++) {
@@ -403,7 +426,9 @@ function _addToZip(zip, obj) {
 			if (_ieExcel) {
 				// IE doesn't include the XML declaration
 				if (str.indexOf('<?xml') === -1) {
-					str = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' + str;
+					str =
+						'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+						str;
 				}
 
 				// Return namespace attributes to being as such
@@ -786,6 +811,76 @@ var _excelSpecials = [
 	} //Date yyyy-mm-dd
 ];
 
+var _excelMergeCells = function (rels, row, column, rowspan, colspan) {
+	var mergeCells = $('mergeCells', rels);
+
+	mergeCells[0].appendChild(
+		_createNode(rels, 'mergeCell', {
+			attr: {
+				ref:
+					createCellPos(column) +
+					row +
+					':' +
+					createCellPos(column + colspan - 1) +
+					(row + rowspan - 1)
+			}
+		})
+	);
+
+	mergeCells.attr('count', parseFloat(mergeCells.attr('count')) + 1);
+};
+
+function _findFirstEmpty(row) {
+	for (var i = 0; i < row.length; i++) {
+		if (!row[i]) {
+			return i;
+		}
+	}
+
+	return row.length;
+}
+
+// Expand the DT header structure to have empty objects for where a
+// row / col span from another cell covers it, as needed by pdfmake
+function _headerExpand(rows, structure) {
+	var existingRows = rows.length;
+
+	// Setup an empty array per row
+	structure.forEach(function () {
+		rows.push([]);
+	});
+
+	structure.forEach(function (rowStructure, i) {
+		var row = rows[i + existingRows];
+
+		rowStructure.forEach(function (cell) {
+			var insert = _findFirstEmpty(row);
+
+			// The actual cell
+			row[insert] = {
+				text: cell.title,
+				colSpan: cell.colspan,
+				rowSpan: cell.rowspan,
+				style: 'tableHeader'
+			};
+
+			// Null for empty
+			for (let colspan = 1; colspan < cell.colspan; colspan++) {
+				row[insert + colspan] = {};
+			}
+
+			// And for rowspan, plus any colspan
+			for (let rowspan = 1; rowspan < cell.rowspan; rowspan++) {
+				for (let colspan = 0; colspan < cell.colspan; colspan++) {
+					rows[i + existingRows + rowspan][insert + colspan] = {};
+				}
+			}
+		});
+	});
+
+	return rows;
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Buttons
  */
@@ -833,7 +928,9 @@ DataTable.ext.buttons.copyHtml5 = {
 			output = config.customize(output, config, dt);
 		}
 
-		var textarea = $('<textarea readonly/>').val(output).appendTo(hiddenDiv);
+		var textarea = $('<textarea readonly/>')
+			.val(output)
+			.appendTo(hiddenDiv);
 
 		// For browsers that support the copy execCommand, try to use it
 		if (document.queryCommandSupported('copy')) {
@@ -876,7 +973,11 @@ DataTable.ext.buttons.copyHtml5 = {
 				'</span>'
 		).append(hiddenDiv);
 
-		dt.buttons.info(dt.i18n('buttons.copyTitle', 'Copy to clipboard'), message, 0);
+		dt.buttons.info(
+			dt.i18n('buttons.copyTitle', 'Copy to clipboard'),
+			message,
+			0
+		);
 
 		// Select the text so when the user activates their system clipboard
 		// it will copy that text
@@ -968,7 +1069,11 @@ DataTable.ext.buttons.csvHtml5 = {
 			output = String.fromCharCode(0xfeff) + output;
 		}
 
-		_saveAs(new Blob([output], { type: 'text/csv' + charset }), info.filename, true);
+		_saveAs(
+			new Blob([output], { type: 'text/csv' + charset }),
+			info.filename,
+			true
+		);
 
 		this.processing(false);
 	},
@@ -1066,7 +1171,8 @@ DataTable.ext.buttons.excelHtml5 = {
 				}
 
 				var originalContent = row[i];
-				row[i] = typeof row[i].trim === 'function' ? row[i].trim() : row[i];
+				row[i] =
+					typeof row[i].trim === 'function' ? row[i].trim() : row[i];
 
 				// Special number formatting options
 				for (var j = 0, jen = _excelSpecials.length; j < jen; j++) {
@@ -1075,7 +1181,11 @@ DataTable.ext.buttons.excelHtml5 = {
 					// TODO Need to provide the ability for the specials to say
 					// if they are returning a string, since at the moment it is
 					// assumed to be a number
-					if (row[i].match && !row[i].match(/^0\d+/) && row[i].match(special.match)) {
+					if (
+						row[i].match &&
+						!row[i].match(/^0\d+/) &&
+						row[i].match(special.match)
+					) {
 						var val = row[i].replace(/[^\d\.\-]/g, '');
 
 						if (special.fmt) {
@@ -1115,7 +1225,10 @@ DataTable.ext.buttons.excelHtml5 = {
 						// String output - replace non standard characters for text output
 						var text = !originalContent.replace
 							? originalContent
-							: originalContent.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '');
+							: originalContent.replace(
+									/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g,
+									''
+							  );
 
 						cell = _createNode(rels, 'c', {
 							attr: {
@@ -1145,53 +1258,70 @@ DataTable.ext.buttons.excelHtml5 = {
 			rowPos++;
 		};
 
+		var addHeader = function (exportedStructure) {
+			var structure = _headerExpand([], exportedStructure);
+
+			structure.forEach(function (row) {
+				addRow(
+					row.map(function (cell) {
+						return cell ? cell.text : '';
+					}),
+					rowPos
+				);
+				$('row:last c', rels).attr('s', '2'); // bold
+
+				// Add any merge cells
+				row.forEach(function (cell, columnCounter) {
+					if (
+						cell.colSpan &&
+						(cell.colSpan > 1 || cell.rowSpan > 1)
+					) {
+						_excelMergeCells(
+							rels,
+							rowPos,
+							columnCounter,
+							cell.rowSpan,
+							cell.colSpan
+						);
+					}
+				});
+			});
+		};
+
 		if (config.customizeData) {
 			config.customizeData(data);
 		}
-
-		var mergeCells = function (row, colspan) {
-			var mergeCells = $('mergeCells', rels);
-
-			mergeCells[0].appendChild(
-				_createNode(rels, 'mergeCell', {
-					attr: {
-						ref: 'A' + row + ':' + createCellPos(colspan) + row
-					}
-				})
-			);
-			mergeCells.attr('count', parseFloat(mergeCells.attr('count')) + 1);
-			$('row:eq(' + (row - 1) + ') c', rels).attr('s', '51'); // centre
-		};
 
 		// Title and top messages
 		var exportInfo = dt.buttons.exportInfo(config);
 		if (exportInfo.title) {
 			addRow([exportInfo.title], rowPos);
-			mergeCells(rowPos, data.header.length - 1);
+			_excelMergeCells(rels, rowPos, 0, 1, data.header.length);
+			$('row:last c', rels).attr('s', '51'); // centre
 		}
 
 		if (exportInfo.messageTop) {
 			addRow([exportInfo.messageTop], rowPos);
-			mergeCells(rowPos, data.header.length - 1);
+			_excelMergeCells(rels, rowPos, 0, 1, data.header.length);
 		}
 
-		// Table itself
+		// Table header
 		if (config.header) {
-			addRow(data.header, rowPos);
-			$('row:last c', rels).attr('s', '2'); // bold
+			addHeader(data.headerStructure);
 		}
 
 		dataStartRow = rowPos;
 
+		// Table body
 		for (var n = 0, ie = data.body.length; n < ie; n++) {
 			addRow(data.body[n], rowPos);
 		}
 
 		dataEndRow = rowPos;
 
+		// Table footer
 		if (config.footer && data.footer) {
-			addRow(data.footer, rowPos);
-			$('row:last c', rels).attr('s', '2'); // bold
+			addHeader(data.footerStructure);
 		}
 
 		// Below the table
@@ -1270,7 +1400,8 @@ DataTable.ext.buttons.excelHtml5 = {
 		var zipConfig = {
 			compression: 'DEFLATE',
 			type: 'blob',
-			mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+			mimeType:
+				'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 		};
 
 		_addToZip(zip, xlsx);
@@ -1306,7 +1437,7 @@ DataTable.ext.buttons.excelHtml5 = {
 
 	header: true,
 
-	footer: false,
+	footer: true,
 
 	title: '*',
 
@@ -1324,57 +1455,6 @@ DataTable.ext.buttons.excelHtml5 = {
 //
 // PDF export - using pdfMake - http://pdfmake.org
 //
-function _pdfFindFirstEmpty(row) {
-	for (var i=0 ; i<row.length ; i++) {
-		if (! row[i]) {
-			return i;
-		}
-	}
-
-	return row.length;
-}
-
-// Expand the DT header structure to have empty objects for where a
-// row / col span from another cell covers it, as needed by pdfmake
-function _pdfHeader(rows, structure) {
-	var existingRows = rows.length;
-
-	// Setup an empty array per row
-	structure.forEach(function () {
-		rows.push([]);
-	});
-
-	structure.forEach(function (rowStructure, i) {
-		var row = rows[i + existingRows];
-
-		rowStructure.forEach(function (cell) {
-			var insert = _pdfFindFirstEmpty(row);
-
-			// The actual cell
-			row[insert] = {
-				text: cell.title,
-				colSpan: cell.colspan,
-				rowSpan: cell.rowspan,
-				style: 'tableHeader'
-			};
-
-			// Add empty objects for colspan
-			for (let colspan=1 ; colspan<cell.colspan ; colspan++) {
-				row[insert + colspan] = {};
-			}
-
-			// And for rowspan, plus any colspan
-			for (let rowspan=1 ; rowspan<cell.rowspan ; rowspan++) {
-				for (let colspan=0 ; colspan<cell.colspan ; colspan++) {
-					rows[i + existingRows + rowspan][insert + colspan] = {};
-				}
-			}
-		});
-	});
-}
-
-
-
 DataTable.ext.buttons.pdfHtml5 = {
 	className: 'buttons-pdf buttons-html5',
 
@@ -1394,16 +1474,17 @@ DataTable.ext.buttons.pdfHtml5 = {
 		var rows = [];
 
 		if (config.header) {
-			_pdfHeader(rows, data.headerStructure);
+			_headerExpand(rows, data.headerStructure);
 		}
 
 		for (var i = 0, ien = data.body.length; i < ien; i++) {
 			rows.push(
 				data.body[i].map(function (d) {
 					return {
-						text: d === null || d === undefined
-							? ''
-							: typeof d === 'string'
+						text:
+							d === null || d === undefined
+								? ''
+								: typeof d === 'string'
 								? d
 								: d.toString()
 					};
@@ -1412,7 +1493,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 		}
 
 		if (config.footer) {
-			_pdfHeader(rows, data.footerStructure);
+			_headerExpand(rows, data.footerStructure);
 		}
 
 		var doc = {
@@ -1427,17 +1508,20 @@ DataTable.ext.buttons.pdfHtml5 = {
 						body: rows
 					},
 					layout: {
-						hLineWidth: function(i, node) {
+						hLineWidth: function (i, node) {
 							if (i === 0 || i === node.table.body.length) {
 								return 0;
 							}
 							return 0.5;
 						},
-						vLineWidth: function(i) {
+						vLineWidth: function (i) {
 							return 0;
 						},
-						hLineColor: function(i, node) {
-							return i === node.table.headerRows || i === node.table.body.length - node.table.footerRows
+						hLineColor: function (i, node) {
+							return i === node.table.headerRows ||
+								i ===
+									node.table.body.length -
+										node.table.footerRows
 								? '#333'
 								: '#ddd';
 						},
@@ -1445,12 +1529,12 @@ DataTable.ext.buttons.pdfHtml5 = {
 							if (rowIndex < data.headerStructure.length) {
 								return '#fff';
 							}
-							return (rowIndex % 2 === 0) ? '#f3f3f3' : null;
+							return rowIndex % 2 === 0 ? '#f3f3f3' : null;
 						},
-						paddingTop: function() {
+						paddingTop: function () {
 							return 5;
 						},
-						paddingBottom: function() {
+						paddingBottom: function () {
 							return 5;
 						}
 					}
@@ -1531,9 +1615,10 @@ DataTable.ext.buttons.pdfHtml5 = {
 	orientation: 'portrait',
 
 	// This isn't perfect, but it is close
-	pageSize: navigator.language === 'en-US' || navigator.language === 'en-CA' 
-		? 'LETTER'
-		: 'A4',
+	pageSize:
+		navigator.language === 'en-US' || navigator.language === 'en-CA'
+			? 'LETTER'
+			: 'A4',
 
 	header: true,
 

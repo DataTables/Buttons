@@ -192,8 +192,8 @@
 		Indicate if the table header should be included in the exported data or not.
 	</option>
 
-	<option type="boolean" name="footer" default="false">
-		Indicate if the table footer should be included in the exported data or not.
+	<option type="boolean" name="footer" default="true">
+		Indicate if the table footer should be included in the exported data or not. Please note that the default for this parameter was updated in Buttons 3.0 to be `true`. In earlier versions it was `false`.
 	</option>
 
 	<option type="string|function" name="filename" default="*">
