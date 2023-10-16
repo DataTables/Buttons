@@ -34,7 +34,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-This example demonstrates the use of `colspan` and `rowspan` in a DataTable and its effect on the exported data. PDF, Excel and Copy allow allow for column and row spanning elements in the table header. There is however no concept of this in CSV, so it will export just a single row for the header / footer.
+This example demonstrates the use of `colspan` and `rowspan` in a DataTable and its effect on the exported data. The export formats all allow for column and row spanning elements in the table header. In the case of copy and CSV export an empty string is used, since they are plain text formats and have no concept for `colspan` / `rowspan`.
 
 ]]></info>
 

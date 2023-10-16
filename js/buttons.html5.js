@@ -298,10 +298,35 @@ var _exportData = function (dt, config) {
 		return s;
 	};
 
-	var header = config.header ? join(data.header) + newLine : '';
-	var footer =
-		config.footer && data.footer ? newLine + join(data.footer) : '';
+	var header = '';
+	var footer = '';
 	var body = [];
+
+	if (config.header) {
+		header =
+			_headerExpand([], data.headerStructure)
+				.map(function (row) {
+					return join(
+						row.map(function (cell) {
+							return cell.text || '';
+						})
+					);
+				})
+				.join(newLine) + newLine;
+	}
+
+	if (config.footer && data.footer) {
+		footer =
+			_headerExpand([], data.footerStructure)
+				.map(function (row) {
+					return join(
+						row.map(function (cell) {
+							return cell.text || '';
+						})
+					);
+				})
+				.join(newLine) + newLine;
+	}
 
 	for (var i = 0, ien = data.body.length; i < ien; i++) {
 		body.push(join(data.body[i]));

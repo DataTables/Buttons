@@ -16,23 +16,11 @@
 	<description>
 		This button will create and save a PDF file from the table's data.
 
-		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported).
-
-		In addition to this, the [PDFMake](http://pdfmake.org/) library must also be available on the page and a suitable font-size. [PDFMake provides Roboto in `vfs_fonts.js`](http://pdfmake.org/#/gettingstarted) or a [custom font](https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side) can be used. This MIT licensed library provides the ability to create a PDF file in the browser and it utilised by this button.
+		It makes use of the [PDFMake](http://pdfmake.org/) library which must be on the page or registered with the `DataTable.Buttons.pdfmake()` method, and a suitable font file available. [PDFMake provides Roboto in `vfs_fonts.js`](http://pdfmake.org/#/gettingstarted) although [custom fonts](https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side) can be used. PDFMake is an MIT licensed library.
 
 		The use of PDFMake with this button provides the ability to easily modify the PDF file that is generated to include text, images and other information. This is done through the `customize` function (see below, and the [PDFMake documentation](http://pdfmake.org/#/gettingstarted)).
 
-
-		## Browser support
-
-		The API methods used by this button are supported in the following browsers. If the browser being used does not support the requirements for this button, it simply will not be displayed.
-
-		* Internet Explorer 10+
-		  * IE9 and older are not supported as they do not support the `FileReader` API available in newer browsers.
-		* Edge: Yes
-		* Chrome: Yes
-		* Opera: Yes
-		* Safari: Yes
+		If your table has a header or footer with multiple rows, these will all be included in the export. If the header or footer contains `colspan` or `rowspan` cells, they will automatically be migrated to the PDF document for export.
 	</description>
 
 
