@@ -48,7 +48,7 @@ function _fadeOut(el, duration, fn) {
  */
 var Buttons = function (dt, config) {
 	if ( ! DataTable.versionCheck( '2' ) ) {
-		throw( "Warning: AutoFill requires DataTables 2 or newer");
+		throw( "Warning: Buttons requires DataTables 2 or newer");
 	}
 
 	// If not created with a `new` keyword then we return a wrapper function that
