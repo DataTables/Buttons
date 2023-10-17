@@ -70,9 +70,20 @@ DataTable.ext.buttons.print = {
 			for (var i = 0, ien = d.length; i < ien; i++) {
 				// null and undefined aren't useful in the print output
 				var dataOut = d[i] === null || d[i] === undefined ? '' : d[i];
-				var classAttr = columnClasses[i] ? 'class="' + columnClasses[i] + '"' : '';
+				var classAttr = columnClasses[i]
+					? 'class="' + columnClasses[i] + '"'
+					: '';
 
-				str += '<' + tag + ' ' + classAttr + '>' + dataOut + '</' + tag + '>';
+				str +=
+					'<' +
+					tag +
+					' ' +
+					classAttr +
+					'>' +
+					dataOut +
+					'</' +
+					tag +
+					'>';
 			}
 
 			return str + '</tr>';
@@ -83,11 +94,23 @@ DataTable.ext.buttons.print = {
 
 		if (config.header) {
 			var rows = data.headerStructure.map(function (row) {
-				return '<tr>' + row.map(function(cell) {
-					return cell
-						? '<th colspan="' + cell.colspan + '" rowspan="' + cell.rowspan + '">' + cell.title + '</th>'
-						: '';
-				}).join('') + '</tr>';
+				return (
+					'<tr>' +
+					row
+						.map(function (cell) {
+							return cell
+								? '<th colspan="' +
+										cell.colspan +
+										'" rowspan="' +
+										cell.rowspan +
+										'">' +
+										cell.title +
+										'</th>'
+								: '';
+						})
+						.join('') +
+					'</tr>'
+				);
 			});
 
 			html += '<thead>' + rows.join('') + '</thead>';
@@ -101,11 +124,23 @@ DataTable.ext.buttons.print = {
 
 		if (config.footer && data.footer) {
 			var rows = data.footerStructure.map(function (row) {
-				return '<tr>' + row.map(function(cell) {
-					return cell
-						? '<th colspan="' + cell.colspan + '" rowspan="' + cell.rowspan + '">' + cell.title + '</th>'
-						: '';
-				}).join('') + '</tr>';
+				return (
+					'<tr>' +
+					row
+						.map(function (cell) {
+							return cell
+								? '<th colspan="' +
+										cell.colspan +
+										'" rowspan="' +
+										cell.rowspan +
+										'">' +
+										cell.title +
+										'</th>'
+								: '';
+						})
+						.join('') +
+					'</tr>'
+				);
 			});
 
 			html += '<tfoot>' + rows.join('') + '</tfoot>';
