@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="7">
+
+<css lib="datatables buttons">
+body.dt-print-view h1 {
+	text-align: center;
+	margin: 1em;
+}
+</css>
+<js lib="jquery datatables buttons buttons-print">
+<![CDATA[
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: ['print']
+		}
+	}
+});
+
+]]>
+</js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['print']
+		}
+	}
+});
+
+]]>
+</js-vanilla>
+
+<title lib="Buttons">CSS styling in print view</title>
+
+<info><![CDATA[
+
+You may wish to provide some custom CSS specifically for the print view, tailoring the displayed data for a printer. Button's print view operates by creating an simple HTML document with a representation of your export data and then displaying that in the browser. As part of that process it copies across the stylesheets from the host document. It will also add the class `dt-print-view` to the `-tag body` element of the new document.
+
+The upshot of all of this is that you can use `body.dt-print-view { ... }` CSS and additional selectors to target styles, in your standard stylesheets, specifically for the print view.
+
+In this example we centre align the `-tag h1` element and give it a little margin.
+
+It is worth noting that you may also use `@media print {}` selectors in your CSS which will work in your print view as well. However, styles applied this way will not show visibly in the print view browser window, thus the `body.dt-print-view` selector is generally preferred.
+
+]]></info>
+
+</dt-example>
+
