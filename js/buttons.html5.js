@@ -304,11 +304,11 @@ var _exportData = function (dt, config) {
 
 	if (config.header) {
 		header =
-			_headerExpand([], data.headerStructure)
+			data.headerStructure
 				.map(function (row) {
 					return join(
 						row.map(function (cell) {
-							return cell.text || '';
+							return cell ? cell.title : '';
 						})
 					);
 				})
@@ -317,11 +317,11 @@ var _exportData = function (dt, config) {
 
 	if (config.footer && data.footer) {
 		footer =
-			_headerExpand([], data.footerStructure)
+			data.footerStructure
 				.map(function (row) {
 					return join(
 						row.map(function (cell) {
-							return cell.text || '';
+							return cell ? cell.title : '';
 						})
 					);
 				})
@@ -855,57 +855,6 @@ var _excelMergeCells = function (rels, row, column, rowspan, colspan) {
 	mergeCells.attr('count', parseFloat(mergeCells.attr('count')) + 1);
 };
 
-function _findFirstEmpty(row) {
-	for (var i = 0; i < row.length; i++) {
-		if (!row[i]) {
-			return i;
-		}
-	}
-
-	return row.length;
-}
-
-// Expand the DT header structure to have empty objects for where a
-// row / col span from another cell covers it, as needed by pdfmake
-function _headerExpand(rows, structure) {
-	var existingRows = rows.length;
-
-	// Setup an empty array per row
-	structure.forEach(function () {
-		rows.push([]);
-	});
-
-	structure.forEach(function (rowStructure, i) {
-		var row = rows[i + existingRows];
-
-		rowStructure.forEach(function (cell) {
-			var insert = _findFirstEmpty(row);
-
-			// The actual cell
-			row[insert] = {
-				text: cell.title,
-				colSpan: cell.colspan,
-				rowSpan: cell.rowspan,
-				style: 'tableHeader'
-			};
-
-			// Null for empty
-			for (let colspan = 1; colspan < cell.colspan; colspan++) {
-				row[insert + colspan] = {};
-			}
-
-			// And for rowspan, plus any colspan
-			for (let rowspan = 1; rowspan < cell.rowspan; rowspan++) {
-				for (let colspan = 0; colspan < cell.colspan; colspan++) {
-					rows[i + existingRows + rowspan][insert + colspan] = {};
-				}
-			}
-		});
-	});
-
-	return rows;
-}
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Buttons
  */
@@ -1283,13 +1232,11 @@ DataTable.ext.buttons.excelHtml5 = {
 			rowPos++;
 		};
 
-		var addHeader = function (exportedStructure) {
-			var structure = _headerExpand([], exportedStructure);
-
+		var addHeader = function (structure) {
 			structure.forEach(function (row) {
 				addRow(
 					row.map(function (cell) {
-						return cell ? cell.text : '';
+						return cell ? cell.title : '';
 					}),
 					rowPos
 				);
@@ -1297,10 +1244,7 @@ DataTable.ext.buttons.excelHtml5 = {
 
 				// Add any merge cells
 				row.forEach(function (cell, columnCounter) {
-					if (
-						cell.colSpan &&
-						(cell.colSpan > 1 || cell.rowSpan > 1)
-					) {
+					if (cell && (cell.colSpan > 1 || cell.rowSpan > 1)) {
 						_excelMergeCells(
 							rels,
 							rowPos,
@@ -1499,7 +1443,20 @@ DataTable.ext.buttons.pdfHtml5 = {
 		var rows = [];
 
 		if (config.header) {
-			_headerExpand(rows, data.headerStructure);
+			data.headerStructure.forEach(function (row) {
+				rows.push(
+					row.map(function (cell) {
+						return cell
+							? {
+									text: cell.title,
+									colSpan: cell.colspan,
+									rowSpan: cell.rowspan,
+									style: 'tableHeader'
+							  }
+							: {};
+					})
+				);
+			});
 		}
 
 		for (var i = 0, ien = data.body.length; i < ien; i++) {
@@ -1518,7 +1475,20 @@ DataTable.ext.buttons.pdfHtml5 = {
 		}
 
 		if (config.footer) {
-			_headerExpand(rows, data.footerStructure);
+			data.footerStructure.forEach(function (row) {
+				rows.push(
+					row.map(function (cell) {
+						return cell
+							? {
+									text: cell.title,
+									colSpan: cell.colspan,
+									rowSpan: cell.rowspan,
+									style: 'tableHeader'
+							  }
+							: {};
+					})
+				);
+			});
 		}
 
 		var doc = {
