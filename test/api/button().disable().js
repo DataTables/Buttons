@@ -28,13 +28,13 @@ describe('buttons - button().disable()', function () {
 				buttons: [{ text: 'first' }]
 			});
 
-			expect($('button.disabled').length).toBe(0);
+			expect($('div.dt-buttons button.disabled').length).toBe(0);
 
 			table.button(0).disable();
 
-			expect($('button.disabled').length).toBe(1);
-			expect($('button.disabled').attr('disabled')).toBe('disabled');
-			expect($('button.disabled').text()).toBe('first');
+			expect($('div.dt-buttons button.disabled').length).toBe(1);
+			expect($('div.dt-buttons button.disabled').attr('disabled')).toBe('disabled');
+			expect($('div.dt-buttons button.disabled').text()).toBe('first');
 		});
 
 		dt.html('basic');
@@ -46,14 +46,14 @@ describe('buttons - button().disable()', function () {
 
 			table.button(1).disable();
 
-			expect($('button.disabled').length).toBe(1);
-			expect($('button.disabled').attr('disabled')).toBe('disabled');
-			expect($('button.disabled').text()).toBe('second');
+			expect($('div.dt-buttons button.disabled').length).toBe(1);
+			expect($('div.dt-buttons button.disabled').attr('disabled')).toBe('disabled');
+			expect($('div.dt-buttons button.disabled').text()).toBe('second');
 
 			table.button(0).disable();
 
-			expect($('button.disabled').length).toBe(2);
-			expect($('button.disabled:first').text()).toBe('first');
+			expect($('div.dt-buttons button.disabled').length).toBe(2);
+			expect($('div.dt-buttons button.disabled:first').text()).toBe('first');
 		});
 
 		dt.html('basic');
@@ -65,13 +65,13 @@ describe('buttons - button().disable()', function () {
 
 			table.button().add(null, { text: 'first' });
 
-			expect($('button.disabled').length).toBe(0);
+			expect($('div.dt-buttons button.disabled').length).toBe(0);
 
 			table.button(0).disable();
 
-			expect($('button.disabled').length).toBe(1);
-			expect($('button.disabled').attr('disabled')).toBe('disabled');
-			expect($('button.disabled').text()).toBe('first');
+			expect($('div.dt-buttons button.disabled').length).toBe(1);
+			expect($('div.dt-buttons button.disabled').attr('disabled')).toBe('disabled');
+			expect($('div.dt-buttons button.disabled').text()).toBe('first');
 		});
 
 		dt.html('basic');
@@ -86,15 +86,15 @@ describe('buttons - button().disable()', function () {
 
 			table.button(1).disable();
 
-			expect($('button.disabled').length).toBe(1);
-			expect($('button.disabled').attr('disabled')).toBe('disabled');
-			expect($('button.disabled').text()).toBe('second');
+			expect($('div.dt-buttons button.disabled').length).toBe(1);
+			expect($('div.dt-buttons button.disabled').attr('disabled')).toBe('disabled');
+			expect($('div.dt-buttons button.disabled').text()).toBe('second');
 
 			table.button(0).disable();
 
-			expect($('button.disabled').length).toBe(2);
-			expect($('button.disabled:first').attr('disabled')).toBe('disabled');
-			expect($('button.disabled:first').text()).toBe('first');
+			expect($('div.dt-buttons button.disabled').length).toBe(2);
+			expect($('div.dt-buttons button.disabled:first').attr('disabled')).toBe('disabled');
+			expect($('div.dt-buttons button.disabled:first').text()).toBe('first');
 		});
 	});
 
@@ -115,13 +115,13 @@ describe('buttons - button().disable()', function () {
 			});
 
 			table.button('0-0').disable();
-			expect($('button.disabled').length).toBe(0);
+			expect($('div.dt-buttons button.disabled').length).toBe(0);
 
 			$('.buttons-collection').click();
 
-			expect($('button.disabled').length).toBe(1);
-			expect($('button.disabled').attr('disabled')).toBe('disabled');
-			expect($('button.disabled').text()).toBe('first');
+			expect($('div.dt-buttons button.disabled').length).toBe(1);
+			expect($('div.dt-buttons button.disabled').attr('disabled')).toBe('disabled');
+			expect($('div.dt-buttons button.disabled').text()).toBe('first');
 		});
 
 		dt.html('basic');
@@ -138,13 +138,13 @@ describe('buttons - button().disable()', function () {
 			});
 
 			table.button('0-0').disable();
-			expect($('button.disabled').length).toBe(0);
+			expect($('div.dt-buttons button.disabled').length).toBe(0);
 
 			$('.buttons-collection').click();
 
-			expect($('button.disabled').length).toBe(1);
-			expect($('button.disabled').attr('disabled')).toBe('disabled');
-			expect($('button.disabled').text()).toBe('first');
+			expect($('div.dt-buttons button.disabled').length).toBe(1);
+			expect($('div.dt-buttons button.disabled').attr('disabled')).toBe('disabled');
+			expect($('div.dt-buttons button.disabled').text()).toBe('first');
 		});
 
 		dt.html('basic');
@@ -167,9 +167,9 @@ describe('buttons - button().disable()', function () {
 			$('.buttons-collection').click();
 
 			expect($('.dt-button').length).toBe(1);
-			expect($('button.disabled').length).toBe(1);
-			expect($('button.disabled').attr('disabled')).toBe('disabled');
-			expect($('button.disabled span:first').text()).toBe('Table control');
+			expect($('div.dt-buttons button.disabled').length).toBe(1);
+			expect($('div.dt-buttons button.disabled').attr('disabled')).toBe('disabled');
+			expect($('div.dt-buttons button.disabled span:first').text()).toBe('Table control');
 		});
 	});
 
@@ -201,14 +201,14 @@ describe('buttons - button().disable()', function () {
 		it('Disable a button from the second group', function () {
 			table.button('second', 0).disable();
 
-			expect($('button.disabled').length).toBe(1);
-			expect($('button.disabled').text()).toBe('one');
+			expect($('div.dt-buttons button.disabled').length).toBe(1);
+			expect($('div.dt-buttons button.disabled').text()).toBe('one');
 		});
 		it('Disable a button from the first group', function () {
 			table.button('first', 1).disable();
 
-			expect($('button.disabled').length).toBe(2);
-			expect($('button.disabled:first').text()).toBe('second');
+			expect($('div.dt-buttons button.disabled').length).toBe(2);
+			expect($('div.dt-buttons button.disabled:first').text()).toBe('second');
 		});
 
 		it('Destroy the table so that the defaults will be reset', function () {

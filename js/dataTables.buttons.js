@@ -47,8 +47,8 @@ function _fadeOut(el, duration, fn) {
  * @param {[type]}
  */
 var Buttons = function (dt, config) {
-	if ( ! DataTable.versionCheck( '2' ) ) {
-		throw( "Warning: Buttons requires DataTables 2 or newer");
+	if (!DataTable.versionCheck('2')) {
+		throw 'Warning: Buttons requires DataTables 2 or newer';
 	}
 
 	// If not created with a `new` keyword then we return a wrapper function that
@@ -90,7 +90,9 @@ var Buttons = function (dt, config) {
 	};
 
 	this.dom = {
-		container: $('<' + this.c.dom.container.tag + '/>').addClass(this.c.dom.container.className)
+		container: $('<' + this.c.dom.container.tag + '/>').addClass(
+			this.c.dom.container.className
+		)
 	};
 
 	this._constructor();
@@ -179,7 +181,9 @@ $.extend(Buttons.prototype, {
 			buttons,
 			config,
 			config !== undefined ? config.split : undefined,
-			(config === undefined || config.split === undefined || config.split.length === 0) &&
+			(config === undefined ||
+				config.split === undefined ||
+				config.split.length === 0) &&
 				base !== undefined,
 			false,
 			idx
@@ -224,7 +228,8 @@ $.extend(Buttons.prototype, {
 						newBtn.config !== undefined &&
 						newBtn.config.split !== undefined,
 					true,
-					newBtn.parentConf !== undefined && newBtn.parentConf.split !== undefined,
+					newBtn.parentConf !== undefined &&
+						newBtn.parentConf.split !== undefined,
 					null,
 					newBtn.parentConf
 				);
@@ -250,7 +255,9 @@ $.extend(Buttons.prototype, {
 	disable: function (node) {
 		var button = this._nodeToButton(node);
 
-		$(button.node).addClass(this.c.dom.button.disabled).prop('disabled', true);
+		$(button.node)
+			.addClass(this.c.dom.button.disabled)
+			.prop('disabled', true);
 
 		return this;
 	},
@@ -301,7 +308,9 @@ $.extend(Buttons.prototype, {
 		}
 
 		var button = this._nodeToButton(node);
-		$(button.node).removeClass(this.c.dom.button.disabled).prop('disabled', false);
+		$(button.node)
+			.removeClass(this.c.dom.button.disabled)
+			.prop('disabled', false);
 
 		return this;
 	},
@@ -437,7 +446,9 @@ $.extend(Buttons.prototype, {
 		var dt = this.s.dt;
 		var jqNode = $(button.node);
 		var text = function (opt) {
-			return typeof opt === 'function' ? opt(dt, jqNode, button.conf) : opt;
+			return typeof opt === 'function'
+				? opt(dt, jqNode, button.conf)
+				: opt;
 		};
 
 		if (label === undefined) {
@@ -485,7 +496,10 @@ $.extend(Buttons.prototype, {
 
 		// Global key event binding to listen for button keys
 		$('body').on('keyup.' + this.s.namespace, function (e) {
-			if (!document.activeElement || document.activeElement === document.body) {
+			if (
+				!document.activeElement ||
+				document.activeElement === document.body
+			) {
 				// SUse a string of characters for fast lookup of if we need to
 				// handle this
 				var character = String.fromCharCode(e.keyCode).toLowerCase();
@@ -508,7 +522,9 @@ $.extend(Buttons.prototype, {
 	 */
 	_addKey: function (conf) {
 		if (conf.key) {
-			this.s.listenKeys += $.isPlainObject(conf.key) ? conf.key.key : conf.key;
+			this.s.listenKeys += $.isPlainObject(conf.key)
+				? conf.key.key
+				: conf.key;
 		}
 	},
 
@@ -576,7 +592,9 @@ $.extend(Buttons.prototype, {
 				this._expandButton(
 					attachTo,
 					conf,
-					built !== undefined && built.conf !== undefined ? built.conf.split : undefined,
+					built !== undefined && built.conf !== undefined
+						? built.conf.split
+						: undefined,
 					inCollection,
 					parentConf !== undefined && parentConf.split !== undefined,
 					attachPoint,
@@ -589,7 +607,8 @@ $.extend(Buttons.prototype, {
 				conf,
 				inCollection,
 				conf.split !== undefined ||
-					(conf.config !== undefined && conf.config.split !== undefined),
+					(conf.config !== undefined &&
+						conf.config.split !== undefined),
 				inSplit
 			);
 			if (!built) {
@@ -606,7 +625,9 @@ $.extend(Buttons.prototype, {
 
 			// Create the dropdown for a collection
 			if (built.conf.buttons) {
-				built.collection = $('<' + domCollection.container.content.tag + '/>');
+				built.collection = $(
+					'<' + domCollection.container.content.tag + '/>'
+				);
 				built.conf._collection = built.collection;
 
 				$(built.node).append(domCollection.action.dropHtml);
@@ -701,7 +722,12 @@ $.extend(Buttons.prototype, {
 		// Spacers don't do much other than insert an element into the DOM
 		if (config.spacer) {
 			var spacer = $('<' + dom.spacer.tag + '/>')
-				.addClass('dt-button-spacer ' + config.style + ' ' + dom.spacer.className)
+				.addClass(
+					'dt-button-spacer ' +
+						config.style +
+						' ' +
+						dom.spacer.className
+				)
 				.html(text(config.text));
 
 			return {
@@ -718,7 +744,11 @@ $.extend(Buttons.prototype, {
 
 		// Make sure that the button is available based on whatever requirements
 		// it has. For example, PDF button require pdfmake
-		if (config.available && !config.available(dt, config) && !config.hasOwnProperty('html')) {
+		if (
+			config.available &&
+			!config.available(dt, config) &&
+			!config.hasOwnProperty('html')
+		) {
 			return false;
 		}
 
@@ -737,7 +767,8 @@ $.extend(Buttons.prototype, {
 			};
 
 			var tag = config.tag || dom.tag;
-			var clickBlurs = config.clickBlurs === undefined ? true : config.clickBlurs;
+			var clickBlurs =
+				config.clickBlurs === undefined ? true : config.clickBlurs;
 
 			button = $('<' + tag + '/>')
 				.addClass(dom.className)
@@ -866,7 +897,13 @@ $.extend(Buttons.prototype, {
 			this._addKey(dropButtonConfig);
 
 			var splitAction = function (e, dt, button, config) {
-				_dtButtons.split.action.call(dt.button(splitDiv), e, dt, button, config);
+				_dtButtons.split.action.call(
+					dt.button(splitDiv),
+					e,
+					dt,
+					button,
+					config
+				);
 
 				$(dt.table().node()).triggerHandler('buttons-action.dt', [
 					dt.button(button),
@@ -878,7 +915,9 @@ $.extend(Buttons.prototype, {
 			};
 
 			var dropButton = $(
-				'<button class="' + dropdownConf.dropdown.className + ' dt-button"></button>'
+				'<button class="' +
+					dropdownConf.dropdown.className +
+					' dt-button"></button>'
 			)
 				.html(dropdownConf.dropdown.dropHtml)
 				.on('click.dtb', function (e) {
@@ -1202,7 +1241,8 @@ $.extend(Buttons.prototype, {
 			inOpts
 		);
 
-		var containerSelector = options.tag + '.' + options.containerClassName.replace(/ /g, '.');
+		var containerSelector =
+			options.tag + '.' + options.containerClassName.replace(/ /g, '.');
 		var hostNode = hostButton.node();
 
 		var close = function () {
@@ -1212,13 +1252,19 @@ $.extend(Buttons.prototype, {
 				$(this).detach();
 			});
 
-			$(dt.buttons('[aria-haspopup="dialog"][aria-expanded="true"]').nodes()).attr(
-				'aria-expanded',
-				'false'
-			);
+			$(
+				dt
+					.buttons('[aria-haspopup="dialog"][aria-expanded="true"]')
+					.nodes()
+			).attr('aria-expanded', 'false');
 
 			$('div.dt-button-background').off('click.dtb-collection');
-			Buttons.background(false, options.backgroundClassName, options.fade, hostNode);
+			Buttons.background(
+				false,
+				options.backgroundClassName,
+				options.fade,
+				hostNode
+			);
 
 			$(window).off('resize.resize.dtb-collection');
 			$('body').off('.dtb-collection');
@@ -1281,12 +1327,16 @@ $.extend(Buttons.prototype, {
 
 		if (options.popoverTitle) {
 			display.prepend(
-				'<div class="dt-button-collection-title">' + options.popoverTitle + '</div>'
+				'<div class="dt-button-collection-title">' +
+					options.popoverTitle +
+					'</div>'
 			);
 		}
 		else if (options.collectionTitle) {
 			display.prepend(
-				'<div class="dt-button-collection-title">' + options.collectionTitle + '</div>'
+				'<div class="dt-button-collection-title">' +
+					options.collectionTitle +
+					'</div>'
 			);
 		}
 
@@ -1318,7 +1368,8 @@ $.extend(Buttons.prototype, {
 			var computed = window.getComputedStyle(offsetParent[0]);
 
 			tableSizes.height = offsetParent.outerHeight();
-			tableSizes.width = offsetParent.width() + parseFloat(computed.paddingLeft);
+			tableSizes.width =
+				offsetParent.width() + parseFloat(computed.paddingLeft);
 			tableSizes.right = tableSizes.left + tableSizes.width;
 			tableSizes.bottom = tableSizes.top + tableSizes.height;
 
@@ -1351,12 +1402,21 @@ $.extend(Buttons.prototype, {
 					popoverSizes.marginBottom;
 			}
 
-			if (options.align === 'button-right' || display.hasClass(options.rightAlignClassName)) {
-				left = buttonPosition.left - popoverSizes.width + hostNode.outerWidth();
+			if (
+				options.align === 'button-right' ||
+				display.hasClass(options.rightAlignClassName)
+			) {
+				left =
+					buttonPosition.left -
+					popoverSizes.width +
+					hostNode.outerWidth();
 			}
 
 			// Container alignment - make sure it doesn't overflow the table container
-			if (options.align === 'dt-container' || options.align === 'container') {
+			if (
+				options.align === 'dt-container' ||
+				options.align === 'container'
+			) {
 				if (left < buttonPosition.left) {
 					left = -buttonPosition.left;
 				}
@@ -1367,9 +1427,15 @@ $.extend(Buttons.prototype, {
 			}
 
 			// Window adjustment
-			if (containerPosition.left + left + popoverSizes.width > $(window).width()) {
+			if (
+				containerPosition.left + left + popoverSizes.width >
+				$(window).width()
+			) {
 				// Overflowing the document to the right
-				left = $(window).width() - popoverSizes.width - containerPosition.left;
+				left =
+					$(window).width() -
+					popoverSizes.width -
+					containerPosition.left;
 			}
 
 			if (buttonOffset.left + left < 0) {
@@ -1433,7 +1499,10 @@ $.extend(Buttons.prototype, {
 		// background element, iOS Safari will ignore the body click
 		// listener below. An empty function here is all that is
 		// required to make it work...
-		$('div.dt-button-background').on('click.dtb-collection', function () {});
+		$('div.dt-button-background').on(
+			'click.dtb-collection',
+			function () {}
+		);
 
 		if (options.autoClose) {
 			setTimeout(function () {
@@ -1463,7 +1532,8 @@ $.extend(Buttons.prototype, {
 					var parent = $(e.target).parent()[0];
 
 					if (
-						(!$(e.target).parents()[back]().filter(content).length &&
+						(!$(e.target).parents()[back]().filter(content)
+							.length &&
 							!$(parent).hasClass('dt-buttons')) ||
 						$(e.target).hasClass('dt-button-background')
 					) {
@@ -1529,7 +1599,10 @@ Buttons.background = function (show, className, fade, insertPoint) {
 
 	if (show) {
 		_fadeIn(
-			$('<div/>').addClass(className).css('display', 'none').insertAfter(insertPoint),
+			$('<div/>')
+				.addClass(className)
+				.css('display', 'none')
+				.insertAfter(insertPoint),
 			fade
 		);
 	}
@@ -1747,7 +1820,10 @@ Buttons.stripData = function (str, config) {
 	}
 
 	// Always remove script tags
-	str = str.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+	str = str.replace(
+		/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+		''
+	);
 
 	// Always remove comments
 	str = str.replace(/<!\-\-.*?\-\->/g, '');
@@ -1784,7 +1860,7 @@ Buttons.stripData = function (str, config) {
  */
 Buttons.entityDecoder = function (fn) {
 	_entityDecoder = fn;
-}
+};
 
 /**
  * Buttons defaults. For full documentation, please refer to the docs/option
@@ -1920,7 +1996,10 @@ $.extend(_dtButtons, {
 		}
 	},
 	excel: function (dt, conf) {
-		if (_dtButtons.excelHtml5 && _dtButtons.excelHtml5.available(dt, conf)) {
+		if (
+			_dtButtons.excelHtml5 &&
+			_dtButtons.excelHtml5.available(dt, conf)
+		) {
 			return 'excelHtml5';
 		}
 	},
@@ -2059,30 +2138,38 @@ DataTable.Api.register('button()', function (group, selector) {
 });
 
 // Active buttons
-DataTable.Api.registerPlural('buttons().active()', 'button().active()', function (flag) {
-	if (flag === undefined) {
-		return this.map(function (set) {
-			return set.inst.active(set.node);
+DataTable.Api.registerPlural(
+	'buttons().active()',
+	'button().active()',
+	function (flag) {
+		if (flag === undefined) {
+			return this.map(function (set) {
+				return set.inst.active(set.node);
+			});
+		}
+
+		return this.each(function (set) {
+			set.inst.active(set.node, flag);
 		});
 	}
-
-	return this.each(function (set) {
-		set.inst.active(set.node, flag);
-	});
-});
+);
 
 // Get / set button action
-DataTable.Api.registerPlural('buttons().action()', 'button().action()', function (action) {
-	if (action === undefined) {
-		return this.map(function (set) {
-			return set.inst.action(set.node);
+DataTable.Api.registerPlural(
+	'buttons().action()',
+	'button().action()',
+	function (action) {
+		if (action === undefined) {
+			return this.map(function (set) {
+				return set.inst.action(set.node);
+			});
+		}
+
+		return this.each(function (set) {
+			set.inst.action(set.node, action);
 		});
 	}
-
-	return this.each(function (set) {
-		set.inst.action(set.node, action);
-	});
-});
+);
 
 // Collection control
 DataTable.Api.registerPlural(
@@ -2101,18 +2188,24 @@ DataTable.Api.registerPlural(
 );
 
 // Enable / disable buttons
-DataTable.Api.register(['buttons().enable()', 'button().enable()'], function (flag) {
-	return this.each(function (set) {
-		set.inst.enable(set.node, flag);
-	});
-});
+DataTable.Api.register(
+	['buttons().enable()', 'button().enable()'],
+	function (flag) {
+		return this.each(function (set) {
+			set.inst.enable(set.node, flag);
+		});
+	}
+);
 
 // Disable buttons
-DataTable.Api.register(['buttons().disable()', 'button().disable()'], function () {
-	return this.each(function (set) {
-		set.inst.disable(set.node);
-	});
-});
+DataTable.Api.register(
+	['buttons().disable()', 'button().disable()'],
+	function () {
+		return this.each(function (set) {
+			set.inst.disable(set.node);
+		});
+	}
+);
 
 // Button index
 DataTable.Api.register('button().index()', function () {
@@ -2130,51 +2223,67 @@ DataTable.Api.register('button().index()', function () {
 });
 
 // Get button nodes
-DataTable.Api.registerPlural('buttons().nodes()', 'button().node()', function () {
-	var jq = $();
+DataTable.Api.registerPlural(
+	'buttons().nodes()',
+	'button().node()',
+	function () {
+		var jq = $();
 
-	// jQuery will automatically reduce duplicates to a single entry
-	$(
-		this.each(function (set) {
-			jq = jq.add(set.inst.node(set.node));
-		})
-	);
+		// jQuery will automatically reduce duplicates to a single entry
+		$(
+			this.each(function (set) {
+				jq = jq.add(set.inst.node(set.node));
+			})
+		);
 
-	return jq;
-});
+		return jq;
+	}
+);
 
 // Get / set button processing state
-DataTable.Api.registerPlural('buttons().processing()', 'button().processing()', function (flag) {
-	if (flag === undefined) {
-		return this.map(function (set) {
-			return set.inst.processing(set.node);
+DataTable.Api.registerPlural(
+	'buttons().processing()',
+	'button().processing()',
+	function (flag) {
+		if (flag === undefined) {
+			return this.map(function (set) {
+				return set.inst.processing(set.node);
+			});
+		}
+
+		return this.each(function (set) {
+			set.inst.processing(set.node, flag);
 		});
 	}
-
-	return this.each(function (set) {
-		set.inst.processing(set.node, flag);
-	});
-});
+);
 
 // Get / set button text (i.e. the button labels)
-DataTable.Api.registerPlural('buttons().text()', 'button().text()', function (label) {
-	if (label === undefined) {
-		return this.map(function (set) {
-			return set.inst.text(set.node);
+DataTable.Api.registerPlural(
+	'buttons().text()',
+	'button().text()',
+	function (label) {
+		if (label === undefined) {
+			return this.map(function (set) {
+				return set.inst.text(set.node);
+			});
+		}
+
+		return this.each(function (set) {
+			set.inst.text(set.node, label);
 		});
 	}
-
-	return this.each(function (set) {
-		set.inst.text(set.node, label);
-	});
-});
+);
 
 // Trigger a button's action
-DataTable.Api.registerPlural('buttons().trigger()', 'button().trigger()', function () {
-	return this.each(function (set) {
-		set.inst.node(set.node).trigger('click');
-	});
-});
+DataTable.Api.registerPlural(
+	'buttons().trigger()',
+	'button().trigger()',
+	function () {
+		return this.each(function (set) {
+			set.inst.node(set.node).trigger('click');
+		});
+	}
+);
 
 // Button resolver to the popover
 DataTable.Api.register('button().popover()', function (content, options) {
@@ -2214,7 +2323,10 @@ DataTable.Api.register('button().add()', function (idx, conf, draw) {
 
 	// Don't use `this` as it could be empty - select the instances directly
 	if (ctx.length) {
-		var inst = Buttons.instanceSelector(this._groupSelector, ctx[0]._buttons);
+		var inst = Buttons.instanceSelector(
+			this._groupSelector,
+			ctx[0]._buttons
+		);
 
 		if (inst.length) {
 			inst[0].add(conf, idx, draw);
@@ -2236,13 +2348,17 @@ DataTable.Api.register('buttons().destroy()', function () {
 });
 
 // Remove a button
-DataTable.Api.registerPlural('buttons().remove()', 'buttons().remove()', function () {
-	this.each(function (set) {
-		set.inst.remove(set.node);
-	});
+DataTable.Api.registerPlural(
+	'buttons().remove()',
+	'buttons().remove()',
+	function () {
+		this.each(function (set) {
+			set.inst.remove(set.node);
+		});
 
-	return this;
-});
+		return this;
+	}
+);
 
 // Information box that can be used by buttons
 var _infoTimer;
@@ -2273,7 +2389,11 @@ DataTable.Api.register('buttons.info()', function (title, message, time) {
 	_fadeIn(
 		$('<div id="datatables_buttons_info" class="dt-button-info"/>')
 			.html(title)
-			.append($('<div/>')[typeof message === 'string' ? 'html' : 'append'](message))
+			.append(
+				$('<div/>')[typeof message === 'string' ? 'html' : 'append'](
+					message
+				)
+			)
 			.css('display', 'none')
 			.appendTo('body')
 	);
@@ -2441,8 +2561,8 @@ var _exportData = function (dt, inOpts) {
 		.columns(config.columns)
 		.indexes()
 		.map(function (idx) {
-			var el = dt.column(idx).header();
-			return config.format.header(el.innerHTML, idx, el);
+			var col = dt.column(idx);
+			return config.format.header(col.title(), idx, col.header());
 		})
 		.toArray();
 
@@ -2452,7 +2572,11 @@ var _exportData = function (dt, inOpts) {
 				.indexes()
 				.map(function (idx) {
 					var el = dt.column(idx).footer();
-					return config.format.footer(el ? el.innerHTML : '', idx, el);
+					return config.format.footer(
+						el ? $('.dt-column-title', el).html() : '',
+						idx,
+						el
+					);
 				})
 				.toArray()
 		: null;
@@ -2461,14 +2585,22 @@ var _exportData = function (dt, inOpts) {
 	// to the selected rows. If no rows are selected, all rows will be exported. Specify
 	// a `selected` modifier to control directly.
 	var modifier = $.extend({}, config.modifier);
-	if (dt.select && typeof dt.select.info === 'function' && modifier.selected === undefined) {
-		if (dt.rows(config.rows, $.extend({ selected: true }, modifier)).any()) {
+	if (
+		dt.select &&
+		typeof dt.select.info === 'function' &&
+		modifier.selected === undefined
+	) {
+		if (
+			dt.rows(config.rows, $.extend({ selected: true }, modifier)).any()
+		) {
 			$.extend(modifier, { selected: true });
 		}
 	}
 
 	var rowIndexes = dt.rows(config.rows, modifier).indexes().toArray();
-	var selectedCells = dt.cells(rowIndexes, config.columns);
+	var selectedCells = dt.cells(rowIndexes, config.columns, {
+		order: modifier.order
+	});
 	var cells = selectedCells.render(config.orthogonal).toArray();
 	var cellNodes = selectedCells.nodes().toArray();
 
@@ -2481,7 +2613,12 @@ var _exportData = function (dt, inOpts) {
 		var row = [columns];
 
 		for (var j = 0; j < columns; j++) {
-			row[j] = config.format.body(cells[cellCounter], i, j, cellNodes[cellCounter]);
+			row[j] = config.format.body(
+				cells[cellCounter],
+				i,
+				j,
+				cellNodes[cellCounter]
+			);
 			cellCounter++;
 		}
 
@@ -2530,7 +2667,9 @@ $(document).on('init.dt plugin-init.dt', function (e, settings) {
 
 function _init(settings, options) {
 	var api = new DataTable.Api(settings);
-	var opts = options ? options : api.init().buttons || DataTable.defaults.buttons;
+	var opts = options
+		? options
+		: api.init().buttons || DataTable.defaults.buttons;
 
 	return new Buttons(api, opts).container();
 }

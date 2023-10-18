@@ -798,7 +798,7 @@ describe('buttons - collection', function () {
 		});
 		it('Clicking away hides all collections', async function () {
 			await dt.sleep(250);
-			$('div.dataTables_filter').click();
+			$('input.dt-input').trigger('click');
 			await dt.sleep(250);
 			expect($('button.dt-button').length).toBe(1);
 		});
