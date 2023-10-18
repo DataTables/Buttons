@@ -603,7 +603,7 @@ var excelStrings = {
 		'<?xml version="1.0" encoding="UTF-8"?>' +
 		'<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">' +
 		'<numFmts count="6">' +
-		'<numFmt numFmtId="164" formatCode="#,##0.00_- [$$-45C]"/>' +
+		'<numFmt numFmtId="164" formatCode="[$$-409]#,##0.00;-[$$-409]#,##0.00"/>'+
 		'<numFmt numFmtId="165" formatCode="&quot;£&quot;#,##0.00"/>' +
 		'<numFmt numFmtId="166" formatCode="[$€-2] #,##0.00"/>' +
 		'<numFmt numFmtId="167" formatCode="0.0%"/>' +
