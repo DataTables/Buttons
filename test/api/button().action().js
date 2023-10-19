@@ -36,12 +36,13 @@ describe('buttons - button().action()', function() {
 
 			$('.dt-button').click();
 
-			expect(args.length).toBe(4);
+			expect(args.length).toBe(5);
 			expect(typeof args[0]).toBe('object');
 			expect(args[1] instanceof $.fn.dataTable.Api).toBe(true);
 			expect(args[2] instanceof $).toBe(true);
 			expect(typeof args[3]).toBe('object');
 			expect(args[3].text).toBe('test');
+			expect(typeof args[4]).toBe('function');
 		});
 	});
 

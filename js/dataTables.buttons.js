@@ -778,7 +778,7 @@ $.extend(Buttons.prototype, {
 					}, config.async);
 				}
 				else {
-					run(e, dt, button[0], config, function () {});
+					run(e, dt, button, config, function () {});
 				}
 			}
 
