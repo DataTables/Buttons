@@ -697,6 +697,7 @@ $.extend(Buttons.prototype, {
 	 * @private
 	 */
 	_buildButton: function (config, inCollection, isSplit, inSplit) {
+		var that = this;
 		var configDom = this.c.dom;
 		var textNode;
 		var dt = this.s.dt;
@@ -755,8 +756,8 @@ $.extend(Buttons.prototype, {
 		var button;
 
 		if (!config.hasOwnProperty('html')) {
-			var action = function (e, dt, button, config) {
-				config.action.call(dt.button(button), e, dt, button, config);
+			var run = function (e, dt, button, config, done) {
+				config.action.call(dt.button(button), e, dt, button, config, done);
 
 				$(dt.table().node()).triggerHandler('buttons-action.dt', [
 					dt.button(button),
@@ -765,6 +766,21 @@ $.extend(Buttons.prototype, {
 					config
 				]);
 			};
+
+			var action = function(e, dt, button, config) {
+				if (config.async) {
+					that.processing(button[0], true);
+
+					setTimeout(function () {
+						run(e, dt, button, config, function () {
+							that.processing(button[0], false);
+						});
+					}, config.async);
+				}
+				else {
+					run(e, dt, button[0], config, function () {});
+				}
+			}
 
 			var tag = config.tag || dom.tag;
 			var clickBlurs =

@@ -49,7 +49,7 @@ DataTable.ext.buttons.print = {
 		return dt.i18n('buttons.print', 'Print');
 	},
 
-	action: function (e, dt, button, config) {
+	action: function (e, dt, button, config, cb) {
 		var data = dt.buttons.exportData(
 			$.extend({ decodeEntities: false }, config.exportOptions) // XSS protection
 		);
@@ -212,7 +212,11 @@ DataTable.ext.buttons.print = {
 		};
 
 		win.setTimeout(autoPrint, 1000);
+
+		cb();
 	},
+
+	async: 100,
 
 	title: '*',
 

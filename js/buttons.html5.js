@@ -869,9 +869,7 @@ DataTable.ext.buttons.copyHtml5 = {
 		return dt.i18n('buttons.copy', 'Copy');
 	},
 
-	action: function (e, dt, button, config) {
-		this.processing(true);
-
+	action: function (e, dt, button, config, cb) {
 		var that = this;
 		var exportData = _exportData(dt, config);
 		var info = dt.buttons.exportInfo(config);
@@ -930,7 +928,7 @@ DataTable.ext.buttons.copyHtml5 = {
 						2000
 					);
 
-					this.processing(false);
+					cb();
 					return;
 				}
 			} catch (t) {}
@@ -972,14 +970,16 @@ DataTable.ext.buttons.copyHtml5 = {
 				if (e.keyCode === 27) {
 					// esc
 					close();
-					that.processing(false);
+					cb();
 				}
 			})
 			.on('copy.buttons-copy cut.buttons-copy', function () {
 				close();
-				that.processing(false);
+				cb();
 			});
 	},
+
+	async: 100,
 
 	exportOptions: {},
 
@@ -1014,9 +1014,7 @@ DataTable.ext.buttons.csvHtml5 = {
 		return dt.i18n('buttons.csv', 'CSV');
 	},
 
-	action: function (e, dt, button, config) {
-		this.processing(true);
-
+	action: function (e, dt, button, config, cb) {
 		// Set the text
 		var output = _exportData(dt, config).str;
 		var info = dt.buttons.exportInfo(config);
@@ -1049,8 +1047,10 @@ DataTable.ext.buttons.csvHtml5 = {
 			true
 		);
 
-		this.processing(false);
+		cb();
 	},
+
+	async: 100,
 
 	filename: '*',
 
@@ -1090,9 +1090,7 @@ DataTable.ext.buttons.excelHtml5 = {
 		return dt.i18n('buttons.excel', 'Excel');
 	},
 
-	action: function (e, dt, button, config) {
-		this.processing(true);
-
+	action: function (e, dt, button, config, cb) {
 		var that = this;
 		var rowPos = 0;
 		var dataStartRow, dataEndRow;
@@ -1388,15 +1386,17 @@ DataTable.ext.buttons.excelHtml5 = {
 			// JSZip 3+
 			zip.generateAsync(zipConfig).then(function (blob) {
 				_saveAs(blob, filename);
-				that.processing(false);
+				cb();
 			});
 		}
 		else {
 			// JSZip 2.5
 			_saveAs(zip.generate(zipConfig), filename);
-			this.processing(false);
+			cb();
 		}
 	},
+
+	async: 100,
 
 	filename: '*',
 
@@ -1435,9 +1435,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 		return dt.i18n('buttons.pdf', 'PDF');
 	},
 
-	action: function (e, dt, button, config) {
-		this.processing(true);
-
+	action: function (e, dt, button, config, cb) {
 		var data = dt.buttons.exportData(config.exportOptions);
 		var info = dt.buttons.exportInfo(config);
 		var rows = [];
@@ -1596,8 +1594,10 @@ DataTable.ext.buttons.pdfHtml5 = {
 			pdf.download(info.filename);
 		}
 
-		this.processing(false);
+		cb();
 	},
+
+	async: 100,
 
 	title: '*',
 

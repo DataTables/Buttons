@@ -7,7 +7,7 @@
 	<default value="Default action depends upon the button type. Please refer to the button type documentation"/>
 
 	<type type="function">
-		<signature>action( e, dt, node, config )</signature>
+		<signature>action( e, dt, node, config, callback )</signature>
 		<scope>
 			DataTables API instance for the selected button - i.e. `b-api button()` for the button in question
 		</scope>
@@ -22,6 +22,9 @@
 		</parameter>
 		<parameter type="object" name="config">
 			The button's configuration object
+		</parameter>
+		<parameter type="function" name="callback" since="3.0">
+			Callback function that should be executed when the action function has finished processing. This is to allow the button to resume its normal state when the `-feature buttons.buttons.async` property is set for a button. If it is not set, this function will give be executable, it just won't do anything.
 		</parameter>
 		<returns>
 			No return value is required or expected. No action is taken upon any value that is returned.
@@ -49,7 +52,7 @@ new DataTable('#myTable', {
 			buttons: [
 				{
 					text: 'Alert',
-					action: function (e, dt, node, config) {
+					action: function (e, dt, node, config, cb) {
 						alert('Activated!');
 						this.disable(); // disable button
 					}
@@ -67,7 +70,7 @@ new DataTable('#myTable', {
 			buttons: [
 				{
 					text: 'Create CSV',
-					action: function (e, dt, node, config) {
+					action: function (e, dt, node, config, cb) {
 						// Do custom processing
 						// ...
 
@@ -79,6 +82,30 @@ new DataTable('#myTable', {
 							node,
 							config
 						);
+					}
+				}
+			]
+		}
+	}
+});
+]]></example>
+
+	<example title="Async processing finished callback"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topEnd: {
+			buttons: [
+				{
+					text: 'Make Ajax call',
+					async: 100,
+					action: function (e, dt, node, config, cb) {
+						// Do custom async processing - e.g. an Ajax call
+						new Promise(resolve => {
+							// ...
+
+							resolve();
+							cb();
+						});
 					}
 				}
 			]

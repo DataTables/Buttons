@@ -6,18 +6,18 @@
 <![CDATA[
 
 $('#example').DataTable({
+	columnDefs: [
+		{
+			targets: 1,
+			className: 'noVis'
+		}
+	],
 	layout: {
 		topStart: {
-			columnDefs: [
-				{
-					targets: 1,
-					className: 'noVis'
-				}
-			],
 			buttons: [
 				{
 					extend: 'colvis',
-					columns: ':not(.noVis)'
+					columns: ':not(.noVis)',
 				}
 			]
 		}
@@ -31,14 +31,14 @@ $('#example').DataTable({
 <![CDATA[
 
 new DataTable('#example', {
+	columnDefs: [
+		{
+			targets: 1,
+			className: 'noVis'
+		}
+	],
 	layout: {
 		topStart: {
-			columnDefs: [
-				{
-					targets: 1,
-					className: 'noVis'
-				}
-			],
 			buttons: [
 				{
 					extend: 'colvis',
