@@ -80,7 +80,8 @@ new DataTable('#myTable', {
 							e,
 							dt,
 							node,
-							config
+							config,
+							cb
 						);
 					}
 				}

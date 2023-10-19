@@ -13,7 +13,7 @@ new DataTable('#myTable', {
 	buttons: [
 		{
 			text: 'Alert',
-			action: function (e, dt, node, config) {
+			action: function (e, dt, node, config, cb) {
 				alert('Activated!');
 				this.disable(); // disable button
 			}
@@ -30,12 +30,12 @@ new DataTable('#myTable', {
 	buttons: [
 		{
 			text: 'Create CSV',
-			action: function (e, dt, node, config) {
+			action: function (e, dt, node, config, cb) {
 				// Do custom processing
 				// ...
 
 				// Call the default csvHtml5 action method to create the CSV file
-				DataTable.ext.buttons.csvHtml5.action.call(this, e, dt, node, config);
+				DataTable.ext.buttons.csvHtml5.action.call(this, e, dt, node, config, cb);
 			}
 		}
 	]
