@@ -93,7 +93,7 @@ DataTable.ext.buttons.print = {
 		var html = '<table class="' + dt.table().node().className + '">';
 
 		if (config.header) {
-			var rows = data.headerStructure.map(function (row) {
+			var headerRows = data.headerStructure.map(function (row) {
 				return (
 					'<tr>' +
 					row
@@ -113,7 +113,7 @@ DataTable.ext.buttons.print = {
 				);
 			});
 
-			html += '<thead>' + rows.join('') + '</thead>';
+			html += '<thead>' + headerRows.join('') + '</thead>';
 		}
 
 		html += '<tbody>';
@@ -123,7 +123,7 @@ DataTable.ext.buttons.print = {
 		html += '</tbody>';
 
 		if (config.footer && data.footer) {
-			var rows = data.footerStructure.map(function (row) {
+			var footerRows = data.footerStructure.map(function (row) {
 				return (
 					'<tr>' +
 					row
@@ -143,7 +143,7 @@ DataTable.ext.buttons.print = {
 				);
 			});
 
-			html += '<tfoot>' + rows.join('') + '</tfoot>';
+			html += '<tfoot>' + footerRows.join('') + '</tfoot>';
 		}
 		html += '</table>';
 

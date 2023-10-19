@@ -27,7 +27,7 @@ $.extend(DataTable.ext.buttons, {
 		};
 
 		// Rebuild the collection with the new column structure if columns are reordered
-		dt.on('column-reorder.dt' + conf.namespace, function (e, settings, details) {
+		dt.on('column-reorder.dt' + conf.namespace, function () {
 			dt.button(null, dt.button(null, node).node()).collectionRebuild([
 				{
 					extend: 'columnsToggle',
@@ -107,7 +107,7 @@ $.extend(DataTable.ext.buttons, {
 				if (!settings.bDestroying && settings.nTable == dt.settings()[0].nTable) {
 					that.active(dt.column(conf.columns).visible());
 				}
-			}).on('column-reorder.dt' + conf.namespace, function (e, settings, details) {
+			}).on('column-reorder.dt' + conf.namespace, function () {
 				// Button has been removed from the DOM
 				if (conf.destroying) {
 					return;

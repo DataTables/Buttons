@@ -748,14 +748,14 @@ $.extend(Buttons.prototype, {
 		if (
 			config.available &&
 			!config.available(dt, config) &&
-			!config.hasOwnProperty('html')
+			!config.html
 		) {
 			return false;
 		}
 
 		var button;
 
-		if (!config.hasOwnProperty('html')) {
+		if (!config.html) {
 			var run = function (e, dt, button, config, done) {
 				config.action.call(dt.button(button), e, dt, button, config, done);
 
@@ -1233,7 +1233,7 @@ $.extend(Buttons.prototype, {
 	 * @param {DataTable.Api} hostButton DT API instance of the button
 	 * @param {object} inOpts Options (see object below for all options)
 	 */
-	_popover: function (content, hostButton, inOpts, e) {
+	_popover: function (content, hostButton, inOpts) {
 		var dt = hostButton;
 		var c = this.c;
 		var closed = false;
@@ -1484,7 +1484,7 @@ $.extend(Buttons.prototype, {
 		}
 		else {
 			// Fix position - centre on screen
-			var position = function () {
+			var place = function () {
 				var half = $(window).height() / 2;
 
 				var top = display.height() / 2;
@@ -1495,10 +1495,10 @@ $.extend(Buttons.prototype, {
 				display.css('marginTop', top * -1);
 			};
 
-			position();
+			place();
 
 			$(window).on('resize.dtb-collection', function () {
-				position();
+				place();
 			});
 		}
 
@@ -1962,7 +1962,7 @@ $.extend(_dtButtons, {
 		},
 		className: 'buttons-collection',
 		closeButton: false,
-		init: function (dt, button, config) {
+		init: function (dt, button) {
 			button.attr('aria-expanded', false);
 		},
 		action: function (e, dt, button, config) {
@@ -1990,7 +1990,7 @@ $.extend(_dtButtons, {
 		},
 		className: 'buttons-split',
 		closeButton: false,
-		init: function (dt, button, config) {
+		init: function (dt, button) {
 			return button.attr('aria-expanded', false);
 		},
 		action: function (e, dt, button, config) {
@@ -2001,7 +2001,7 @@ $.extend(_dtButtons, {
 		}
 		// Also the popover options, defined in Buttons.popover
 	},
-	copy: function (dt, conf) {
+	copy: function () {
 		if (_dtButtons.copyHtml5) {
 			return 'copyHtml5';
 		}

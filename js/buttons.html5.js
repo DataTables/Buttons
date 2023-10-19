@@ -139,7 +139,7 @@ var _saveAs = (function (view) {
 								: reader.result.replace(
 										/^data:[^;]*;/,
 										'data:attachment/file;'
-								  );
+								);
 							var popup = view.open(url, '_blank');
 							if (!popup) view.location.href = url;
 							url = undefined; // release reference before dispatching
@@ -290,8 +290,8 @@ var _exportData = function (dt, config) {
 
 			s += boundary
 				? boundary +
-				  ('' + a[i]).replace(reBoundary, escapeChar + boundary) +
-				  boundary
+				('' + a[i]).replace(reBoundary, escapeChar + boundary) +
+				boundary
 				: a[i];
 		}
 
@@ -384,7 +384,9 @@ function createCellPos(n) {
 try {
 	var _serialiser = new XMLSerializer();
 	var _ieExcel;
-} catch (t) {}
+} catch (t) {
+	// noop
+}
 
 /**
  * Recursively add XML files from an object's structure to a ZIP file. This
@@ -603,7 +605,7 @@ var excelStrings = {
 		'<?xml version="1.0" encoding="UTF-8"?>' +
 		'<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac">' +
 		'<numFmts count="6">' +
-		'<numFmt numFmtId="164" formatCode="[$$-409]#,##0.00;-[$$-409]#,##0.00"/>'+
+		'<numFmt numFmtId="164" formatCode="[$$-409]#,##0.00;-[$$-409]#,##0.00"/>' +
 		'<numFmt numFmtId="165" formatCode="&quot;£&quot;#,##0.00"/>' +
 		'<numFmt numFmtId="166" formatCode="[$€-2] #,##0.00"/>' +
 		'<numFmt numFmtId="167" formatCode="0.0%"/>' +
@@ -870,7 +872,6 @@ DataTable.ext.buttons.copyHtml5 = {
 	},
 
 	action: function (e, dt, button, config, cb) {
-		var that = this;
 		var exportData = _exportData(dt, config);
 		var info = dt.buttons.exportInfo(config);
 		var newline = _newLine(config);
@@ -931,7 +932,9 @@ DataTable.ext.buttons.copyHtml5 = {
 					cb();
 					return;
 				}
-			} catch (t) {}
+			} catch (t) {
+				// noop
+			}
 		}
 
 		// Otherwise we show the text box and instruct the user to use it
@@ -1091,7 +1094,6 @@ DataTable.ext.buttons.excelHtml5 = {
 	},
 
 	action: function (e, dt, button, config, cb) {
-		var that = this;
 		var rowPos = 0;
 		var dataStartRow, dataEndRow;
 		var getXml = function (type) {
@@ -1195,12 +1197,13 @@ DataTable.ext.buttons.excelHtml5 = {
 					}
 					else {
 						// String output - replace non standard characters for text output
+						/*eslint no-control-regex: "off"*/
 						var text = !originalContent.replace
 							? originalContent
 							: originalContent.replace(
 									/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g,
 									''
-							  );
+							);
 
 						cell = _createNode(rels, 'c', {
 							attr: {
@@ -1294,7 +1297,7 @@ DataTable.ext.buttons.excelHtml5 = {
 		// Below the table
 		if (exportInfo.messageBottom) {
 			addRow([exportInfo.messageBottom], rowPos);
-			mergeCells(rowPos, data.header.length - 1);
+			_excelMergeCells(rels, rowPos, 0, 1, data.header.length);
 		}
 
 		// Set column widths
@@ -1450,7 +1453,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 									colSpan: cell.colspan,
 									rowSpan: cell.rowspan,
 									style: 'tableHeader'
-							  }
+							}
 							: {};
 					})
 				);
@@ -1482,7 +1485,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 									colSpan: cell.colspan,
 									rowSpan: cell.rowspan,
 									style: 'tableHeader'
-							  }
+							}
 							: {};
 					})
 				);
@@ -1507,7 +1510,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 							}
 							return 0.5;
 						},
-						vLineWidth: function (i) {
+						vLineWidth: function () {
 							return 0;
 						},
 						hLineColor: function (i, node) {
@@ -1518,7 +1521,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 								? '#333'
 								: '#ddd';
 						},
-						fillColor: function (rowIndex, node, columnIndex) {
+						fillColor: function (rowIndex) {
 							if (rowIndex < data.headerStructure.length) {
 								return '#fff';
 							}
