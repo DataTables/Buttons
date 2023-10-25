@@ -44,16 +44,14 @@ new DataTable('#example', {
 						var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
 						// Loop over the cells in column `C`
-						sheet
-							.querySelectorAll('row c[r^="C"]')
-							.forEach((row) => {
-								// Get the value
-								let cell = row.querySelector('is t');
+						sheet.querySelectorAll('row c[r^="C"]').forEach((row) => {
+							// Get the value
+							let cell = row.querySelector('is t');
 
-								if (cell && cell.textContent === 'New York') {
-									row.setAttribute('s', '20');
-								}
-							});
+							if (cell && cell.textContent === 'New York') {
+								row.setAttribute('s', '20');
+							}
+						});
 					}
 				}
 			]

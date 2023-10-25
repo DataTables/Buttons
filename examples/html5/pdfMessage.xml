@@ -11,8 +11,7 @@ $('#example').DataTable({
 			buttons: [
 				{
 					extend: 'pdfHtml5',
-					messageTop:
-						'PDF created by PDFMake with Buttons for DataTables.'
+					messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
 				}
 			]
 		}
@@ -31,8 +30,7 @@ new DataTable('#example', {
 			buttons: [
 				{
 					extend: 'pdfHtml5',
-					messageTop:
-						'PDF created by PDFMake with Buttons for DataTables.'
+					messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
 				}
 			]
 		}

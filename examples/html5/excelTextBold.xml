@@ -37,11 +37,9 @@ new DataTable('#example', {
 					customize: function (xlsx) {
 						var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-						sheet
-							.querySelectorAll('row c[r^="C"]')
-							.forEach((el) => {
-								el.setAttribute('s', '2');
-							});
+						sheet.querySelectorAll('row c[r^="C"]').forEach((el) => {
+							el.setAttribute('s', '2');
+						});
 					}
 				}
 			]

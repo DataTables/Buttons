@@ -14,10 +14,7 @@ $('#example').DataTable({
 					action: function (e, dt, button, config) {
 						var data = dt.buttons.exportData();
 
-						DataTable.fileSave(
-							new Blob([JSON.stringify(data)]),
-							'Export.json'
-						);
+						DataTable.fileSave(new Blob([JSON.stringify(data)]), 'Export.json');
 					}
 				}
 			]
@@ -40,10 +37,7 @@ new DataTable('#example', {
 					action: function (e, dt, button, config) {
 						var data = dt.buttons.exportData();
 
-						DataTable.fileSave(
-							new Blob([JSON.stringify(data)]),
-							'Export.json'
-						);
+						DataTable.fileSave(new Blob([JSON.stringify(data)]), 'Export.json');
 					}
 				}
 			]

@@ -13,10 +13,7 @@ var table = $('#example').DataTable({
 					text: 'Row selected data',
 					action: function (e, dt, node, config) {
 						alert(
-							'Row data: ' +
-								JSON.stringify(
-									dt.row({ selected: true }).data()
-								)
+							'Row data: ' + JSON.stringify(dt.row({ selected: true }).data())
 						);
 					},
 					enabled: false
@@ -55,10 +52,7 @@ var table = new DataTable('#example', {
 					text: 'Row selected data',
 					action: function (e, dt, node, config) {
 						alert(
-							'Row data: ' +
-								JSON.stringify(
-									dt.row({ selected: true }).data()
-								)
+							'Row data: ' + JSON.stringify(dt.row({ selected: true }).data())
 						);
 					},
 					enabled: false

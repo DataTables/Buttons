@@ -22,7 +22,7 @@ div.dt-paging {
 
 $('#example').DataTable({
 	dom: 'Bfrtip',
-	buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+	buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
 });
 
 ]]>
@@ -33,7 +33,7 @@ $('#example').DataTable({
 
 new DataTable('#example', {
 	dom: 'Bfrtip',
-	buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+	buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
 });
 
 ]]>

@@ -8,7 +8,7 @@
 var printCounter = 0;
 
 $('#example').DataTable({
-	caption: 'A fictional company\'s staff table.',
+	caption: "A fictional company's staff table.",
 	layout: {
 		topStart: {
 			buttons: [
@@ -32,9 +32,7 @@ $('#example').DataTable({
 						}
 						else {
 							return (
-								'You have printed this document ' +
-								printCounter +
-								' times'
+								'You have printed this document ' + printCounter + ' times'
 							);
 						}
 					},
@@ -54,7 +52,7 @@ $('#example').DataTable({
 var printCounter = 0;
 
 new DataTable('#example', {
-	caption: 'A fictional company\'s staff table.',
+	caption: "A fictional company's staff table.",
 	layout: {
 		topStart: {
 			buttons: [
@@ -78,9 +76,7 @@ new DataTable('#example', {
 						}
 						else {
 							return (
-								'You have printed this document ' +
-								printCounter +
-								' times'
+								'You have printed this document ' + printCounter + ' times'
 							);
 						}
 					},

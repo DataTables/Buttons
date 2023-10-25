@@ -17,7 +17,7 @@ $('#example').DataTable({
 			buttons: [
 				{
 					extend: 'colvis',
-					columns: ':not(.noVis)',
+					columns: ':not(.noVis)'
 				}
 			]
 		}
