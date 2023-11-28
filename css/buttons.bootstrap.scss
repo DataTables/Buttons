@@ -70,6 +70,10 @@ div.dt-buttons {
 	}
 
 	span.dt-button-spacer {
+		float: left;
+		font-size: 1rem;
+		padding-top: 4px;
+
 		&.empty {
 			margin: 2px;
 		}
