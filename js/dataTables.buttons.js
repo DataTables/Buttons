@@ -2619,6 +2619,7 @@ var _exportData = function (dt, inOpts) {
 	});
 	var cells = selectedCells.render(config.orthogonal).toArray();
 	var cellNodes = selectedCells.nodes().toArray();
+	var cellIndexes = selectedCells.indexes().toArray();
 
 	var columns = header.length;
 	var rows = columns > 0 ? cells.length / columns : 0;
@@ -2631,8 +2632,8 @@ var _exportData = function (dt, inOpts) {
 		for (var j = 0; j < columns; j++) {
 			row[j] = config.format.body(
 				cells[cellCounter],
-				i,
-				j,
+				cellIndexes[i + j].row,
+				cellIndexes[i + j].column,
 				cellNodes[cellCounter]
 			);
 			cellCounter++;
