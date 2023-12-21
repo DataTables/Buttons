@@ -95,6 +95,8 @@ $.extend(DataTable.ext.buttons, {
 			var col = dt.columns(conf.columns);
 			var curr = col.visible();
 
+			console.log('action', conf.columns, curr);
+
 			col.visible(
 				conf.visibility !== undefined ? conf.visibility : !(curr.length ? curr[0] : false)
 			);
@@ -134,6 +136,10 @@ $.extend(DataTable.ext.buttons, {
 		},
 
 		_columnText: function (dt, conf) {
+			if (typeof conf.text === 'string') {
+				return conf.text;
+			}
+
 			// Use DataTables' internal data structure until this is presented
 			// is a public API. The other option is to use
 			// `$( column(col).node() ).text()` but the node might not have been
