@@ -165,25 +165,22 @@ $.extend(DataTable.ext.buttons, {
 		},
 
 		init: function (dt, button, conf) {
-			conf._visOriginal = dt
-				.columns()
-				.indexes()
-				.map(function (idx) {
-					return dt.column(idx).visible();
-				})
-				.toArray();
+			// Use a private parameter on the column. This gets moved around with the
+			// column if ColReorder changes the order
+			dt.columns().every(function () {
+				var init = this.init();
+
+				if (init.__visOriginal === undefined) {
+					init.__visOriginal = this.visible();
+				}
+			});
 		},
 
 		action: function (e, dt, button, conf) {
 			dt.columns().every(function (i) {
-				// Take into account that ColReorder might have disrupted our
-				// indexes
-				var idx =
-					dt.colReorder && dt.colReorder.transpose
-						? dt.colReorder.transpose(i, 'toOriginal')
-						: i;
+				var init = this.init();
 
-				this.visible(conf._visOriginal[idx]);
+				this.visible(init.__visOriginal);
 			});
 		}
 	},
