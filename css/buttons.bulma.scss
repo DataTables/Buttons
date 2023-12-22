@@ -5,19 +5,21 @@
 div.dt-button-collection {
 	position: absolute;
 	z-index: 2001;
-	// min-width: 200px;
-	// background: white;
-	// // We need the dropdown stylings on the container, not the dropdown content
-	// max-width: none;
-	// display: block;
-	// box-shadow: 0 .5em 1em -.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
-	// border-radius: 4;
-	// padding: .5rem;
+	width: 200px;
+	
+	// We need the dropdown stylings on the container, not the dropdown content
+	background: white;
+	max-width: none;
+	display: block;
+	box-shadow: 0 .5em 1em -.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+	border-radius: 4;
 
-	div.dropdown-menu {
-		display: block;
-		z-index: 2002;
-		min-width: 100%;
+	div.dropdown-content {
+		box-shadow: none;
+	}
+
+	div.dt-button-collection-title {
+		padding: 0.75em 0.6em 0.25em;
 	}
 
 	div.dt-button-split {
