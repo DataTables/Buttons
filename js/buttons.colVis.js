@@ -95,8 +95,6 @@ $.extend(DataTable.ext.buttons, {
 			var col = dt.columns(conf.columns);
 			var curr = col.visible();
 
-			console.log('action', conf.columns, curr);
-
 			col.visible(
 				conf.visibility !== undefined ? conf.visibility : !(curr.length ? curr[0] : false)
 			);
