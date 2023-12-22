@@ -17,7 +17,8 @@ $('#example').DataTable({
 			buttons: [
 				{
 					extend: 'colvis',
-					columns: ':not(.noVis)'
+					columns: ':not(.noVis)',
+					popoverTitle: 'Column visibility selector'
 				}
 			]
 		}
@@ -42,7 +43,8 @@ new DataTable('#example', {
 			buttons: [
 				{
 					extend: 'colvis',
-					columns: ':not(.noVis)'
+					columns: ':not(.noVis)',
+					popoverTitle: 'Column visibility selector'
 				}
 			]
 		}

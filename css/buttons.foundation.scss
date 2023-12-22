@@ -11,15 +11,26 @@ div.dt-buttons.button-group {
 		> button:last-child {
 			margin-right: 1px;
 		}
+
+		li {
+			overflow: hidden;
+			white-space: nowrap;
+
+			a {
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
 	}
 
 	div.dt-button-collection {
 		position: absolute;
-		min-width: 200px;
+		width: 200px;
 		margin-top: 3px !important;
 		z-index: 2002;
 
 		.dropdown.menu {
+			width: 100%;
 			display: block;
 			left: 0;
 		}
@@ -27,7 +38,7 @@ div.dt-buttons.button-group {
 		div.dt-button-split {
 			display: flex;
 			flex-direction: row;
-			flex-wrap: wrap;
+			flex-wrap: nowrap;
 			justify-content: flex-start;
 			align-content: flex-start;
 			align-items: stretch;
@@ -47,11 +58,6 @@ div.dt-buttons.button-group {
 
 				&:after {
 					border-top-color: #1779ba;
-					margin-left: -10px;
-				}
-
-				&:hover {
-					border-top-color: #0b6daf;
 					margin-left: -10px;
 				}
 			}

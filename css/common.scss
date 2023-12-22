@@ -19,6 +19,7 @@ div.dt-buttons {
 	.dt-button {
 		overflow: hidden;
 		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 }
 
