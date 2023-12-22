@@ -21,13 +21,13 @@ $.extend(true, DataTable.Buttons.defaults, {
 				tag: 'div',
 				className: 'ui dropdown active visible dt-button-collection',
 				content: {
-					className: 'menu transition visible'
+					className: 'menu'
 				}
 			},
 			closeButton: false,
 			button: {
 				tag: 'div',
-				className: 'item',
+				className: 'dt-button item',
 				active: 'dt-button-active',
 				spacer: {
 					className: 'divider',

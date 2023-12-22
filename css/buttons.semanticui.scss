@@ -2,22 +2,33 @@
 @import 'mixins.scss';
 @import 'common.scss';
 
-div.dt-button-collection {
-	position: absolute !important;
-	min-width: 200px;
+div.dt-button-collection.ui.dropdown {
+	position: absolute;
+	width: 200px;
 	margin-top: 3px !important;
 	z-index: 2002;
-	background: white;
+	
+	// Move styles to parent container
+	box-shadow: 0 2px 3px 0 rgba(34,36,38,.15);
+	border: 1px solid rgba(34,36,38,.15);
+	border-radius: .28571429rem;
+	background-color: white;
 
-	> div.menu {
+	div.menu {
+		position: relative;
+		display: block;
 		right: auto !important;
-		min-width: 150px !important;
+		min-width: 200px !important;
+		box-shadow: none;
+		border: none;
+		border-radius: 0;
+		transition: none;
+		background: transparent;
 	}
-
-	@include dtb-fixed-collection();
 
 	div.dt-button-collection-title {
 		font-size: 1rem;
+		padding: 1em 0.75em 0.5em;
 	}
 
 	&.columns {
@@ -89,6 +100,8 @@ div.dt-button-collection {
 			}
 		}
 	}
+
+	@include dtb-fixed-collection();
 }
 
 div.dt-button-background {

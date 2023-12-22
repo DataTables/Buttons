@@ -3,8 +3,6 @@
 @import 'common.scss';
 
 div.dt-buttons.button-group {
-	@include dtb-fixed-collection();
-
 	div.dt-button-split {
 		margin-bottom: 0;
 
@@ -29,10 +27,22 @@ div.dt-buttons.button-group {
 		margin-top: 3px !important;
 		z-index: 2002;
 
+		// Menu styles need to be on the container, not the dropdown, to allow for the title
+		border: 1px solid #cacaca;
+		background: #fefefe;
+
 		.dropdown.menu {
+			position: relative;
 			width: 100%;
 			display: block;
 			left: 0;
+			
+			border: none;
+			background: transparent;
+		}
+
+		div.dt-button-collection-title {
+			padding: 1em 0.75em 0.5em;
 		}
 
 		div.dt-button-split {
@@ -62,5 +72,7 @@ div.dt-buttons.button-group {
 				}
 			}
 		}
+
+		@include dtb-fixed-collection();
 	}
 }
