@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example table-type="html" order="4" framework="bulma">
 
-<css lib="datatables buttons"/>
+<css lib="datatables buttons font-awesome"/>
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print buttons-colvis">
 <![CDATA[
 
