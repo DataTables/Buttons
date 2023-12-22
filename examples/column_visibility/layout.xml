@@ -12,7 +12,7 @@ $('#example').DataTable({
 				{
 					extend: 'colvis',
 					collectionLayout: 'fixed columns',
-					collectionTitle: 'Column visibility control'
+					popoverTitle: 'Column visibility control'
 				}
 			]
 		}
@@ -32,7 +32,7 @@ new DataTable('#example', {
 				{
 					extend: 'colvis',
 					collectionLayout: 'fixed columns',
-					collectionTitle: 'Column visibility control'
+					popoverTitle: 'Column visibility control'
 				}
 			]
 		}

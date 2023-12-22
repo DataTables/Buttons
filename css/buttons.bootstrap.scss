@@ -13,10 +13,27 @@ div.dt-buttons {
 		margin-top: 3px;
 		z-index: 2002;
 
+		// Need to move the dropdown styling to the container to allow for the title
+		background-color: #fff;
+		border: 1px solid rgba(0,0,0,.15);
+		border-radius: 4px;
+		box-shadow: 0 6px 12px rgba(0,0,0,.175);
+
+		div.dt-button-collection-title {
+			padding: 0.75em 0 0.25em;
+		}
+
 		.dropdown-menu {
+			position: relative;
 			margin-top: 4px;
 			display: block;
 			width: 100%;
+
+			// Moved to collection container
+			background-color: transparent;
+			border: none;
+			border-radius: 0;
+			box-shadow: none;
 
 			li {
 				position: relative;

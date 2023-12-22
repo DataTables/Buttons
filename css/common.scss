@@ -70,6 +70,10 @@ div.dt-button-collection-title {
 	margin-left: 0.5em;
 	margin-right: 0.5em;
 	font-size: 0.9em;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 div.dt-button-collection-title:empty {
