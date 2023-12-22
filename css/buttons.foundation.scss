@@ -39,6 +39,10 @@ div.dt-buttons.button-group {
 			
 			border: none;
 			background: transparent;
+
+			.dt-button {
+				position: relative;
+			}
 		}
 
 		div.dt-button-collection-title {
