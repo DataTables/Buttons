@@ -1436,10 +1436,6 @@ $.extend(Buttons.prototype, {
 				if (left < buttonPosition.left) {
 					left = -buttonPosition.left;
 				}
-
-				if (left + popoverSizes.width > tableSizes.width) {
-					left = tableSizes.width - popoverSizes.width;
-				}
 			}
 
 			// Window adjustment
