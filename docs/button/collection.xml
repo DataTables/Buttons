@@ -96,35 +96,18 @@
 	</option>
 
 	<example title="DataTables initialisation: Create an export collection"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'collection',
-			text: 'Export',
-			buttons: [ 'csv', 'excel', 'pdf' ]
-		}
-	]
-} );
-
-]]></example>
-
-	<example title="Direct initialisation: Collection of custom buttons"><![CDATA[
-
-new $.fn.dataTable.Buttons( table, {
-	buttons: [
-		{
-			extend: 'collection',
-			text: 'Flag',
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
 			buttons: [
-				{ text: 'High priority',   action: function () { ... } },
-				{ text: 'Medium priority', action: function () { ... } },
-				{ text: 'Low priority',    action: function () { ... } }
-			],
-			fade: true
+				{
+					extend: 'collection',
+					text: 'Export',
+					buttons: ['csv', 'excel', 'pdf']
+				}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 </dt-button>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="Buttons">
+	<name>buttons.buttons.split</name>
+	<summary>Split dropdown buttons</summary>
+	<since>3.0.0</since>
+
+    <default value="undefined"/>
+
+    <type type="array">
+        <description>
+This array contains further buttons which are to be added as secondary buttons which are displayed within a popover. The buttons within this array can be declared in the same form as the `-feature buttons.buttons` option, please read that documentation for full details.
+        </description>
+    </type>
+
+	<description>
+This option allows for split button functionality with all DataTables buttons.
+
+To implement split buttons simply extend any existing button type to include the `-feature buttons.buttons.split` config option, or include it within your custom buttons initialisation. The value of this option is an array that contains further buttons which are to be added as secondary buttons. The buttons within this array can be declared in the same form as the `-feature buttons.buttons` option, please read that documentation for full details.
+
+As of Buttons 2.0.0 it is possible to add custom html to collections. Simply include a string containing the html into the `-feature buttons.buttons.split` array and it will be inserted in that order into the collection popover. [This example](//datatables.net/extensions/buttons/examples/initialisation/customHTMLButtons.html) shows how this can be used to create more powerful popovers.
+
+Note: Bulma does not support split button dropdowns at the time of creating the styling integrations. Because of this, split buttons are not supported in Bulma. This will be updated in the future if Bulma begin supporting split buttons.
+	</description>
+
+	
+
+	<example title="Split dropdown button for printing options"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topEnd: {
+			buttons: [
+				{
+					extend: 'csv',
+					split: ['pdf', 'excel']
+				}
+			]
+		}
+	}
+});
+]]></example>
+
+	<example title="Split dropdown button with custom buttons"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topEnd: {
+			buttons: [
+				{
+					text: 'High priority',
+					action: function () {
+						/* ... */
+					},
+					split: [
+						{
+							text: 'Medium priority',
+							action: function () {
+								/* ... */
+							}
+						},
+						{
+							text: 'Low priority',
+							action: function () {
+								/* ... */
+							}
+						}
+					]
+				}
+			]
+		}
+	}
+});
+]]></example>
+
+	<example title="Split dropdown button with a mix of custom buttons and built in buttons"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topEnd: {
+			buttons: [
+				{
+					text: 'High priority',
+					action: function () {
+						/* ... */
+					},
+					split: [
+						'pdf',
+						{
+							text: 'Medium priority',
+							action: function () {
+								/* ... */
+							}
+						},
+						{
+							text: 'Low priority',
+							action: function () {
+								/* ... */
+							}
+						}
+					]
+				}
+			]
+		}
+	}
+});
+]]></example>
+
+	<example title="Custom HTML within popovers"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topEnd: {
+			buttons: [
+				{
+					extend: 'collection',
+					className: 'custom-html-collection',
+					buttons: [
+						'<h3>Export</h3>',
+						'pdf',
+						'csv',
+						'excel',
+						'<h3 class="not-top-heading">Column Visibility</h3>',
+						'colvis',
+						'colvis'
+					]
+				}
+			]
+		}
+	}
+});
+]]></example>
+</dt-button>

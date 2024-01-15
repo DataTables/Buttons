@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="Buttons">
+	<name>buttons</name>
+	<summary>Table control buttons</summary>
+	<since>3.0.0</since>
+
+	<type type="array">
+		<description>
+			The majority of button configurations are not concerned with the DOM configuration and other options that Buttons presents, but rather just with what buttons are presented and how they are individually constructed. As such, to provide a short-cut this option can be provided as an array. This array will be mapped automatically to the `-feature buttons.buttons` option.
+
+			For example the following two configurations are functionally identical:
+
+			```js
+			// Using `buttons` as an array
+			new DataTable('#myTable', {
+				layout: {
+					topStart: {
+						buttons: [ 'copy', 'csv', 'excel' ]
+					}
+				}
+			} );
+			```
+
+			```js
+			// Using `buttons.buttons`
+			new DataTable('#myTable', {
+				layout: {
+					topStart: {
+						buttons: {
+							buttons: [ 'copy', 'csv', 'excel' ]
+						}
+					}
+				}
+			} );
+			```
+		</description>
+	</type>
+
+	<type type="object">
+		<description>
+			As an object this option provides the ability to configure a single instance of the DataTables Buttons extension that will be created when the DataTable is initialised. For the full range of parameters that are available to be used in this object, please refer to the remainder of the Buttons initialisation reference.
+		</description>
+	</type>
+
+	<description>
+		The Buttons extension for DataTables makes it possible to easily add sets of buttons to a DataTable, providing control of the data in the table. Buttons provides a set of buttons that can be used to export data from the table to various formats and basic table control, but more generally sets out a framework that can be used by other extensions for DataTables to provide a common way of defining control buttons.
+	</description>
+
+	<example title="Creation of Buttons using defaults "><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: 'buttons'
+	}
+});
+]]></example>
+
+	<example title="Creation of Buttons with an array of buttons"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['copy', 'csv', 'excel']
+		}
+	}
+});
+]]></example>
+
+	<example title="Creation of Buttons with object configuration"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: {
+				name: 'primary',
+				buttons: ['copy', 'csv', 'excel']
+			}
+		}
+	}
+});
+]]></example>
+</dt-option>

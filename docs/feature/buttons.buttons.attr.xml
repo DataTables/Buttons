@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="Buttons">
+	<name>buttons.buttons.attr</name>
+	<summary>Collection of attribute key / values to set for a button</summary>
+	<since>3.0.0</since>
+
+	<default value="No default value (i.e. undefined)" />
+
+	<type type="object">
+		<description>
+			The attributes assigned to the button are defined by the parameter key being used for the attribute name and the value being used as the attribute's value. In this way multiple attributes can be set.
+		</description>
+	</type>
+
+	<description>
+		This option provides the ability to set any arbitrary attribute on the button's HTML element in the document. This can be useful for customisation of attributes such as ARIA assistive attributes, setting a custom `id` for selection / styling, custom data parameters, etc.
+	</description>
+
+	<example title="Copy button with title text and an id"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topEnd: {
+			buttons: [
+				{
+					extend: 'copyHtml5',
+					attr: {
+						title: 'Copy',
+						id: 'copyButton'
+					}
+				}
+			]
+		}
+	}
+});
+]]></example>
+</dt-option>

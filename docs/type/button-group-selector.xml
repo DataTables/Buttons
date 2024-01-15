@@ -6,7 +6,7 @@
 	<description>
 <![CDATA[
 
-The Buttons extension for DataTables can have multiple instances of the `$.fn.dataTable.Buttons` object created and attached to a single DataTable, giving the ability to display different button sets to the end user. For example, you could display identical buttons both above and below the table, or show entirely different button sets in two different locations around the table if your design calls for it.
+The Buttons extension for DataTables can have multiple instances of the `DataTable.Buttons` object created and attached to a single DataTable, giving the ability to display different button sets to the end user. For example, you could display identical buttons both above and below the table, or show entirely different button sets in two different locations around the table if your design calls for it.
 
 As a result of this multi-instance behaviour, the `b-api buttons()` and `b-api button()` methods provide the option to select buttons from one or more button instances that are attached to a DataTable.
 
@@ -27,8 +27,8 @@ If no button group selector is given (i.e. `-type undefined`), all buttons insta
 ###### Disable all buttons on the page:
 
 ```js
-var allTables = $.fn.dataTable.tables();
-$( allTables ).DataTable().buttons().disable();
+var allTables = DataTable.tables({api: true});
+allTables.buttons().disable();
 ```
 
 ###### Enable all buttons using an existing DataTables instance:
@@ -47,9 +47,9 @@ Please note that the index of each instance can be changed if the `b-api buttons
 ###### Select the first button instance and disable the second button
 
 ```js
-var table = $('#myTable').DataTable();
+var table = new DataTable('#myTable');
 
-table.buttons( 0, 1 ).disable();
+table.buttons(0, 1).disable();
 ```
 
 
@@ -62,43 +62,59 @@ In addition to being able to select a single instance with a string, multiple in
 ###### Table with two button sets; enable button index 0 from the `main` instance
 
 ```js
-var table = $('#myTable').DataTable( {
-	buttons: {
-		name: 'main'
+var table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: {
+				name: 'main',
+				buttons: [
+					// ...
+				]
+			}
+		},
+		bottomStart: {
+			buttons: {
+				name: 'commands',
+				buttons: [
+					// ...
+				]
+			}
+		}
 	}
-} );
+});
 
-new $.fn.dataTable.Buttons( table, {
-	name: 'commands',
-	buttons: ...
-} );
-
-table.buttons( 'main', 0 ).enable();
+table.buttons('main', 0).enable();
 ```
 
 
 ###### Using a comma to select two button instances
 
 ```js
-var table = $('#myTable').DataTable();
-
-new $.fn.dataTable.Buttons( table, {
-	name: 'export',
-	buttons: ...
-} );
-
-new $.fn.dataTable.Buttons( table, {
-	name: 'commands',
-	buttons: ...
-} );
+var table = new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: {
+				name: 'main',
+				buttons: [
+					// ...
+				]
+			}
+		},
+		bottomStart: {
+			buttons: {
+				name: 'commands',
+				buttons: [
+					// ...
+				]
+			}
+		}
+	}
+});
 
 // Note the use of `null` in the second parameter to act as the button selector
 // since `buttons()` with a single parameter will treat the first parameter as
 // a button selector. See the `buttons()` documentation for full details.
-table
-	.buttons( 'export, commands', null )
-	.containers()
-	.appendTo( '#panel' );
+table.buttons('export, commands', null).containers().appendTo('#panel');
 ```
 
 
@@ -110,9 +126,9 @@ As an array, the button group selector can select one or more button instances. 
 
 ```js
 table
-	.buttons( ['export', 'commands'], null )
+	.buttons(['export', 'commands'], null)
 	.containers()
-	.appendTo( '#panel' );
+	.appendTo('#panel');
 ```
 
 

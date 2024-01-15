@@ -35,34 +35,26 @@
 	</description>
 
 	<example title="Disable the button at index position 2"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.button( 2 ).disable();
-
+table.button(2).disable();
 ]]></example>
 
 	<example title="Change the text for collection button with index 3-1"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.button( '3-1' ).text( 'Not available' );
-
+table.button('3-1').text('Not available');
 ]]></example>
 
 	<example title="Select and disable button index 1 from button instance index 0"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons( 0, 1 ).disable();
-
+table.buttons(0, 1).disable();
 ]]></example>
 
 	<example title="Enable the button with the name `csv` from instance index 1"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons( 1, 'csv:name' ).enable();
-
+table.buttons(1, 'csv:name').enable();
 ]]></example>
 </dt-api>

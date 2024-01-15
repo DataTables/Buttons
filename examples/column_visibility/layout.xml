@@ -4,20 +4,43 @@
 <css lib="datatables buttons" />
 <js lib="jquery datatables buttons buttons-colvis">
 <![CDATA[
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'colvis',
-				collectionLayout: 'fixed columns',
-				collectionTitle: 'Column visibility control'
-			}
-		]
-	} );
-} );
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvis',
+					collectionLayout: 'fixed columns',
+					popoverTitle: 'Column visibility control'
+				}
+			]
+		}
+	}
+});
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvis',
+					collectionLayout: 'fixed columns',
+					popoverTitle: 'Column visibility control'
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Multi-column layout</title>
 

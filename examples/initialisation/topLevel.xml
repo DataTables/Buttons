@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="2">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
+<![CDATA[
+
+$('#example').DataTable({
+	buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+	layout: {
+		topStart: 'buttons'
+	}
+});
+
+]]>
+</js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+	layout: {
+		topStart: 'buttons'
+	}
+});
+
+]]>
+</js-vanilla>
+
+<title lib="Buttons">Initialisation: Top level `buttons` option</title>
+
+<info><![CDATA[
+
+Prior to DataTables 2 Buttons was configured through the top level `-init buttons` option. In order to ease the transition to the new `-init layout` option, this property is still supported and you can simply assign the `-feature buttons` feature as a string to the location you want the Buttons to appear in the table layout.
+
+This example demonstrates the use of this initialisation method, with the buttons defined at the top level of the configuration object and then positioned in `-init layout`.
+
+It is worth noting that the preferred method is to define the buttons inside `-init layout`, [as shown in the simple example](simple.html) as this allows multiple button groups to be defined and moved around as needed.
+
+]]></info>
+
+</dt-example>

@@ -5,23 +5,46 @@
 <js lib="jquery datatables buttons jszip buttons-html5">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			'copyHtml5',
-			{
-				text: 'TSV',
-				extend: 'csvHtml5',
-				fieldSeparator: '\t',
-				extension: '.tsv'
-			}
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				'copyHtml5',
+				{
+					text: 'TSV',
+					extend: 'csvHtml5',
+					fieldSeparator: '\t',
+					extension: '.tsv'
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				'copyHtml5',
+				{
+					text: 'TSV',
+					extend: 'csvHtml5',
+					fieldSeparator: '\t',
+					extension: '.tsv'
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Tab separated values</title>
 

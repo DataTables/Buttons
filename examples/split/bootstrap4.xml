@@ -5,24 +5,40 @@
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print buttons-colvis">
 <![CDATA[
 
-$(document).ready(function() {
-	var table = $('#example').DataTable( {
-		lengthChange: false,
-		buttons: [
-			{
-				extend: 'csv',
-				split: [ 'pdf', 'excel'],
-			},
-			'colvis'
-		]
-	} );
-
-	table.buttons().container()
-		.appendTo( '#example_wrapper .col-md-6:eq(0)' );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'csv',
+					split: ['pdf', 'excel']
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'csv',
+					split: ['pdf', 'excel']
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Bootstrap 4</title>
 

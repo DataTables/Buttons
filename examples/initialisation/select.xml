@@ -1,34 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" order="14">
+<dt-example table-type="html" order="16">
 
 <css lib="datatables buttons select"/>
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print select">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			'copy',
-            'csv',
-            'excel',
-            'pdf',
-            {
-                extend: 'print',
-                text: 'Print all (not just selected)',
-                exportOptions: {
-                    modifier: {
-                        selected: null
-                    }
-                }
-            }
-		],
-        select: true
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				'copy',
+				'csv',
+				'excel',
+				'pdf',
+				{
+					extend: 'print',
+					text: 'Print all (not just selected)',
+					exportOptions: {
+						modifier: {
+							selected: null
+						}
+					}
+				}
+			]
+		}
+	},
+	select: true
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				'copy',
+				'csv',
+				'excel',
+				'pdf',
+				{
+					extend: 'print',
+					text: 'Print all (not just selected)',
+					exportOptions: {
+						modifier: {
+							selected: null
+						}
+					}
+				}
+			]
+		}
+	},
+	select: true
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Select integration - export selected rows</title>
 

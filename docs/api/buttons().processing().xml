@@ -22,9 +22,7 @@
 	</description>
 
 	<example title="Set all buttons to show as processing"><![CDATA[
-
-var table = $('#myTable').DataTable();
-table.buttons().processing( true );
-
+var table = new DataTable('#myTable');
+table.buttons().processing(true);
 ]]></example>
 </dt-api>

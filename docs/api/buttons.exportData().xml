@@ -16,7 +16,7 @@
 			* `-type row-selector` `rows` - The row selector to use. Default - all rows
 			* `-type column-selector` `columns` - The column selector to use. Default - all columns
 			* `-type selector-modifier` `modifier` - How the ordering and search state of the table should be applied. Default - `{search: 'applied', order: 'applied'}`
-			* `-type string` `orthogonal` - What [orthogonal data type](https://datatables.net/manual/orthogonal-data) to request when getting the data for a cell. Default `-string display` - i.e. the data shown in the table.
+			* `-type string` `orthogonal` - What [orthogonal data type](https://datatables.net/manual/orthogonal-data) to request when getting the data for a cell. Default is an empty string (i.e. get the original data), this was updated in Buttons 3.0, previously was `-string display`.
 			* `-type boolean` `stripHtml` - Indicate if HTML should be stripped from the read data if there is any (`true`) or not (`false`). Default - `true`.
 			* `-type boolean` `stripNewlines` - Indicate if newline characters should be stripped from the read data if there are any (`true`) or not (`false`). Default - `true`.
 			* `-type boolean` `decodeEntities` - Indicate if HTML entities should be decoded (`true`) or not (`false`) - for example `&gt;` would become `>`. For larger tables you may wish to disable this option as it can decrease performance. Default - `true`.
@@ -65,50 +65,42 @@
 	</description>
 
 	<example title="Get all data in the table for export"><![CDATA[
-
-var table = $('#myTable').DataTable();
+var table = new DataTable('#myTable');
 
 var data = table.buttons.exportData();
 // Do something with the 'data' variable
-
 ]]></example>
 
 	<example title="Export only selected rows (with the _Select_ extension)"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-var data = table.buttons.exportData( {
+var data = table.buttons.exportData({
 	modifier: {
 		selected: true
 	}
-} );
+});
 // Do something with the 'data' variable
-
 ]]></example>
 
 	<example title="Get the data for the visible columns only"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-var data = table.buttons.exportData( {
+var data = table.buttons.exportData({
 	columns: ':visible'
-} );
+});
 // Do something with the 'data' variable
-
 ]]></example>
 
 	<example title="Format the header cells - adding the column index"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-var data = table.buttons.exportData( {
+var data = table.buttons.exportData({
 	format: {
-		header: function ( data, columnIdx ) {
-			return columnIdx +': '+ data;
+		header: function (data, columnIdx) {
+			return columnIdx + ': ' + data;
 		}
 	}
-} );
+});
 // Do something with the 'data' variable
-
 ]]></example>
 </dt-api>

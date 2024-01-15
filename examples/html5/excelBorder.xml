@@ -5,23 +5,53 @@
 <js lib="jquery datatables buttons jszip buttons-html5">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [ {
-			extend: 'excelHtml5',
-			customize: function ( xlsx ){
-				var sheet = xlsx.xl.worksheets['sheet1.xml'];
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'excelHtml5',
+					customize: function (xlsx) {
+						var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-				// jQuery selector to add a border
-				$('row c[r*="10"]', sheet).attr( 's', '25' );
-			}
-		} ]
-	} );
-} );
+						// jQuery selector to add a border
+						$('row c[r*="10"]', sheet).attr('s', '25');
+					}
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'excelHtml5',
+					customize: function (xlsx) {
+						var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+						// Selector to add a border
+						sheet.querySelectorAll('row c[r*="10"]').forEach((el) => {
+							el.setAttribute('s', '25');
+						});
+					}
+				}
+			]
+		}
+	}
+});
+
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Excel - Customise borders</title>
 

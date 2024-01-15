@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" order="13">
+<dt-example table-type="html" order="15">
 
 <css lib="datatables buttons"/>
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Blfrtip'
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		top1Start: {
+			buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		top1Start: {
+			buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Page length (select)</title>
 
 <info><![CDATA[
 
-DataTables has a built in page length control which is often replaced in many of the Buttons examples at the top left of the table with the buttons for the example. However, you may wish to keep the length list, which you can do by adding the `l` option back into `dt-init dom` which is shown in this example.
+DataTables has a built in `-feature pageLength` feature for controlling the number of records shown on each DataTables page. This feature is replaced in many of the Buttons examples at the top left of the table with the buttons for the example through use of the `topStart` positional parameter. However, you may wish to keep the length list, which you can do by assigning the `-feature buttons` feature to a different location, or indeed moving the `-feature pageLength` feature.
 
-Additionally, you might wish to consider using the `b-button pageLength` button which provides the same page length control, but does so as an integrated part of Buttons. An example of that [is available here](./pageLength.html).
+This example demonstrates placing the buttons at the top left of the table, above the page length control. Many other placement options are available through the `-init layout` option.
+
+Another alternative is to use the `-button pageLength` button which provides the same page length control, but does so as an integrated part of Buttons. An example of that [is available here](./pageLength.html).
 
 ]]></info>
 

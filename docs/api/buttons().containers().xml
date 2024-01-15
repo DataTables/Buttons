@@ -22,16 +22,19 @@
 		When using the `b-api buttons()` selector method, the second argument (the buttons selector) is effectively ignored when processing this method. Only the button instances are used.
 	</description>
 
-	<example title="Insert buttons which are created using `new $.fn.dataTable.Buttons()` into the document"><![CDATA[
+	<example title="Insert buttons which are created using `new DataTable.Buttons()` into the document"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-new $.fn.dataTable.Buttons( table, {
+new DataTable.Buttons(table, {
 	name: 'commands',
-	buttons: ...
-} );
+	buttons: [
+		// ...
+	]
+});
 
-table.buttons().containers().appendTo( 'body' );
-
+table
+	.buttons()
+	.containers()
+	.appendTo('body');
 ]]></example>
 </dt-api>

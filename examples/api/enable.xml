@@ -5,41 +5,80 @@
 <js lib="jquery datatables buttons select">
 <![CDATA[
 
-$(document).ready(function() {
-	var table = $('#example').DataTable( {
-		dom: 'Bfrtip',
-		select: true,
-		buttons: [
-			{
-				text: 'Row selected data',
-				action: function ( e, dt, node, config ) {
-					alert(
-						'Row data: '+
-						JSON.stringify( dt.row( { selected: true } ).data() )
-					);
+var table = $('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'Row selected data',
+					action: function (e, dt, node, config) {
+						alert(
+							'Row data: ' + JSON.stringify(dt.row({ selected: true }).data())
+						);
+					},
+					enabled: false
 				},
-				enabled: false
-			},
-			{
-				text: 'Count rows selected',
-				action: function ( e, dt, node, config ) {
-					alert( 'Rows: '+ dt.rows( { selected: true } ).count() );
-				},
-				enabled: false
-			}
-		]
-	} );
+				{
+					text: 'Count rows selected',
+					action: function (e, dt, node, config) {
+						alert('Rows: ' + dt.rows({ selected: true }).count());
+					},
+					enabled: false
+				}
+			]
+		}
+	},
+	select: true
+});
 
-	table.on( 'select deselect', function () {
-		var selectedRows = table.rows( { selected: true } ).count();
+table.on('select deselect', function () {
+	var selectedRows = table.rows({ selected: true }).count();
 
-		table.button( 0 ).enable( selectedRows === 1 );
-		table.button( 1 ).enable( selectedRows > 0 );
-	} );
-} );
+	table.button(0).enable(selectedRows === 1);
+	table.button(1).enable(selectedRows > 0);
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+var table = new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'Row selected data',
+					action: function (e, dt, node, config) {
+						alert(
+							'Row data: ' + JSON.stringify(dt.row({ selected: true }).data())
+						);
+					},
+					enabled: false
+				},
+				{
+					text: 'Count rows selected',
+					action: function (e, dt, node, config) {
+						alert('Rows: ' + dt.rows({ selected: true }).count());
+					},
+					enabled: false
+				}
+			]
+		}
+	},
+	select: true
+});
+
+table.on('select deselect', function () {
+	var selectedRows = table.rows({ selected: true }).count();
+
+	table.button(0).enable(selectedRows === 1);
+	table.button(1).enable(selectedRows > 0);
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Enable / disable</title>
 

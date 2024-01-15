@@ -34,43 +34,47 @@
 
 
 	<example title="DataTables initialisation: Column grouping using class names"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [ 
-		{
-			extend: 'colvisGroup',
-			text: 'Office info',
-			show: '.office',
-			hide: '.hr'
-		},
-		{
-			extend: 'colvisGroup',
-			text: 'HR info',
-			show: '.hr',
-			hide: '.office'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvisGroup',
+					text: 'Office info',
+					show: '.office',
+					hide: '.hr'
+				},
+				{
+					extend: 'colvisGroup',
+					text: 'HR info',
+					show: '.hr',
+					hide: '.office'
+				}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Show all / show none buttons"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'colvisGroup',
-			text: 'Show all',
-			show: ':hidden'
-		},
-		{
-			extend: 'colvisGroup',
-			text: 'Show none',
-			hide: ':visible'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvisGroup',
+					text: 'Show all',
+					show: ':hidden'
+				},
+				{
+					extend: 'colvisGroup',
+					text: 'Show none',
+					hide: ':visible'
+				}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 
 </dt-button>

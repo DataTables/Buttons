@@ -13,9 +13,27 @@ div.dt-buttons {
 		margin-top: 3px;
 		z-index: 2002;
 
+		// Need to move the dropdown styling to the container to allow for the title
+		background-color: #fff;
+		border: 1px solid rgba(0,0,0,.15);
+		border-radius: 4px;
+		box-shadow: 0 6px 12px rgba(0,0,0,.175);
+
+		div.dt-button-collection-title {
+			padding: 0.75em 0 0.25em;
+		}
+
 		.dropdown-menu {
+			position: relative;
 			margin-top: 4px;
 			display: block;
+			width: 100%;
+
+			// Moved to collection container
+			background-color: transparent;
+			border: none;
+			border-radius: 0;
+			box-shadow: none;
 
 			li {
 				position: relative;
@@ -53,6 +71,7 @@ div.dt-buttons {
 					line-height: 1rem;
 					color: rgb(33, 37, 41);
 					padding: 0 16px;
+					overflow: visible;
 
 					&:hover {
 						color: #16181b;
@@ -70,6 +89,10 @@ div.dt-buttons {
 	}
 
 	span.dt-button-spacer {
+		float: left;
+		font-size: 1rem;
+		padding-top: 4px;
+
 		&.empty {
 			margin: 2px;
 		}
@@ -88,6 +111,7 @@ div.dt-buttons {
 	div.dt-button-split {
 		button:last-child span {
 			margin-left: 0 !important;
+			overflow: visible;
 		}
 	}
 }

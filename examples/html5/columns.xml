@@ -5,35 +5,70 @@
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-colvis">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'copyHtml5',
-				exportOptions: {
-					columns: [ 0, ':visible' ]
-				}
-			},
-			{
-				extend: 'excelHtml5',
-				exportOptions: {
-					columns: ':visible'
-				}
-			},
-			{
-				extend: 'pdfHtml5',
-				exportOptions: {
-					columns: [ 0, 1, 2, 5 ]
-				}
-			},
-			'colvis'
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'copyHtml5',
+					exportOptions: {
+						columns: [0, ':visible']
+					}
+				},
+				{
+					extend: 'excelHtml5',
+					exportOptions: {
+						columns: ':visible'
+					}
+				},
+				{
+					extend: 'pdfHtml5',
+					exportOptions: {
+						columns: [0, 1, 2, 5]
+					}
+				},
+				'colvis'
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'copyHtml5',
+					exportOptions: {
+						columns: [0, ':visible']
+					}
+				},
+				{
+					extend: 'excelHtml5',
+					exportOptions: {
+						columns: ':visible'
+					}
+				},
+				{
+					extend: 'pdfHtml5',
+					exportOptions: {
+						columns: [0, 1, 2, 5]
+					}
+				},
+				'colvis'
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Column selectors</title>
 

@@ -21,10 +21,8 @@
 	</description>
 
 	<example title="Remove all buttons with the class `.export`"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons( '.export' ).remove();
-
+table.buttons('.export').remove();
 ]]></example>
 </dt-api>

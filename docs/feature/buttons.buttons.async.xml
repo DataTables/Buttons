@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="Buttons">
+	<name>buttons.buttons.async</name>
+	<summary>Indicate that a button's action processing should be performed asynchronously.</summary>
+	<since>3.0.0</since>
+
+	<default value="No default value (i.e. undefined)" />
+
+	<type type="number">
+		<description>
+			The number of milliseconds after the event that triggered the action that the processing of the action should occur. `100` is a recommended value to allow the "processing" indicator to show for the button, but not so long that the user would notice.
+		</description>
+	</type>
+
+	<description>
+		For actions that take a noticeable amount of time, you might want to show a processing indicator for the button that triggered the action. Buttons can do that using the `-api button().processing()` method, but it requires a break in the Javascript execution in order to be able to display the processing indicator on the page.
+
+		This option provides exactly that option, specifying a number of milliseconds after the processing indicator is shown that the action should be executed.
+
+		When specified, you must call the callback function passed to the `-feature buttons.buttons.action` function as the fifth parameter in order to indicate that the processing has completed (i.e. when your async action has finished). This removes the processing indicator from the button.
+	</description>
+
+	<example title="Async processing finished callback"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topEnd: {
+			buttons: [
+				{
+					text: 'Make Ajax call',
+					async: 100,
+					action: function (e, dt, node, config, cb) {
+						// Do custom async processing - e.g. an Ajax call
+						new Promise(resolve => {
+							// ...
+
+							resolve();
+							cb();
+						});
+					}
+				}
+			]
+		}
+	}
+});
+]]></example>
+</dt-option>

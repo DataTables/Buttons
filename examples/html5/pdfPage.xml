@@ -5,21 +5,42 @@
 <js lib="jquery datatables buttons pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'pdfHtml5',
-				orientation: 'landscape',
-				pageSize: 'LEGAL'
-			}
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'pdfHtml5',
+					orientation: 'landscape',
+					pageSize: 'LEGAL'
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'pdfHtml5',
+					orientation: 'landscape',
+					pageSize: 'LEGAL'
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">PDF - page size and orientation</title>
 

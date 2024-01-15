@@ -21,10 +21,8 @@
 	</description>
 
 	<example title="Trigger all buttons with the class 'update'"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons( '.update' ).trigger();
-
+table.buttons('.update').trigger();
 ]]></example>
 </dt-api>

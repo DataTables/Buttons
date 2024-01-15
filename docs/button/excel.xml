@@ -88,30 +88,32 @@
 
 
 	<example title="DataTables initialisation: Use the `b-button excel` button type to automatically alias the HTML button options."><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'excel'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['excel']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `exportOptions` to save only the data shown on the current DataTable page"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'excel',
-			text: 'Save current page',
-			exportOptions: {
-				modifier: {
-					page: 'current'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'excel',
+					text: 'Save current page',
+					exportOptions: {
+						modifier: {
+							page: 'current'
+						}
+					}
 				}
-			}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 </dt-button>

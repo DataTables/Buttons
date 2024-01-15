@@ -36,15 +36,13 @@
 	</description>
 
 	<example title="Add a new button, into index position 0, that provides the ability to reload an Ajax sourced DataTable"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.button().add( 0, {
-	action: function ( e, dt, button, config ) {
+table.button().add(0, {
+	action: function (e, dt, button, config) {
 		dt.ajax.reload();
 	},
 	text: 'Reload table'
-} );
-
+});
 ]]></example>
 </dt-api>

@@ -24,32 +24,32 @@
 	</option>
 
 	<example title="Add a spacer between buttons"><![CDATA[
-
-$('#myTable').DataTable( {
-	dom: 'Bfrtip',
-	buttons: [
-		'csv', 'excel', 'pdf', 'spacer', 'copy', 'print'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['csv', 'excel', 'pdf', 'spacer', 'copy', 'print']
+		}
+	}
+});
 ]]></example>
 
 	<example title="Show with a bar"><![CDATA[
-
-$('#myTable').DataTable( {
-	dom: 'Bfrtip',
-	buttons: [
-		'csv',
-		'excel',
-		'pdf',
-		{
-			extend: 'spacer',
-			style: 'bar'
-		},
-		'copy',
-		'print'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				'csv',
+				'excel',
+				'pdf',
+				{
+					extend: 'spacer',
+					style: 'bar'
+				},
+				'copy',
+				'print'
+			]
+		}
+	}
+});
 ]]></example>
 </dt-button>

@@ -56,19 +56,16 @@
 	</description>
 
 	<example title="Get export information in a custom button"><![CDATA[
-
-var table = $('#myTable').DataTable( {
+var table = new DataTable('#myTable', {
 	buttons: [
 		{
 			text: 'My button',
-			action: function ( e, dt, button, config ) {
+			action: function (e, dt, button, config) {
 				var info = dt.buttons.exportInfo();
 				// Do something with the 'info' variable when creating custom export
 			}
 		}
 	]
-} );
-
-
+});
 ]]></example>
 </dt-api>

@@ -1,37 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" order="5">
+<dt-example table-type="html" order="8">
 
 <css lib="datatables buttons"/>
 <js lib="jquery datatables buttons">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				text: 'Button <u>1</u>',
-				key: '1',
-				action: function ( e, dt, node, config ) {
-					alert( 'Button 1 activated' );
-				}
-			},
-			{
-				text: 'Button <u><i>shift</i> 2</u>',
-				key: {
-					shiftKey: true,
-					key: '2'
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'Button <u>1</u>',
+					key: '1',
+					action: function (e, dt, node, config) {
+						alert('Button 1 activated');
+					}
 				},
-				action: function ( e, dt, node, config ) {
-					alert( 'Button 2 activated' );
+				{
+					text: 'Button <u><i>shift</i> 2</u>',
+					key: {
+						shiftKey: true,
+						key: '2'
+					},
+					action: function (e, dt, node, config) {
+						alert('Button 2 activated');
+					}
 				}
-			}
-		]
-	} );
-} );
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'Button <u>1</u>',
+					key: '1',
+					action: function (e, dt, node, config) {
+						alert('Button 1 activated');
+					}
+				},
+				{
+					text: 'Button <u><i>shift</i> 2</u>',
+					key: {
+						shiftKey: true,
+						key: '2'
+					},
+					action: function (e, dt, node, config) {
+						alert('Button 2 activated');
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Keyboard activation</title>
 

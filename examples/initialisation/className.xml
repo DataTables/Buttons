@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dt-example table-type="html" order="4">
+<dt-example table-type="html" order="7">
 
 <css lib="datatables buttons">
 	.dt-button.red {
@@ -17,28 +17,56 @@
 <js lib="jquery datatables buttons">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				text: 'Red',
-				className: 'red'
-			},
-			{
-				text: 'Orange',
-				className: 'orange'
-			},
-			{
-				text: 'Green',
-				className: 'green'
-			}
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'Red',
+					className: 'red'
+				},
+				{
+					text: 'Orange',
+					className: 'orange'
+				},
+				{
+					text: 'Green',
+					className: 'green'
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'Red',
+					className: 'red'
+				},
+				{
+					text: 'Orange',
+					className: 'orange'
+				},
+				{
+					text: 'Green',
+					className: 'green'
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Class names</title>
 

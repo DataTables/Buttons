@@ -19,6 +19,7 @@ div.dt-buttons {
 	.dt-button {
 		overflow: hidden;
 		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 }
 
@@ -65,10 +66,14 @@ button.dtb-hide-drop {
 
 div.dt-button-collection-title {
 	text-align: center;
-	padding: 0.3em 0 0.5em;
+	padding: 0.3em 0.5em 0.5em;
 	margin-left: 0.5em;
 	margin-right: 0.5em;
 	font-size: 0.9em;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 div.dt-button-collection-title:empty {

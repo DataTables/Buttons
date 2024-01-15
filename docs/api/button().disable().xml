@@ -23,23 +23,19 @@
 	</description>
 
 	<example title="Disable button index 2-1"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.button( '2-1' ).disable();
-
+table.button('2-1').disable();
 ]]></example>
 
 	<example title="Set enabled state on a logic condition"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-if ( table.rows( { selected: true } ).indexes().length === 0 ) {
-	table.button( 'edit:name' ).disable();
+if (table.rows({ selected: true }).indexes().length === 0) {
+	table.button('edit:name').disable();
 }
 else {
-	table.button( 'edit:name' ).enable();
+	table.button('edit:name').enable();
 }
-
 ]]></example>
 </dt-api>

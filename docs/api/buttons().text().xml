@@ -36,29 +36,23 @@
 	</description>
 
 	<example title="Get the text for all buttons"><![CDATA[
-
-var table = $('#myTable').DataTable();
+var table = new DataTable('#myTable');
 var buttonText = table.buttons().text();
 
-console.log( buttonText.toArray() );
-
+console.log(buttonText.toArray());
 ]]></example>
 
 	<example title="Set text for all disabled buttons with HTML"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons( '.disabled' ).text( '<b>Not available</b>' );
-
+table.buttons('.disabled').text('<b>Not available</b>');
 ]]></example>
 
 	<example title="Use a function to display the text"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons( [0,1] ).text( function ( dt, button, config ) {
-	return dt.i18n( 'buttons.input', 'Input' );
-} );
-
+table.buttons([0, 1]).text(function (dt, button, config) {
+	return dt.i18n('buttons.input', 'Input');
+});
 ]]></example>
 </dt-api>

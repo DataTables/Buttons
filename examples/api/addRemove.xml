@@ -4,30 +4,57 @@
 <css lib="datatables buttons"/>
 <js lib="jquery datatables buttons">
 <![CDATA[
+var counter = 1;
 
-$(document).ready(function() {
-	var counter = 1;
-
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				text: 'Add new button',
-				action: function ( e, dt, node, config ) {
-					dt.button().add( 1, {
-						text: 'Button '+(counter++),
-						action: function () {
-							this.remove();
-						}
-					} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'Add new button',
+					action: function (e, dt, node, config) {
+						dt.button().add(1, {
+							text: 'Button ' + counter++,
+							action: function () {
+								this.remove();
+							}
+						});
+					}
 				}
-			}
-		]
-	} );
-} );
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+let counter = 1;
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'Add new button',
+					action: function (e, dt, node, config) {
+						dt.button().add(1, {
+							text: 'Button ' + counter++,
+							action: function () {
+								this.remove();
+							}
+						});
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Adding and removing buttons dynamically</title>
 

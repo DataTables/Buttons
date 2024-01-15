@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="Buttons">
+	<name>buttons.buttons.async</name>
+	<summary>Indicate that a button's action processing should be performed asynchronously.</summary>
+	<since>1.0.0</since>
+	<alias>-feature buttons.buttons.action</alias>
+
+	<example title="Async processing finished callback"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: 'buttons'
+	},
+	buttons: [
+		{
+			text: 'Make Ajax call',
+			async: 100,
+			action: function (e, dt, node, config, cb) {
+				// Do custom async processing - e.g. an Ajax call
+				new Promise(resolve => {
+					// ...
+
+					resolve();
+					cb();
+				});
+			}
+		}
+	]
+});
+]]></example>
+</dt-option>

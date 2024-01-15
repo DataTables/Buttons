@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html-complex-header" order="2">
+
+<css lib="datatables buttons"/>
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-print">
+<![CDATA[
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: ['print']
+		}
+	}
+});
+
+]]>
+</js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['print']
+		}
+	}
+});
+
+]]>
+</js-vanilla>
+
+<title lib="Buttons">Complex table headers</title>
+
+<info><![CDATA[
+
+This example demonstrates the use of `colspan` and `rowspan` in a DataTable and its effect on the exported print view. The print view export supports column and row spanning elements in the table header and footer.
+
+]]></info>
+
+</dt-example>
+

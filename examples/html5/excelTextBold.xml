@@ -5,22 +5,50 @@
 <js lib="jquery datatables buttons jszip buttons-html5">
 <![CDATA[
 
-$(document).ready( function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [ {
-			extend: 'excelHtml5',
-			customize: function( xlsx ) {
-				var sheet = xlsx.xl.worksheets['sheet1.xml'];
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'excelHtml5',
+					customize: function (xlsx) {
+						var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-				$('row c[r^="C"]', sheet).attr( 's', '2' );
-			}
-		} ]
-	} );
-} );
+						$('row c[r^="C"]', sheet).attr('s', '2');
+					}
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'excelHtml5',
+					customize: function (xlsx) {
+						var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+						sheet.querySelectorAll('row c[r^="C"]').forEach((el) => {
+							el.setAttribute('s', '2');
+						});
+					}
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Excel - Bold text</title>
 

@@ -5,20 +5,40 @@
 <js lib="jquery datatables buttons pdfmake vfsfonts jszip buttons-html5">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'csv',
-				split: [ 'pdf', 'excel'],
-			}
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'csv',
+					split: ['pdf', 'excel']
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'csv',
+					split: ['pdf', 'excel']
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Split Dropdown Button</title>
 

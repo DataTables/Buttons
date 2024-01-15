@@ -5,27 +5,58 @@
 <js lib="jquery datatables buttons buttons-print buttons-colvis">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'print',
-				exportOptions: {
-					columns: ':visible'
-				}
-			},
-			'colvis'
-		],
-		columnDefs: [ {
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					exportOptions: {
+						columns: ':visible'
+					}
+				},
+				'colvis'
+			]
+		}
+	},
+	columnDefs: [
+		{
 			targets: -1,
 			visible: false
-		} ]
-	} );
-} );
+		}
+	]
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					exportOptions: {
+						columns: ':visible'
+					}
+				},
+				'colvis'
+			]
+		}
+	},
+	columnDefs: [
+		{
+			targets: -1,
+			visible: false
+		}
+	]
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Export options - column selector</title>
 

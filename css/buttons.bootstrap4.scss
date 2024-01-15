@@ -9,6 +9,7 @@ div.dt-buttons {
 
 	div.dropdown-menu {
 		margin-top: 4px;
+		width: 200px;
 
 		.dt-button {
 			position: relative;
@@ -36,6 +37,7 @@ div.dt-buttons {
 				line-height: 1rem;
 				color: rgb(33, 37, 41);
 				padding: 0 16px;
+				overflow: visible;
 
 				&:hover {
 					color: #16181b;

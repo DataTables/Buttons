@@ -19,26 +19,22 @@
 	</description>
 
 	<example title="Set the background colour for selected buttons"><![CDATA[
-
-var table = $('#myTable').DataTable();
+var table = new DataTable('#myTable');
 
 table
-	.buttons( '.important' )
+	.buttons('.important')
 	.nodes()
-	.css( 'background', 'red' );
-
+	.css('background', 'red');
 ]]></example>
 
 	<example title="Add a custom click event handler to the selected buttons"><![CDATA[
-
-var table = $('#myTable').DataTable();
+var table = new DataTable('#myTable');
 
 table
-	.buttons( '.data' )
+	.buttons('.data')
 	.nodes()
-	.on( 'click', function ( e ) {
-		console.log( 'Button clicked!' );
-	} );
-
+	.on('click', function (e) {
+		console.log('Button clicked!');
+	});
 ]]></example>
 </dt-api>

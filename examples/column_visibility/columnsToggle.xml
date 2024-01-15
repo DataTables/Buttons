@@ -4,16 +4,31 @@
 <css lib="datatables buttons" />
 <js lib="jquery datatables buttons buttons-colvis">
 <![CDATA[
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			'columnsToggle'
-		]
-	} );
-} );
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: ['columnsToggle']
+		}
+	}
+});
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: ['columnsToggle']
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Visibility toggle buttons</title>
 

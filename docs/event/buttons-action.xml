@@ -33,12 +33,10 @@
 	</description>
 
 	<example title="Show a message with the button name that was activated"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#example').DataTable();
-
-table.on( 'buttons-action', function ( e, buttonApi, dataTable, node, config ) {
-	console.log( 'Button '+buttonApi.text()+' was activated' );
-} );
-
+table.on('buttons-action', function (e, buttonApi, dataTable, node, config) {
+	console.log('Button ' + buttonApi.text() + ' was activated');
+});
 ]]></example>
 </dt-event>

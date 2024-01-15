@@ -20,7 +20,13 @@ describe('buttons - buttons.exportData()', function() {
 		it('Returns an object', function() {
 			defaultData = table.buttons.exportData();
 			expect(typeof defaultData).toBe('object');
-			expect(Object.keys(defaultData)).toEqual(['header', 'footer', 'body']);
+			expect(Object.keys(defaultData)).toEqual([
+				'header',
+				'headerStructure',
+				'footer',
+				'footerStructure',
+				'body'
+			]);
 		});
 	});
 
@@ -47,7 +53,7 @@ describe('buttons - buttons.exportData()', function() {
 			expect(defaultData.body.length).toBe(58);
 		});
 		it('row-selector - modified', function() {
-			var data = table.buttons.exportData({ rows: '.odd' });
+			var data = table.buttons.exportData({ rows: ':nth-child(odd)' });
 			expect(data.body.length).toBe(5);
 			expect(data.body[1][0]).toBe('Ashton Cox');
 		});

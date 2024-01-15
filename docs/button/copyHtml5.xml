@@ -12,18 +12,11 @@
 
 	<description>
 		<![CDATA[
-		This button provides a simple copy-to-clipboard action to the end user, copied the table's data to the system clipboard.
-
-		As of Buttons 1.1.0, in browsers that support the required functionality the table's content will be immediately copied to the system clipboard when the button is clicked up. Browsers that provide this ability are:
-
-		* Chrome 42+
-		* Firefox 41+
-		* IE9+
-		* Opera 29+
-
-		In older browsers (and Safari), or with older versions of Buttons, a message is shown to the end user inviting them to use their keyboard or the _Edit_ menu to copy the table's data. The copy is done from an almost completely hidden `-tag textarea` element so the end user won't see it, but the browser is still above to give the textarea focus and select the text.
+		This button provides a simple copy-to-clipboard action to the end user, copied the table's data to the system clipboard. In most cases this will just be automatically available on the users clipboard, but if your browser doesn't support the required APIs for that a message is shown to the end user inviting them to use their keyboard or the _Edit_ menu to copy the table's data. The copy is done from an almost completely hidden `-tag textarea` element so the end user won't see it, but the browser is still above to give the textarea focus and select the text.
 
 		When the user activates the copy command the dialogue box is dismissed. They can also click on the box or press escape to dismiss it without performing the copy action.
+
+		If your table has a header or footer with multiple rows, these will all be included in the export. If the header or footer contains `colspan` or `rowspan` cells, they will be filled in by an empty string, since this is a plain text export and has no way to represent cells that span over others.
 
 		There are a number of language strings that can be set to configure the messages shown to the end user - these are set in the `buttons` property of the `dt-init language` configuration option of the DataTable (see below for examples) - these are, including the default values:
 
@@ -76,8 +69,8 @@
 		Indicate if the table header should be included in the exported data or not.
 	</option>
 
-	<option type="boolean" name="footer" default="false">
-		Indicate if the table footer should be included in the exported data or not.
+	<option type="boolean" name="footer" default="true">
+		Indicate if the table footer should be included in the exported data or not. Please note that the default for this parameter was updated in Buttons 3.0 to be `true`. In earlier versions it was `false`.
 	</option>
 
 	<option type="function" name="customize" default="undefined" since="1.1.1">
@@ -106,56 +99,58 @@
 
 
 	<example title="DataTables initialisation: Use the Html copy button"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'copyHtml5'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['copyHtml5']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `b-button copy` button type to alias the HTML button options."><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'copy'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['copy']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `exportOptions` to copy only the current DataTable page"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'copyHtml5',
-			text: 'Copy current page',
-			exportOptions: {
-				modifier: {
-					page: 'current'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'copyHtml5',
+					text: 'Copy current page',
+					exportOptions: {
+						modifier: {
+							page: 'current'
+						}
+					}
 				}
-			}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `dt-init language` object to set the information displayed when activated"><![CDATA[
-
-$('#myTable').DataTable( {
-	language: 
+new DataTable('#myTable', {
+	language: {
 		buttons: {
 			copyTitle: 'Data copied',
 			copyKeys: 'Use your keyboard or menu to select the copy command'
 		}
 	},
-	buttons: [
-		'copyHtml5'
-	]
-} );
-
+	layout: {
+		topStart: {
+			buttons: ['copyHtml5']
+		}
+	}
+});
 ]]></example>
 </dt-button>

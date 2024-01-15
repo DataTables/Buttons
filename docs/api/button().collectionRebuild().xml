@@ -22,45 +22,45 @@
 	</description>
 
 	<example title="Add excel button to collection"><![CDATA[
-
-var table = $('#myTable').DataTable({
-    buttons: [{
-        extend: 'collection',
-        text: 'print',
-        buttons: ['csv', 'pdf']
-    }]
+var table = new DataTable('#myTable', {
+	buttons: [
+		{
+			extend: 'collection',
+			text: 'print',
+			buttons: ['csv', 'pdf']
+		}
+	]
 });
 
-table.button( 0 ).collectionRebuild(['csv', 'pdf', 'excel']);
-
+table.button(0).collectionRebuild(['csv', 'pdf', 'excel']);
 ]]></example>
 
 	<example title="Remove csv button from collection"><![CDATA[
-
-var table = $('#myTable').DataTable({
-    buttons: [{
-        extend: 'collection',
-        text: 'print',
-        buttons: ['csv', 'pdf']
-    }]
+var table = new DataTable('#myTable', {
+	buttons: [
+		{
+			extend: 'collection',
+			text: 'print',
+			buttons: ['csv', 'pdf']
+		}
+	]
 });
 
-table.button( 0 ).collectionRebuild(['pdf']);
-
+table.button(0).collectionRebuild(['pdf']);
 ]]></example>
 
 	<example title="Empty collection"><![CDATA[
-
-var table = $('#myTable').DataTable({
-    buttons: [{
-        extend: 'collection',
-        text: 'print',
-        buttons: ['csv', 'pdf']
-    }]
+var table = new DataTable('#myTable', {
+	buttons: [
+		{
+			extend: 'collection',
+			text: 'print',
+			buttons: ['csv', 'pdf']
+		}
+	]
 });
 
-table.button( 0 ).collectionRebuild([]);
-
+table.button(0).collectionRebuild([]);
 ]]></example>
 
 

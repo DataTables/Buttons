@@ -5,30 +5,60 @@
 <js lib="jquery datatables buttons buttons-print select">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'print',
-				text: 'Print all',
-				exportOptions: {
-					modifier: {
-						selected: null
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					text: 'Print all',
+					exportOptions: {
+						modifier: {
+							selected: null
+						}
 					}
+				},
+				{
+					extend: 'print',
+					text: 'Print selected'
 				}
-			},
-			{
-				extend: 'print',
-				text: 'Print selected'
-			}
-		],
-		select: true
-	} );
-} );
+			]
+		}
+	},
+	select: true
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					text: 'Print all',
+					exportOptions: {
+						modifier: {
+							selected: null
+						}
+					}
+				},
+				{
+					extend: 'print',
+					text: 'Print selected'
+				}
+			]
+		}
+	},
+	select: true
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Export options - row selector</title>
 

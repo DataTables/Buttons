@@ -31,32 +31,32 @@ describe('buttons - button().enable()', function() {
 				buttons: [{ text: 'first' }]
 			});
 
-			expect($('button.disabled').length).toBe(0);
+			expect($('div.dt-buttons button.disabled').length).toBe(0);
 		});
 		it('Use enable to disable', function() {
 			table.button(0).enable(false);
 
-			expect($('button.disabled').length).toBe(1);
-			expect($('button.disabled').attr('disabled')).toBe('disabled');
-			expect($('button.disabled').text()).toBe('first');
+			expect($('div.dt-buttons button.disabled').length).toBe(1);
+			expect($('div.dt-buttons button.disabled').attr('disabled')).toBe('disabled');
+			expect($('div.dt-buttons button.disabled').text()).toBe('first');
 		});
 		it('Use enable to enable', function() {
 			table.button(0).enable(true);
 
-			expect($('button.disabled').attr('disabled')).toBe(undefined);
-			expect($('button.disabled').length).toBe(0);
+			expect($('div.dt-buttons button.disabled').attr('disabled')).toBe(undefined);
+			expect($('div.dt-buttons button.disabled').length).toBe(0);
 		});
 		it('Disable again', function() {
 			table.button(0).enable(false);
 
-			expect($('button.disabled').length).toBe(1);
-			expect($('button.disabled').attr('disabled')).toBe('disabled');
-			expect($('button.disabled').text()).toBe('first');
+			expect($('div.dt-buttons button.disabled').length).toBe(1);
+			expect($('div.dt-buttons button.disabled').attr('disabled')).toBe('disabled');
+			expect($('div.dt-buttons button.disabled').text()).toBe('first');
 		});
 		it('Use enable to enable with default setting', function() {
 			table.button(0).enable();
 
-			expect($('button.disabled').length).toBe(0);
+			expect($('div.dt-buttons button.disabled').length).toBe(0);
 		});
 	});
 });

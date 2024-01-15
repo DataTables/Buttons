@@ -30,7 +30,7 @@ No selector (i.e. `-type undefined` or `-type null`) will select all buttons ava
 ###### Disable all buttons:
 
 ```js
-var table = $('#myTable').DataTable();
+var table = new DataTable('#myTable');
 
 table.buttons().disable();
 ```
@@ -43,9 +43,9 @@ An integer selector will select top level buttons (i.e. those which are always v
 ###### Disable the second button only:
 
 ```js
-var table = $('#myTable').DataTable();
+var table = new DataTable('#myTable');
 
-table.button( 1 ).disable();
+table.button(1).disable();
 ```
 
 
@@ -62,10 +62,7 @@ buttons: [
 	'remove',
 	{
 		text: 'Export',
-		buttons: [
-			'csv',
-			'pdf'
-		]
+		buttons: ['csv', 'pdf']
 	}
 ]
 ```
@@ -84,13 +81,11 @@ In addition to being able to select a single button with a string, multiple butt
 ###### Disable a button using a name selector
 
 ```js
-var table = $('#example').DataTable( {
-	buttons: [
-		{ extend: 'csv', name: 'csv' }
-	]
-} );
+var table = new DataTable('#myTable', {
+	buttons: [{ extend: 'csv', name: 'csv' }]
+});
 
-table.buttons( 'csv:name' ).disable();
+table.buttons('csv:name').disable();
 ```
 
 
@@ -101,13 +96,11 @@ If a string is given as a selector, it will initially be checked to see if it ma
 ###### Disable a button using a class name selector
 
 ```js
-var table = $('#example').DataTable( {
-	buttons: [
-		{ extend: 'csv', className: 'csv' }
-	]
-} );
+var table = new DataTable('#myTable', {
+	buttons: [{ extend: 'csv', className: 'csv' }]
+});
 
-table.buttons( '.csv' ).disable();
+table.buttons('.csv').disable();
 ```
 
 
@@ -118,11 +111,11 @@ Select a button using a DOM element. This can be useful if you are using DOM eve
 ###### Enable a button on mouse enter
 
 ```js
-var table = $('#example').DataTable();
+var table = new DataTable('#myTable');
 
-$('#content').on( 'mouseenter', 'a.dt-button', function (e) {
-	table.button( this ).enable();
-} );
+$('#content').on('mouseenter', 'a.dt-button', function (e) {
+	table.button(this).enable();
+});
 ```
 
 
@@ -133,9 +126,9 @@ Very similar to the above `node` type (since a jQuery object is an _array-like_ 
 ###### Disable buttons which have the class name `csv`
 
 ```js
-var table = $('#example').DataTable();
+var table = new DataTable('#myTable');
 
-table.buttons( $('a.dt-button.csv') ).disable();
+table.buttons($('a.dt-button.csv')).disable();
 ```
 
 
@@ -146,9 +139,9 @@ Any combination of the above options can be given as selector together, providin
 ###### Disable button index 0 and all buttons with the class `csv`
 
 ```js
-var table = $('#example').DataTable();
+var table = new DataTable('#myTable');
 
-table.buttons( [ 0, '.csv' ] ).disable();
+table.buttons([0, '.csv']).disable();
 ```
 
 

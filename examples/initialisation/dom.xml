@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="4" framework="datatables">
+
+<css lib="datatables buttons">
+div.dt-search {
+	float: right;
+}
+
+div.dt-info {
+	float: left;
+	margin-top: 0.8em;
+}
+
+div.dt-paging {
+	float: right;
+	margin-top: 0.5em;
+}
+</css>
+
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
+<![CDATA[
+
+$('#example').DataTable({
+	dom: 'Bfrtip',
+	buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+});
+
+]]>
+</js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	dom: 'Bfrtip',
+	buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+});
+
+]]>
+</js-vanilla>
+
+<title lib="Buttons">Initialisation: Legacy `dom` option</title>
+
+<info><![CDATA[
+
+This example shows the Buttons extension for DataTables being initialised with the legacy `-init dom` option in DataTables. Please note that `-init layout` is now preferred over `-init dom` and installations should be updated to use `-init layout`. Please note that this example will only work with the default DataTables styling due to the use of `-init dom` rather than `-init layout` (another benefit of the new layout option).
+
+Buttons can be initialised though the `b-init buttons` object which can be given as an array of the buttons that you wish to display. The `-string B` option in the `dt-init dom` parameter will instruct DataTables where the buttons should be placed in the document - in this case, at the top left (CSS also plays a part).
+
+The simplest method of using buttons is to use [predefined button types](https://datatables.net/reference/buttons) which can be displayed simply by using their name in the `b-init buttons` array. Each button can also be [extended](custom.html) to provide customisation of that button.
+
+This example shows the `b-button copy`, `b-button csv`, `b-button excel`, `b-button pdf` and `b-button print` buttons being used to display data export options for the DataTable.
+
+]]></info>
+
+</dt-example>

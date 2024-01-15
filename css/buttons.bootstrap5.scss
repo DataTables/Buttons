@@ -9,6 +9,7 @@ div.dt-buttons {
 
 	div.dropdown-menu {
 		margin-top: 4px;
+		width: 200px;
 
 		.dt-button {
 			position: relative;
@@ -36,6 +37,7 @@ div.dt-buttons {
 				line-height: 1rem;
 				color: var(--bs-dropdown-link-color);
 				padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+				overflow: visible;
 
 				&:hover {
 					color: var(--bs-dropdown-link-hover-color);

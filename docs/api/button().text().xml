@@ -36,34 +36,26 @@
 	</description>
 
 	<example title="Get the text for button index 1"><![CDATA[
-
-var table = $('#myTable').DataTable();
-var buttonText = table.button( 1 ).text();
-
+var table = new DataTable('#myTable');
+var buttonText = table.button(1).text();
 ]]></example>
 
 	<example title="Use an action to display a button activation counter"><![CDATA[
-
-var table = $('#myTable').DataTable();
-var button = table.button( 0 );
+var table = new DataTable('#myTable');
+var button = table.button(0);
 var counter = 0;
 
-button
-	.text( 'Click counter: 0' )
-	.action( function () {
-		counter++;
-		this.text( 'Click counter: '+counter );
-	} );
-
+button.text('Click counter: 0').action(function () {
+	counter++;
+	this.text('Click counter: ' + counter);
+});
 ]]></example>
 
 	<example title="Use a function to display the text"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.button( 0 ).text( function ( dt, button, config ) {
-	return dt.i18n( 'buttons.input', 'Input' );
-} );
-
+table.button(0).text(function (dt, button, config) {
+	return dt.i18n('buttons.input', 'Input');
+});
 ]]></example>
 </dt-api>

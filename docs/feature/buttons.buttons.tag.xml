@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="Buttons">
+	<name>buttons.buttons.tag</name>
+	<summary>Set the tag for the button</summary>
+	<since>3.0.0</since>
+
+	<type type="string">
+		<description>
+			The HTML element name to be used for the button.
+		</description>
+	</type>
+	<default value="undefined"/>
+
+	<description>
+		By default Buttons will use the `tag` property defined by `-feature buttons.dom.button` configuration object as the name of the HTML element to create. This option provides the ability to override that on a per-button basis, where as `-feature buttons.dom.button` will apply to all buttons.
+	</description>
+
+	<example title="Use an `a` tag for a button"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topEnd: {
+			buttons: [
+				{
+					extend: 'copy',
+					tag: 'a'
+				}
+			]
+		}
+	}
+});
+]]></example>
+</dt-option>

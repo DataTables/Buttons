@@ -16,24 +16,11 @@
 	<![CDATA[
 		This button provides the end user with the ability to save the table's data into a locally created Excel XLSX file.
 
+		The [JSZip](https://stuk.github.io/jszip/) library must be available on the page or registered with `DataTable.Buttons.jszip()` if you are importing modules. JSZip is an MIT licensed library provides the ability to create a ZIP file in the browser, which is required to build a valid XLSX file.
+
 		At this time, although an XLSX file is created, data formatting, colours, etc are not retained. Only the raw data from the table is included in the exported file. For complete control over the generated file, a custom button could be constructed using the [SheetJS](http://sheetjs.com/) library.
 
-		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported).
-
-		In addition to this, the [JSZip](https://stuk.github.io/jszip/) library must also be available on the page. This MIT licensed library provides the ability to create a ZIP file in the browser, which is required to build a valid XLSX file.
-
-
-		## Browser support
-
-		The API methods used by this button are supported in the following browsers. If the browser being used does not support the requirements for this button, it simply will not be displayed.
-
-		* Internet Explorer 10+
-		  * IE9 and older are not supported as they do not support the `FileReader` or XML parsing APIs available in newer browsers.
-		* Edge: Yes
-		* Chrome: Yes
-		* Opera: Yes
-		* Safari: Yes (tech preview 18+) Safari 10.0.x and earlier are _not_ supported.
-
+		If your table has a header or footer with multiple rows, these will all be included in the export. If the header or footer contains `colspan` or `rowspan` cells, they will automatically be migrated to the Excel document for export.
 
 		## Customisation
 
@@ -192,8 +179,8 @@
 		Indicate if the table header should be included in the exported data or not.
 	</option>
 
-	<option type="boolean" name="footer" default="false">
-		Indicate if the table footer should be included in the exported data or not.
+	<option type="boolean" name="footer" default="true">
+		Indicate if the table footer should be included in the exported data or not. Please note that the default for this parameter was updated in Buttons 3.0 to be `true`. In earlier versions it was `false`.
 	</option>
 
 	<option type="string|function" name="filename" default="*">
@@ -241,53 +228,57 @@
 
 
 	<example title="DataTables initialisation: Use the HTML5 Excel button"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'excelHtml5'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['excelHtml5']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `b-button excel` button type to alias the HTML button options."><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'excel'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['excel']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `exportOptions` to save only the data shown on the current DataTable page"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'excelHtml5',
-			text: 'Save current page',
-			exportOptions: {
-				modifier: {
-					page: 'current'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'excelHtml5',
+					text: 'Save current page',
+					exportOptions: {
+						modifier: {
+							page: 'current'
+						}
+					}
 				}
-			}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 
 	<example title="Enable the auto filter option in Excel"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'excelHtml5',
-			autoFilter: true
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'excelHtml5',
+					autoFilter: true
+				}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 </dt-button>

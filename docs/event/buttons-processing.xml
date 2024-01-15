@@ -34,19 +34,17 @@
 	</description>
 
 	<example title="Insert an element into the document when a button is processing"><![CDATA[
-
-var table = $('#example').DataTable();
+var table = new DataTable('#myTable');
 var overlay = $('<div class="ui-blocker">Please wait...</div>');
 
-table.on( 'buttons-processing', function ( e, indicator ) {
-    if ( indicator ) {
-        overlay.appendTo('body');
-    }
-    else {
-        overlay.remove();
-    }
-} );
-
+table.on('buttons-processing', function (e, indicator) {
+	if (indicator) {
+		overlay.appendTo('body');
+	}
+	else {
+		overlay.remove();
+	}
+});
 ]]></example>
 
     <related>-api button().processing()</related>

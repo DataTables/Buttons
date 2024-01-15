@@ -4,25 +4,53 @@
 <css lib="datatables buttons" />
 <js lib="jquery datatables buttons buttons-colvis">
 <![CDATA[
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'colvis',
-				postfixButtons: [ 'colvisRestore' ]
-			}
-		],
-		columnDefs: [
-			{
-				targets: -1,
-				visible: false
-			}
-		]
-	} );
-} );
+
+$('#example').DataTable({
+	columnDefs: [
+		{
+			targets: -1,
+			visible: false
+		}
+	],
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvis',
+					postfixButtons: ['colvisRestore']
+				}
+			]
+		}
+	}
+});
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	columnDefs: [
+		{
+			targets: -1,
+			visible: false
+		}
+	],
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvis',
+					postfixButtons: ['colvisRestore']
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Restore column visibility</title>
 

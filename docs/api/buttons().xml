@@ -33,34 +33,26 @@
 	</description>
 
 	<example title="Disable all buttons with the class 'csv'"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons( '.csv' ).disable();
-
+table.buttons('.csv').disable();
 ]]></example>
 
 	<example title="Change the text for button indexes 2 and 2-0"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons( [2, '2-0'] ).text( 'Not available' );
-
+table.buttons([2, '2-0']).text('Not available');
 ]]></example>
 
 	<example title="Select and disable all buttons from instance index 0"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons( 0, null ).disable();
-
+table.buttons(0, null).disable();
 ]]></example>
 
 	<example title="Enable all buttons with the class `export` from the instance with the name `output`"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons( 'output:name', '.export' ).enable();
-
+table.buttons('output:name', '.export').enable();
 ]]></example>
 </dt-api>

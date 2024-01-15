@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dt-example table-type="html" order="4" framework="bulma">
 
-<css lib="datatables buttons"/>
+<css lib="datatables buttons font-awesome"/>
 <js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print buttons-colvis">
 <![CDATA[
 
-$(document).ready(function() {
-	var table = $('#example').DataTable( {
-		lengthChange: false,
-		buttons: [
-			{
-				extend: 'csv',
-				split: [ 'pdf', 'excel'],
-			}
-		]
-	} );
-
-	// Insert at the top left of the table
-	table.buttons().container()
-		.appendTo( $('div.column.is-half', table.table().container()).eq(0) );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'csv',
+					split: ['pdf', 'excel']
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'csv',
+					split: ['pdf', 'excel']
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Bulma</title>
 

@@ -4,25 +4,55 @@
 <css lib="datatables buttons" />
 <js lib="jquery datatables buttons buttons-colvis">
 <![CDATA[
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		columnDefs: [
-			{
-				targets: 1,
-				className: 'noVis'
-			}
-		],
-		buttons: [
-			{
-				extend: 'colvis',
-				columns: ':not(.noVis)'
-			}
-		]
-	} );
-} );
+
+$('#example').DataTable({
+	columnDefs: [
+		{
+			targets: 1,
+			className: 'noVis'
+		}
+	],
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvis',
+					columns: ':not(.noVis)',
+					popoverTitle: 'Column visibility selector'
+				}
+			]
+		}
+	}
+});
+
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	columnDefs: [
+		{
+			targets: 1,
+			className: 'noVis'
+		}
+	],
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colvis',
+					columns: ':not(.noVis)',
+					popoverTitle: 'Column visibility selector'
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">Select columns</title>
 

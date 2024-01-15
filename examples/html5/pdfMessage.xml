@@ -5,20 +5,40 @@
 <js lib="jquery datatables buttons pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
-$(document).ready(function() {
-	$('#example').DataTable( {
-		dom: 'Bfrtip',
-		buttons: [
-			{
-				extend: 'pdfHtml5',
-				messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
-			}
-		]
-	} );
-} );
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'pdfHtml5',
+					messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
+				}
+			]
+		}
+	}
+});
 
 ]]>
 </js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'pdfHtml5',
+					messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
 
 <title lib="Buttons">PDF - message</title>
 

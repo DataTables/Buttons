@@ -45,13 +45,11 @@
 	</description>
 
 	<example title="Set a simple action function for all buttons"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons().action( function( e, dt, button, config ) {
-	console.log( 'Button '+this.text()+' activated' );
+table.buttons().action(function (e, dt, button, config) {
+	console.log('Button ' + this.text() + ' activated');
 	this.disable();
-} );
-
+});
 ]]></example>
 </dt-api>

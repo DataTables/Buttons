@@ -12,22 +12,9 @@
 	</requires>
 
 	<description>
-		This button provides the end user with the ability to save the table's data into a locally created Comma Separated Values (CSV) file. That file can then be used by variety of programs including spreadsheet and data analysis applications.
+		This button provides the end user with the ability to save the table's data into a locally created [Comma Separated Values](https://en.wikipedia.org/wiki/Comma-separated_values) (CSV) file. That file can then be used by variety of programs including spreadsheet and data analysis applications.
 
-		This button requires a reasonably modern browser in order to operate (IE8 and 9 are not supported).
-
-
-		## Browser support
-
-		The API methods used by this button are supported in the following browsers. If the browser being used does not support the requirements for this button, it simply will not be displayed.
-
-		* Internet Explorer 10+
-		  * IE9 and older are not supported as they do not support the `FileReader` API available in newer browsers.
-		* Edge: Yes
-		* Chrome: Yes
-		* Opera: Yes
-		* Safari: No
-		  * Safari does not currently support the ability to download generated files ([see WebKit bug 156056](https://bugs.webkit.org/show_bug.cgi?id=156056)). As soon as this has been addressed in Safari it will be released here.
+		If your table has a header or footer with multiple rows, these will all be included in the export. If the header or footer contains `colspan` or `rowspan` cells, they will be filled in by an empty string, since CSV is a plain text file and has no way to represent cells that span over others. 
 	</description>
 
 
@@ -63,8 +50,8 @@
 		Indicate if the table header should be included in the exported data or not.
 	</option>
 
-	<option type="boolean" name="footer" default="false">
-		Indicate if the table footer should be included in the exported data or not.
+	<option type="boolean" name="footer" default="true">
+		Indicate if the table footer should be included in the exported data or not. Please note that the default for this parameter was updated in Buttons 3.0 to be `true`. In earlier versions it was `false`.
 	</option>
 
 	<option type="string|function" name="filename" default="*">
@@ -101,40 +88,42 @@
 
 
 	<example title="DataTables initialisation: Use the HTML5 CSV button"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'csvHtml5'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['csvHtml5']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `b-button csv` button type to alias the HTML button options."><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'csv'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['csv']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `exportOptions` to save all data, regardless of filtering"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'csvHtml5',
-			text: 'Copy all data',
-			exportOptions: {
-				modifier: {
-					search: 'none'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'csvHtml5',
+					text: 'Copy all data',
+					exportOptions: {
+						modifier: {
+							search: 'none'
+						}
+					}
 				}
-			}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 </dt-button>

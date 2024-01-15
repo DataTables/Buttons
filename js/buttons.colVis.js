@@ -27,7 +27,7 @@ $.extend(DataTable.ext.buttons, {
 		};
 
 		// Rebuild the collection with the new column structure if columns are reordered
-		dt.on('column-reorder.dt' + conf.namespace, function (e, settings, details) {
+		dt.on('column-reorder.dt' + conf.namespace, function () {
 			dt.button(null, dt.button(null, node).node()).collectionRebuild([
 				{
 					extend: 'columnsToggle',
@@ -107,7 +107,7 @@ $.extend(DataTable.ext.buttons, {
 				if (!settings.bDestroying && settings.nTable == dt.settings()[0].nTable) {
 					that.active(dt.column(conf.columns).visible());
 				}
-			}).on('column-reorder.dt' + conf.namespace, function (e, settings, details) {
+			}).on('column-reorder.dt' + conf.namespace, function () {
 				// Button has been removed from the DOM
 				if (conf.destroying) {
 					return;
@@ -134,6 +134,10 @@ $.extend(DataTable.ext.buttons, {
 		},
 
 		_columnText: function (dt, conf) {
+			if (typeof conf.text === 'string') {
+				return conf.text;
+			}
+
 			// Use DataTables' internal data structure until this is presented
 			// is a public API. The other option is to use
 			// `$( column(col).node() ).text()` but the node might not have been
@@ -165,25 +169,22 @@ $.extend(DataTable.ext.buttons, {
 		},
 
 		init: function (dt, button, conf) {
-			conf._visOriginal = dt
-				.columns()
-				.indexes()
-				.map(function (idx) {
-					return dt.column(idx).visible();
-				})
-				.toArray();
+			// Use a private parameter on the column. This gets moved around with the
+			// column if ColReorder changes the order
+			dt.columns().every(function () {
+				var init = this.init();
+
+				if (init.__visOriginal === undefined) {
+					init.__visOriginal = this.visible();
+				}
+			});
 		},
 
 		action: function (e, dt, button, conf) {
 			dt.columns().every(function (i) {
-				// Take into account that ColReorder might have disrupted our
-				// indexes
-				var idx =
-					dt.colReorder && dt.colReorder.transpose
-						? dt.colReorder.transpose(i, 'toOriginal')
-						: i;
+				var init = this.init();
 
-				this.visible(conf._visOriginal[idx]);
+				this.visible(init.__visOriginal);
 			});
 		}
 	},

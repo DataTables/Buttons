@@ -86,44 +86,48 @@
 
 
 	<example title="DataTables initialisation: Show a print button"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		'print'
-	]
-} );
-
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['print']
+		}
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Disable auto display of the print dialogue box"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'print',
-			text: 'Print current page',
-			autoPrint: false
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					text: 'Print current page',
+					autoPrint: false
+				}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 
 	<example title="DataTables initialisation: Use the `exportOptions` to print only the current DataTable page"><![CDATA[
-
-$('#myTable').DataTable( {
-	buttons: [
-		{
-			extend: 'print',
-			text: 'Print current page',
-			exportOptions: {
-				modifier: {
-					page: 'current'
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					text: 'Print current page',
+					exportOptions: {
+						modifier: {
+							page: 'current'
+						}
+					}
 				}
-			}
+			]
 		}
-	]
-} );
-
+	}
+});
 ]]></example>
 </dt-button>

@@ -37,10 +37,8 @@
 	</description>
 
 	<example title="Remove the active state from all buttons"><![CDATA[
+var table = new DataTable('#myTable');
 
-var table = $('#myTable').DataTable();
-
-table.buttons().active( false );
-
+table.buttons().active(false);
 ]]></example>
 </dt-api>
