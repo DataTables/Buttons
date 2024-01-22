@@ -11,23 +11,8 @@ $dtb-dark-button-colour: rgba(255, 255, 255, 0.15);
 $dtb-dark-button-border: 1px solid rgb(89, 91, 94);
 
 div.dt-buttons {
-	float: left;
+	white-space: nowrap;
 
-	&.buttons-right {
-		float: right;
-	}
-}
-
-// DT2 layout does not need or want a float
-div.dataTables_layout_cell div.dt-buttons {
-	float: none;
-
-	&.buttons-right {
-		float: none;
-	}
-}
-
-div.dt-buttons {
 	> .dt-button,
 	> div.dt-button-split .dt-button {
 		position: relative;
