@@ -156,6 +156,12 @@ div.dt-button-collection {
 	}
 }
 
+@media print {
+	table.dataTable tr > * {
+		box-shadow: none !important;
+	}
+}
+
 html.dark {
 	div.dt-button-info {
 		background-color: var(--dt-html-background);
