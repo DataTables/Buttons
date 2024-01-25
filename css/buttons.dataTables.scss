@@ -11,8 +11,6 @@ $dtb-dark-button-colour: rgba(255, 255, 255, 0.15);
 $dtb-dark-button-border: 1px solid rgb(89, 91, 94);
 
 div.dt-buttons {
-	white-space: nowrap;
-
 	> .dt-button,
 	> div.dt-button-split .dt-button {
 		position: relative;
