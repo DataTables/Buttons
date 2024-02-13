@@ -2439,20 +2439,20 @@ DataTable.Api.register('buttons.exportInfo()', function (conf) {
 	}
 
 	return {
-		filename: _filename(conf),
-		title: _title(conf),
-		messageTop: _message(this, conf.message || conf.messageTop, 'top'),
-		messageBottom: _message(this, conf.messageBottom, 'bottom')
+		filename: _filename(conf, this),
+		title: _title(conf, this),
+		messageTop: _message(this, conf, conf.message || conf.messageTop, 'top'),
+		messageBottom: _message(this, conf. conf.messageBottom, 'bottom')
 	};
 });
 
 /**
  * Get the file name for an exported file.
  *
- * @param {object}	config Button configuration
- * @param {boolean} incExtension Include the file name extension
+ * @param {object} config Button configuration
+ * @param {object} dt DataTable instance
  */
-var _filename = function (config) {
+var _filename = function (config, dt) {
 	// Backwards compatibility
 	var filename =
 		config.filename === '*' &&
@@ -2464,7 +2464,7 @@ var _filename = function (config) {
 			: config.filename;
 
 	if (typeof filename === 'function') {
-		filename = filename();
+		filename = filename(config, dt);
 	}
 
 	if (filename === undefined || filename === null) {
@@ -2478,7 +2478,7 @@ var _filename = function (config) {
 	// Strip characters which the OS will object to
 	filename = filename.replace(/[^a-zA-Z0-9_\u00A1-\uFFFF\.,\-_ !\(\)]/g, '');
 
-	var extension = _stringOrFunction(config.extension);
+	var extension = _stringOrFunction(config.extension, config, dt);
 	if (!extension) {
 		extension = '';
 	}
@@ -2492,12 +2492,12 @@ var _filename = function (config) {
  * @param {undefined|string|function} option Option
  * @return {null|string} Resolved value
  */
-var _stringOrFunction = function (option) {
+var _stringOrFunction = function (option, config, dt) {
 	if (option === null || option === undefined) {
 		return null;
 	}
 	else if (typeof option === 'function') {
-		return option();
+		return option(config, dt);
 	}
 	return option;
 };
@@ -2507,8 +2507,8 @@ var _stringOrFunction = function (option) {
  *
  * @param {object} config	Button configuration
  */
-var _title = function (config) {
-	var title = _stringOrFunction(config.title);
+var _title = function (config, dt) {
+	var title = _stringOrFunction(config.title, config, dt);
 
 	return title === null
 		? null
@@ -2517,8 +2517,8 @@ var _title = function (config) {
 		: title;
 };
 
-var _message = function (dt, option, position) {
-	var message = _stringOrFunction(option);
+var _message = function (dt, config, option, position) {
+	var message = _stringOrFunction(option, config, dt);
 	if (message === null) {
 		return null;
 	}
