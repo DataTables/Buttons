@@ -59,7 +59,7 @@ describe('buttons - colvis', function() {
 		});
 	});
 
-	describe('Functional test', function() {
+	describe('Functional tests', function() {
 		let params = undefined;
 
 		dt.html('basic');

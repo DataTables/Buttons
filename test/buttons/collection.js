@@ -6,7 +6,7 @@ describe('buttons - collection', function () {
 
 	let table;
 
-	describe('Functional tests - Check the defaults', function () {
+	describe('Check the defaults', function () {
 		dt.html('basic');
 		it('Ensure collection button is as expected', function () {
 			$('#example').DataTable({
