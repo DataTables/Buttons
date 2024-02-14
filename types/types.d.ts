@@ -52,7 +52,7 @@ declare module 'datatables.net' {
 			/**
 			 * Create a new Buttons instance for the target DataTable
 			 */
-			new (dt: Api<any>, settings: boolean | ConfigButtons | Array<string | ButtonConfig>): void;
+			new (dt: Api<any>, settings: boolean | ConfigButtons | Array<string | ButtonConfig>): DataTablesStatic['Buttons'];
 
 			/**
 			 * Buttons version
@@ -78,8 +78,10 @@ declare module 'datatables.net' {
 		}
 	}
 
-	interface DataTablesStaticExt {
-		buttons: ExtButtons;
+	interface DataTablesStaticExtButtons {
+		[name: string]: ButtonConfigCommon;
+
+		collection: ButtonCollection;
 	}
 
 
@@ -231,7 +233,7 @@ declare module 'datatables.net' {
 		exportData(options?: ButtonsApiExportDataParameter): ButtonsApiExportDataReturn;
 	}
 
-	interface ApiButtonsMethods<T> extends Api<T> {
+	interface ApiButtonsMethods<T> extends Omit<Api<T>, 'trigger'> {
 		/**
 		 * Get the action function for the selected button.
 		 * 
@@ -489,12 +491,6 @@ declare module 'datatables.net' {
 	type FunctionButtonCustomize = (win: Window|string) => void;
 
 	type FunctionExtButtonsCollectionText = (a: any) => string;
-
-	interface ExtButtons {
-		[name: string]: ButtonConfigCommon;
-
-		collection: ButtonCollection;
-	}
 
 	/**
 	 * Collection button
