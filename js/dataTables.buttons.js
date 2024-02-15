@@ -2442,7 +2442,7 @@ DataTable.Api.register('buttons.exportInfo()', function (conf) {
 		filename: _filename(conf, this),
 		title: _title(conf, this),
 		messageTop: _message(this, conf, conf.message || conf.messageTop, 'top'),
-		messageBottom: _message(this, conf. conf.messageBottom, 'bottom')
+		messageBottom: _message(this, conf, conf.messageBottom, 'bottom')
 	};
 });
 
