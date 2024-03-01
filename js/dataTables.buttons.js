@@ -2584,11 +2584,17 @@ var _exportData = function (dt, inOpts) {
 				.indexes()
 				.map(function (idx) {
 					var el = dt.column(idx).footer();
-					return config.format.footer(
-						el ? $('.dt-column-title', el).html() : '',
-						idx,
-						el
-					);
+					var val = '';
+
+					if (el) {
+						var inner = $('.dt-column-title', el);
+
+						val = inner.length
+							? inner.html()
+							: $(el).html();
+					}
+
+					return config.format.footer(val, idx, el);
 				})
 				.toArray()
 		: null;
