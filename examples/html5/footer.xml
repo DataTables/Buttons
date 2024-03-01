@@ -9,10 +9,10 @@ $('#example').DataTable({
 	layout: {
 		topStart: {
 			buttons: [
-				{ extend: 'copyHtml5', footer: true },
-				{ extend: 'excelHtml5', footer: true },
-				{ extend: 'csvHtml5', footer: true },
-				{ extend: 'pdfHtml5', footer: true }
+				{ extend: 'copyHtml5', footer: false },
+				{ extend: 'excelHtml5', footer: false },
+				{ extend: 'csvHtml5', footer: false },
+				{ extend: 'pdfHtml5', footer: false }
 			]
 		}
 	}
@@ -28,10 +28,10 @@ new DataTable('#example', {
 	layout: {
 		topStart: {
 			buttons: [
-				{ extend: 'copyHtml5', footer: true },
-				{ extend: 'excelHtml5', footer: true },
-				{ extend: 'csvHtml5', footer: true },
-				{ extend: 'pdfHtml5', footer: true }
+				{ extend: 'copyHtml5', footer: false },
+				{ extend: 'excelHtml5', footer: false },
+				{ extend: 'csvHtml5', footer: false },
+				{ extend: 'pdfHtml5', footer: false }
 			]
 		}
 	}
@@ -40,11 +40,13 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="Buttons">Include footer in export</title>
+<title lib="Buttons">Exclude footer in export</title>
 
 <info><![CDATA[
 
-By default the data export buttons do not include the table footer (if present) in the output. That behaviour can be altered using the `footer` option that is present for each of the export buttons, as shown in this example.
+As of Buttons 3, by default the data export buttons will include the table footer (if present) in the output (prior to Buttons 3, the default was for the footer not to be included).
+
+This behaviour can be altered using the `footer` option that is present for each of the export buttons, as shown in this example.
 
 ]]></info>
 
