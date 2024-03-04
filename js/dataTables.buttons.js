@@ -2646,9 +2646,15 @@ var _exportData = function (dt, inOpts) {
 
 	var data = {
 		header: header,
-		headerStructure: dt.table().header.structure(config.columns),
+		headerStructure: _headerFormatter(
+			config.format.header,
+			dt.table().header.structure(config.columns)
+		),
 		footer: footer,
-		footerStructure: dt.table().footer.structure(config.columns),
+		footerStructure: _headerFormatter(
+			config.format.footer,
+			dt.table().footer.structure(config.columns)
+		),
 		body: body
 	};
 
@@ -2658,6 +2664,24 @@ var _exportData = function (dt, inOpts) {
 
 	return data;
 };
+
+function _headerFormatter(formatter, struct) {
+	for (var i=0 ; i<struct.length ; i++) {
+		for (var j=0 ; j<struct[i].length ; j++) {
+			var item = struct[i][j];
+
+			if (item) {
+				item.title = formatter(
+					item.title,
+					j,
+					item.cell
+				);
+			}
+		}
+	}
+
+	return struct;
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables interface
