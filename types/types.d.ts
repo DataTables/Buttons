@@ -556,6 +556,11 @@ declare module 'datatables.net' {
 		customizeData?: FunctionButtonCustomizeData;
 
 		/**
+		 * EXCEL
+		 */
+		customizeZip?: FunctionButtonCustomizeZip;
+
+		/**
 		 * PDF: portrait / landscape
 		 */
 		orientation?: string;
@@ -629,4 +634,6 @@ declare module 'datatables.net' {
 	type FunctionButtonCustomizeData = (content: any) => void;
 
 	type FunctionButtonColvisColumnText = (dt: Api<any>, i: number, title: string) => string;
+
+	type FunctionButtonCustomizeZip = (zip: any, data: ButtonsApiExportDataReturn, filename: string) => void;
 }

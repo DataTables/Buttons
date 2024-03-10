@@ -1385,6 +1385,12 @@ DataTable.ext.buttons.excelHtml5 = {
 			filename = filename.substr(0, 175);
 		}
 
+		// Let the developer customize the final zip file if they want to before it is generated and sent to the browser
+		if (config.customizeZip) {
+			config.customizeZip(zip, data, filename);
+		}
+
+
 		if (zip.generateAsync) {
 			// JSZip 3+
 			zip.generateAsync(zipConfig).then(function (blob) {
