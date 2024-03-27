@@ -1348,8 +1348,9 @@ DataTable.ext.buttons.excelHtml5 = {
 						_sheetname(config) +
 						'!$A$' +
 						dataStartRow +
-						':' +
+						':$' +
 						createCellPos(data.header.length - 1) +
+						'$' +
 						dataEndRow
 				})
 			);
