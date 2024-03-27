@@ -225,6 +225,10 @@
 		Enable Excel's auto filter feature for the header cells in the table allowing the user to quickly filter and sort the exported spreadsheet in Excel. Note that this does not operate in LibreOffice (although the spreadsheet is still readable).
 	</option>
 
+	<option type="boolean" name="fixedHeader" default="false" since="3.0.2">
+		Freeze the header cells in the table allowing the user to always see the header as they scroll the spreadsheet.
+	</option>
+
 
 
 	<example title="DataTables initialisation: Use the HTML5 Excel button"><![CDATA[
