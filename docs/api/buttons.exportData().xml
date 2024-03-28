@@ -16,7 +16,7 @@
 			* `-type row-selector` `rows` - The row selector to use. Default - all rows
 			* `-type column-selector` `columns` - The column selector to use. Default - all columns
 			* `-type selector-modifier` `modifier` - How the ordering and search state of the table should be applied. Default - `{search: 'applied', order: 'applied'}`
-			* `-type string` `orthogonal` - What [orthogonal data type](https://datatables.net/manual/orthogonal-data) to request when getting the data for a cell. Default is an empty string (i.e. get the original data), this was updated in Buttons 3.0, previously was `-string display`.
+			* `-type string` `orthogonal` - What [orthogonal data type](https://datatables.net/manual/orthogonal-data) to request when getting the data for a cell. Default `-string display` - i.e. the data shown in the table.
 			* `-type boolean` `stripHtml` - Indicate if HTML should be stripped from the read data if there is any (`true`) or not (`false`). Default - `true`.
 			* `-type boolean` `stripNewlines` - Indicate if newline characters should be stripped from the read data if there are any (`true`) or not (`false`). Default - `true`.
 			* `-type boolean` `decodeEntities` - Indicate if HTML entities should be decoded (`true`) or not (`false`) - for example `&gt;` would become `>`. For larger tables you may wish to disable this option as it can decrease performance. Default - `true`.
