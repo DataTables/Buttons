@@ -1317,6 +1317,32 @@ DataTable.ext.buttons.excelHtml5 = {
 			);
 		}
 
+		// Make the header fixed while scrolling
+		if (config.fixedHeader) {
+			var sheetViews = _createNode(rels, 'sheetViews', {
+				children: [
+					_createNode(rels, 'sheetView', {
+						attr: {
+							tabSelected: '1',
+							workbookViewId: '0'
+						},
+						children: [
+							_createNode(rels, 'pane', {
+								attr: {
+									xSplit: '0',
+									ySplit: '2',
+									topLeftCell: 'A' + (dataStartRow + 1),
+									activePane: 'bottomRight',
+									state: 'frozen'
+								}
+							})
+						]
+					})
+				]
+			});
+			$('worksheet', rels).prepend(sheetViews);
+		}
+
 		// Workbook modifications
 		var workbook = xlsx.xl['workbook.xml'];
 
