@@ -139,6 +139,7 @@ $.extend(DataTable.ext.buttons, {
 			}
 
 			var title = dt.column(conf.columns).title();
+			var idx = dt.column(conf.columns).index();
 
 			title = title
 				.replace(/\n/g, ' ') // remove new lines
@@ -146,7 +147,7 @@ $.extend(DataTable.ext.buttons, {
 				.replace(/<select(.*?)<\/select\s*>/gi, ''); // remove select tags, including options text
 
 			// Strip HTML comments
-			title = DataTable.Buttons.stripHtmlComments(str);
+			title = DataTable.Buttons.stripHtmlComments(title);
 
 			// Use whatever HTML stripper DataTables is configured for
 			title = DataTable.stripHtml(title).trim();
