@@ -1838,7 +1838,7 @@ Buttons.stripData = function (str, config) {
 	str = Buttons.stripHtmlComments(str);
 
 	if (!config || config.stripHtml) {
-		str = DataTable.stripHtml(str);
+		str = DataTable.util.stripHtml(str);
 	}
 
 	if (!config || config.trim) {

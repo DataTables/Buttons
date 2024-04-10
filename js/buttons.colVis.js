@@ -150,7 +150,7 @@ $.extend(DataTable.ext.buttons, {
 			title = DataTable.Buttons.stripHtmlComments(title);
 
 			// Use whatever HTML stripper DataTables is configured for
-			title = DataTable.stripHtml(title).trim();
+			title = DataTable.util.stripHtml(title).trim();
 
 			return conf.columnText ? conf.columnText(dt, idx, title) : title;
 		}
