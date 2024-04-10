@@ -146,7 +146,7 @@ $.extend(DataTable.ext.buttons, {
 				.replace(/<select(.*?)<\/select\s*>/gi, ''); // remove select tags, including options text
 
 			// Strip HTML comments
-			title = Buttons.stripHtmlComments(str);
+			title = DataTable.Buttons.stripHtmlComments(str);
 
 			// Use whatever HTML stripper DataTables is configured for
 			title = DataTable.stripHtml(title).trim();

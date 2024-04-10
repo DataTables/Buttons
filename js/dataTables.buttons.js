@@ -1881,8 +1881,8 @@ Buttons.stripHtmlComments = function (input) {
 	var previous;  
 	
 	do {  
-	  previous = input;  
-	  input = input.replace(/(<!--.*?--!?>)|(<!--[\S\s]+?--!?>)|(<!--[\S\s]*?$)/g, '');  
+		previous = input;
+		input = input.replace(/(<!--.*?--!?>)|(<!--[\S\s]+?--!?>)|(<!--[\S\s]*?$)/g, '');
 	} while (input !== previous);  
 
 	return input;  
@@ -1898,8 +1898,8 @@ Buttons.stripHtmlScript = function (input) {
 	var previous;  
 	
 	do {  
-	  previous = input;  
-	  input = input.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi, '');  
+		previous = input;
+		input = input.replace(/<script\b[^<]*(?:(?!<\/script[^>]*>)<[^<]*)*<\/script[^>]*>/gi, '');
 	} while (input !== previous);  
 
 	return input;  
