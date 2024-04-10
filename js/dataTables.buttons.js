@@ -1832,20 +1832,17 @@ Buttons.stripData = function (str, config) {
 	}
 
 	// Always remove script tags
-	str = str.replace(
-		/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi,
-		''
-	);
+	str = Buttons.stripHtmlScript(str);
 
 	// Always remove comments
-	str = str.replace(/<!\-\-.*?\-\-!?>/g, '');
+	str = Buttons.stripHtmlComments(str);
 
 	if (!config || config.stripHtml) {
 		str = DataTable.stripHtml(str);
 	}
 
 	if (!config || config.trim) {
-		str = str.replace(/^\s+|\s+$/g, '');
+		str = str.trim();
 	}
 
 	if (!config || config.stripNewlines) {
@@ -1872,6 +1869,40 @@ Buttons.stripData = function (str, config) {
  */
 Buttons.entityDecoder = function (fn) {
 	_entityDecoder = fn;
+};
+
+/**
+ * Common function for stripping HTML comments
+ *
+ * @param {*} input 
+ * @returns 
+ */
+Buttons.stripHtmlComments = function (input) {
+	var previous;  
+	
+	do {  
+	  previous = input;  
+	  input = input.replace(/(<!--.*?-->)|(<!--[\S\s]+?-->)|(<!--[\S\s]*?$)/g, '');  
+	} while (input !== previous);  
+
+	return input;  
+};
+
+/**
+ * Common function for stripping HTML script tags
+ *
+ * @param {*} input 
+ * @returns 
+ */
+Buttons.stripHtmlScript = function (input) {
+	var previous;  
+	
+	do {  
+	  previous = input;  
+	  input = input.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi, '');  
+	} while (input !== previous);  
+
+	return input;  
 };
 
 /**
