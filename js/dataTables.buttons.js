@@ -1833,15 +1833,15 @@ Buttons.stripData = function (str, config) {
 
 	// Always remove script tags
 	str = str.replace(
-		/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+		/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi,
 		''
 	);
 
 	// Always remove comments
-	str = str.replace(/<!\-\-.*?\-\->/g, '');
+	str = str.replace(/<!\-\-.*?\-\-!?>/g, '');
 
 	if (!config || config.stripHtml) {
-		str = str.replace(/<[^>]*>/g, '');
+		str = DataTable.stripHtml(str);
 	}
 
 	if (!config || config.trim) {
@@ -2472,7 +2472,7 @@ var _filename = function (config, dt) {
 	}
 
 	if (filename.indexOf('*') !== -1) {
-		filename = filename.replace('*', $('head > title').text()).trim();
+		filename = filename.replace(/\*/g, $('head > title').text()).trim();
 	}
 
 	// Strip characters which the OS will object to
@@ -2513,7 +2513,7 @@ var _title = function (config, dt) {
 	return title === null
 		? null
 		: title.indexOf('*') !== -1
-		? title.replace('*', $('head > title').text() || 'Exported data')
+		? title.replace(/\*/g, $('head > title').text() || 'Exported data')
 		: title;
 };
 
