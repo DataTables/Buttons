@@ -1675,6 +1675,14 @@ Buttons.instanceSelector = function (group, buttons) {
 			// Index selector
 			ret.push(buttons[input].inst);
 		}
+		else if (typeof input === 'object' && input.nodeName) {
+			// Element selector
+			for (var j = 0; j < buttons.length; j++) {
+				if (buttons[j].inst.dom.container[0] === input) {
+					ret.push(buttons[j].inst);
+				}
+			}
+		}
 		else if (typeof input === 'object') {
 			// Actual instance selector
 			ret.push(input);

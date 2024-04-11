@@ -17,6 +17,7 @@ The button group selector can be given in a number of different forms to ensure 
 * No selector - Select all button instances
 * `-type integer` - Instance index selector
 * `-type string` - Instance name selector (set by `b-init buttons.name`)
+* `-type node` - `-tag div` element of the button group (<span class="since">since 3.0.2</span>).
 * `-type array` - Array containing any combination of the above options
 
 
@@ -115,6 +116,27 @@ var table = new DataTable('#myTable', {
 // since `buttons()` with a single parameter will treat the first parameter as
 // a button selector. See the `buttons()` documentation for full details.
 table.buttons('export, commands', null).containers().appendTo('#panel');
+```
+
+
+## node
+
+< Note that this option was introduced in <span class="since">Buttons 3.0.2</span>.
+
+A `-tag div` element can be used to select the button instance group using the container element. This can be useful if working with multiple button sets and you need to select a specific group based on an interaction with a button contained within it.
+
+Please note that this needs to be a plain `-tag div`, not a jQuery object with the `-tag div` inside it. Use `$().get()` if you used jQuery to select the container.
+
+###### Select a button group from a `div`
+
+```js
+// Note `this` might be a button element itself
+let groupEl = this.closest('div.dt-buttons');
+
+table
+	.buttons(groupEl, null)
+	.containers()
+	.appendTo('#panel');
 ```
 
 
