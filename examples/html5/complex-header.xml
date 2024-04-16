@@ -30,7 +30,7 @@ new DataTable('#example', {
 ]]>
 </js-vanilla>
 
-<title lib="Buttons">Complex table headers</title>
+<title lib="Buttons">Complex table headers - all header rows</title>
 
 <info><![CDATA[
 

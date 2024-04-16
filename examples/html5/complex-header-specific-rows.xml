@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="ajax" order="2">
+
+<css lib="datatables buttons">
+	thead input {
+		width: 100%;
+		padding: 3px;
+		box-sizing: border-box;
+	}
+</css>
+<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
+<![CDATA[
+
+var exportOptions = {
+	customizeData: function (data) {
+		// Remove the second header row by popping it off the array
+		data.headerStructure.pop();
+		console.log(data);
+	}
+};
+
+$('#example').DataTable({
+	ajax: '../../../../examples/ajax/data/objects.txt',
+	columns: [
+		{ data: 'name' },
+		{ data: 'position' },
+		{ data: 'office' },
+		{ data: 'extn' },
+		{ data: 'start_date' },
+		{ data: 'salary' }
+	],
+	layout: {
+		topStart: {
+			buttons: [
+				{ extend: 'copyHtml5', exportOptions: exportOptions },
+				{ extend: 'excelHtml5', exportOptions: exportOptions },
+				{ extend: 'pdfHtml5', exportOptions: exportOptions }
+			]
+		}
+	},
+	initComplete: function () {
+		this.api()
+			.columns()
+			.every(function () {
+				// Get the input element from the second header row
+				var input = $('input', this.header(1));
+				var column = this;
+
+				// Event listener for user input
+				input.on('keyup', function () {
+					if (column.search() !== input.val()) {
+						column.search(input.val()).draw();
+					}
+				});
+			});
+	}
+});
+
+]]>
+</js>
+
+<js-vanilla>
+<![CDATA[
+
+let exportOptions = {
+	customizeData: function (data) {
+		// Remove the second header row by popping it off the array
+		data.headerStructure.pop();
+		console.log(data);
+	}
+};
+
+new DataTable('#example', {
+	ajax: '../../../../examples/ajax/data/objects.txt',
+	columns: [
+		{ data: 'name' },
+		{ data: 'position' },
+		{ data: 'office' },
+		{ data: 'extn' },
+		{ data: 'start_date' },
+		{ data: 'salary' }
+	],
+	layout: {
+		topStart: {
+			buttons: [
+				{ extend: 'copyHtml5', exportOptions: exportOptions },
+				{ extend: 'excelHtml5', exportOptions: exportOptions },
+				{ extend: 'pdfHtml5', exportOptions: exportOptions }
+			]
+		}
+	},
+	initComplete: function () {
+		this.api()
+			.columns()
+			.every(function () {
+				// Get the input element from the second header row
+				let input = this.header(1).querySelector('input');
+				let column = this;
+
+				// Event listener for user input
+				input.addEventListener('keyup', () => {
+					if (column.search() !== input.value) {
+						column.search(input.value).draw();
+					}
+				});
+			});
+	}
+});
+
+]]>
+</js-vanilla>
+
+<title lib="Buttons">Complex table headers - selected header rows</title>
+
+<info><![CDATA[
+
+As with [its companion example](complex-header.html), this example shows Buttons's multi-row header and footer handling, but in this case shows how to limited the export to a specific row, rather than including all rows in the header / footer in the export. This can be useful if you have a row in the header for search input elements that wouldn't be relevant in the exported data, as is shown here.
+
+To have only one row in the header's output, we use the `customizeData` callback function of the `exportOptions` for each button (see `-api buttons.exportData()` for the full list of options available for the export options) to manipulate the data to be exported - in this case removing a row from the header. This function is shared between all buttons used on this page to help with code readability and reduce size.
+
+]]></info>
+
+<custom-table>
+	<table id="example" class="display" style="width:100%">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Position</th>
+				<th>Office</th>
+				<th>Extn.</th>
+				<th>Start date</th>
+				<th>Salary</th>
+			</tr>
+			<tr data-dt-order="disable">
+				<th><input type="text" placeholder="Search..." /></th>
+				<th><input type="text" placeholder="Search..." /></th>
+				<th><input type="text" placeholder="Search..." /></th>
+				<th><input type="text" placeholder="Search..." /></th>
+				<th><input type="text" placeholder="Search..." /></th>
+				<th><input type="text" placeholder="Search..." /></th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>Name</th>
+				<th>Position</th>
+				<th>Office</th>
+				<th>Extn.</th>
+				<th>Start date</th>
+				<th>Salary</th>
+			</tr>
+		</tfoot>
+	</table>
+</custom-table>
+
+</dt-example>
+
