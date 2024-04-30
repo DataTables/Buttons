@@ -180,6 +180,15 @@ DataTable.ext.buttons.print = {
 			$(win.document.head).html(head); // Old IE
 		}
 
+		// Add any custom scripts (for example for paged.js)
+		if (config.customScripts) {
+			config.customScripts.forEach(function (script) {
+				var tag = win.document.createElement("script");
+				tag.src = script;
+				win.document.getElementsByTagName("head")[0].appendChild(tag);
+			});
+		}
+
 		// Inject the table and other surrounding information
 		win.document.body.innerHTML =
 			'<h1>' +
