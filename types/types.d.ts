@@ -616,6 +616,11 @@ declare module 'datatables.net' {
 		autoPrint?: boolean;
 
 		/**
+		 * PRINT: Add custom scripts to the print window.
+		 */
+		customScripts?: string[];
+
+		/**
 		 * COLVIS: Column selector
 		 */
 		columns?: any;

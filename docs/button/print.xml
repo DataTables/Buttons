@@ -84,6 +84,11 @@
 		Message to be shown at the bottom of the table, or the `-tag caption` tag if displayed at the bottom of the table.
 	</option>
 
+	<option type="array" name="customScripts" default="null">
+		An array of URLs pointing to scripts that should be included in the print view document. This can be useful for including additional libraries that are required for the document to be displayed correctly.
+		Function that is executed when the window that contains the print view document has been displayed.
+	</option>
+
 
 	<example title="DataTables initialisation: Show a print button"><![CDATA[
 new DataTable('#myTable', {

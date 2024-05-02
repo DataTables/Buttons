@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="6">
+
+<css lib="datatables buttons">
+<![CDATA[
+
+@page {
+  size: A4;
+  @bottom-center {
+    content: "Page " counter(page) " of " counter(pages)
+  }
+}
+]]>
+</css>
+<js lib="jquery datatables buttons buttons-print">
+<![CDATA[
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					customScripts: [
+						'https://unpkg.com/pagedjs/dist/paged.polyfill.js'
+					]
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'print',
+					customScripts: [
+						'https://unpkg.com/pagedjs/dist/paged.polyfill.js'
+					]
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
+
+<title lib="Buttons">Adding scripts to the print view window</title>
+
+<info><![CDATA[
+
+If you need to add JavaScript to the print view window, you can do so by using the `customScripts` option. 
+This option takes an array of URLs pointing to scripts that should be included in the print view document. 
+This can be useful for including additional libraries that are required for the document to be displayed correctly.
+
+This simple example shows:
+
+* How PagedJS is added to the print view window
+* The necessary CSS to display page numbers
+
+]]></info>
+
+</dt-example>
+
