@@ -2,17 +2,20 @@
 <dt-example table-type="html" order="7">
 
 <css lib="datatables buttons">
-	.dt-button.red {
-		color: red;
-	}
+button.red,
+a.red {
+	color: red !important;
+}
 
-	.dt-button.orange {
-		color: orange;
-	}
+button.orange,
+a.orange {
+	color: orange !important;
+}
 
-	.dt-button.green {
-		color: green;
-	}
+button.green,
+a.green {
+	color: green !important;
+}
 </css>
 <js lib="jquery datatables buttons">
 <![CDATA[
