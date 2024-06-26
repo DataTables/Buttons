@@ -830,7 +830,7 @@ var _excelSpecials = [
 	{ match: /^\-?[\d,]+$/, style: 63 }, // Numbers with thousand separators
 	{ match: /^\-?[\d,]+\.\d{2}$/, style: 64 },
 	{
-		match: /^[\d]{4}\-[01][\d]\-[0123][\d]$/,
+		match: /^(19\d\d|[2-9]\d\d\d)\-(0\d|1[012])\-[0123][\d]$/,
 		style: 67,
 		fmt: function (d) {
 			return Math.round(25569 + Date.parse(d) / (86400 * 1000));
