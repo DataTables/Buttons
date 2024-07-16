@@ -32,6 +32,10 @@ declare module 'datatables.net' {
 		buttons?: ConfigButtonsLanguage;
 	}
 
+	interface Feature {
+		buttons?: ConfigButtons | Array<string | ButtonConfig>;
+	}
+
 	interface Api<T> {
 		/**
 		 * Select a single button from the button instances attached to a DataTable.
