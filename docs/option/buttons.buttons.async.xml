@@ -3,7 +3,7 @@
 	<name>buttons.buttons.async</name>
 	<summary>Indicate that a button's action processing should be performed asynchronously.</summary>
 	<since>1.0.0</since>
-	<alias>-feature buttons.buttons.action</alias>
+	<alias>-feature buttons.buttons.async</alias>
 
 	<example title="Async processing finished callback"><![CDATA[
 new DataTable('#myTable', {
