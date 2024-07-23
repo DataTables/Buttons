@@ -8,7 +8,7 @@ $.extend(true, DataTable.Buttons.defaults, {
 			className: 'dt-buttons field is-grouped'
 		},
 		button: {
-			className: 'button is-light',
+			className: 'button',
 			active: 'is-active',
 			disabled: 'is-disabled'
 		},
@@ -30,7 +30,7 @@ $.extend(true, DataTable.Buttons.defaults, {
 			},
 			closeButton: false,
 			container: {
-				className: 'dt-button-collection dropdown-menu',
+				className: 'dt-button-collection dropdown dropdown-menu',
 				content: {
 					className: 'dropdown-content'
 				}
@@ -39,13 +39,13 @@ $.extend(true, DataTable.Buttons.defaults, {
 		split: {
 			action: {
 				tag: 'button',
-				className: 'dt-button-split-drop-button button is-light',
+				className: 'dt-button-split-drop-button button',
 				closeButton: false
 			},
 			dropdown: {
 				tag: 'button',
 				dropHtml: '<i class="fa fa-angle-down" aria-hidden="true"></i>',
-				className: 'button is-light',
+				className: 'button',
 				closeButton: false,
 				align: 'split-left',
 				splitAlignClass: 'dt-button-split-left'

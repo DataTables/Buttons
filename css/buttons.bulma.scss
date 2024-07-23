@@ -2,21 +2,16 @@
 @import 'mixins.scss';
 @import 'common.scss';
 
+.dt-button {
+	position: relative;
+}
+
 div.dt-button-collection {
 	position: absolute;
 	z-index: 2001;
 	width: 200px;
-	
-	// We need the dropdown stylings on the container, not the dropdown content
-	background: white;
 	max-width: none;
 	display: block;
-	box-shadow: 0 .5em 1em -.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
-	border-radius: 4;
-
-	div.dropdown-content {
-		box-shadow: none;
-	}
 
 	div.dt-button-collection-title {
 		padding: 0.75em 0.6em 0.25em;
@@ -97,13 +92,6 @@ div.dt-buttons {
 	a.btn.processing {
 		@include dtb-processing();
 	}
-
-	button.button {
-		margin-left: 5px;
-		&:first-child {
-			margin-left: 0px;
-		}
-	}
 }
 
 span.dt-button-spacer {
@@ -157,7 +145,6 @@ div.dt-button-split {
 		border-top-left-radius: 0px;
 		border-top-right-radius: 3px;
 		border-bottom-right-radius: 3px;
-		padding: 0px;
 	}
 	margin-bottom: 0px !important;
 
