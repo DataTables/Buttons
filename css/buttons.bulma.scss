@@ -86,7 +86,9 @@ div.dt-button-background {
 	}
 }
 
-div.dt-buttons {
+div.dt-buttons.field.is-grouped {
+	display: block;
+
 	button.btn.processing,
 	div.btn.processing,
 	a.btn.processing {
