@@ -79,6 +79,10 @@
 		Message to be shown at the bottom of the table, or the `-tag caption` tag if displayed at the bottom of the table.
 	</option>
 
+	<option type="boolean" name="copySuccess" default="true" since="3.1.2">
+		Indicate if the message should be displayed or not when the copy is complete.
+	</option>
+
 
 	<example title="DataTables initialisation: Use the `b-button copy` button type to alias the HTML button options."><![CDATA[
 new DataTable('#myTable', {
