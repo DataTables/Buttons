@@ -969,7 +969,10 @@ DataTable.ext.buttons.copyHtml5 = {
 			dt.buttons.info(false);
 		};
 
-		container.on('click.buttons-copy', close);
+		container.on('click.buttons-copy', function () {
+			close();
+			cb();
+		});
 		$(document)
 			.on('keydown.buttons-copy', function (e) {
 				if (e.keyCode === 27) {
