@@ -494,61 +494,53 @@ declare module 'datatables.net' {
 
 	type FunctionButtonCustomize = (win: Window|string) => void;
 
+	interface CollectionOptions {
+		action?: FunctionButtonAction;
+		align?: 'button-left' | 'button-right' | 'container' | 'dt-container';
+		autoClose?: boolean;
+		background?: boolean;
+		backgroundClassName?: string;
+		buttons: ButtonsList;
+		className?: string;
+		collectionLayout?: string;
+		collectionTitle?: string;
+		dropup?: boolean;
+		fade?: number;
+		popoverTitle?: string;
+		postfixButtons?: ButtonsList;
+		prefixButtons?: ButtonsList;
+		span?: null | 'container' | 'dt-container';
+	}
+
 	/**
 	 * List of all the button types - can be extended by external libraries
 	 */
 	export interface Buttons {
-		/** Collection button */
-		collection: {
-			extend?: 'collection',
-			action?: FunctionButtonAction;
-			align?: 'button-left' | 'button-right' | 'container' | 'dt-container';
-			autoClose?: boolean;
-			background?: boolean;
-			backgroundClassName?: string;
-			buttons: ButtonsList;
-			className?: string;
-			collectionLayout?: string;
-			collectionTitle?: string;
-			dropup?: boolean;
-			fade?: number;
-			popoverTitle?: string;
-			postfixButtons?: ButtonsList;
-			prefixButtons?: ButtonsList;
-			span?: null | 'container' | 'dt-container';
-		} | ButtonConfig;
-
-		/** A collection of column visibility buttons */
-		colvis: {
-			columns?: ColumnSelector;
-			columnText?: string;
-		} | Buttons['collection'];
-
 		/** Selected columns with individual buttons - toggle column visibility */
 		columnsToggle: {
 			columns?: ColumnSelector;
 			columnText?: string;
-		} | ButtonConfig;
+		};
 
 		/** Single button to toggle column visibility */
 		columnToggle: {
 			columns?: ColumnSelector;
 			columnText?: string;
-		} | ButtonConfig;
+		};
 
 		/** Selected columns with individual buttons - set column visibility */
 		columnsVisibility: {
 			columns?: ColumnSelector;
 			columnText?: string;
 			visibility: boolean;
-		} | ButtonConfig;
+		};
 
 		/** Single button to set column visibility */
 		columnVisibility: {
 			columns?: ColumnSelector;
 			columnText?: string;
 			visibility: boolean;
-		} | ButtonConfig;
+		};
 
 		/** Restore column visibility to what it was when the table loaded */
 		colvisRestore: ButtonConfig;
@@ -557,7 +549,7 @@ declare module 'datatables.net' {
 		colvisGroup: {
 			show: ColumnSelector;
 			hide: ColumnSelector;
-		} | ButtonConfig;
+		};
 
 		/** Copy table data to clipboard */
 		copy: {
@@ -570,7 +562,7 @@ declare module 'datatables.net' {
 			title?: string;
 			messageTop?: string;
 			messageBottom?: string;
-		} | ButtonConfig;
+		};
 
 		copyHtml5: Buttons['copy'];
 
@@ -586,7 +578,7 @@ declare module 'datatables.net' {
 			charset?: string | null;
 			header?: boolean;
 			footer?: boolean;
-		} | ButtonConfig;
+		};
 
 		csvHtml5: Buttons['copy'];
 
@@ -605,12 +597,9 @@ declare module 'datatables.net' {
 			autoFilter?: boolean;
 			sheetName?: string;
 			customize?: null | ((win: Window, conf: Buttons['print'], dt: Api<any>) => void);
-		} | ButtonConfig;
+		};
 
 		excelHtml5: Buttons['copy'];
-
-		/** Set the table's paging length */
-		pageLength: Buttons['collection'];
 
 		/** Construct a view of the table suitable for printing */
 		print: {
@@ -624,7 +613,7 @@ declare module 'datatables.net' {
 			autoPrint?: boolean;
 			customize?: null | ((xlsx: any, conf: Buttons['print'], dt: Api<any>) => void);
 			customizeZip?: null | ((zip: any, data: any, filename: any) => void);
-		} | ButtonConfig;
+		};
 
 		/** Create a PDF file with the table data */
 		pdf: {
@@ -641,7 +630,7 @@ declare module 'datatables.net' {
 			messageBottom?: string;
 			customize?: null | ((doc: any, config: Buttons['pdf'], dt: Api<any>) => void),
 			download?: 'download' | 'open'
-		} | ButtonConfig;
+		};
 
 		pdfHtml5: Buttons['copy'];
 
@@ -649,13 +638,36 @@ declare module 'datatables.net' {
 		space: {
 			spacer: boolean;
 			style: 'empty' | 'bar';
-		} | ButtonConfig;
-
-		/** Split buttons */
-		split: Buttons['collection'];
+		};
 	}
 
-	type ButtonsList = Array<ButtonConfig | keyof Buttons | Buttons[keyof Buttons] | FunctionButton>;
+	export interface CollectionButtons {
+		/** Collection button */
+		collection: {
+			extend?: 'collection',
+		};
+
+		/** A collection of column visibility buttons */
+		colvis: {
+			columns?: ColumnSelector;
+			columnText?: string;
+		};
+
+		/** Set the table's paging length */
+		pageLength: {}
+
+		/** Split buttons */
+		split: {}
+	}
+
+	type ButtonsList = Array<
+		ButtonConfig |
+		keyof Buttons |
+		(Buttons[keyof Buttons] | ButtonConfig) |
+		keyof CollectionButtons |
+		(CollectionButtons[keyof CollectionButtons] | CollectionOptions) |
+		FunctionButton
+	>;
 
 	type ButtonSelectorTypes = string | number | JQuery<any>;
 
