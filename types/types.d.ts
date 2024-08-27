@@ -518,18 +518,21 @@ declare module 'datatables.net' {
 	export interface Buttons {
 		/** Selected columns with individual buttons - toggle column visibility */
 		columnsToggle: {
+			extend: 'columnsToggle';
 			columns?: ColumnSelector;
 			columnText?: string;
 		};
 
 		/** Single button to toggle column visibility */
 		columnToggle: {
+			extend: 'columnToggle';
 			columns?: ColumnSelector;
 			columnText?: string;
 		};
 
 		/** Selected columns with individual buttons - set column visibility */
 		columnsVisibility: {
+			extend: 'columnsVisibility';
 			columns?: ColumnSelector;
 			columnText?: string;
 			visibility: boolean;
@@ -537,24 +540,28 @@ declare module 'datatables.net' {
 
 		/** Single button to set column visibility */
 		columnVisibility: {
+			extend: 'columnVisibility';
 			columns?: ColumnSelector;
 			columnText?: string;
 			visibility: boolean;
 		};
 
 		/** Restore column visibility to what it was when the table loaded */
-		colvisRestore: ButtonConfig;
+		colvisRestore: {
+			extend: 'colvisRestore';
+		};
 
 		/** Set the column visibility for columns (both show and hide) */
 		colvisGroup: {
+			extend: 'colvisGroup';
 			show: ColumnSelector;
 			hide: ColumnSelector;
 		};
 
 		/** Copy table data to clipboard */
 		copy: {
-			extend: 'copy',
-			exportOptions?: ButtonExportOptions,
+			extend: 'copy';
+			exportOptions?: ButtonExportOptions;
 			fieldSeparator?: string;
 			fieldBoundary?: string;
 			header?: boolean;
@@ -580,7 +587,7 @@ declare module 'datatables.net' {
 			footer?: boolean;
 		};
 
-		csvHtml5: Buttons['copy'];
+		csvHtml5: Buttons['csv'];
 
 		/** Create an Excel XLSX file with the table data */
 		excel: {
@@ -599,7 +606,7 @@ declare module 'datatables.net' {
 			customize?: null | ((win: Window, conf: Buttons['print'], dt: Api<any>) => void);
 		};
 
-		excelHtml5: Buttons['copy'];
+		excelHtml5: Buttons['excel'];
 
 		/** Construct a view of the table suitable for printing */
 		print: {
@@ -632,7 +639,7 @@ declare module 'datatables.net' {
 			download?: 'download' | 'open'
 		};
 
-		pdfHtml5: Buttons['copy'];
+		pdfHtml5: Buttons['pdf'];
 
 		/** A spacer to visually separate buttons (not a real button!) */
 		space: {
@@ -649,12 +656,15 @@ declare module 'datatables.net' {
 
 		/** A collection of column visibility buttons */
 		colvis: {
+			extend?: 'colvis',
 			columns?: ColumnSelector;
 			columnText?: string;
 		};
 
 		/** Set the table's paging length */
-		pageLength: {}
+		pageLength: {
+			extend?: 'pageLength'
+		}
 
 		/** Split buttons */
 		split: {}
