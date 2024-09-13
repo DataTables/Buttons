@@ -1305,6 +1305,26 @@ $.extend(Buttons.prototype, {
 			close();
 		}
 
+		// Sort buttons if defined
+		if (options.sort) {
+			var elements = $('button', content)
+				.map(function (idx, el) {
+					return {
+						text: $(el).text(),
+						el: el
+					};
+				})
+				.toArray();
+
+			elements.sort(function (a, b) {
+				return a.text.localeCompare(b.text);
+			});
+
+			$(content).append(elements.map(function (v) {
+				return v.el;
+			}));
+		}
+
 		// Try to be smart about the layout
 		var cnt = $('.dt-button', content).length;
 		var mod = '';

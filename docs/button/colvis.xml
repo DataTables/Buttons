@@ -42,6 +42,10 @@
 		The return value is a `-type string` that will be used for the button's text.
 	</option>
 
+	<option type="string" name="sort" default="undefined" since="3.1.3">
+		Indicate if the column buttons displayed should be shown in column order (default) or alphabetically. To display alphabetically set this option to be `-string alphabetic`.
+	</option>
+
 
 	<example title="DataTables initialisation: Show the `colvis` button with default options"><![CDATA[
 new DataTable('#myTable', {
