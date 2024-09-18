@@ -1487,7 +1487,7 @@ $.extend(Buttons.prototype, {
 					popoverSizes.marginBottom;
 			}
 
-			if (containerPosition.top + top < $(window).scrollTop()) {
+			if (offsetParent.offset().top + top < $(window).scrollTop()) {
 				// Correction for when the top is beyond the top of the page
 				top = buttonPosition.top + hostNode.outerHeight();
 			}
