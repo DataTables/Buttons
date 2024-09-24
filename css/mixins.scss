@@ -69,18 +69,14 @@
 	&.two-column > :last-child,
 	&.three-column > :last-child,
 	&.four-column > :last-child {
+		// Multi-column layout feature
+		display: block !important;
+		column-gap: 8px;
+
 		> * {
 			-webkit-column-break-inside: avoid;
 			break-inside: avoid;
 		}
-
-		// Multi-column layout feature
-		display: block !important;
-		-webkit-column-gap: 8px;
-		-moz-column-gap: 8px;
-			-ms-column-gap: 8px;
-			-o-column-gap: 8px;
-		column-gap: 8px;
 	}
 
 	&.two-column {

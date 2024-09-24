@@ -42,6 +42,7 @@ div.dt-button-collection {
 	border-radius: 5px;
 	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 	z-index: 2002;
+	column-gap: 0;
 
 	.dt-button {
 		position: relative;
@@ -62,9 +63,6 @@ div.dt-button-collection {
 	}
 
 	@include dtb-fixed-collection();
-
-	column-gap: 0;
-
 }
 
 div.dt-button-split {
