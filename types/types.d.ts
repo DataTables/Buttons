@@ -85,7 +85,7 @@ declare module 'datatables.net' {
 	interface DataTablesStaticExtButtons {
 		[name: string]: ButtonConfig;
 
-		collection: Buttons['collection'];
+		collection: CollectionButtons['collection'];
 	}
 
 
