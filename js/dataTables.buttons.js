@@ -255,9 +255,20 @@ $.extend(Buttons.prototype, {
 	disable: function (node) {
 		var button = this._nodeToButton(node);
 
-		$(button.node)
-			.addClass(this.c.dom.button.disabled)
-			.prop('disabled', true);
+		if (button.isSplit) {
+			$(button.node.childNodes[0])
+				.addClass(this.c.dom.button.disabled)
+				.prop('disabled', true);
+		}
+		else {
+			$(button.node)
+				.addClass(this.c.dom.button.disabled)
+				.prop('disabled', true);
+		}
+
+		button.disabled = true;
+
+		this._checkSplitEnable();
 
 		return this;
 	},
@@ -308,9 +319,21 @@ $.extend(Buttons.prototype, {
 		}
 
 		var button = this._nodeToButton(node);
-		$(button.node)
-			.removeClass(this.c.dom.button.disabled)
-			.prop('disabled', false);
+
+		if (button.isSplit) {
+			$(button.node.childNodes[0])
+				.removeClass(this.c.dom.button.disabled)
+				.prop('disabled', false);
+		}
+		else {
+			$(button.node)
+				.removeClass(this.c.dom.button.disabled)
+				.prop('disabled', false);
+		}
+
+		button.disabled = false;
+
+		this._checkSplitEnable();
 
 		return this;
 	},
@@ -975,6 +998,57 @@ $.extend(Buttons.prototype, {
 			collection: null,
 			textNode: textNode
 		};
+	},
+
+	/**
+	 * Spin over buttons checking if splits should be enabled or not.
+	 * @param {*} buttons Array of buttons to check
+	 */
+	_checkSplitEnable: function (buttons) {
+		if (! buttons) {
+			buttons = this.s.buttons;
+		}
+
+		for (var i=0 ; i<buttons.length ; i++) {
+			var button = buttons[i];
+
+			// Check if the button is a split one and if so, determine
+			// its state
+			if (button.isSplit) {
+				var splitBtn = button.node.childNodes[1];
+
+				if (this._checkAnyEnabled(button.buttons)) {
+					// Enable the split
+					$(splitBtn)
+						.removeClass(this.c.dom.button.disabled)
+						.prop('disabled', false);
+				}
+				else {
+					$(splitBtn)
+						.addClass(this.c.dom.button.disabled)
+						.prop('disabled', false);
+				}
+			}
+			else if (button.isCollection) {
+				// Nest down into collections
+				this._checkSplitEnable(button.buttons);
+			}
+		}
+	},
+
+	/**
+	 * Check an array of buttons and see if any are enabled in it
+	 * @param {*} buttons Button array
+	 * @returns true if a button is enabled, false otherwise
+	 */
+	_checkAnyEnabled: function (buttons) {
+		for (var i=0 ; i<buttons.length ; i++) {
+			if (! buttons[i].disabled) {
+				return true;
+			}
+		}
+
+		return false;
 	},
 
 	/**

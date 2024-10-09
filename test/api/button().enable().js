@@ -59,4 +59,67 @@ describe('buttons - button().enable()', function() {
 			expect($('div.dt-buttons button.disabled').length).toBe(0);
 		});
 	});
+
+	describe('Split buttons', function() {
+		var table;
+
+		dt.html('basic');
+
+		it('Main button is enabled', function() {
+			table = $('#example').DataTable({
+				layout: {
+					topStart: {
+						buttons: [{
+							text: 'main',
+							split: [{
+								text: 'sub'
+							}]
+						}]
+					}
+				}
+			});
+
+			expect($('button.dt-button').eq(0).hasClass('disabled')).toBe(false);
+		});
+
+		it('Split button is disabled', function() {
+			expect($('button.dt-button-split-drop').eq(0).hasClass('disabled')).toBe(false);
+		});
+
+		it('Disable main button', function() {
+			table.button(0).disable();
+			expect($('button.dt-button').eq(0).hasClass('disabled')).toBe(true);
+		});
+
+		it('Does not disable the split', function() {
+			expect($('button.dt-button-split-drop').eq(0).hasClass('disabled')).toBe(false);
+		});
+
+		it('Reenable main button', function() {
+			table.button(0).enable();
+			expect($('button.dt-button').eq(0).hasClass('disabled')).toBe(false);
+		});
+
+		it('Does not change the split', function() {
+			expect($('button.dt-button-split-drop').eq(0).hasClass('disabled')).toBe(false);
+		});
+
+		it('Disable the button in the split - does not change the main button', function() {
+			table.button('0-0').disable();
+			expect($('button.dt-button').eq(0).hasClass('disabled')).toBe(false);
+		});
+
+		it('Has changed the split', function() {
+			expect($('button.dt-button-split-drop').eq(0).hasClass('disabled')).toBe(true);
+		});
+
+		it('Reenable the button in the split - does not change the main button', function() {
+			table.button('0-0').enable();
+			expect($('button.dt-button').eq(0).hasClass('disabled')).toBe(false);
+		});
+
+		it('Has changed the split', function() {
+			expect($('button.dt-button-split-drop').eq(0).hasClass('disabled')).toBe(false);
+		});
+	});
 });
