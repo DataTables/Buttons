@@ -646,14 +646,19 @@ $.extend(Buttons.prototype, {
 				attachTo.push(built);
 			}
 
+			// Any button type can have a drop icon set
+			if (built.conf.dropIcon && ! built.conf.split) {
+				$(built.node)
+					.addClass(this.c.dom.button.dropClass)
+					.append(this.c.dom.button.dropHtml);
+			}
+
 			// Create the dropdown for a collection
 			if (built.conf.buttons) {
 				built.collection = $(
 					'<' + domCollection.container.content.tag + '/>'
 				);
 				built.conf._collection = built.collection;
-
-				$(built.node).append(domCollection.action.dropHtml);
 
 				this._expandButton(
 					built.buttons,
@@ -959,7 +964,8 @@ $.extend(Buttons.prototype, {
 					dropdownConf.dropdown.className +
 					' dt-button"></button>'
 			)
-				.html(dropdownConf.dropdown.dropHtml)
+				.html(this.c.dom.button.dropHtml)
+				.addClass(this.c.dom.button.dropClass)
 				.on('click.dtb', function (e) {
 					e.preventDefault();
 					e.stopPropagation();
@@ -2026,10 +2032,6 @@ Buttons.defaults = {
 			className: 'dt-buttons'
 		},
 		collection: {
-			action: {
-				// action button
-				dropHtml: '<span class="dt-button-down-arrow">&#x25BC;</span>'
-			},
 			container: {
 				// The element used for the dropdown
 				className: 'dt-button-collection',
@@ -2055,7 +2057,9 @@ Buttons.defaults = {
 			liner: {
 				tag: 'span',
 				className: ''
-			}
+			},
+			dropClass: '',
+			dropHtml: '<span class="dt-button-down-arrow">&#x25BC;</span>'
 		},
 		split: {
 			action: {
@@ -2067,7 +2071,6 @@ Buttons.defaults = {
 				// button to trigger the dropdown
 				align: 'split-right',
 				className: 'dt-button-split-drop',
-				dropHtml: '<span class="dt-button-down-arrow">&#x25BC;</span>',
 				splitAlignClass: 'dt-button-split-left',
 				tag: 'button'
 			},
@@ -2094,6 +2097,7 @@ $.extend(_dtButtons, {
 		},
 		className: 'buttons-collection',
 		closeButton: false,
+		dropIcon: true,
 		init: function (dt, button) {
 			button.attr('aria-expanded', false);
 		},

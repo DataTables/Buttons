@@ -9,12 +9,11 @@ $.extend(true, DataTable.Buttons.defaults, {
 		},
 		button: {
 			className: 'btn btn-secondary',
-			active: 'active'
+			active: 'active',
+			dropHtml: '',
+			dropClass: 'dropdown-toggle'
 		},
 		collection: {
-			action: {
-				dropHtml: ''
-			},
 			container: {
 				tag: 'div',
 				className: 'dropdown-menu dt-button-collection'
@@ -39,9 +38,8 @@ $.extend(true, DataTable.Buttons.defaults, {
 			},
 			dropdown: {
 				tag: 'button',
-				dropHtml: '',
 				className:
-					'btn btn-secondary dt-button-split-drop dropdown-toggle dropdown-toggle-split',
+					'btn btn-secondary dt-button-split-drop dropdown-toggle-split',
 				closeButton: false,
 				align: 'split-left',
 				splitAlignClass: 'dt-button-split-left'
@@ -58,5 +56,4 @@ $.extend(true, DataTable.Buttons.defaults, {
 	}
 });
 
-DataTable.ext.buttons.collection.className += ' dropdown-toggle';
 DataTable.ext.buttons.collection.rightAlignClassName = 'dropdown-menu-right';

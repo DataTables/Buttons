@@ -32,6 +32,10 @@ div.dt-button-collection.ui.dropdown {
 		padding: 1em 0.75em 0.5em;
 	}
 
+	i.dropdown.icon::before {
+		content: "\f0da" !important;
+	}
+
 	&.columns {
 		div.ui.basic.buttons {
 			span.dt-button-spacer {

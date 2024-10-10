@@ -10,6 +10,10 @@ div.dt-buttons.button-group {
 			margin-right: 1px;
 		}
 
+		a.dt-button {
+			margin-right: 0;
+		}
+
 		li {
 			overflow: hidden;
 			white-space: nowrap;
@@ -30,6 +34,16 @@ div.dt-buttons.button-group {
 		// Menu styles need to be on the container, not the dropdown, to allow for the title
 		border: 1px solid #cacaca;
 		background: #fefefe;
+
+		li {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			.dt-button-down-arrow {
+				width: 24px;
+			}
+		}
 
 		.dropdown.menu {
 			position: relative;
@@ -61,6 +75,7 @@ div.dt-buttons.button-group {
 				min-width: auto;
 				flex: 1 0 50px;
 				padding-right: 0;
+				margin-right: 0;
 			}
 
 			> *:last-child {

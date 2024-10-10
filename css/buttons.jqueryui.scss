@@ -52,14 +52,26 @@ div.dt-button-collection {
 		box-sizing: border-box;
 		text-align: left;
 
-		display: block;
 		float: none;
 		margin-right: 0;
 		margin-bottom: 4px;
+
+		display: flex;
+		float: none;
+		justify-content: space-between;
+		align-items: center;
+
+		.ui-icon {
+			margin-right: -9px;
+		}
 	}
 
 	.dt-button-split {
 		width: 100%;
+
+		button:last-child {
+			display: block;
+		}
 	}
 
 	@include dtb-fixed-collection();

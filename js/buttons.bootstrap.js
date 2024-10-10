@@ -9,12 +9,11 @@ $.extend(true, DataTable.Buttons.defaults, {
 		},
 		button: {
 			className: 'btn btn-default',
-			active: 'active'
+			active: 'active',
+			dropHtml: '<span class="caret"></span>',
+			dropClass: ''
 		},
 		collection: {
-			action: {
-				dropHtml: '<span class="caret"></span>'
-			},
 			container: {
 				tag: 'div',
 				className: 'dt-button-collection',
@@ -46,9 +45,8 @@ $.extend(true, DataTable.Buttons.defaults, {
 			},
 			dropdown: {
 				tag: 'button',
-				dropHtml: '<span class="caret"></span>',
 				className:
-					'btn btn-default dt-button-split-drop dropdown-toggle dropdown-toggle-split',
+					'btn btn-default dt-button-split-drop dropdown-toggle-split',
 				closeButton: false,
 				align: 'split-left',
 				splitAlignClass: 'dt-button-split-left'

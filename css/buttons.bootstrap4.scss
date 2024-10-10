@@ -13,6 +13,14 @@ div.dt-buttons {
 
 		.dt-button {
 			position: relative;
+
+			&.dropdown-toggle {
+				&::after {
+					position: absolute;
+					right: 12px;
+					top: 14px;
+				}
+			}
 		}
 
 		div.dt-button-split {
@@ -42,11 +50,6 @@ div.dt-buttons {
 				&:hover {
 					color: #16181b;
 					background-color: #f8f9fa;
-				}
-
-				&:after {
-					position: relative;
-					left: -3px;
 				}
 			}
 		}

@@ -37,6 +37,12 @@ div.dt-buttons {
 
 			li {
 				position: relative;
+
+				span.caret {
+					position: absolute;
+					right: 9px;
+					top: 14px;
+				}
 			}
 
 			div.dt-button-split {
