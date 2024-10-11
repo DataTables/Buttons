@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="Buttons">
+	<name>buttons.buttons.dropIcon</name>
+	<summary>Show a dropdown (further action) icon</summary>
+	<since>3.2.0</since>
+	<alias>-feature buttons.buttons.dropIcon</alias>
+
+	<example title="Show a drop down icon in a button"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: 'buttons'
+	},
+	buttons: [
+		{
+			text: 'Popover',
+			dropIcon: true,
+			action: function () {
+				this.popover('Popover information...');
+			}
+		}
+	]
+});
+]]></example>
+</dt-option>

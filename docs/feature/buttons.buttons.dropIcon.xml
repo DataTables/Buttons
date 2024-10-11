@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-option library="Buttons">
+	<name>buttons.buttons.dropIcon</name>
+	<summary>Show a dropdown (further action) icon</summary>
+	<since>3.2.0</since>
+
+	<default value="false"/>
+
+	<type type="boolean">
+		<description>
+			A boolean flag to indicate if the button should show a dropdown icon or not. `true` will cause the icon to show, `false` will hide it.
+		</description>
+	</type>
+
+	<description>
+		It can be useful to indicate to the end user that activation of a button will trigger the display of a submenu, popover or modal. It gives them an indication of what to expect when the button is activated. This option provides that ability by indicating to Buttons that it should show an icon after the button text. The icon used is customised per styling framework to make sure it fits in with your page.
+
+		By default this option is enabled for the `-button collection` buttons, but can be individually enabled on buttons as you need.
+	</description>
+
+	<example title="Show a drop down icon in a button"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'Popover',
+					dropIcon: true,
+					action: function () {
+						this.popover('Popover information...');
+					}
+				}
+			]
+		}
+	}
+});
+]]></example>
+</dt-option>

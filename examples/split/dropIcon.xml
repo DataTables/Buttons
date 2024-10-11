@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="7">
+
+<css lib="datatables buttons" />
+<js lib="jquery datatables buttons buttons-colvis jszip pdfmake vfsfonts buttons-html5 buttons-print">
+<![CDATA[
+
+$('#example').DataTable({
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'Popover',
+					dropIcon: true,
+					action: function () {
+						this.popover('Popover information...');
+					}
+				},
+				{
+					extend: 'collection',
+					text: 'Export',
+					buttons: ['copy', 'pdf', 'excel', 'print']
+				},
+				{
+					extend: 'collection',
+					text: 'Split',
+					split: [
+						{
+							text: 'Inner popover',
+							dropIcon: true,
+							action: function () {
+								this.popover('Popover information from split...');
+							}
+						},
+						{
+							extend: 'copy',
+							split: ['pdf', 'excel', 'print']
+						}
+					]
+				},
+				'colvis'
+			]
+		}
+	}
+});
+
+]]>
+</js>
+
+<js-vanilla>
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					text: 'Popover',
+					dropIcon: true,
+					action: function () {
+						this.popover('Popover information...');
+					}
+				},
+				{
+					extend: 'collection',
+					text: 'Export',
+					buttons: ['copy', 'pdf', 'excel', 'print']
+				},
+				{
+					extend: 'collection',
+					text: 'Split',
+					split: [
+						{
+							text: 'Inner popover',
+							dropIcon: true,
+							action: function () {
+								this.popover('Popover information from split...');
+							}
+						},
+						{
+							extend: 'copy',
+							split: ['pdf', 'excel', 'print']
+						}
+					]
+				},
+				'colvis'
+			]
+		}
+	}
+});
+
+]]>
+</js-vanilla>
+
+<title lib="Buttons">Dropdown icon</title>
+
+<info><![CDATA[
+
+Each button can indicate that a popover or submenu will show when a button is activated through the `-init buttons.buttons.dropIcon` attribute. This example, while not practical in the options it offers the end user, shows a variety of ways in which the `dropIcon` can be used.
+
+In many cases this is automatic (e.g. with a split button, or a `-button collection`), but there are cases where you may wish to specifically enable this option when you have a custom action to display a popover.
+
+]]></info>
+
+</dt-example>
+

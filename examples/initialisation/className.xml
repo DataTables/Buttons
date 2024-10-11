@@ -17,7 +17,7 @@ a.green {
 	color: green !important;
 }
 </css>
-<js lib="jquery datatables buttons buttons-colvis buttons-html5">
+<js lib="jquery datatables buttons">
 <![CDATA[
 
 $('#example').DataTable({
@@ -33,33 +33,9 @@ $('#example').DataTable({
 					className: 'orange'
 				},
 				{
-					text: 'Solo',
-					dropIcon: true
-				},
-				{
-					extend: 'collection',
-					text: 'Collection',
-					buttons: [ 'copy' ]
-				},
-				{
-					extend: 'collection',
-					text: 'Split',
-					split: [
-						{
-							extend: 'copy',
-							dropIcon: true
-						},
-						{
-							extend: 'copy',
-							split: [
-								{
-									text: 'Super-Inner'
-								}
-							]
-						}
-					]
-				},
-				'colvis'
+					text: 'Green',
+					className: 'green'
+				}
 			]
 		}
 	}
