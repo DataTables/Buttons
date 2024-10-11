@@ -1340,7 +1340,8 @@ $.extend(Buttons.prototype, {
 
 		var containerSelector =
 			options.tag + '.' + options.containerClassName.replace(/ /g, '.');
-		var hostNode = hostButton.node();
+		var hostButtonNode = hostButton.node();
+		var hostNode = options.collectionLayout.includes('fixed') ? $('body') : hostButton.node();
 
 		var close = function () {
 			closed = true;
@@ -1436,7 +1437,7 @@ $.extend(Buttons.prototype, {
 			.attr('role', 'menu')
 			.appendTo(display);
 
-		hostNode.attr('aria-expanded', 'true');
+		hostButtonNode.attr('aria-expanded', 'true');
 
 		if (hostNode.parents('body')[0] !== document.body) {
 			hostNode = document.body.lastChild;
