@@ -1338,8 +1338,6 @@ $.extend(Buttons.prototype, {
 			inOpts
 		);
 
-		console.log(inOpts, options);
-
 		var containerSelector =
 			options.tag + '.' + options.containerClassName.replace(/ /g, '.');
 		var hostNode = hostButton.node();

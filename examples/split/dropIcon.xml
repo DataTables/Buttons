@@ -13,7 +13,9 @@ $('#example').DataTable({
 					text: 'Popover',
 					dropIcon: true,
 					action: function () {
-						this.popover('Popover information...');
+						this.popover('<span>Popover information...</span>', {
+							collectionLayout: 'fixed'
+						});
 					}
 				},
 				{
@@ -58,7 +60,9 @@ new DataTable('#example', {
 					text: 'Popover',
 					dropIcon: true,
 					action: function () {
-						this.popover('Popover information...');
+						this.popover('<span>Popover information...</span>', {
+							collectionLayout: 'fixed'
+						});
 					}
 				},
 				{
