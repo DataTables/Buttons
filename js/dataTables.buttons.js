@@ -1368,6 +1368,8 @@ $.extend(Buttons.prototype, {
 			$('body').off('.dtb-collection');
 			dt.off('buttons-action.b-internal');
 			dt.off('destroy');
+
+			$('body').trigger('buttons-popover-hide.dt');
 		};
 
 		if (content === false) {
