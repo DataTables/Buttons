@@ -20,6 +20,7 @@
 			* `-type boolean` `stripHtml` - Indicate if HTML should be stripped from the read data if there is any (`true`) or not (`false`). Default - `true`.
 			* `-type boolean` `stripNewlines` - Indicate if newline characters should be stripped from the read data if there are any (`true`) or not (`false`). Default - `true`.
 			* `-type boolean` `decodeEntities` - Indicate if HTML entities should be decoded (`true`) or not (`false`) - for example `&gt;` would become `>`. For larger tables you may wish to disable this option as it can decrease performance. Default - `true`.
+			* `-type boolean` `escapeExcelFormula` (since 3.2.0) - Prefix spreadsheet formulas in individual cells with an apostrophe to prevent them from being executed immediately on loading the spreadsheet. This is particularly important when using CSV and importing into Excel. Default - `false` (although default enabled for the `-button csv` button type).
 			* `-type boolean` `trim` - Indicate if the read data should have white space trimmed from the start and end of the value (`true`) or not (`false`). Default - `true`.
 			* `-type object` `format` (since 1.1.0) - Container object for the cell formatting functions that the export will use
 			  * `-type function` `format.header` - Function that will be used to format the data in the header cells - default function will strip HTML tags. The returned value is used in the exported data for the column headers. Three arguments are passed in:
