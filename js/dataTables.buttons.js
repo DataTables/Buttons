@@ -1971,6 +1971,14 @@ Buttons.stripData = function (str, config) {
 		}
 	}
 
+	// Prevent Excel from running a formula
+	if (!config || config.escapeExcelFormula) {
+		if (str.match(/^[=+\-@\t\r]/)) {
+			console.log('matching and updateing');
+			str = "'" + str;
+		}
+	}
+
 	return str;
 };
 
@@ -2693,6 +2701,7 @@ var _exportData = function (dt, inOpts) {
 			stripHtml: true,
 			stripNewlines: true,
 			decodeEntities: true,
+			escapeExcelFormula: false,
 			trim: true,
 			format: {
 				header: function (d) {
