@@ -294,4 +294,9 @@ html.dark {
 		background-color: rgb(33, 37, 41);
 		box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.8);
 	}
+
+	div.dt-button-info {
+		background-color: var(--dt-html-background);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+	}
 }
