@@ -7,56 +7,6 @@ div.dt-buttons {
 		position: initial;
 	}
 
-	div.dropdown-menu {
-		margin-top: 4px;
-		width: 200px;
-
-		.dt-button {
-			position: relative;
-
-			&.dropdown-toggle {
-				&::after {
-					position: absolute;
-					right: 12px;
-					top: 14px;
-				}
-			}
-		}
-
-		div.dt-button-split {
-			display: flex;
-			flex-direction: row;
-			flex-wrap: wrap;
-			justify-content: flex-start;
-			align-content: flex-start;
-			align-items: stretch;
-
-			a:first-child {
-				min-width: auto;
-				flex: 1 0 50px;
-				padding-right: 0;
-			}
-
-			button:last-child {
-				min-width: 33px;
-				flex: 0;
-				background: transparent;
-				border: none;
-				line-height: 1rem;
-				color: var(--bs-dropdown-link-color);
-				padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
-				overflow: visible;
-
-				&:hover {
-					color: var(--bs-dropdown-link-hover-color);
-					background-color: var(--bs-dropdown-link-hover-bg);
-				}
-			}
-		}
-
-		@include dtb-fixed-collection();
-	}
-
 	span.dt-button-spacer {
 		&.empty {
 			margin: 1px;
@@ -73,6 +23,57 @@ div.dt-buttons {
 		@include dtb-processing();
 	}
 }
+
+div.dropdown-menu.dt-button-collection {
+	margin-top: 4px;
+	width: 200px;
+
+	.dt-button {
+		position: relative;
+
+		&.dropdown-toggle {
+			&::after {
+				position: absolute;
+				right: 12px;
+				top: 14px;
+			}
+		}
+	}
+
+	div.dt-button-split {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		align-content: flex-start;
+		align-items: stretch;
+
+		a:first-child {
+			min-width: auto;
+			flex: 1 0 50px;
+			padding-right: 0;
+		}
+
+		button:last-child {
+			min-width: 33px;
+			flex: 0;
+			background: transparent;
+			border: none;
+			line-height: 1rem;
+			color: var(--bs-dropdown-link-color);
+			padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+			overflow: visible;
+
+			&:hover {
+				color: var(--bs-dropdown-link-hover-color);
+				background-color: var(--bs-dropdown-link-hover-bg);
+			}
+		}
+	}
+
+	@include dtb-fixed-collection();
+}
+
 
 div.dt-button-background {
 	position: fixed;
