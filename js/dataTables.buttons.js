@@ -1940,7 +1940,7 @@ Buttons.buttonSelector = function (insts, selector) {
  */
 Buttons.stripData = function (str, config) {
 	// If the input is an HTML element, we can use the HTML from it (HTML might be stripped below).
-	if (typeof str === 'object' && str.nodeName && str.nodeType) {
+	if (str !== null && typeof str === 'object' && str.nodeName && str.nodeType) {
 		str = str.innerHTML;
 	}
 
