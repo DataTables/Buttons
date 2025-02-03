@@ -1496,7 +1496,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 									text: cell.title,
 									colSpan: cell.colspan,
 									rowSpan: cell.rowspan,
-									style: 'tableHeader'
+									style: 'tableFooter'
 							}
 							: {};
 					})
@@ -1556,7 +1556,8 @@ DataTable.ext.buttons.pdfHtml5 = {
 				},
 				tableFooter: {
 					bold: true,
-					fontSize: 11
+					fontSize: 11,
+					alignment: 'center'
 				},
 				table: {
 					margin: [0, 5, 0, 5]
