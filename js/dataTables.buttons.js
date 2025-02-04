@@ -808,7 +808,7 @@ $.extend(Buttons.prototype, {
 				else {
 					run(e, dt, button, config, function () {});
 				}
-			}
+			};
 
 			var tag = config.tag || dom.tag;
 			var clickBlurs =
