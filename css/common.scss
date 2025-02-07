@@ -5,7 +5,7 @@
 	margin-top: -10px;
 	right: 1em;
 	display: inline-block;
-	content: '\2713'; // utf8 tick
+	content: unicode("2713"); // utf8 tick
 	color: inherit;
 }
 
@@ -132,7 +132,7 @@ div.dt-button-collection {
 			position: absolute;
 			right: 1em;
 			display: inline-block;
-			content: '\2713'; // utf8 tick
+			content: unicode("2713"); // utf8 tick
 			color: inherit;
 		}
 	}

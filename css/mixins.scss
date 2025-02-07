@@ -1,4 +1,10 @@
 
+// Output should contain UTF8 characters as escaped ASCII - use this function as a workaround for
+// the SASS output
+@function unicode($str) {
+	@return unquote("\"")+unquote(str-insert($str, "\\", 1))+unquote("\"");
+}
+
 @function dtb-tint( $color, $percent ) {
 	@return mix(white, $color, $percent);
 }
