@@ -490,7 +490,13 @@ declare module 'datatables.net' {
 
 	type FunctionButtonInit = (dt: Api<any>, node: JQuery, config: any) => void;
 
-	type FunctionButtonAction = (e: JQuery.Event, dt: Api<any>, node: JQuery, config: ButtonConfig) => void;
+	type FunctionButtonAction = (
+		e: JQuery.Event,
+		dt: Api<any>,
+		node: JQuery,
+		config: ButtonConfig,
+		callback: () => {}
+	) => void;
 
 	type FunctionButtonCustomize = (win: Window|string) => void;
 
