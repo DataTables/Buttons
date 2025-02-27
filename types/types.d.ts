@@ -582,6 +582,7 @@ declare module 'datatables.net' {
 		/** Create a CSV file with the table data */
 		csv: {
 			extend: 'csv',
+			bom?: boolean;
 			filename?: string;
 			extension?: string;
 			exportOptions?: ButtonExportOptions,
@@ -690,6 +691,7 @@ declare module 'datatables.net' {
 	interface ButtonExportOptions {
 		rows?: any;
 		columns?: ButtonSelectorTypes | ButtonSelectorTypes[];
+		customizeData?: FunctionButtonCustomizeData;
 		modifier?: any;
 		orthogonal?: string;
 		stripHtml?: boolean;
@@ -700,7 +702,6 @@ declare module 'datatables.net' {
 			header?: any;
 			footer?: any;
 			body?: any;
-			customizeData?: any;
 		}
 	}
 
