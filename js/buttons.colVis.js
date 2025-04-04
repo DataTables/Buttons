@@ -103,9 +103,9 @@ $.extend(DataTable.ext.buttons, {
 			var that = this;
 			button.attr('data-cv-idx', conf.columns);
 
-			dt.on('column-visibility.dt' + conf.namespace, function (e, settings) {
+			dt.on('column-visibility.dt' + conf.namespace, function (e, settings, column, state) {
 				if (!settings.bDestroying && settings.nTable == dt.settings()[0].nTable) {
-					that.active(dt.column(conf.columns).visible());
+					that.active(state);
 				}
 			}).on('column-reorder.dt' + conf.namespace, function () {
 				// Button has been removed from the DOM

@@ -1075,7 +1075,7 @@ $.extend(Buttons.prototype, {
 		}
 
 		for (var i = 0, ien = buttons.length; i < ien; i++) {
-			if (buttons[i].node === node || $(buttons[i].node).children().eq(0).get(0) === node) {
+			if (buttons[i].node === node || buttons[i].node.children[0] === node) {
 				return buttons[i];
 			}
 
