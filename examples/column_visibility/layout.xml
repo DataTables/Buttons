@@ -26,17 +26,20 @@ $('#example').DataTable({
 <![CDATA[
 
 new DataTable('#example', {
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'colvis',
-					collectionLayout: 'fixed columns',
-					popoverTitle: 'Column visibility control'
-				}
-			]
-		}
-	}
+    layout: {
+      topEnd: {
+        buttons: [
+          {
+            extend: "colvis",
+            collectionLayout: "fixed columns",
+            className: "btn-light py-1 mb-1",
+          },
+          {
+            extend: "colvis",
+          },
+        ],
+      },
+    },
 });
 
 ]]>
