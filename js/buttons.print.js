@@ -70,20 +70,9 @@ DataTable.ext.buttons.print = {
 			for (var i = 0, ien = d.length; i < ien; i++) {
 				// null and undefined aren't useful in the print output
 				var dataOut = d[i] === null || d[i] === undefined ? '' : d[i];
-				var classAttr = columnClasses[i]
-					? 'class="' + columnClasses[i] + '"'
-					: '';
+				var classAttr = columnClasses[i] ? 'class="' + columnClasses[i] + '"' : '';
 
-				str +=
-					'<' +
-					tag +
-					' ' +
-					classAttr +
-					'>' +
-					dataOut +
-					'</' +
-					tag +
-					'>';
+				str += '<' + tag + ' ' + classAttr + '>' + dataOut + '</' + tag + '>';
 			}
 
 			return str + '</tr>';
@@ -166,13 +155,13 @@ DataTable.ext.buttons.print = {
 		win.document.close();
 
 		// Inject the title and also a copy of the style and link tags from this
-		// document so the table can retain its base styling. This avoids 
+		// document so the table can retain its base styling. This avoids
 		// issues with Content Security Policy (CSP) and is compatible with modern browsers.
 		win.document.title = exportInfo.title;
 
 		$('style, link[rel="stylesheet"]').each(function () {
 			let node = this.cloneNode(true);
-			
+
 			if (node.tagName.toLowerCase() === 'link') {
 				node.href = _relToAbs(node.href);
 			}
@@ -183,9 +172,9 @@ DataTable.ext.buttons.print = {
 		// Add any custom scripts (for example for paged.js)
 		if (config.customScripts) {
 			config.customScripts.forEach(function (script) {
-				var tag = win.document.createElement("script");
+				var tag = win.document.createElement('script');
 				tag.src = script;
-				win.document.getElementsByTagName("head")[0].appendChild(tag);
+				win.document.getElementsByTagName('head')[0].appendChild(tag);
 			});
 		}
 
