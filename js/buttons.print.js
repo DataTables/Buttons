@@ -167,19 +167,18 @@ DataTable.ext.buttons.print = {
 
 		// Inject the title and also a copy of the style and link tags from this
 		// document so the table can retain its base styling. This avoids 
-        // issues with Content Security Policy (CSP) and is compatible with modern browsers.
-
+		// issues with Content Security Policy (CSP) and is compatible with modern browsers.
 		win.document.title = exportInfo.title;
 
-	    $('style, link[rel="stylesheet"]').each(function () {
-	      let node = this.cloneNode(true);
-	      
-	      if (node.tagName.toLowerCase() === 'link') {
-	        node.href = _relToAbs(node.href);
-	       }
+		$('style, link[rel="stylesheet"]').each(function () {
+			let node = this.cloneNode(true);
+			
+			if (node.tagName.toLowerCase() === 'link') {
+				node.href = _relToAbs(node.href);
+			}
 
-	       win.document.head.appendChild(node);
-	    });
+			win.document.head.appendChild(node);
+		});
 
 		// Add any custom scripts (for example for paged.js)
 		if (config.customScripts) {
