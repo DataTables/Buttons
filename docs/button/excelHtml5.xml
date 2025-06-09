@@ -223,7 +223,7 @@
 	</option>
 
 	<option type="boolean" name="autoFilter" default="false" since="1.5.4">
-		Enable Excel's auto filter feature for the header cells in the table allowing the user to quickly filter and sort the exported spreadsheet in Excel. Note that this does not operate in LibreOffice (although the spreadsheet is still readable).
+		Enable Excel's auto filter feature for the header cells in the table allowing the user to quickly filter and sort the exported spreadsheet in Excel.
 	</option>
 
 
