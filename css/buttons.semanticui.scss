@@ -64,6 +64,12 @@ div.dt-button-collection.ui.dropdown {
 		}
 	}
 
+	.dt-button {
+		&:focus {
+			outline-offset: -2px;
+		}
+	}
+
 	div.dt-button-split {
 		display: flex;
 

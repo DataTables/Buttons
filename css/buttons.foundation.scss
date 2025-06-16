@@ -57,6 +57,10 @@ div.dt-button-collection {
 
 		.dt-button {
 			position: relative;
+
+			a:focus {
+				outline-offset: -2px;
+			}
 		}
 	}
 

@@ -22,6 +22,10 @@ div.dt-button-collection {
 		justify-content: space-between;
 		align-items: center;
 		padding-right: 0.5rem;
+
+		&:focus {
+			outline-offset: -2px;
+		}
 	}
 
 	div.dt-button-split {

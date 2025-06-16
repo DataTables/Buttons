@@ -188,6 +188,10 @@ div.dt-button-collection {
 			background: rgba(153, 153, 153, 0.1);
 			box-shadow: none;
 		}
+
+		&:focus {
+			outline-offset: -2px;
+		}
 	}
 
 	div.dt-button-split {

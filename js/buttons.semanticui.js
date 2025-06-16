@@ -25,7 +25,7 @@ $.extend(true, DataTable.Buttons.defaults, {
 			},
 			closeButton: false,
 			button: {
-				tag: 'div',
+				tag: 'a',
 				className: 'dt-button item',
 				active: 'dt-button-active',
 				spacer: {
