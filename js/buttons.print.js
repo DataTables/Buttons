@@ -6,22 +6,6 @@
 var _link = document.createElement('a');
 
 /**
- * Clone link and style tags, taking into account the need to change the source
- * path.
- *
- * @param  {node}     el Element to convert
- */
-var _styleToAbs = function (el) {
-	var clone = $(el).clone()[0];
-
-	if (clone.nodeName.toLowerCase() === 'link') {
-		clone.href = _relToAbs(clone.href);
-	}
-
-	return clone.outerHTML;
-};
-
-/**
  * Convert a URL from a relative to an absolute address so it will work
  * correctly in the popup window which has no base URL.
  *
