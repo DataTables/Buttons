@@ -24,9 +24,33 @@ div.dt-buttons {
 	}
 }
 
-div.dropdown-menu.dt-button-collection {
+div.dt-button-collection {
+	position: absolute;
+	min-width: 200px;
 	margin-top: 4px;
-	width: 200px;
+	z-index: 2002;
+
+	// Need to move the dropdown styling to the container to allow for the title
+	background-color: var(--bs-body-bg);
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	border-radius: var(--bs-border-radius);
+	box-shadow: var(--bs-box-shadow);
+
+	div.dt-button-collection-title {
+		padding: 0.75em 0 0.25em;
+	}
+
+	.dropdown-menu {
+		position: relative;
+		display: block;
+		width: 100%;
+
+		// Moved to collection container
+		background-color: transparent;
+		border: none;
+		border-radius: 0;
+		box-shadow: none;
+	}
 
 	.dt-button {
 		position: relative;
@@ -48,10 +72,9 @@ div.dropdown-menu.dt-button-collection {
 		align-content: flex-start;
 		align-items: stretch;
 
-		a:first-child {
+		> *:first-child {
 			min-width: auto;
 			flex: 1 0 50px;
-			padding-right: 0;
 		}
 
 		button:last-child {
@@ -103,7 +126,7 @@ div.dt-button-info {
 }
 
 :root[data-bs-theme="dark"] {
-	div.dropdown-menu.dt-button-collection.fixed  {
+	div.dt-button-collection.fixed  {
 		background-color: var(--bs-body-bg);
 		border: 1px solid var(--bs-border-color-translucent);
 	}
