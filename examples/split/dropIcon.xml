@@ -31,7 +31,7 @@ $('#example').DataTable({
 							text: 'Inner popover',
 							dropIcon: true,
 							action: function () {
-								this.popover('Popover information from split...');
+								this.popover('<span>Popover information from split...</span>');
 							}
 						},
 						{
@@ -78,7 +78,7 @@ new DataTable('#example', {
 							text: 'Inner popover',
 							dropIcon: true,
 							action: function () {
-								this.popover('Popover information from split...');
+								this.popover('<span>Popover information from split...</span>');
 							}
 						},
 						{
