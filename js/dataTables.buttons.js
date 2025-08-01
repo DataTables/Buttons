@@ -1996,8 +1996,7 @@ Buttons.stripData = function (str, config) {
 
 	// Prevent Excel from running a formula
 	if (!config || config.escapeExcelFormula) {
-		if (str.match(/^[=+\-@\t\r]/)) {
-			console.log('matching and updateing');
+		if (str.match(/^[=@\t\r]/)) {
 			str = "'" + str;
 		}
 	}
