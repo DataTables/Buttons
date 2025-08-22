@@ -39,6 +39,8 @@
 		* `-type DataTables.Api` - The DataTable API instance
 		* `-type jQuery` - jQuery object for the button node
 		* `-type object` - Configuration object for the button.
+
+		Please note that this option is now deprecated in favour of the `messageTop` option.
 	</option>
 
 	<option type="object" name="exportOptions" default="{}">
