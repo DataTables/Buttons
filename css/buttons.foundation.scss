@@ -1,6 +1,6 @@
 
-@import 'mixins.scss';
-@import 'common.scss';
+@use 'mixins.scss';
+@use 'common.scss';
 
 div.dt-buttons.button-group {
 	div.dt-button-split {
@@ -97,5 +97,5 @@ div.dt-button-collection {
 		}
 	}
 
-	@include dtb-fixed-collection();
+	@include mixins.dtb-fixed-collection();
 }

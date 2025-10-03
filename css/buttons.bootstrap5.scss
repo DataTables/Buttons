@@ -1,6 +1,6 @@
 
-@import 'mixins.scss';
-@import 'common.scss';
+@use 'mixins.scss';
+@use 'common.scss';
 
 div.dt-buttons {
 	div.btn-group {
@@ -20,7 +20,7 @@ div.dt-buttons {
 	}
 
 	.btn.processing {
-		@include dtb-processing();
+		@include mixins.dtb-processing();
 	}
 }
 
@@ -94,7 +94,7 @@ div.dt-button-collection {
 		}
 	}
 
-	@include dtb-fixed-collection();
+	@include mixins.dtb-fixed-collection();
 }
 
 

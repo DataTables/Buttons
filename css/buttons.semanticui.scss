@@ -1,6 +1,6 @@
 
-@import 'mixins.scss';
-@import 'common.scss';
+@use 'mixins.scss';
+@use 'common.scss';
 
 div.dt-button-collection.ui.dropdown {
 	position: absolute;
@@ -112,7 +112,7 @@ div.dt-button-collection.ui.dropdown {
 		}
 	}
 
-	@include dtb-fixed-collection();
+	@include mixins.dtb-fixed-collection();
 }
 
 div.dt-button-background {
@@ -143,7 +143,7 @@ div.dt-buttons {
 	a.button.processing {
 		position: relative;
 
-		@include dtb-processing();
+		@include mixins.dtb-processing();
 	}
 
 

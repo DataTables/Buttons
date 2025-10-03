@@ -1,10 +1,11 @@
 
-@import 'mixins.scss';
-@import 'common.scss';
+@use "sass:color";
+@use 'mixins.scss';
+@use 'common.scss';
 
 $dtb-button-colour: rgba(0, 0, 0, 0.1) !default;
 $dtb-button-focus-colour: rgba(121, 172, 233, 1) !default;
-$dtb-button-border: 1px solid dtb-shade(transparent, 30%) !default;
+$dtb-button-border: 1px solid mixins.dtb-shade(transparent, 30%) !default;
 
 $dtb-dark-button-colour: rgba(255, 255, 255, 0.15);
 // $dtb-dark-button-focus-colour: 
@@ -28,8 +29,8 @@ div.dt-buttons {
 		color: inherit;
 		white-space: nowrap;
 		overflow: hidden;
-		@include dtb-two-stop-gradient(
-			lighten($dtb-button-colour, 90%),
+		@include mixins.dtb-two-stop-gradient(
+			color.adjust($dtb-button-colour, $lightness: 90%),
 			$dtb-button-colour
 		);
 		-webkit-user-select: none;
@@ -50,17 +51,17 @@ div.dt-buttons {
 		}
 
 		&.dt-button-active:not(.disabled) {
-			@include dtb-two-stop-gradient(
-				lighten($dtb-button-colour, 70%),
-				darken($dtb-button-colour, 20%)
+			@include mixins.dtb-two-stop-gradient(
+				color.adjust($dtb-button-colour, $lightness: 70%),
+				color.adjust($dtb-button-colour, $lightness: -20%)
 			);
 			box-shadow: inset 1px 1px 3px #999999;
 
 			&:hover:not(.disabled) {
 				box-shadow: inset 1px 1px 3px #999999;
-				@include dtb-two-stop-gradient(
-					lighten($dtb-button-colour, 50%),
-					darken($dtb-button-colour, 50%)
+				@include mixins.dtb-two-stop-gradient(
+					color.adjust($dtb-button-colour, $lightness: 50%),
+					color.adjust($dtb-button-colour, $lightness: -50%)
 				);
 			}
 		}
@@ -71,9 +72,9 @@ div.dt-buttons {
 
 		&:hover:not(.disabled) {
 			border: 1px solid #666;
-			@include dtb-two-stop-gradient(
-				lighten($dtb-button-colour, 60%),
-				darken($dtb-button-colour, 30%)
+			@include mixins.dtb-two-stop-gradient(
+				color.adjust($dtb-button-colour, $lightness: 60%),
+				color.adjust($dtb-button-colour, $lightness: -30%)
 			);
 		}
 
@@ -224,7 +225,7 @@ div.dt-button-collection {
 		}
 	}
 
-	@include dtb-fixed-collection();
+	@include mixins.dtb-fixed-collection();
 }
 
 div.dt-button-background {
@@ -234,13 +235,13 @@ div.dt-button-background {
 	width: 100%;
 	height: 100%;
 
-	@include dtb-radial-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7) );
+	@include mixins.dtb-radial-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7) );
 
 	z-index: 2001;
 }
 
 .dt-button.processing {
-	@include dtb-processing();
+	@include mixins.dtb-processing();
 }
 
 @media screen and (max-width: 640px) {
@@ -258,17 +259,17 @@ html.dark {
 			background: $dtb-dark-button-colour;
 			
 			&.dt-button-active:not(.disabled) {
-				background: darken($dtb-dark-button-colour, 30%);
+				background: color.adjust($dtb-dark-button-colour, $lightness: -30%);
 				box-shadow: inset 1px 1px 2px black;
 		
 				&:hover:not(.disabled) {
-					background: darken($dtb-dark-button-colour, 50%);
+					background: color.adjust($dtb-dark-button-colour, $lightness: -50%);
 					box-shadow: inset 1px 1px 3px black;
 				}
 			}
 		
 			&:hover:not(.disabled) {
-				background: darken($dtb-dark-button-colour, 30%);
+				background: color.adjust($dtb-dark-button-colour, $lightness: -30%);
 			}
 
 			&:focus:not(.disabled) {

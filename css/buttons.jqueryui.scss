@@ -1,6 +1,6 @@
 
-@import 'mixins.scss';
-@import 'common.scss';
+@use 'mixins.scss';
+@use 'common.scss';
 
 div.dt-buttons {
 	position: relative;
@@ -19,7 +19,7 @@ div.dt-buttons {
 		}
 
 		&.processing{
-			@include dtb-processing();
+			@include mixins.dtb-processing();
 		}
 
 		&:active {
@@ -74,7 +74,7 @@ div.dt-button-collection {
 		}
 	}
 
-	@include dtb-fixed-collection();
+	@include mixins.dtb-fixed-collection();
 }
 
 div.dt-button-split {
@@ -109,7 +109,7 @@ div.dt-button-background {
 	width: 100%;
 	height: 100%;
 
-	@include dtb-radial-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7) );
+	@include mixins.dtb-radial-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7) );
 
 	z-index: 2001;
 }

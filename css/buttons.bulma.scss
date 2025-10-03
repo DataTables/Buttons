@@ -1,6 +1,6 @@
 
-@import 'mixins.scss';
-@import 'common.scss';
+@use 'mixins.scss';
+@use 'common.scss';
 
 .dt-button {
 	position: relative;
@@ -65,7 +65,7 @@ div.dt-button-collection {
 		}
 	}
 
-	@include dtb-fixed-collection();
+	@include mixins.dtb-fixed-collection();
 
 	&.fixed {
 		&:before,
@@ -103,7 +103,7 @@ div.dt-buttons.field.is-grouped {
 	button.btn.processing,
 	div.btn.processing,
 	a.btn.processing {
-		@include dtb-processing();
+		@include mixins.dtb-processing();
 	}
 }
 

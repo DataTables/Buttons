@@ -1,22 +1,25 @@
+@use "sass:color";
+@use "sass:list";
+@use "sass:string";
 
 // Output should contain UTF8 characters as escaped ASCII - use this function as a workaround for
 // the SASS output
 @function unicode($str) {
-	@return unquote("\"")+unquote(str-insert($str, "\\", 1))+unquote("\"");
+	@return string.unquote("\"")+string.unquote(string.insert($str, "\\", 1))+string.unquote("\"");
 }
 
 @function dtb-tint( $color, $percent ) {
-	@return mix(white, $color, $percent);
+	@return color.mix(white, $color, $percent);
 }
 
 @function dtb-shade( $color, $percent ) {
-	@return mix(black, $color, $percent);
+	@return color.mix(black, $color, $percent);
 }
 
 @mixin dtb-two-stop-gradient($fromColor, $toColor) {
 	background-color: $toColor; /* Fallback */
 	background: linear-gradient(to bottom, $fromColor 0%, $toColor 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#{nth( $fromColor, 1 )}', EndColorStr='#{nth( $toColor, 1 )}');
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#{list.nth( $fromColor, 1 )}', EndColorStr='#{list.nth( $toColor, 1 )}');
 }
 
 @mixin dtb-radial-gradient ($fromColor, $toColor ) {
