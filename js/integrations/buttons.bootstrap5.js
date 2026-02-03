@@ -2,7 +2,10 @@
  * © SpryMedia Ltd - datatables.net/license
  */
 
-$.extend(true, DataTable.Buttons.defaults, {
+var dom = DataTable.dom;
+var util = DataTable.util;
+
+util.object.assignDeep(DataTable.Buttons.defaults, {
 	dom: {
 		container: {
 			className: 'dt-buttons btn-group flex-wrap'
@@ -16,17 +19,25 @@ $.extend(true, DataTable.Buttons.defaults, {
 		collection: {
 			container: {
 				tag: 'div',
-				className: 'dropdown-menu dt-button-collection'
+				className: 'dt-button-collection',
+				content: {
+					tag: 'ul',
+					className: 'dropdown-menu show'
+				}
 			},
 			closeButton: false,
 			button: {
-				tag: 'a',
-				className: 'dt-button dropdown-item',
-				active: 'dt-button-active',
+				tag: 'li',
+				className: 'dt-button',
+				active: 'dt-button-active-a',
 				disabled: 'disabled',
+				liner: {
+					tag: 'a',
+					className: 'dropdown-item'
+				},
 				spacer: {
-					className: 'dropdown-divider',
-					tag: 'hr'
+					className: 'divider',
+					tag: 'li'
 				}
 			}
 		},
@@ -52,7 +63,9 @@ $.extend(true, DataTable.Buttons.defaults, {
 		}
 	},
 	buttonCreated: function (config, button) {
-		return config.buttons ? $('<div class="btn-group"/>').append(button) : button;
+		return config.buttons
+			? dom.c('div').classAdd('btn-group').append(button)
+			: button;
 	}
 });
 

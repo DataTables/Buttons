@@ -2,7 +2,7 @@
  * © SpryMedia Ltd - datatables.net/license
  */
 
-$.extend(true, DataTable.Buttons.defaults, {
+DataTable.util.object.assignDeep(DataTable.Buttons.defaults, {
 	dom: {
 		container: {
 			className: 'dt-buttons btn-group flex-wrap'

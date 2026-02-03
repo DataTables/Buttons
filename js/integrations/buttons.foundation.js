@@ -2,7 +2,10 @@
  * © SpryMedia Ltd - datatables.net/license
  */
 
-$.extend(true, DataTable.Buttons.defaults, {
+var dom = DataTable.dom;
+var util = DataTable.util;
+
+util.object.assignDeep(DataTable.Buttons.defaults, {
 	dom: {
 		container: {
 			tag: 'div',
@@ -48,14 +51,16 @@ $.extend(true, DataTable.Buttons.defaults, {
 	}
 });
 
-$(document).on('buttons-popover.dt', function () {
+dom.s(document).on('buttons-popover.dt', function () {
 	var notButton = false;
-	$('.dtsp-panesContainer').each(function () {
-		if (!$(this).is('button')) {
+
+	dom.s('.dtsp-panesContainer').each(function (el) {
+		if (!dom.s(el).is('button')) {
 			notButton = true;
 		}
 	});
+
 	if (notButton) {
-		$('.dtsp-panesContainer').removeClass('button-group stacked');
+		dom.s('.dtsp-panesContainer').classRemove('button-group stacked');
 	}
 });

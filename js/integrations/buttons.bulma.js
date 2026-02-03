@@ -2,7 +2,10 @@
  * © SpryMedia Ltd - datatables.net/license
  */
 
-$.extend(true, DataTable.Buttons.defaults, {
+var dom = DataTable.dom;
+var util = DataTable.util;
+
+util.object.assignDeep(DataTable.Buttons.defaults, {
 	dom: {
 		container: {
 			className: 'dt-buttons field is-grouped'
@@ -11,7 +14,8 @@ $.extend(true, DataTable.Buttons.defaults, {
 			className: 'button',
 			active: 'is-active',
 			disabled: 'is-disabled',
-			dropHtml: '<span class="icon is-small"><i class="fa fa-angle-down" aria-hidden="true"></i></span>',
+			dropHtml:
+				'<span class="icon is-small"><i class="fa fa-angle-down" aria-hidden="true"></i></span>',
 			dropClass: ''
 		},
 		collection: {
@@ -52,7 +56,8 @@ $.extend(true, DataTable.Buttons.defaults, {
 			},
 			wrapper: {
 				tag: 'div',
-				className: 'dt-button-split dropdown-trigger buttons has-addons',
+				className:
+					'dt-button-split dropdown-trigger buttons has-addons',
 				closeButton: false
 			}
 		}
@@ -61,7 +66,10 @@ $.extend(true, DataTable.Buttons.defaults, {
 		// For collections
 		if (config.buttons) {
 			// Wrap the dropdown content in a menu element
-			config._collection = $('<div class="dropdown-menu"/>').append(config._collection);
+			config._collection = dom
+				.c('div')
+				.classAdd('dropdown-menu')
+				.append(config._collection);
 		}
 
 		return button;
