@@ -931,35 +931,34 @@ export default class Buttons {
 
 	/**
 	 * Add a new button
-	 * @param {object} config Button configuration object, base string name or function
-	 * @param {int|string} [idx] Button index for where to insert the button
-	 * @param {boolean} [draw=true] Trigger a draw. Set a false when adding
-	 *   lots of buttons, until the last button.
-	 * @return {Buttons} Self for chaining
+	 *
+	 * @param config Button configuration object, base string name or function
+	 * @param idx Button index for where to insert the button
+	 * @param draw Trigger a draw. Set a false when adding lots of buttons,
+	 *   until the last button.
+	 * @return Self for chaining
 	 */
-	public add(config, idx, draw) {
+	public add(config: ButtonTypes, idx?: string | number, draw = true) {
 		var buttons = this.s.buttons;
 
 		if (typeof idx === 'string') {
-			var split = idx.split('-');
-			var base = this.s;
+			var parts = idx.split('-');
+			var base = this.s as any;
 
-			for (var i = 0, ien = split.length - 1; i < ien; i++) {
-				base = base.buttons[split[i] * 1];
+			for (var i = 0, ien = parts.length - 1; i < ien; i++) {
+				base = base.buttons[parseInt(parts[i])];
 			}
 
 			buttons = base.buttons;
-			idx = split[split.length - 1] * 1;
+			idx = parseInt(parts[parts.length - 1]);
 		}
 
+		let split = config ? (config as any).split : undefined;
 		let node = this._expandButton(
 			buttons,
 			config,
-			config !== undefined ? config.split : undefined,
-			(config === undefined ||
-				config.split === undefined ||
-				config.split.length === 0) &&
-				base !== undefined,
+			split,
+			(!config || !split || split.length === 0) && base,
 			false,
 			idx
 		);
@@ -1419,12 +1418,12 @@ export default class Buttons {
 	 */
 	private _expandButton(
 		attachTo: ButtonSettings[],
-		button,
-		split,
+		button: ButtonsList | ButtonTypes | undefined,
+		split: ButtonsList | ButtonTypes | undefined,
 		inCollection: boolean,
 		inSplit: boolean,
-		attachPoint,
-		parentConf
+		attachPoint?: number,
+		parentConf?: ButtonConfig
 	) {
 		var dt = this.s.dt;
 		var isSplit = false;
@@ -1437,39 +1436,41 @@ export default class Buttons {
 		}
 
 		for (var i = 0, ien = buttons.length; i < ien; i++) {
+			// If the configuration is an array, then expand the buttons at this
+			// point
+			if (Array.isArray(buttons[i])) {
+				this._expandButton(
+					attachTo,
+					buttons[i],
+					undefined,
+					inCollection,
+					parentConf !== undefined && parentConf.split !== undefined,
+					attachPoint,
+					parentConf
+				);
+
+				continue;
+			}
+
 			var conf = this._resolveExtends(buttons[i]);
 
 			if (!conf) {
 				continue;
 			}
 
-			isSplit = conf.config && conf.config.split ? true : false;
-
-			// If the configuration is an array, then expand the buttons at this
-			// point
-			if (Array.isArray(conf)) {
-				this._expandButton(
-					attachTo,
-					conf,
-					built !== undefined && built.conf !== undefined
-						? built.conf.split
-						: undefined,
-					inCollection,
-					parentConf !== undefined && parentConf.split !== undefined,
-					attachPoint,
-					parentConf
-				);
-				continue;
-			}
+			isSplit = conf.split ? true : false; // TODO wut? conf.config && conf.config.split ? true : false;
 
 			var built = this._buildButton(
 				conf,
 				inCollection,
-				conf.split !== undefined ||
-					(conf.config !== undefined &&
-						conf.config.split !== undefined),
+				conf.split !== undefined,
+				// TODO don't understand this
+				//  ||
+				// 	(conf.config !== undefined &&
+				// 		conf.config.split !== undefined),
 				inSplit
 			);
+
 			if (!built) {
 				continue;
 			}
@@ -1484,16 +1485,14 @@ export default class Buttons {
 
 			// Any button type can have a drop icon set
 			if (built.conf.dropIcon && !built.conf.split) {
-				$(built.node)
+				built.node
 					.classAdd(this.c.dom.button.dropClass)
 					.append(this.c.dom.button.dropHtml);
 			}
 
 			// Create the dropdown for a collection
 			if (built.conf.buttons) {
-				built.collection = $(
-					'<' + domCollection.container.content.tag + '/>'
-				);
+				built.collection = dom.c(domCollection.container.content.tag);
 				built.conf._collection = built.collection;
 
 				this._expandButton(
@@ -1509,25 +1508,25 @@ export default class Buttons {
 
 			// And the split collection
 			if (built.conf.split) {
-				built.collection = $('<' + domCollection.container.tag + '/>');
+				built.collection = dom.c(domCollection.container.tag);
 				built.conf._collection = built.collection;
 
 				for (var j = 0; j < built.conf.split.length; j++) {
-					var item = built.conf.split[j];
+					var item: any = built.conf.split[j];
 
 					if (typeof item === 'object') {
 						item.parent = parentConf;
 
 						if (item.collectionLayout === undefined) {
-							item.collectionLayout = built.conf.collectionLayout;
+							item.collectionLayout = (built.conf as any).collectionLayout;
 						}
 
 						if (item.dropup === undefined) {
-							item.dropup = built.conf.dropup;
+							item.dropup = (built.conf as any).dropup;
 						}
 
 						if (item.fade === undefined) {
-							item.fade = built.conf.fade;
+							item.fade = (built.conf as any).fade;
 						}
 					}
 				}
@@ -1548,7 +1547,7 @@ export default class Buttons {
 			// init call is made here, rather than buildButton as it needs to
 			// be selectable, and for that it needs to be in the buttons array
 			if (conf.init) {
-				conf.init.call(dt.button(built.node), dt, $(built.node), conf);
+				conf.init.call(dt.button(built.node), dt, built.node, conf);
 			}
 
 			lastButton = built.node;
@@ -1982,7 +1981,10 @@ export default class Buttons {
 		}
 
 		for (var i = 0, ien = buttons.length; i < ien; i++) {
-			if (buttons[i].node.get(0) === node || buttons[i].nodeChild === node) {
+			if (
+				buttons[i].node.get(0) === node ||
+				buttons[i].nodeChild === node
+			) {
 				return buttons[i];
 			}
 
@@ -2111,22 +2113,25 @@ export default class Buttons {
 
 	/**
 	 * Resolve a button configuration
-	 * @param  {string|function|object} conf Button config to resolve
-	 * @return {object} Button configuration
+	 *
+	 * @param confIn Button config to resolve
+	 * @return Button configuration
 	 */
-	private _resolveExtends(conf: ButtonTypes) {
+	private _resolveExtends(confIn: ButtonTypes): ButtonConfig | false {
 		var that = this;
 		var dt = this.s.dt;
 		var i, ien;
-		var toConfObject = function (base: string | Function | object) {
+		var toConfObject = function (
+			base: string | Function | object
+		): ButtonConfig | false {
 			var loop = 0;
 
 			// Loop until we have resolved to a button configuration, or an
 			// array of button configurations (which will be iterated
 			// separately)
-			while (!util.is.plainObject(base) && !Array.isArray(base)) {
+			while (!util.is.plainObject(base)) {
 				if (base === undefined) {
-					return;
+					return false;
 				}
 
 				if (typeof base === 'function') {
@@ -2151,10 +2156,16 @@ export default class Buttons {
 				}
 			}
 
-			return Array.isArray(base) ? base : util.object.assign({}, base);
+			return util.object.assign({}, base);
 		};
 
-		conf = toConfObject(conf);
+		var confRes = toConfObject(confIn);
+
+		if (confRes === false) {
+			return false;
+		}
+
+		var conf = confRes;
 
 		while (conf && conf.extend) {
 			// Use `toConfObject` in case the button definition being extended
@@ -2164,10 +2175,8 @@ export default class Buttons {
 			}
 
 			var objArray = toConfObject(_dtButtons[conf.extend]);
-			if (Array.isArray(objArray)) {
-				return objArray;
-			}
-			else if (!objArray) {
+
+			if (!objArray) {
 				// This is a little brutal as it might be possible to have a
 				// valid button without the extend, but if there is no extend
 				// then the host button would be acting in an undefined state
@@ -2177,11 +2186,18 @@ export default class Buttons {
 			// Stash the current class name
 			var originalClassName = objArray.className;
 
-			if (conf.config !== undefined && objArray.config !== undefined) {
-				conf.config = util.object.assign({}, objArray.config, conf.config);
-			}
+			// TODO Was added for Bulma. I don't understand why it is here.
+			// What's it doing here?
+			// TODO!
+			// if (conf.config !== undefined && objArray.config !== undefined) {
+			// 	conf.config = util.object.assign(
+			// 		{},
+			// 		objArray.config,
+			// 		conf.config
+			// 	);
+			// }
 
-			conf = util.object.assign({}, objArray, conf);
+			conf = util.object.assign({}, objArray, conf) as ButtonConfig;
 
 			// The extend will have overwritten the original class name if the
 			// `conf` object also assigned a class, but we want to concatenate

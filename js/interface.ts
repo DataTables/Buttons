@@ -416,6 +416,11 @@ export interface ButtonConfig {
 	async?: number;
 
 	/**
+	 * Buttons for a collection.
+	 */
+	buttons?: ButtonsList;
+
+	/**
 	 * Set the class name for the button
 	 */
 	className?: string;
@@ -430,6 +435,11 @@ export interface ButtonConfig {
 	 * Function that is called when the button is destroyed
 	 */
 	destroy?: FunctionButtonInit;
+
+	/**
+	 * Indicate if a drop icon should be shown in the button
+	 */
+	dropIcon?: boolean;
 
 	/**
 	 * Set a button's initial enabled state
@@ -476,6 +486,23 @@ export interface ButtonConfig {
 	namespace?: string;
 
 	/**
+	 * Parent configuration object - Internal only
+	 * 
+	 * @ignore
+	 */
+	parent?: ButtonConfig;
+
+	/**
+	 * Buttons to go at the end of a collection
+	 */
+	prefixButtons?: ButtonsList;
+
+	/**
+	 * Buttons to go at the end of a collection
+	 */
+	postfixButtons?: ButtonsList;
+
+	/**
 	 * Indicate that the button is a spacer - uses a simplified DOM
 	 */
 	spacer?: boolean;
@@ -500,6 +527,13 @@ export interface ButtonConfig {
 	 * Button 'title' attribute text
 	 */
 	titleAttr?: string;
+
+	/**
+	 * Internal reference to a host collection
+	 *
+	 * @ignore
+	 */
+	_collection?: Dom;
 }
 
 export interface ButtonSettings {
@@ -538,7 +572,7 @@ export type FunctionButtonText = (dt: Api, node: Dom, config: any) => string;
 
 type FunctionButtonAvailable = (dt: Api, config: any) => boolean;
 
-type FunctionButtonInit = (dt: Api, node: JQuery, config: any) => void;
+type FunctionButtonInit = (dt: Api, node: Dom, config: any) => void;
 
 export type ButtonAction = (
 	this: any, // ApiButtonMethods<T>, TODO
