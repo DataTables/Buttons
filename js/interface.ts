@@ -52,10 +52,7 @@ declare module 'datatables.net' {
 	}
 
 	interface Context {
-		_buttons: {
-			inst: Buttons;
-			name: string;
-		}[];
+		_buttons: ContextButtons[];
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -68,15 +65,8 @@ declare module 'datatables.net' {
 
 	interface ApiButton<T> {
 		(
-			groupSelector?: number | string | Array<number | string> | Dom,
-			buttonSelector?:
-				| null
-				| number
-				| string
-				| Node
-				| Dom
-				| JQuery<HTMLElement>
-				| Array<null | number | string | Node | Dom | JQuery<HTMLElement>>
+			groupSelector?: GroupSelector,
+			buttonSelector?: ButtonSelector
 		): ApiButtonMethods<T>;
 	}
 
@@ -132,11 +122,12 @@ declare module 'datatables.net' {
 		enable(state?: boolean): Api<any>;
 
 		/**
-		 * Get a jQuery object that contains a reference to the node for the selected button.
+		 * Get a Dom object that contains a reference to the node for the
+		 * selected button.
 		 *
-		 * @returns A jQuery object that contains the node of the selected button
+		 * @returns A Dom object that contains the node of the selected button
 		 */
-		node(): JQuery;
+		node(): Dom;
 
 		/**
 		 * Determine if a button is currently in the processing state or not.
@@ -241,16 +232,16 @@ declare module 'datatables.net' {
 		active(state: boolean): Api<Array<any>>;
 
 		/**
-		 * Get a jQuery instance that contains a reference to the button container instance.
+		 * Get a Dom instance that contains a reference to the button container instance.
 		 */
-		container(): JQuery;
+		container(): Dom;
 
 		/**
-		 * Get a jQuery instance that contains a reference to the button container instances.
+		 * Get a Dom instance that contains a reference to the button container instances.
 		 *
-		 * @returns jQuery instance that contains the container elements for the selected button instances.
+		 * @returns Dom instance that contains the container elements for the selected button instances.
 		 */
-		containers(): JQuery;
+		containers(): Dom;
 
 		/**
 		 * Destroy the selected button instances, removing the container and all button elements from the document.
@@ -274,11 +265,11 @@ declare module 'datatables.net' {
 		enable(state?: boolean): Api<Array<any>>;
 
 		/**
-		 * Get a jQuery object that contains a reference to the node for the selected button.
+		 * Get a Dom object that contains a reference to the node for the selected button.
 		 *
-		 * @returns A jQuery object that contains the node of the selected button
+		 * @returns A Dom object that contains the node of the selected button
 		 */
-		nodes(): JQuery;
+		nodes(): Dom;
 
 		/**
 		 * Set the processing state for the selected button.
@@ -360,7 +351,11 @@ interface DefaultsButtonsDom {
 			content: ElStruct;
 			tag: string;
 		};
-		button?: ElStruct;
+		button?: {
+			active?: string;
+			className?: string;
+			tag: string;
+		};
 		split?: SplitStruct;
 	};
 	split: SplitStruct;
@@ -374,7 +369,7 @@ export interface SplitStruct {
 		className: string;
 		splitAlignClass: string;
 		tag: string;
-		text: string;
+		text?: string;
 	};
 	wrapper: ElStruct;
 }
@@ -437,6 +432,13 @@ export interface ButtonConfig {
 	destroy?: FunctionButtonInit;
 
 	/**
+	 * Flag to indicate that the button is being destroyed
+	 *
+	 * @ignore
+	 */
+	destroying?: boolean;
+
+	/**
 	 * Indicate if a drop icon should be shown in the button
 	 */
 	dropIcon?: boolean;
@@ -487,7 +489,7 @@ export interface ButtonConfig {
 
 	/**
 	 * Parent configuration object - Internal only
-	 * 
+	 *
 	 * @ignore
 	 */
 	parent?: ButtonConfig;
@@ -768,7 +770,7 @@ export interface CollectionButtons {
 	split: {};
 }
 
-export type ButtonTypes = 
+export type ButtonTypes =
 	| ButtonConfig
 	| keyof Buttons
 	| (Buttons[keyof Buttons] | ButtonConfig)
@@ -778,7 +780,7 @@ export type ButtonTypes =
 
 export type ButtonsList = Array<ButtonTypes>;
 
-type ButtonSelectorTypes = string | number | JQuery<any>;
+type ButtonSelectorTypes = string | number | JQuery<any> | Dom;
 
 interface ButtonExportOptions {
 	rows?: any;
@@ -820,9 +822,9 @@ export interface DefaultsButtons {
 	/**
 	 * Used for styling integration callback for DOM manipulation
 	 *
-	 * @param config 
-	 * @param inserter 
-	 * @returns 
+	 * @param config
+	 * @param inserter
+	 * @returns
 	 * @internal
 	 */
 	buttonCreated?: (config: ButtonConfig, inserter: Dom) => Dom;
@@ -839,4 +841,73 @@ export interface SettingsButtons {
 
 export interface DomButtons {
 	container: Dom;
+}
+
+export type EntityDecoder = (str: string) => string;
+
+export interface PopoverOptions {
+	align:
+		| 'button-left'
+		| 'button-right'
+		| 'dt-container'
+		| 'split-left'
+		| 'split-right'
+		| 'container';
+	autoClose: boolean;
+	background: boolean;
+	backgroundClassName: string;
+	backgroundHost: HTMLElement;
+	closeButton: boolean;
+	containerClassName: string;
+	contentClassName: string;
+	collectionLayout: string;
+	collectionTitle: string;
+	dropup: boolean;
+	fade: number;
+	popoverTitle: string;
+	rightAlignClassName: string;
+	sort: boolean;
+	span: string;
+	splitAlignClass: string;
+	tag: string;
+}
+
+export interface StripOptions {
+	decodeEntities?: boolean;
+	escapeExcelFormula?: boolean;
+	trim?: boolean;
+	stripHtml?: boolean;
+	stripNewlines?: boolean;
+}
+
+export type GroupSelector =
+	| number
+	| string
+	| Array<number | string>
+	| Dom
+	| Node;
+
+export type ButtonSelector =
+	| null
+	| number
+	| string
+	| Node
+	| Dom
+	| JQuery<HTMLElement>
+	| Array<null | number | string | Node | Dom | JQuery<HTMLElement>>;
+
+export interface ContextButtons {
+	inst: Buttons;
+	name: string;
+}
+
+export interface SelectedButtons {
+	inst: Buttons;
+	node: Dom;
+}
+
+export interface SelectListButtons {
+	node: Dom;
+	name?: string;
+	idx: string;
 }

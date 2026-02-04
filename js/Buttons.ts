@@ -1,21 +1,29 @@
 /*! Buttons for DataTables 3.2.6
  * © SpryMedia Ltd - datatables.net/license
  */
-import DataTable, { Api, Context, Dom } from 'datatables.net';
+import DataTable, { Api, ApiButtonMethods, Context, Dom } from 'datatables.net';
 import {
 	ButtonAction,
 	ButtonConfig,
 	ButtonDom,
+	ButtonSelector,
 	ButtonSettings,
 	ButtonsKeyboardEvent,
 	ButtonsList,
 	ButtonTypes,
 	ConfigButtons,
+	ContextButtons,
 	DefaultsButtons,
 	DomButtons,
+	EntityDecoder,
 	FunctionButtonText,
+	GroupSelector,
+	PopoverOptions,
+	SelectedButtons,
+	SelectListButtons,
 	SettingsButtons,
-	SplitStruct
+	SplitStruct,
+	StripOptions
 } from './interface';
 
 if (!DataTable.versionCheck('3')) {
@@ -35,33 +43,33 @@ var _buttonCounter = 0;
 var _dtButtons = DataTable.ext.buttons;
 
 // Custom entity decoder for data export
-var _entityDecoder = null;
+var _entityDecoder: EntityDecoder | null = null;
 
 // Allow for jQuery slim
-function _fadeIn(el, duration, fn) {
-	if ($.fn.animate) {
-		el.stop().fadeIn(duration, fn);
-	}
-	else {
-		el.css('display', 'block');
+function _fadeIn(el: Dom, duration: number, fn?: (this: Dom) => void) {
+	// if ($.fn.animate) {
+	// 	el.stop().fadeIn(duration, fn);
+	// }
+	// else {
+	el.css('display', 'block');
 
-		if (fn) {
-			fn.call(el);
-		}
+	if (fn) {
+		fn.call(el);
 	}
+	// }
 }
 
-function _fadeOut(el, duration, fn) {
-	if ($.fn.animate) {
-		el.stop().fadeOut(duration, fn);
-	}
-	else {
-		el.css('display', 'none');
+function _fadeOut(el: Dom, duration: number, fn?: (this: Dom) => void) {
+	// if ($.fn.animate) {
+	// 	el.stop().fadeOut(duration, fn);
+	// }
+	// else {
+	el.css('display', 'none');
 
-		if (fn) {
-			fn.call(el);
-		}
+	if (fn) {
+		fn.call(el);
 	}
+	// }
 }
 
 export default class Buttons {
@@ -86,7 +94,8 @@ export default class Buttons {
 	) {
 		if (show) {
 			_fadeIn(
-				$('<div/>')
+				dom
+					.c('div')
 					.classAdd(className)
 					.css('display', 'none')
 					.insertAfter(insertPoint),
@@ -94,36 +103,37 @@ export default class Buttons {
 			);
 		}
 		else {
-			_fadeOut($('div.' + className), fade, function () {
-				$(this).classRemove(className).remove();
+			_fadeOut(dom.s('div.' + className), fade, function () {
+				this.classRemove(className).remove();
 			});
 		}
 	};
 
 	/**
-	 * Instance selector - select Buttons instances based on an instance selector
-	 * value from the buttons assigned to a DataTable. This is only useful if
-	 * multiple instances are attached to a DataTable.
-	 * @param  {string|int|array} Instance selector - see `instance-selector`
-	 *   documentation on the DataTables site
-	 * @param  {array} Button instance array that was attached to the DataTables
-	 *   settings object
-	 * @return {array} Buttons instances
+	 * Instance selector - select Buttons instances based on an instance
+	 * selector value from the buttons assigned to a DataTable. This is only
+	 * useful if multiple instances are attached to a DataTable.
+	 *
+	 * @param group Instance selector - see `instance-selector` documentation on
+	 *   the DataTables site
+	 * @param Button instance array that was attached to the DataTables settings
+	 *   object
+	 * @return Buttons instances
 	 */
-	public static instanceSelector = function (group, buttons) {
+	public static instanceSelector = function (
+		group: GroupSelector,
+		buttons: ContextButtons[]
+	): Buttons[] {
+		// If no group selector, then return all
 		if (group === undefined || group === null) {
-			return $.map(buttons, function (v) {
-				return v.inst;
-			});
+			return buttons.map(v => v.inst);
 		}
 
-		var ret = [];
-		var names = $.map(buttons, function (v) {
-			return v.name;
-		});
+		var ret: Buttons[] = [];
+		var names = buttons.map(v => v.name);
 
 		// Flatten the group selector into an array of single options
-		var process = function (input) {
+		var process = function (input: GroupSelector) {
 			if (Array.isArray(input)) {
 				for (var i = 0, ien = input.length; i < ien; i++) {
 					process(input[i]);
@@ -138,7 +148,7 @@ export default class Buttons {
 				}
 				else {
 					// String selector individual name
-					var idx = $.inArray(input.trim(), names);
+					var idx = names.indexOf(input.trim());
 
 					if (idx !== -1) {
 						ret.push(buttons[idx].inst);
@@ -149,17 +159,17 @@ export default class Buttons {
 				// Index selector
 				ret.push(buttons[input].inst);
 			}
-			else if (typeof input === 'object' && input.nodeName) {
+			else if (util.is.element(input)) {
 				// Element selector
 				for (var j = 0; j < buttons.length; j++) {
-					if (buttons[j].inst.dom.container[0] === input) {
+					if (buttons[j].inst.dom.container.get(0) === input) {
 						ret.push(buttons[j].inst);
 					}
 				}
 			}
 			else if (typeof input === 'object') {
 				// Actual instance selector
-				ret.push(input);
+				ret.push(input as any as Buttons);
 			}
 		};
 
@@ -171,15 +181,22 @@ export default class Buttons {
 	/**
 	 * Button selector - select one or more buttons from a selector input so some
 	 * operation can be performed on them.
-	 * @param  {array} Button instances array that the selector should operate on
-	 * @param  {string|int|node|jQuery|array} Button selector - see
+	 * @param Button instances array that the selector should operate on
+	 * @param Button selector - see
 	 *   `button-selector` documentation on the DataTables site
-	 * @return {array} Array of objects containing `inst` and `idx` properties of
+	 * @return Array of objects containing `inst` and `idx` properties of
 	 *   the selected buttons so you know which instance each button belongs to.
 	 */
-	public static buttonSelector = function (insts, selector) {
-		var ret = [];
-		var nodeBuilder = function (a, buttons, baseIdx) {
+	public static buttonSelector = function (
+		insts: Buttons[],
+		selector: ButtonSelector
+	) {
+		var ret: SelectedButtons[] = [];
+		var nodeBuilder = function (
+			a: SelectListButtons[],
+			buttons: ButtonSettings[],
+			baseIdx?: string
+		) {
 			var button;
 			var idx;
 
@@ -202,18 +219,17 @@ export default class Buttons {
 			}
 		};
 
-		var run = function (selector, inst) {
+		var run = function (selector: ButtonSelector, inst: Buttons) {
 			var i, ien;
-			var buttons = [];
+			var buttons: SelectListButtons[] = [];
+
 			nodeBuilder(buttons, inst.s.buttons);
 
-			var nodes = $.map(buttons, function (v) {
-				return v.node;
-			});
+			var nodes = buttons.map(v => v.node.get(0));
 
-			if (Array.isArray(selector) || selector instanceof $) {
-				for (i = 0, ien = selector.length; i < ien; i++) {
-					run(selector[i], inst);
+			if (selector && util.is.arrayLike(selector)) {
+				for (i = 0, ien = (selector as any[]).length; i < ien; i++) {
+					run((selector as any)[i], inst);
 				}
 				return;
 			}
@@ -251,13 +267,11 @@ export default class Buttons {
 				}
 				else if (selector.match(/^\d+(\-\d+)*$/)) {
 					// Sub-button index selector
-					var indexes = $.map(buttons, function (v) {
-						return v.idx;
-					});
+					var indexes = buttons.map(v => v.idx);
 
 					ret.push({
 						inst: inst,
-						node: buttons[$.inArray(selector, indexes)].node
+						node: buttons[indexes.indexOf(selector)].node
 					});
 				}
 				else if (selector.indexOf(':name') !== -1) {
@@ -275,24 +289,24 @@ export default class Buttons {
 				}
 				else {
 					// jQuery selector on the nodes
-					$(nodes)
+					dom.s(nodes)
 						.filter(selector)
-						.each(function () {
+						.each(function (el) {
 							ret.push({
 								inst: inst,
-								node: this
+								node: dom.s(el)
 							});
 						});
 				}
 			}
-			else if (typeof selector === 'object' && selector.nodeName) {
+			else if (util.is.element(selector)) {
 				// Node selector
-				var idx = $.inArray(selector, nodes);
+				var idx = nodes.indexOf(selector);
 
 				if (idx !== -1) {
 					ret.push({
 						inst: inst,
-						node: nodes[idx]
+						node: dom.s(nodes[idx])
 					});
 				}
 			}
@@ -312,17 +326,19 @@ export default class Buttons {
 	 *
 	 * @param str Data to strip
 	 */
-	public static stripData = function (str: string, config) {
+	public static stripData = function (
+		input: string | HTMLElement,
+		config?: StripOptions
+	) {
 		// If the input is an HTML element, we can use the HTML from it (HTML
 		// might be stripped below).
-		if (
-			str !== null &&
-			typeof str === 'object' &&
-			str.nodeName &&
-			str.nodeType
-		) {
-			str = str.innerHTML;
-		}
+		var str =
+			input !== null &&
+			typeof input === 'object' &&
+			input.nodeName &&
+			input.nodeType
+				? input.innerHTML
+				: (input as string);
 
 		if (typeof str !== 'string') {
 			return str;
@@ -369,23 +385,30 @@ export default class Buttons {
 	/**
 	 * Provide a custom entity decoding function - e.g. a regex one, which can
 	 * be much faster than the built in DOM option, but also larger code size.
+	 *
 	 * @param fn
 	 */
-	public static entityDecoder = function (fn) {
+	public static entityDecoder = function (fn: EntityDecoder) {
 		_entityDecoder = fn;
 	};
 
 	/**
-	 * Display (and replace if there is an existing one) a popover attached to a button
-	 * @param {string|node} content Content to show
-	 * @param {DataTable.Api} hostButton DT API instance of the button
-	 * @param {object} inOpts Options (see object below for all options)
+	 * Display (and replace if there is an existing one) a popover attached to a
+	 * button
+	 *
+	 * @param contentIn Content to show
+	 * @param hostButton DT API instance of the button
+	 * @param inOpts Options (see object below for all options)
 	 */
-	public popover(content, hostButton, inOpts) {
+	public popover(
+		contentIn: HTMLElement | string | false,
+		hostButton: ApiButtonMethods<any>,
+		inOpts: PopoverOptions
+	) {
 		var dt = hostButton;
 		var c = this.c;
 		var closed = false;
-		var options = $.extend(
+		var options = util.object.assign<PopoverOptions>(
 			{
 				align: 'button-left', // button-right, dt-container, split-left, split-right
 				autoClose: false,
@@ -409,71 +432,74 @@ export default class Buttons {
 			options.tag + '.' + options.containerClassName.replace(/ /g, '.');
 		var hostButtonNode = hostButton.node();
 		var hostNode = options.collectionLayout.includes('fixed')
-			? $('body')
+			? dom.s('body')
 			: hostButton.node();
 
 		var close = function () {
 			closed = true;
 
-			_fadeOut($(containerSelector), options.fade, function () {
-				$(this).detach();
+			_fadeOut(dom.s(containerSelector), options.fade, function () {
+				this.detach();
 			});
 
-			$(
-				dt
-					.buttons('[aria-haspopup="dialog"][aria-expanded="true"]')
-					.nodes()
-			).attr('aria-expanded', 'false');
+			dt.buttons('[aria-haspopup="dialog"][aria-expanded="true"]')
+				.nodes()
+				.attr('aria-expanded', 'false');
 
-			$('div.dt-button-background').off('click.dtb-collection');
+			dom.s('div.dt-button-background').off('click.dtb-collection');
 			Buttons.background(
 				false,
 				options.backgroundClassName,
 				options.fade,
-				hostNode
+				hostNode.get(0)
 			);
 
-			$(window).off('resize.resize.dtb-collection');
-			$('body').off('.dtb-collection');
+			dom.w.off('resize.resize.dtb-collection');
+			dom.s('body').off('.dtb-collection');
 			dt.off('buttons-action.b-internal');
 			dt.off('destroy.dtb-popover');
 
-			$('body').trigger('buttons-popover-hide.dt');
+			dom.s('body').trigger('buttons-popover-hide.dt');
 		};
 
-		if (content === false) {
+		if (contentIn === false) {
 			close();
 			return;
 		}
 
-		var existingExpanded = $(
-			dt.buttons('[aria-haspopup="dialog"][aria-expanded="true"]').nodes()
-		);
-		if (existingExpanded.length) {
-			// Reuse the current position if the button that was triggered is inside an existing collection
-			if (hostNode.closest(containerSelector).length) {
+		var existingExpanded = dt
+			.buttons('[aria-haspopup="dialog"][aria-expanded="true"]')
+			.nodes();
+
+		if (existingExpanded.count()) {
+			// Reuse the current position if the button that was triggered is
+			// inside an existing collection
+			if (hostNode.closest(containerSelector).count()) {
 				hostNode = existingExpanded.eq(0);
 			}
 
 			close();
 		}
 
+		let content: Dom =
+			typeof contentIn === 'string'
+				? dom.c('div').html(contentIn).children()
+				: dom.s(contentIn);
+
 		// Sort buttons if defined
 		if (options.sort) {
-			var elements = $('button', content)
-				.map(function (idx, el) {
-					return {
-						text: $(el).text(),
-						el: el
-					};
-				})
-				.toArray();
+			var elements = content.find('button').mapTo(function (el) {
+				return {
+					text: dom.s(el).text(),
+					el: el
+				};
+			});
 
 			elements.sort(function (a, b) {
 				return a.text.localeCompare(b.text);
 			});
 
-			$(content).append(
+			content.append(
 				elements.map(function (v) {
 					return v.el;
 				})
@@ -481,7 +507,7 @@ export default class Buttons {
 		}
 
 		// Try to be smart about the layout
-		var cnt = $('.dt-button', content).length;
+		var cnt = content.find('.dt-button').count();
 		var mod = '';
 
 		if (cnt === 3) {
@@ -494,7 +520,7 @@ export default class Buttons {
 			mod = 'dtb-b1';
 		}
 
-		var display = $('<' + options.tag + '/>')
+		var display = dom.c(options.tag)
 			.classAdd(options.containerClassName)
 			.classAdd(options.collectionLayout)
 			.classAdd(options.splitAlignClass)
@@ -505,15 +531,17 @@ export default class Buttons {
 				role: 'dialog'
 			});
 
-		content = $(content)
+		content
 			.classAdd(options.contentClassName)
 			.attr('role', 'menu')
 			.appendTo(display);
 
 		hostButtonNode.attr('aria-expanded', 'true');
 
-		if (hostNode.parents('body')[0] !== document.body) {
-			hostNode = $(document.body).children('div, section, p').last();
+		if (! hostNode.isAttached()) {
+			let possibilities = dom.s(document.body).children('div, section, p');
+
+			hostNode = possibilities.eq(possibilities.count() - 1);
 		}
 
 		if (options.popoverTitle) {
@@ -539,50 +567,47 @@ export default class Buttons {
 
 		_fadeIn(display.insertAfter(hostNode), options.fade);
 
-		var tableContainer = $(hostButton.table().container());
+		var tableContainer = dom.s(hostButton.table().container());
 		var position = display.css('position');
 
 		if (options.span === 'container' || options.align === 'dt-container') {
 			hostNode = hostNode.parent();
-			display.css('width', tableContainer.width());
+			display.css('width', tableContainer.width() + 'px');
 		}
 
 		// Align the popover relative to the DataTables container
 		// Useful for wide popovers such as SearchPanes
 		if (position === 'absolute') {
 			// Align relative to the host button
-			var offsetParent = $(hostNode[0].offsetParent);
+			var offsetParent = dom.s(hostNode.get(0).offsetParent);
 			var buttonPosition = hostNode.position();
 			var buttonOffset = hostNode.offset();
-			var tableSizes = offsetParent.offset();
 			var containerPosition = offsetParent.position();
-			var computed = window.getComputedStyle(offsetParent[0]);
-
-			tableSizes.height = offsetParent.outerHeight();
-			tableSizes.width =
-				offsetParent.width() + parseFloat(computed.paddingLeft);
-			tableSizes.right = tableSizes.left + tableSizes.width;
-			tableSizes.bottom = tableSizes.top + tableSizes.height;
 
 			// Set the initial position so we can read height / width
-			var top = buttonPosition.top + hostNode.outerHeight();
+			var top = buttonPosition.top + hostNode.height('outer');
 			var left = buttonPosition.left;
 
 			display.css({
-				top: top,
-				left: left
+				top: top + 'px',
+				left: left + 'px'
 			});
 
 			// Get the popover position
-			computed = window.getComputedStyle(display[0]);
-			var popoverSizes = display.offset();
-
-			popoverSizes.height = display.outerHeight();
-			popoverSizes.width = display.outerWidth();
-			popoverSizes.right = popoverSizes.left + popoverSizes.width;
-			popoverSizes.bottom = popoverSizes.top + popoverSizes.height;
-			popoverSizes.marginTop = parseFloat(computed.marginTop);
-			popoverSizes.marginBottom = parseFloat(computed.marginBottom);
+			var computed = window.getComputedStyle(display.get(0));
+			var displayOffset = display.offset();
+			var displayWidth = display.width('outer');
+			var displayHeight = display.height('outer');
+			var popoverSizes = {
+				height: displayHeight,
+				width: displayWidth,
+				right: displayOffset.left + displayWidth,
+				bottom: displayOffset.top + displayHeight,
+				marginTop: parseFloat(computed.marginTop),
+				marginBottom: parseFloat(computed.marginBottom),
+				top: displayOffset.top,
+				left: displayOffset.left
+			}
 
 			// First position per the class requirements - pop up and right align
 			if (options.dropup) {
@@ -600,7 +625,7 @@ export default class Buttons {
 				left =
 					buttonPosition.left -
 					popoverSizes.width +
-					hostNode.outerWidth();
+					hostNode.width('outer');
 			}
 
 			// Container alignment - make sure it doesn't overflow the table container
@@ -616,13 +641,11 @@ export default class Buttons {
 			// Window adjustment
 			if (
 				containerPosition.left + left + popoverSizes.width >
-				$(window).width()
+				dom.w.width()
 			) {
 				// Overflowing the document to the right
 				left =
-					$(window).width() -
-					popoverSizes.width -
-					containerPosition.left;
+					dom.w.width() - popoverSizes.width - containerPosition.left;
 			}
 
 			if (buttonOffset.left + left < 0) {
@@ -632,7 +655,7 @@ export default class Buttons {
 
 			if (
 				containerPosition.top + top + popoverSizes.height >
-				$(window).height() + $(window).scrollTop()
+				dom.w.height() + dom.w.scrollTop()
 			) {
 				// Pop up if otherwise we'd need the user to scroll down
 				top =
@@ -642,33 +665,33 @@ export default class Buttons {
 					popoverSizes.marginBottom;
 			}
 
-			if (offsetParent.offset().top + top < $(window).scrollTop()) {
+			if (offsetParent.offset().top + top < dom.w.scrollTop()) {
 				// Correction for when the top is beyond the top of the page
-				top = buttonPosition.top + hostNode.outerHeight();
+				top = buttonPosition.top + hostNode.height('outer');
 			}
 
 			// Calculations all done - now set it
 			display.css({
-				top: top,
-				left: left
+				top: top + 'px',
+				left: left + 'px'
 			});
 		}
 		else {
 			// Fix position - centre on screen
 			var place = function () {
-				var half = $(window).height() / 2;
+				var half = dom.w.height() / 2;
 
 				var top = display.height() / 2;
 				if (top > half) {
 					top = half;
 				}
 
-				display.css('marginTop', top * -1);
+				display.css('marginTop', top + 'px');
 			};
 
 			place();
 
-			$(window).on('resize.dtb-collection', function () {
+			dom.w.on('resize.dtb-collection', function () {
 				place();
 			});
 		}
@@ -686,7 +709,7 @@ export default class Buttons {
 		// background element, iOS Safari will ignore the body click
 		// listener below. An empty function here is all that is
 		// required to make it work...
-		$('div.dt-button-background').on(
+		dom.s('div.dt-button-background').on(
 			'click.dtb-collection',
 			function () {}
 		);
@@ -694,21 +717,23 @@ export default class Buttons {
 		if (options.autoClose) {
 			setTimeout(function () {
 				dt.on('buttons-action.b-internal', function (e, btn, dt, node) {
-					if (node[0] === hostNode[0]) {
+					if (node.get(0) === hostNode.get(0)) {
 						return;
 					}
+
 					close();
 				});
 			}, 0);
 		}
 
-		$(display).trigger('buttons-popover.dt');
+		display.trigger('buttons-popover.dt');
 
 		dt.on('destroy.dtb-popover', close);
 
 		setTimeout(function () {
 			closed = false;
-			$('body')
+			
+			dom.s('body')
 				.on('click.dtb-collection', function (e) {
 					if (closed) {
 						return;
@@ -716,7 +741,7 @@ export default class Buttons {
 
 					// andSelf is deprecated in jQ1.8, but we want 1.7 compat
 					var back = $.fn.addBack ? 'addBack' : 'andSelf';
-					var parent = $(e.target).parent()[0];
+					var parent = dom.s(e.target).parent().get(0);
 
 					if (
 						(!$(e.target).parents()[back]().filter(content)
@@ -734,7 +759,7 @@ export default class Buttons {
 				})
 				.on('keydown.dtb-collection', function (e) {
 					// Focus trap for tab key
-					var elements = $('a, button', content);
+					var elements = content.find('a, button');
 					var active = document.activeElement;
 
 					if (e.keyCode !== 9) {
@@ -879,23 +904,21 @@ export default class Buttons {
 	 */
 
 	/**
-	 * Get the action of a button
-	 * @param  {int|string} Button index
-	 * @return {function}
-	 */ /**
-	 * Set the action of a button
-	 * @param  {node} node Button element
-	 * @param  {function} action Function to set
-	 * @return {Buttons} Self for chaining
+	 * Get / set the action of a button
+	 * @param node Button element
+	 * @param action Function to set
+	 * @return Self for chaining
 	 */
-	public action(node, action) {
+	public action(node: HTMLElement, action?: ButtonAction) {
 		var button = this._nodeToButton(node);
 
 		if (action === undefined) {
-			return button.conf.action;
+			return button ? button.conf.action : null;
 		}
 
-		button.conf.action = action;
+		if (button) {
+			button.conf.action = action;
+		}
 
 		return this;
 	}
@@ -903,16 +926,17 @@ export default class Buttons {
 	/**
 	 * Add an active class to the button to make to look active or get current
 	 * active state.
-	 * @param  {node} node Button element
-	 * @param  {boolean} [flag] Enable / disable flag
-	 * @return {Buttons} Self for chaining or boolean for getter
+	 *
+	 * @param node Button element
+	 * @param flag Enable / disable flag
+	 * @return Self for chaining or boolean for getter
 	 */
-	public active(node, flag) {
+	public active(node: HTMLElement, flag?: boolean) {
 		var button = this._nodeToButton(node);
 		var klass = this.c.dom.button.active;
-		var jqNode = $(button.node);
 
 		if (
+			button &&
 			button.inCollection &&
 			this.c.dom.collection.button &&
 			this.c.dom.collection.button.active !== undefined
@@ -921,10 +945,12 @@ export default class Buttons {
 		}
 
 		if (flag === undefined) {
-			return jqNode.classHas(klass);
+			return button ? button.node.classHas(klass) : false;
 		}
 
-		jqNode.toggleClass(klass, flag === undefined ? true : flag);
+		if (button) {
+			button.node.classToggle(klass, flag === undefined ? true : flag);
+		}
 
 		return this;
 	}
@@ -973,14 +999,18 @@ export default class Buttons {
 	/**
 	 * Clear buttons from a collection and then insert new buttons
 	 */
-	public collectionRebuild(node, newButtons) {
+	public collectionRebuild(node: HTMLElement, newButtons: ButtonsList) {
 		var button = this._nodeToButton(node);
+
+		if (!button) {
+			return;
+		}
 
 		if (newButtons !== undefined) {
 			var i;
 			// Need to reverse the array
 			for (i = button.buttons.length - 1; i >= 0; i--) {
-				this.remove(button.buttons[i].node);
+				this.remove(button.buttons[i].node.get(0));
 			}
 
 			// If the collection has prefix and / or postfix buttons we need to add them in
@@ -993,7 +1023,7 @@ export default class Buttons {
 			}
 
 			for (i = 0; i < newButtons.length; i++) {
-				var newBtn = newButtons[i];
+				var newBtn = newButtons[i] as any;
 
 				this._expandButton(
 					button.buttons,
@@ -1004,7 +1034,7 @@ export default class Buttons {
 					true,
 					newBtn.parentConf !== undefined &&
 						newBtn.parentConf.split !== undefined,
-					null,
+					undefined,
 					newBtn.parentConf
 				);
 			}
@@ -1015,7 +1045,8 @@ export default class Buttons {
 
 	/**
 	 * Get the container node for the buttons
-	 * @return {jQuery} Buttons node
+	 *
+	 * @return Buttons node
 	 */
 	public container() {
 		return this.dom.container;
@@ -1023,26 +1054,30 @@ export default class Buttons {
 
 	/**
 	 * Disable a button
-	 * @param  {node} node Button node
-	 * @return {Buttons} Self for chaining
+	 * @param node Button node
+	 * @return Self for chaining
 	 */
-	public disable(node) {
+	public disable(node: HTMLElement) {
 		var button = this._nodeToButton(node);
 
-		if (button.isSplit) {
-			$(button.node.childNodes[0])
-				.classAdd(this.c.dom.button.disabled)
-				.prop('disabled', true);
-		}
-		else {
-			$(button.node)
-				.classAdd(this.c.dom.button.disabled)
-				.prop('disabled', true);
-		}
+		if (button) {
+			if (button.isSplit) {
+				button.node
+					.children()
+					.eq(0)
+					.classAdd(this.c.dom.button.disabled)
+					.prop('disabled', true);
+			}
+			else {
+				button.node
+					.classAdd(this.c.dom.button.disabled)
+					.prop('disabled', true);
+			}
 
-		button.disabled = true;
+			button.disabled = true;
 
-		this._checkSplitEnable();
+			this._checkSplitEnable();
+		}
 
 		return this;
 	}
@@ -1054,7 +1089,7 @@ export default class Buttons {
 	 */
 	public destroy() {
 		// Key event listener
-		$('body').off('keyup.' + this.s.namespace);
+		dom.s('body').off('keyup.' + this.s.namespace);
 
 		// Individual button destroy (so they can remove their own events if
 		// needed). Take a copy as the array is modified by `remove`
@@ -1062,17 +1097,17 @@ export default class Buttons {
 		var i, ien;
 
 		for (i = 0, ien = buttons.length; i < ien; i++) {
-			this.remove(buttons[i].node);
+			this.remove(buttons[i].node.get(0));
 		}
 
 		// Container
 		this.dom.container.remove();
 
 		// Remove from the settings object collection
-		var buttonInsts = this.s.dt.settings()[0];
+		var buttonInsts = this.s.dt.settings()[0]._buttons;
 
 		for (i = 0, ien = buttonInsts.length; i < ien; i++) {
-			if (buttonInsts.inst === this) {
+			if (buttonInsts[i].inst === this) {
 				buttonInsts.splice(i, 1);
 				break;
 			}
@@ -1083,32 +1118,36 @@ export default class Buttons {
 
 	/**
 	 * Enable / disable a button
-	 * @param  {node} node Button node
-	 * @param  {boolean} [flag=true] Enable / disable flag
-	 * @return {Buttons} Self for chaining
+	 *
+	 * @param node Button node
+	 * @param flag Enable / disable flag
+	 * @return Self for chaining
 	 */
-	public enable(node, flag) {
+	public enable(node: HTMLElement, flag = true) {
 		if (flag === false) {
 			return this.disable(node);
 		}
 
 		var button = this._nodeToButton(node);
 
-		if (button.isSplit) {
-			$(button.node.childNodes[0])
-				.classRemove(this.c.dom.button.disabled)
-				.prop('disabled', false);
+		if (button) {
+			if (button.isSplit) {
+				button.node
+					.children()
+					.eq(0)
+					.classRemove(this.c.dom.button.disabled)
+					.prop('disabled', false);
+			}
+			else {
+				button.node
+					.classRemove(this.c.dom.button.disabled)
+					.prop('disabled', false);
+			}
+
+			button.disabled = false;
+
+			this._checkSplitEnable();
 		}
-		else {
-			$(button.node)
-				.classRemove(this.c.dom.button.disabled)
-				.prop('disabled', false);
-		}
-
-		button.disabled = false;
-
-		this._checkSplitEnable();
-
 		return this;
 	}
 
@@ -1116,19 +1155,27 @@ export default class Buttons {
 	 * Get a button's index
 	 *
 	 * This is internally recursive
-	 * @param {element} node Button to get the index of
-	 * @return {string} Button index
+	 *
+	 * @param node Button to get the index of
+	 * @return Button index
 	 */
-	public index(node, nested, buttons) {
+	public index(
+		node: HTMLElement,
+		nested?: string,
+		buttons?: ButtonSettings[]
+	): string | null {
 		if (!nested) {
 			nested = '';
+		}
+
+		if (!buttons) {
 			buttons = this.s.buttons;
 		}
 
 		for (var i = 0, ien = buttons.length; i < ien; i++) {
 			var inner = buttons[i].buttons;
 
-			if (buttons[i].node === node) {
+			if (buttons[i].node.get(0) === node) {
 				return nested + i;
 			}
 
@@ -1146,7 +1193,8 @@ export default class Buttons {
 
 	/**
 	 * Get the instance name for the button set selector
-	 * @return {string} Instance name
+	 *
+	 * @return Instance name
 	 */
 	public name() {
 		return this.c.name;
@@ -1154,49 +1202,53 @@ export default class Buttons {
 
 	/**
 	 * Get a button's node of the buttons container if no button is given
-	 * @param  {node} [node] Button node
-	 * @return {jQuery} Button element, or container
+	 * @param node Button node
+	 * @return Button element, or container
 	 */
-	public node(node) {
+	public node(node?: HTMLElement) {
 		if (!node) {
 			return this.dom.container;
 		}
 
 		var button = this._nodeToButton(node);
-		return $(button.node);
+		return button!.node;
 	}
 
 	/**
 	 * Set / get a processing class on the selected button
-	 * @param {element} node Triggering button node
-	 * @param  {boolean} flag true to add, false to remove, undefined to get
-	 * @return {boolean|Buttons} Getter value or this if a setter.
+	 *
+	 * @param node Triggering button node
+	 * @param flag true to add, false to remove, undefined to get
+	 * @return Getter value or this if a setter.
 	 */
-	public processing(node, flag) {
+	public processing(node: HTMLElement, flag?: boolean) {
 		var dt = this.s.dt;
 		var button = this._nodeToButton(node);
 
 		if (flag === undefined) {
-			return $(button.node).classHas('processing');
+			return button ? button.node.classHas('processing') : false;
 		}
 
-		$(button.node).toggleClass('processing', flag);
+		if (button) {
+			button.node.classToggle('processing', flag);
 
-		$(dt.table().node()).triggerHandler('buttons-processing.dt', [
-			flag,
-			dt.button(node),
-			dt,
-			$(node),
-			button.conf
-		]);
+			dom.s(dt.table().node()).trigger('buttons-processing.dt', false, [
+				flag,
+				dt.button(node),
+				dt,
+				dom.s(node),
+				button.conf
+			]);
+		}
 
 		return this;
 	}
 
 	/**
 	 * Remove a button.
-	 * @param  {node} node Button node
-	 * @return {Buttons} Self for chaining
+	 *
+	 * @param node Button node
+	 * @return Self for chaining
 	 */
 	public remove(node: HTMLElement) {
 		let button = this._nodeToButton(node);
@@ -1211,7 +1263,7 @@ export default class Buttons {
 		// Remove any child buttons first
 		if (button.buttons.length) {
 			for (let i = button.buttons.length - 1; i >= 0; i--) {
-				this.remove(button.buttons[i].node);
+				this.remove(button.buttons[i].node.get(0));
 			}
 		}
 
@@ -1219,19 +1271,26 @@ export default class Buttons {
 
 		// Allow the button to remove event handlers, etc
 		if (button.conf.destroy) {
-			button.conf.destroy.call(dt.button(node), dt, $(node), button.conf);
+			button.conf.destroy.call(
+				dt.button(node),
+				dt,
+				dom.s(node),
+				button.conf
+			);
 		}
 
 		this._removeKey(button.conf);
 
-		$(button.node).remove();
+		button.node.remove();
 
 		if (button.inserter) {
-			$(button.inserter).remove();
+			button.inserter.remove();
 		}
 
-		let idx = host.indexOf(button);
-		host.splice(idx, 1);
+		if (host) {
+			let idx = host.indexOf(button);
+			host.splice(idx, 1);
+		}
 
 		return this;
 	}
@@ -1518,7 +1577,9 @@ export default class Buttons {
 						item.parent = parentConf;
 
 						if (item.collectionLayout === undefined) {
-							item.collectionLayout = (built.conf as any).collectionLayout;
+							item.collectionLayout = (
+								built.conf as any
+							).collectionLayout;
 						}
 
 						if (item.dropup === undefined) {
@@ -1917,7 +1978,7 @@ export default class Buttons {
 	 * Spin over buttons checking if splits should be enabled or not.
 	 * @param buttons Array of buttons to check
 	 */
-	private _checkSplitEnable(buttons: ButtonSettings[]) {
+	private _checkSplitEnable(buttons?: ButtonSettings[]) {
 		if (!buttons) {
 			buttons = this.s.buttons;
 		}
