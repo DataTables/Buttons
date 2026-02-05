@@ -6,6 +6,7 @@ import {
 	ButtonAction,
 	ButtonConfig,
 	ButtonDom,
+	ButtonFunction,
 	ButtonSelector,
 	ButtonSettings,
 	ButtonsKeyboardEvent,
@@ -32,6 +33,7 @@ if (!DataTable.versionCheck('3')) {
 
 const dom = DataTable.dom;
 const util = DataTable.util;
+const _exportTextarea = document.createElement('textarea');
 
 // Used for namespacing events added to the document by each instance, so they
 // can be removed on destroy
@@ -40,7 +42,7 @@ var _instCounter = 0;
 // Button namespacing counter for namespacing events on individual buttons
 var _buttonCounter = 0;
 
-var _dtButtons = DataTable.ext.buttons;
+// var Buttons.buttons = DataTable.ext.buttons;
 
 // Custom entity decoder for data export
 var _entityDecoder: EntityDecoder | null = null;
@@ -108,6 +110,9 @@ export default class Buttons {
 			});
 		}
 	};
+
+	public static buttons: Record<string, ButtonConfig | ButtonFunction> =
+		DataTable.ext.buttons;
 
 	/**
 	 * Instance selector - select Buttons instances based on an instance
@@ -520,7 +525,8 @@ export default class Buttons {
 			mod = 'dtb-b1';
 		}
 
-		var display = dom.c(options.tag)
+		var display = dom
+			.c(options.tag)
 			.classAdd(options.containerClassName)
 			.classAdd(options.collectionLayout)
 			.classAdd(options.splitAlignClass)
@@ -538,8 +544,10 @@ export default class Buttons {
 
 		hostButtonNode.attr('aria-expanded', 'true');
 
-		if (! hostNode.isAttached()) {
-			let possibilities = dom.s(document.body).children('div, section, p');
+		if (!hostNode.isAttached()) {
+			let possibilities = dom
+				.s(document.body)
+				.children('div, section, p');
 
 			hostNode = possibilities.eq(possibilities.count() - 1);
 		}
@@ -607,7 +615,7 @@ export default class Buttons {
 				marginBottom: parseFloat(computed.marginBottom),
 				top: displayOffset.top,
 				left: displayOffset.left
-			}
+			};
 
 			// First position per the class requirements - pop up and right align
 			if (options.dropup) {
@@ -732,7 +740,7 @@ export default class Buttons {
 
 		setTimeout(function () {
 			closed = false;
-			
+
 			dom.s('body')
 				.on('click.dtb-collection', function (e) {
 					if (closed) {
@@ -740,14 +748,16 @@ export default class Buttons {
 					}
 
 					// andSelf is deprecated in jQ1.8, but we want 1.7 compat
-					var back = $.fn.addBack ? 'addBack' : 'andSelf';
-					var parent = dom.s(e.target).parent().get(0);
+					// var back = $.fn.addBack ? 'addBack' : 'andSelf';
+					// var parent = dom.s(e.target).parent().eq(0);
 
 					if (
-						(!$(e.target).parents()[back]().filter(content)
-							.length &&
-							!$(parent).classHas('dt-buttons')) ||
-						$(e.target).classHas('dt-button-background')
+						// TODO Not actually sure what this is for?
+						// (
+						// 	!$(e.target).parents()[back]().filter(content).length &&
+						// 	parent.classHas('dt-buttons')
+						// ) ||
+						dom.s(e.target).classHas('dt-button-background')
 					) {
 						close();
 					}
@@ -760,28 +770,30 @@ export default class Buttons {
 				.on('keydown.dtb-collection', function (e) {
 					// Focus trap for tab key
 					var elements = content.find('a, button');
-					var active = document.activeElement;
+					var active = document.activeElement as HTMLElement;
+					var first = elements.eq(0);
+					var last = elements.eq(elements.count() - 1);
 
 					if (e.keyCode !== 9) {
 						// tab
 						return;
 					}
 
-					if (elements.index(active) === -1) {
+					if (elements.get().includes(active)) {
 						// If current focus is not inside the popover
-						elements.first().focus();
+						first.focus();
 						e.preventDefault();
 					}
 					else if (e.shiftKey) {
 						// Reverse tabbing order when shift key is pressed
-						if (active === elements[0]) {
-							elements.last().focus();
+						if (active === elements.get(0)) {
+							last.focus();
 							e.preventDefault();
 						}
 					}
 					else {
-						if (active === elements.last()[0]) {
-							elements.first().focus();
+						if (active === last.get(0)) {
+							first.focus();
 							e.preventDefault();
 						}
 					}
@@ -1886,13 +1898,19 @@ export default class Buttons {
 			this._addKey(dropButtonConfig);
 
 			var splitAction: ButtonAction = function (e, dt, button, config) {
-				_dtButtons.split.action.call(
-					dt.button(splitDiv),
-					e,
-					dt,
-					button,
-					config
-				);
+				if (
+					typeof Buttons.buttons.split === 'object' &&
+					Buttons.buttons.split.action
+				) {
+					Buttons.buttons.split.action.call(
+						dt.button(splitDiv),
+						e,
+						dt,
+						button,
+						config,
+						() => {}
+					);
+				}
 
 				dom.s(dt.table().node()).trigger('buttons-action.dt', false, [
 					dt.button(button),
@@ -2203,11 +2221,11 @@ export default class Buttons {
 					}
 				}
 				else if (typeof base === 'string') {
-					if (!_dtButtons[base]) {
+					if (!Buttons.buttons[base]) {
 						return { html: base };
 					}
 
-					base = _dtButtons[base];
+					base = Buttons.buttons[base];
 				}
 
 				loop++;
@@ -2231,11 +2249,11 @@ export default class Buttons {
 		while (conf && conf.extend) {
 			// Use `toConfObject` in case the button definition being extended
 			// is itself a string or a function
-			if (!_dtButtons[conf.extend]) {
+			if (!Buttons.buttons[conf.extend]) {
 				throw 'Cannot extend unknown button type: ' + conf.extend;
 			}
 
-			var objArray = toConfObject(_dtButtons[conf.extend]);
+			var objArray = toConfObject(Buttons.buttons[conf.extend]);
 
 			if (!objArray) {
 				// This is a little brutal as it might be possible to have a
@@ -2301,387 +2319,168 @@ export default class Buttons {
 	}
 }
 
-$.extend(_dtButtons, {
-	collection: {
-		text: function (dt) {
-			return dt.i18n('buttons.collection', 'Collection');
-		},
-		className: 'buttons-collection',
-		closeButton: false,
-		dropIcon: true,
-		init: function (dt, button) {
-			button.attr('aria-expanded', false);
-		},
-		action: function (e, dt, button, config) {
-			if (config._collection.parents('body').length) {
-				this.popover(false, config);
-			}
-			else {
-				this.popover(config._collection, config);
-			}
-
-			// When activated using a key - auto focus on the
-			// first item in the popover
-			if (e.type === 'keypress') {
-				$('a, button', config._collection).eq(0).focus();
-			}
-		},
-		attr: {
-			'aria-haspopup': 'dialog'
-		}
-		// Also the popover options, defined in Buttons.popover
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Core Button types
+ */
+Buttons.buttons.collection = {
+	text: function (dt) {
+		return dt.i18n('buttons.collection', 'Collection');
 	},
-	split: {
-		text: function (dt) {
-			return dt.i18n('buttons.split', 'Split');
-		},
-		className: 'buttons-split',
-		closeButton: false,
-		init: function (dt, button) {
-			return button.attr('aria-expanded', false);
-		},
-		action: function (e, dt, button, config) {
-			this.popover(config._collection, config);
-		},
-		attr: {
-			'aria-haspopup': 'dialog'
-		}
-		// Also the popover options, defined in Buttons.popover
+	className: 'buttons-collection',
+	closeButton: false,
+	dropIcon: true,
+	init: function (dt, button) {
+		button.attr('aria-expanded', false);
 	},
-	copy: function () {
-		if (_dtButtons.copyHtml5) {
-			return 'copyHtml5';
-		}
-	},
-	csv: function (dt, conf) {
-		if (_dtButtons.csvHtml5 && _dtButtons.csvHtml5.available(dt, conf)) {
-			return 'csvHtml5';
-		}
-	},
-	excel: function (dt, conf) {
-		if (
-			_dtButtons.excelHtml5 &&
-			_dtButtons.excelHtml5.available(dt, conf)
-		) {
-			return 'excelHtml5';
-		}
-	},
-	pdf: function (dt, conf) {
-		if (_dtButtons.pdfHtml5 && _dtButtons.pdfHtml5.available(dt, conf)) {
-			return 'pdfHtml5';
-		}
-	},
-	pageLength: function (dt) {
-		var lengthMenu = dt.settings()[0].aLengthMenu;
-		var vals = [];
-		var lang = [];
-		var text = function (dt) {
-			return dt.i18n(
-				'buttons.pageLength',
-				{
-					'-1': 'Show all rows',
-					_: 'Show %d rows'
-				},
-				dt.page.len()
-			);
-		};
-
-		// Support for DataTables 1.x 2D array
-		if (Array.isArray(lengthMenu[0])) {
-			vals = lengthMenu[0];
-			lang = lengthMenu[1];
+	action: function (e, dt, button, config) {
+		if (config._collection!.isAttached()) {
+			this.popover(false, config);
 		}
 		else {
-			for (var i = 0; i < lengthMenu.length; i++) {
-				var option = lengthMenu[i];
-
-				// Support for DataTables 2 object in the array
-				if ($.isPlainObject(option)) {
-					vals.push(option.value);
-					lang.push(option.label);
-				}
-				else {
-					vals.push(option);
-					lang.push(option);
-				}
-			}
+			this.popover(config._collection, config);
 		}
 
-		return {
-			extend: 'collection',
-			text: text,
-			className: 'buttons-page-length',
-			autoClose: true,
-			buttons: $.map(vals, function (val, i) {
-				return {
-					text: lang[i],
-					className: 'button-page-length',
-					action: function (e, dt) {
-						dt.page.len(val).draw();
-					},
-					init: function (dt, node, conf) {
-						var that = this;
-						var fn = function () {
-							that.active(dt.page.len() === val);
-						};
-
-						dt.on('length.dt' + conf.namespace, fn);
-						fn();
-					},
-					destroy: function (dt, node, conf) {
-						dt.off('length.dt' + conf.namespace);
-					}
-				};
-			}),
-			init: function (dt, node, conf) {
-				var that = this;
-				dt.on('length.dt' + conf.namespace, function () {
-					that.text(conf.text);
-				});
-			},
-			destroy: function (dt, node, conf) {
-				dt.off('length.dt' + conf.namespace);
-			}
-		};
+		// When activated using a key - auto focus on the
+		// first item in the popover
+		if (e.type === 'keypress') {
+			config._collection!.find('a, button').eq(0).focus();
+		}
 	},
-	spacer: {
-		style: 'empty',
-		spacer: true,
-		text: function (dt) {
-			return dt.i18n('buttons.spacer', '');
-		}
+	attr: {
+		'aria-haspopup': 'dialog'
 	}
-});
-
-/**
- * Get the file name for an exported file.
- *
- * @param {object} config Button configuration
- * @param {object} dt DataTable instance
- */
-var _filename = function (config, dt) {
-	// Backwards compatibility
-	var filename =
-		config.filename === '*' &&
-		config.title !== '*' &&
-		config.title !== undefined &&
-		config.title !== null &&
-		config.title !== ''
-			? config.title
-			: config.filename;
-
-	if (typeof filename === 'function') {
-		filename = filename(config, dt);
-	}
-
-	if (filename === undefined || filename === null) {
-		return null;
-	}
-
-	if (filename.indexOf('*') !== -1) {
-		filename = filename.replace(/\*/g, $('head > title').text()).trim();
-	}
-
-	// Strip characters which the OS will object to
-	filename = filename.replace(/[^a-zA-Z0-9_\u00A1-\uFFFF\.,\-_ !\(\)]/g, '');
-
-	var extension = _stringOrFunction(config.extension, config, dt);
-	if (!extension) {
-		extension = '';
-	}
-
-	return filename + extension;
+	// Also the popover options, defined in Buttons.popover
 };
 
-/**
- * Simply utility method to allow parameters to be given as a function
- *
- * @param {undefined|string|function} option Option
- * @return {null|string} Resolved value
- */
-var _stringOrFunction = function (option, config, dt) {
-	if (option === null || option === undefined) {
-		return null;
+Buttons.buttons.split = {
+	text: function (dt) {
+		return dt.i18n('buttons.split', 'Split');
+	},
+	className: 'buttons-split',
+	closeButton: false,
+	init: function (dt, button) {
+		return button.attr('aria-expanded', false);
+	},
+	action: function (e, dt, button, config) {
+		this.popover(config._collection, config);
+	},
+	attr: {
+		'aria-haspopup': 'dialog'
 	}
-	else if (typeof option === 'function') {
-		return option(config, dt);
-	}
-	return option;
+	// Also the popover options, defined in Buttons.popover
 };
 
-/**
- * Get the title for an exported file.
- *
- * @param {object} config	Button configuration
- */
-var _title = function (config, dt) {
-	var title = _stringOrFunction(config.title, config, dt);
-
-	return title === null
-		? null
-		: title.indexOf('*') !== -1
-		? title.replace(/\*/g, $('head > title').text() || 'Exported data')
-		: title;
+Buttons.buttons.copy = function (dt, conf) {
+	if (Buttons.buttons.copyHtml5) {
+		return 'copyHtml5';
+	}
 };
 
-var _message = function (dt, config, option, position) {
-	var message = _stringOrFunction(option, config, dt);
-	if (message === null) {
-		return null;
-	}
-
-	var caption = $('caption', dt.table().container()).eq(0);
-	if (message === '*') {
-		var side = caption.css('caption-side');
-		if (side !== position) {
-			return null;
-		}
-
-		return caption.length ? caption.text() : '';
-	}
-
-	return message;
-};
-
-var _exportTextarea = $('<textarea/>')[0];
-var _exportData = function (dt, inOpts) {
-	var config = $.extend(
-		true,
-		{},
-		{
-			rows: null,
-			columns: '',
-			modifier: {
-				search: 'applied',
-				order: 'applied'
-			},
-			orthogonal: 'display',
-			stripHtml: true,
-			stripNewlines: true,
-			decodeEntities: true,
-			escapeExcelFormula: false,
-			trim: true,
-			format: {
-				header: function (d) {
-					return Buttons.stripData(d, config);
-				},
-				footer: function (d) {
-					return Buttons.stripData(d, config);
-				},
-				body: function (d) {
-					return Buttons.stripData(d, config);
-				}
-			},
-			customizeData: null,
-			customizeZip: null
-		},
-		inOpts
-	);
-
-	var header = dt
-		.columns(config.columns)
-		.indexes()
-		.map(function (idx) {
-			var col = dt.column(idx);
-			return config.format.header(col.title(), idx, col.header());
-		})
-		.toArray();
-
-	var footer = dt.table().footer()
-		? dt
-				.columns(config.columns)
-				.indexes()
-				.map(function (idx) {
-					var el = dt.column(idx).footer();
-					var val = '';
-
-					if (el) {
-						var inner = $('.dt-column-title', el);
-
-						val = inner.length ? inner.html() : $(el).html();
-					}
-
-					return config.format.footer(val, idx, el);
-				})
-				.toArray()
-		: null;
-
-	// If Select is available on this table, and any rows are selected, limit the export
-	// to the selected rows. If no rows are selected, all rows will be exported. Specify
-	// a `selected` modifier to control directly.
-	var modifier = $.extend({}, config.modifier);
+Buttons.buttons.csv = function (dt, conf) {
 	if (
-		dt.select &&
-		typeof dt.select.info === 'function' &&
-		modifier.selected === undefined
+		typeof Buttons.buttons.csvHtml5 === 'object' &&
+		Buttons.buttons.csvHtml5.available!(dt, conf)
 	) {
-		if (
-			dt.rows(config.rows, $.extend({ selected: true }, modifier)).any()
-		) {
-			$.extend(modifier, { selected: true });
-		}
+		return 'csvHtml5';
 	}
+};
 
-	var rowIndexes = dt.rows(config.rows, modifier).indexes().toArray();
-	var selectedCells = dt.cells(rowIndexes, config.columns, {
-		order: modifier.order
-	});
-	var cells = selectedCells.render(config.orthogonal).toArray();
-	var cellNodes = selectedCells.nodes().toArray();
-	var cellIndexes = selectedCells.indexes().toArray();
-
-	var columns = dt.columns(config.columns).count();
-	var rows = columns > 0 ? cells.length / columns : 0;
-	var body = [];
-	var cellCounter = 0;
-
-	for (var i = 0, ien = rows; i < ien; i++) {
-		var row = [columns];
-
-		for (var j = 0; j < columns; j++) {
-			row[j] = config.format.body(
-				cells[cellCounter],
-				cellIndexes[cellCounter].row,
-				cellIndexes[cellCounter].column,
-				cellNodes[cellCounter]
-			);
-			cellCounter++;
-		}
-
-		body[i] = row;
+Buttons.buttons.excel = function (dt, conf) {
+	if (
+		typeof Buttons.buttons.excelHtml5 === 'object' &&
+		Buttons.buttons.excelHtml5.available!(dt, conf)
+	) {
+		return 'excelHtml5';
 	}
+};
 
-	var data = {
-		header: header,
-		headerStructure: _headerFormatter(
-			config.format.header,
-			dt.table().header.structure(config.columns)
-		),
-		footer: footer,
-		footerStructure: _headerFormatter(
-			config.format.footer,
-			dt.table().footer.structure(config.columns)
-		),
-		body: body
+Buttons.buttons.pdf = function (dt, conf) {
+	if (
+		typeof Buttons.buttons.pdfHtml5 === 'object' &&
+		Buttons.buttons.pdfHtml5.available!(dt, conf)
+	) {
+		return 'pdfHtml5';
+	}
+};
+
+Buttons.buttons.pageLength = function (dt) {
+	var lengthMenu = dt.settings()[0].lengthMenu;
+	var vals = [];
+	var lang: string[] = [];
+	var text = function (dt: Api) {
+		return dt.i18n(
+			'buttons.pageLength',
+			{
+				'-1': 'Show all rows',
+				_: 'Show %d rows'
+			},
+			dt.page.len()
+		);
 	};
 
-	if (config.customizeData) {
-		config.customizeData(data);
+	// Support for DataTables 1.x 2D array
+	if (Array.isArray(lengthMenu[0])) {
+		vals = lengthMenu[0];
+		lang = lengthMenu[1];
 	}
+	else {
+		for (var i = 0; i < lengthMenu.length; i++) {
+			var option = lengthMenu[i];
 
-	return data;
-};
-
-function _headerFormatter(formatter, struct) {
-	for (var i = 0; i < struct.length; i++) {
-		for (var j = 0; j < struct[i].length; j++) {
-			var item = struct[i][j];
-
-			if (item) {
-				item.title = formatter(item.title, j, item.cell);
+			// Support for DataTables 2 object in the array
+			if (util.is.plainObject(option)) {
+				vals.push(option.value);
+				lang.push(option.label);
+			}
+			else {
+				vals.push(option);
+				lang.push(option);
 			}
 		}
 	}
 
-	return struct;
-}
+	return {
+		extend: 'collection',
+		text: text,
+		className: 'buttons-page-length',
+		autoClose: true,
+		buttons: vals.map(function (val, i) {
+			return {
+				text: lang[i],
+				className: 'button-page-length',
+				action: function (e, dt) {
+					dt.page.len(val).draw();
+				},
+				init: function (dt, node, conf) {
+					var that = this;
+					var fn = function () {
+						that.active(dt.page.len() === val);
+					};
+
+					dt.on('length.dt' + conf.namespace, fn);
+					fn();
+				},
+				destroy: function (dt, node, conf) {
+					dt.off('length.dt' + conf.namespace);
+				}
+			};
+		}),
+		init: function (dt, node, conf) {
+			var that = this;
+			dt.on('length.dt' + conf.namespace, function () {
+				that.text(conf.text);
+			});
+		},
+		destroy: function (dt, node, conf) {
+			dt.off('length.dt' + conf.namespace);
+		}
+	};
+};
+
+Buttons.buttons.spacer = {
+	style: 'empty',
+	spacer: true,
+	text: function (dt) {
+		return dt.i18n('buttons.spacer', '');
+	}
+};
