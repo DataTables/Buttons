@@ -35,10 +35,14 @@ declare module 'datatables.net' {
 
 	interface Api<T> {
 		/**
-		 * Select a single button from the button instances attached to a DataTable.
+		 * Select a single button from the button instances attached to a
+		 * DataTable.
 		 *
-		 * @param groupSelector Button group (instance) selector. Provides the ability to select a button from a specific instance of the Buttons class.
-		 * @param buttonSelector Selector to obtain the button that should be acted upon.
+		 * @param groupSelector Button group (instance) selector. Provides the
+		 * ability to select a button from a specific instance of the Buttons
+		 * class.
+		 * @param buttonSelector Selector to obtain the button that should be
+		 * acted upon.
 		 */
 		button: ApiButton<T>;
 
@@ -106,28 +110,34 @@ declare module 'datatables.net' {
 		/**
 		 * Set the active state for the selected button.
 		 *
-		 * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
+		 * @returns DataTables API instance with the selected button in the
+		 * result set, available for chaining further operations on the button.
 		 */
 		active(state: boolean): Api<any>;
 
 		/**
-		 * Create a new button, adding it to the selected button instance and inserting immediately into the document.
+		 * Create a new button, adding it to the selected button instance and
+		 * inserting immediately into the document.
 		 *
-		 * @returns New DataTables API instance with the result set containing the newly created button. This means it is possible to immediately using the chaining API to manipulate the button.
+		 * @returns New DataTables API instance with the result set containing
+		 * the newly created button. This means it is possible to immediately
+		 * using the chaining API to manipulate the button.
 		 */
 		add(index: number | string, config: string | Buttons): Api<any>;
 
 		/**
 		 * Disable the selected buttons.
 		 *
-		 * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
+		 * @returns DataTables API instance with the selected button in the
+		 * result set, available for chaining further operations on the button.
 		 */
 		disable(): Api<any>;
 
 		/**
 		 * Set the enabled state for the selected button.
 		 *
-		 * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
+		 * @returns DataTables API instance with the selected button in the
+		 * result set, available for chaining further operations on the button.
 		 */
 		enable(state?: boolean): Api<any>;
 
@@ -142,19 +152,22 @@ declare module 'datatables.net' {
 		/**
 		 * Determine if a button is currently in the processing state or not.
 		 *
-		 * @returns true if the button is currently in its processing state, false otherwise.
+		 * @returns true if the button is currently in its processing state,
+		 * false otherwise.
 		 */
 		processing(): boolean;
 
 		/**
 		 * Set the processing state for the selected button.
 		 *
-		 * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the buttons.
+		 * @returns DataTables API instance with the selected button in the
+		 * result set, available for chaining further operations on the buttons.
 		 */
 		processing(set: boolean): Api<any>;
 
 		/**
-		 * Remove the selected button from the display. The button is destroyed and can no longer be used once removed.
+		 * Remove the selected button from the display. The button is destroyed
+		 * and can no longer be used once removed.
 		 *
 		 * @returns DataTables API instance.
 		 */
@@ -170,14 +183,16 @@ declare module 'datatables.net' {
 		/**
 		 * Set the display text for the selected button
 		 *
-		 * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the buttons.
+		 * @returns DataTables API instance with the selected button in the
+		 * result set, available for chaining further operations on the buttons.
 		 */
 		text(title: string | FunctionButtonText): Api<any>;
 
 		/**
 		 * Programmatically trigger the action of the selected button.
 		 *
-		 * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
+		 * @returns DataTables API instance with the selected button in the
+		 * result set, available for chaining further operations on the button.
 		 */
 		trigger(): Api<any>;
 
@@ -193,7 +208,8 @@ declare module 'datatables.net' {
 		(groupSelector?: any, buttonSelector?: any): ApiButtonsMethods<T>;
 
 		/**
-		 * Display / hide an information message to the end user to indicate that something has happened.
+		 * Display / hide an information message to the end user to indicate
+		 * that something has happened.
 		 *
 		 * @returns DataTables API instance for chaining.
 		 */
@@ -206,16 +222,19 @@ declare module 'datatables.net' {
 		/**
 		 * Get meta information that is common to many different button types.
 		 *
-		 * @returns An object with properties which contain the filename, messageTop, messageBottom and title.
+		 * @returns An object with properties which contain the filename,
+		 * messageTop, messageBottom and title.
 		 */
 		exportInfo(
 			options?: ButtonsApiExportInfoParameter
 		): ButtonsApiExportInfoReturn;
 
 		/**
-		 * Obtain data from a DataTable that is suitable for exporting by saving into a file or copying to clipboard.
+		 * Obtain data from a DataTable that is suitable for exporting by saving
+		 * into a file or copying to clipboard.
 		 *
-		 * @returns An object with 3 properties, one each for the data in the header, body and footer.
+		 * @returns An object with 3 properties, one each for the data in the
+		 * header, body and footer.
 		 */
 		exportData(
 			options?: ButtonsApiExportDataParameter
@@ -226,7 +245,8 @@ declare module 'datatables.net' {
 		/**
 		 * Get the action function for the selected button.
 		 *
-		 * @returns DataTables API instance which contains the action functions for the selected buttons
+		 * @returns DataTables API instance which contains the action functions
+		 * for the selected buttons
 		 */
 		action(): Api<Array<ButtonAction>>;
 
@@ -234,38 +254,45 @@ declare module 'datatables.net' {
 		 * Set the action function for the selected button.
 		 *
 		 * @param set the function that is to be triggered on an action.
-		 * @returns DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
+		 * @returns DataTables API instance with the selected buttons in the
+		 * result set, available for chaining further operations on the buttons.
 		 */
 		action(set: ButtonAction): Api<Array<any>>;
 
 		/**
 		 * Get the active state for the selected button.
 		 *
-		 * @returns API instance which contains true if currently active, otherwise false for each selected button in the result set.
+		 * @returns API instance which contains true if currently active,
+		 * otherwise false for each selected button in the result set.
 		 */
 		active(): Api<Array<boolean>>;
 
 		/**
 		 * Set the active state for the selected button.
 		 *
-		 * @returns DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
+		 * @returns DataTables API instance with the selected buttons in the
+		 * result set, available for chaining further operations on the buttons.
 		 */
 		active(state: boolean): Api<Array<any>>;
 
 		/**
-		 * Get a Dom instance that contains a reference to the button container instance.
+		 * Get a Dom instance that contains a reference to the button container
+		 * instance.
 		 */
 		container(): Dom;
 
 		/**
-		 * Get a Dom instance that contains a reference to the button container instances.
+		 * Get a Dom instance that contains a reference to the button container
+		 * instances.
 		 *
-		 * @returns Dom instance that contains the container elements for the selected button instances.
+		 * @returns Dom instance that contains the container elements for the
+		 * selected button instances.
 		 */
 		containers(): Dom;
 
 		/**
-		 * Destroy the selected button instances, removing the container and all button elements from the document.
+		 * Destroy the selected button instances, removing the container and all
+		 * button elements from the document.
 		 *
 		 * @returns DataTables API instance.
 		 */
@@ -274,19 +301,22 @@ declare module 'datatables.net' {
 		/**
 		 * Disable the selected buttons.
 		 *
-		 * @returns DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
+		 * @returns DataTables API instance with the selected buttons in the
+		 * result set, available for chaining further operations on the buttons.
 		 */
 		disable(): Api<Array<any>>;
 
 		/**
 		 * Set the enabled state for the selected button.
 		 *
-		 * @returns DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
+		 * @returns DataTables API instance with the selected buttons in the
+		 * result set, available for chaining further operations on the buttons.
 		 */
 		enable(state?: boolean): Api<Array<any>>;
 
 		/**
-		 * Get a Dom object that contains a reference to the node for the selected button.
+		 * Get a Dom object that contains a reference to the node for the
+		 * selected button.
 		 *
 		 * @returns A Dom object that contains the node of the selected button
 		 */
@@ -295,12 +325,14 @@ declare module 'datatables.net' {
 		/**
 		 * Set the processing state for the selected button.
 		 *
-		 * @returns DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
+		 * @returns DataTables API instance with the selected buttons in the
+		 * result set, available for chaining further operations on the buttons.
 		 */
 		processing(set: boolean): Api<any>;
 
 		/**
-		 * Remove the selected button from the display. The button is destroyed and can no longer be used once removed.
+		 * Remove the selected button from the display. The button is destroyed
+		 * and can no longer be used once removed.
 		 *
 		 * @returns DataTables API instance.
 		 */
@@ -316,14 +348,16 @@ declare module 'datatables.net' {
 		/**
 		 * Set the display text for the selected button
 		 *
-		 * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the buttons.
+		 * @returns DataTables API instance with the selected button in the
+		 * result set, available for chaining further operations on the buttons.
 		 */
 		text(title: string | FunctionButtonText): Api<Array<string>>;
 
 		/**
 		 * Programmatically trigger the action of the selected button.
 		 *
-		 * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
+		 * @returns DataTables API instance with the selected button in the
+		 * result set, available for chaining further operations on the button.
 		 */
 		trigger(): Api<Array<any>>;
 	}
@@ -571,7 +605,8 @@ export interface ButtonConfig {
 	attr?: Record<string, string | number>;
 
 	/**
-	 * Ensure that any requirements have been satisfied before initialising a button
+	 * Ensure that any requirements have been satisfied before initialising a
+	 * button
 	 */
 	available?: FunctionButtonAvailable;
 
@@ -960,4 +995,8 @@ export interface SelectListButtons {
 	idx: string;
 }
 
-export type ResolvableOption = null | undefined | string | ((config: ButtonConfig, dt: Api) => string)
+export type ResolvableOption =
+	| null
+	| undefined
+	| string
+	| ((config: ButtonConfig, dt: Api) => string);
