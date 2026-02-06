@@ -13,6 +13,6 @@
         "types": []
     },
     "files": [
-        "src/dataTables.buttons.ts",
+        "js/dataTables.buttons.ts",
     ]
 }

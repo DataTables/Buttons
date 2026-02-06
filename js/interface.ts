@@ -849,7 +849,7 @@ export type ButtonTypes =
 
 export type ButtonsList = Array<ButtonTypes>;
 
-export type ButtonSelectorTypes = string | number | JQuery<any> | Dom;
+export type ButtonSelectorTypes = string | number | JQuery | Dom;
 
 export interface ButtonExportOptions {
 	rows?: any;
@@ -976,8 +976,8 @@ export type ButtonSelector =
 	| string
 	| Node
 	| Dom
-	| JQuery<HTMLElement>
-	| Array<null | number | string | Node | Dom | JQuery<HTMLElement>>;
+	| JQuery
+	| Array<null | number | string | Node | Dom | JQuery>;
 
 export interface ContextButtons {
 	inst: Buttons;

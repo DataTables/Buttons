@@ -27,31 +27,31 @@ DT_BUILT="${DT_SRC}/built/DataTables"
 rsync -r css $OUT_DIR
 css_frameworks buttons $OUT_DIR/css
 
-# Copy images
-#rsync -r images $OUT_DIR
+# Typescript build
+ts_extension Buttons buttons
 
-# Copy JS
-rsync -r js $OUT_DIR
-js_wrap $OUT_DIR/js/dataTables.buttons.js "jquery datatables.net"
-js_frameworks buttons $OUT_DIR/js "jquery datatables.net-FW datatables.net-buttons"
+# # Copy JS
+# rsync -r js $OUT_DIR
+# js_wrap $OUT_DIR/js/dataTables.buttons.js "jquery datatables.net"
+# js_frameworks buttons $OUT_DIR/js "jquery datatables.net-FW datatables.net-buttons"
 
-js_wrap $OUT_DIR/js/buttons.colVis.js "jquery datatables.net datatables.net-buttons"
-js_wrap $OUT_DIR/js/buttons.html5.js "jquery datatables.net datatables.net-buttons"
-js_wrap $OUT_DIR/js/buttons.print.js "jquery datatables.net datatables.net-buttons"
+# js_wrap $OUT_DIR/js/buttons.colVis.js "jquery datatables.net datatables.net-buttons"
+# js_wrap $OUT_DIR/js/buttons.html5.js "jquery datatables.net datatables.net-buttons"
+# js_wrap $OUT_DIR/js/buttons.print.js "jquery datatables.net datatables.net-buttons"
 
-# Copy Types
-if [ -d $OUT_DIR/types ]; then
-	rm -r $OUT_DIR/types		
-fi
-mkdir $OUT_DIR/types
+# # Copy Types
+# if [ -d $OUT_DIR/types ]; then
+# 	rm -r $OUT_DIR/types		
+# fi
+# mkdir $OUT_DIR/types
 
-if [ -d types/ ]; then
-	cp types/* $OUT_DIR/types
-else
-	if [ -f types.d.ts ]; then
-		cp types.d.ts $OUT_DIR/types
-	fi
-fi
+# if [ -d types/ ]; then
+# 	cp types/* $OUT_DIR/types
+# else
+# 	if [ -f types.d.ts ]; then
+# 		cp types.d.ts $OUT_DIR/types
+# 	fi
+# fi
 
 # Copy and build examples
 rsync -r examples $OUT_DIR

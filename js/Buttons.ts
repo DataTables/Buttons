@@ -230,6 +230,10 @@ export default class Buttons {
 
 			var nodes = buttons.map(v => v.node.get(0));
 
+			if (util.is.dom(selector)) {
+				selector = selector.get();
+			}
+
 			if (selector && util.is.arrayLike(selector)) {
 				for (i = 0, ien = (selector as any[]).length; i < ien; i++) {
 					run((selector as any)[i], inst);
@@ -291,7 +295,7 @@ export default class Buttons {
 					}
 				}
 				else {
-					// jQuery selector on the nodes
+					// CSS selector on the nodes
 					dom.s(nodes)
 						.filter(selector)
 						.each(function (el) {
@@ -707,7 +711,7 @@ export default class Buttons {
 				true,
 				options.backgroundClassName,
 				options.fade,
-				options.backgroundHost || hostNode
+				options.backgroundHost || hostNode.get(0)
 			);
 		}
 
@@ -1221,7 +1225,7 @@ export default class Buttons {
 		}
 
 		var button = this._nodeToButton(node);
-		return button!.node;
+		return button ? button.node: null;
 	}
 
 	/**
@@ -1760,7 +1764,7 @@ export default class Buttons {
 					}
 
 					if (clickBlurs) {
-						button.trigger('blur');
+						button.blur();
 					}
 				})
 				.on('keypress.dtb', function (e) {
@@ -1941,7 +1945,7 @@ export default class Buttons {
 						);
 					}
 					if (clickBlurs) {
-						dropButton.trigger('blur');
+						dropButton.blur();
 					}
 				})
 				.on('keypress.dtb', function (e) {

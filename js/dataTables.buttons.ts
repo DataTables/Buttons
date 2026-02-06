@@ -38,49 +38,52 @@ const util = DataTable.util;
  * DataTables site
  */
 
-// Buttons group and individual button selector
-DataTable.Api.register(
-	'buttons()',
-	function (this: Api, group: GroupSelector, selector: ButtonSelector) {
-		// Argument shifting
-		if (selector === undefined) {
-			selector = group;
-			group = null;
-		}
-
-		this.selector.buttonGroup = group;
-
-		var res = this.iterator(
-			true,
-			'table',
-			function (ctx) {
-				if (ctx._buttons) {
-					return Buttons.buttonSelector(
-						Buttons.instanceSelector(group, ctx._buttons),
-						selector
-					);
-				}
-			},
-			true
-		);
-
-		(res as any)._groupSelector = group;
-		return res;
+const buttonSelector = function (
+	this: Api,
+	group: GroupSelector,
+	selector: ButtonSelector
+) {
+	// Argument shifting
+	if (selector === undefined) {
+		selector = group;
+		group = null;
 	}
-);
+
+	this.selector.buttonGroup = group;
+
+	var res = this.iterator(
+		true,
+		'table',
+		function (ctx) {
+			if (ctx._buttons) {
+				return Buttons.buttonSelector(
+					Buttons.instanceSelector(group, ctx._buttons),
+					selector
+				);
+			}
+		},
+		true
+	);
+
+	(res as any)._groupSelector = group;
+	return res;
+};
+
+// Buttons group and individual button selector
+DataTable.Api.register('buttons()', buttonSelector);
 
 // Individual button selector
 DataTable.Api.register(
 	'button()',
 	function (this: Api, group: GroupSelector, selector: ButtonSelector) {
-		// just run buttons() and truncate
-		var buttons = this.buttons(group, selector);
+		let res = buttonSelector.call(this, group, selector);
 
-		if (buttons.length > 1) {
-			buttons.splice(1, buttons.length);
+		if (res.length > 1) {
+			res.splice(1, res.length);
 		}
 
-		return buttons;
+		(res as any)._groupSelector = group;
+		return res;
 	}
 );
 
