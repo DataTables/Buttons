@@ -24,7 +24,7 @@ $('#example').DataTable({
 				{
 					extend: 'colvisGroup',
 					text: 'Show all',
-					show: ':hidden'
+					show: '*'
 				}
 			]
 		}
@@ -56,7 +56,7 @@ new DataTable('#example', {
 				{
 					extend: 'colvisGroup',
 					text: 'Show all',
-					show: ':hidden'
+					show: '*'
 				}
 			]
 		}

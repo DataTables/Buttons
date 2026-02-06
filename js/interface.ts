@@ -777,7 +777,7 @@ interface ButtonKey {
 /**
  * A function that will be executed upon creation of the buttons.
  */
-type FunctionButton = (dt: Api) => ButtonConfig;
+export type FunctionButton = (dt: Api, conf: ButtonConfig) => ButtonConfig;
 
 export type FunctionButtonText = (dt: Api, node: Dom, config: any) => string;
 

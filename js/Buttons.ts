@@ -46,7 +46,11 @@ var _buttonCounter = 0;
 var _entityDecoder: EntityDecoder | null = null;
 
 // Allow for jQuery slim
-export function fadeIn(el: Dom, duration: number=400, fn?: (this: Dom) => void) {
+export function fadeIn(
+	el: Dom,
+	duration: number = 400,
+	fn?: (this: Dom) => void
+) {
 	// if ($.fn.animate) {
 	// 	el.stop().fadeIn(duration, fn);
 	// }
@@ -59,7 +63,11 @@ export function fadeIn(el: Dom, duration: number=400, fn?: (this: Dom) => void) 
 	// }
 }
 
-export function fadeOut(el: Dom, duration: number=400, fn?: (this: Dom) => void) {
+export function fadeOut(
+	el: Dom,
+	duration: number = 400,
+	fn?: (this: Dom) => void
+) {
 	// if ($.fn.animate) {
 	// 	el.stop().fadeOut(duration, fn);
 	// }
@@ -93,14 +101,16 @@ export default class Buttons {
 		insertPoint: HTMLElement = document.body
 	) {
 		if (show) {
-			fadeIn(
-				dom
-					.c('div')
-					.classAdd(className)
-					.css('display', 'none')
-					.insertAfter(insertPoint),
-				fade
-			);
+			let div = dom.c('div').classAdd(className).css('display', 'none');
+
+			if (insertPoint === document.body) {
+				div.appendTo(insertPoint);
+			}
+			else {
+				div.insertAfter(insertPoint);
+			}
+
+			fadeIn(div, fade);
 		}
 		else {
 			fadeOut(dom.s('div.' + className), fade, function () {
@@ -575,7 +585,14 @@ export default class Buttons {
 				.classAdd('dtb-collection-closeable');
 		}
 
-		fadeIn(display.insertAfter(hostNode), options.fade);
+		if (hostNode.get(0) === document.body) {
+			display.appendTo(document.body);
+		}
+		else {
+			display.insertAfter(hostNode);
+		}
+
+		fadeIn(display, options.fade);
 
 		var tableContainer = dom.s(hostButton.table().container());
 		var position = display.css('position');
@@ -1225,7 +1242,7 @@ export default class Buttons {
 		}
 
 		var button = this._nodeToButton(node);
-		return button ? button.node: null;
+		return button ? button.node : null;
 	}
 
 	/**
@@ -1323,8 +1340,14 @@ export default class Buttons {
 	 * @param label Text to set
 	 * @return Buttons instance
 	 */
-	public text(node: HTMLElement | Dom, label: string | FunctionButtonText): Buttons;
-	public text(node: HTMLElement | Dom, label?: string | FunctionButtonText): any {
+	public text(
+		node: HTMLElement | Dom,
+		label: string | FunctionButtonText
+	): Buttons;
+	public text(
+		node: HTMLElement | Dom,
+		label?: string | FunctionButtonText
+	): any {
 		let button = this._nodeToButton(node);
 
 		if (!button) {
@@ -1532,6 +1555,22 @@ export default class Buttons {
 			}
 
 			isSplit = conf.split ? true : false; // TODO wut? conf.config && conf.config.split ? true : false;
+
+			// If the configuration is an array, then expand the buttons at this
+			// point
+			if (Array.isArray(conf)) {
+				this._expandButton(
+					attachTo,
+					conf,
+					false,
+					inCollection,
+					parentConf !== undefined && parentConf.split !== undefined,
+					attachPoint,
+					parentConf
+				);
+
+				continue;
+			}
 
 			var built = this._buildButton(
 				conf,
@@ -2211,20 +2250,21 @@ export default class Buttons {
 		var dt = this.s.dt;
 		var i, ien;
 		var toConfObject = function (
-			base: string | Function | object
+			base: string | Function | object,
+			lastConfig: any
 		): ButtonConfig | false {
 			var loop = 0;
 
 			// Loop until we have resolved to a button configuration, or an
 			// array of button configurations (which will be iterated
 			// separately)
-			while (!util.is.plainObject(base)) {
+			while (!util.is.plainObject(base) && !Array.isArray(base)) {
 				if (base === undefined) {
 					return false;
 				}
 
 				if (typeof base === 'function') {
-					base = base.call(that, dt, conf);
+					base = base.call(that, dt, lastConfig);
 
 					if (!base) {
 						return false;
@@ -2245,10 +2285,10 @@ export default class Buttons {
 				}
 			}
 
-			return util.object.assign({}, base);
+			return Array.isArray(base) ? base : util.object.assign({}, base);
 		};
 
-		var confRes = toConfObject(confIn);
+		var confRes = toConfObject(confIn, confIn);
 
 		if (confRes === false) {
 			return false;
@@ -2263,8 +2303,11 @@ export default class Buttons {
 				throw 'Cannot extend unknown button type: ' + conf.extend;
 			}
 
-			var objArray = toConfObject(Buttons.buttons[conf.extend]);
+			var objArray = toConfObject(Buttons.buttons[conf.extend], conf);
 
+			if (Array.isArray(objArray)) {
+				return objArray;
+			}
 			if (!objArray) {
 				// This is a little brutal as it might be possible to have a
 				// valid button without the extend, but if there is no extend

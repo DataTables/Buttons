@@ -37,13 +37,13 @@ ts_extension Buttons buttons true
 
 rsync -r dist/buttons.*.js $OUT_DIR/js/
 
-# js_wrap $OUT_DIR/js/buttons.colVis.js "jquery datatables.net datatables.net-buttons"
+js_wrap $OUT_DIR/js/buttons.colVis.js "datatables.net datatables.net-buttons"
 # js_wrap $OUT_DIR/js/buttons.html5.js "jquery datatables.net datatables.net-buttons"
 js_wrap $OUT_DIR/js/buttons.print.js "datatables.net datatables.net-buttons"
 
 
 
-# rm -r dist
+rm -r dist
 
 # # Copy Types
 # if [ -d $OUT_DIR/types ]; then
