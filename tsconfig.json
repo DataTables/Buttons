@@ -14,5 +14,6 @@
     },
     "files": [
         "js/dataTables.buttons.ts",
+        "js/buttons.print.ts",
     ]
 }

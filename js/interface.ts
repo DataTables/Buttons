@@ -1,4 +1,4 @@
-import DataTables, { Api, ColumnSelector, Dom } from 'datatables.net';
+import DataTables, { Api, ColumnSelector, Dom, HeaderStructure } from 'datatables.net';
 import Buttons from './Buttons';
 import './interface';
 
@@ -471,6 +471,7 @@ declare module 'datatables.net' {
 			header?: boolean;
 			footer?: boolean;
 			autoPrint?: boolean;
+			customScripts?: string[] | null;
 			customize?:
 				| null
 				| ((xlsx: any, conf: Buttons['print'], dt: Api<any>) => void);
@@ -538,10 +539,12 @@ interface ButtonsApiExportDataParameter {
 	format?: any;
 }
 
-interface ButtonsApiExportDataReturn {
+export interface ButtonsApiExportDataReturn {
 	header: string[];
+	headerStructure: HeaderStructure[][];
 	footer: string[];
-	body: string[];
+	footerStructure: HeaderStructure[][];
+	body: string[][];
 }
 
 interface DefaultsButtonsDom {

@@ -28,16 +28,22 @@ rsync -r css $OUT_DIR
 css_frameworks buttons $OUT_DIR/css
 
 # Typescript build
-ts_extension Buttons buttons
+ts_extension Buttons buttons true
 
 # # Copy JS
 # rsync -r js $OUT_DIR
 # js_wrap $OUT_DIR/js/dataTables.buttons.js "jquery datatables.net"
 # js_frameworks buttons $OUT_DIR/js "jquery datatables.net-FW datatables.net-buttons"
 
+rsync -r dist/buttons.*.js $OUT_DIR/js/
+
 # js_wrap $OUT_DIR/js/buttons.colVis.js "jquery datatables.net datatables.net-buttons"
 # js_wrap $OUT_DIR/js/buttons.html5.js "jquery datatables.net datatables.net-buttons"
-# js_wrap $OUT_DIR/js/buttons.print.js "jquery datatables.net datatables.net-buttons"
+js_wrap $OUT_DIR/js/buttons.print.js "datatables.net datatables.net-buttons"
+
+
+
+# rm -r dist
 
 # # Copy Types
 # if [ -d $OUT_DIR/types ]; then

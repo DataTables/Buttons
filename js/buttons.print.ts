@@ -2,6 +2,8 @@
  * Print button for Buttons and DataTables.
  * © SpryMedia Ltd - datatables.net/license
  */
+import DataTable from 'datatables.net';
+import { ButtonConfig } from './interface';
 
 var _link = document.createElement('a');
 
@@ -9,9 +11,9 @@ var _link = document.createElement('a');
  * Convert a URL from a relative to an absolute address so it will work
  * correctly in the popup window which has no base URL.
  *
- * @param  {string} href URL
+ * @param href URL
  */
-var _relToAbs = function (href) {
+var _relToAbs = function (href: string) {
 	// Assign to a link on the original page so the browser will do all the
 	// hard work of figuring out where the file actually is
 	_link.href = href;
@@ -26,6 +28,9 @@ var _relToAbs = function (href) {
 	return _link.protocol + '//' + linkHost + _link.pathname + _link.search;
 };
 
+const dom = DataTable.dom;
+const util = DataTable.util;
+
 DataTable.ext.buttons.print = {
 	className: 'buttons-print',
 
@@ -34,10 +39,14 @@ DataTable.ext.buttons.print = {
 	},
 
 	action: function (e, dt, button, config, cb) {
+		// Make sure that decodeEntities are set for XSS protection
 		var data = dt.buttons.exportData(
-			$.extend({ decodeEntities: false }, config.exportOptions) // XSS protection
+			util.object.assign({ decodeEntities: false }, config.exportOptions)
 		);
-		var exportInfo = dt.buttons.exportInfo(config);
+
+		// Could do with better typing for the config object - it extends
+		// ButtonsApiExportInfoParameter
+		var exportInfo = dt.buttons.exportInfo(config as any);
 
 		// Get the classes for the columns from the header cells
 		var columnClasses = dt
@@ -48,15 +57,29 @@ DataTable.ext.buttons.print = {
 			})
 			.toArray();
 
-		var addRow = function (d, tag) {
+		var addRow = function (
+			d: Array<string | null | undefined>,
+			tag: string
+		) {
 			var str = '<tr>';
 
 			for (var i = 0, ien = d.length; i < ien; i++) {
 				// null and undefined aren't useful in the print output
 				var dataOut = d[i] === null || d[i] === undefined ? '' : d[i];
-				var classAttr = columnClasses[i] ? 'class="' + columnClasses[i] + '"' : '';
+				var classAttr = columnClasses[i]
+					? 'class="' + columnClasses[i] + '"'
+					: '';
 
-				str += '<' + tag + ' ' + classAttr + '>' + dataOut + '</' + tag + '>';
+				str +=
+					'<' +
+					tag +
+					' ' +
+					classAttr +
+					'>' +
+					dataOut +
+					'</' +
+					tag +
+					'>';
 			}
 
 			return str + '</tr>';
@@ -121,7 +144,7 @@ DataTable.ext.buttons.print = {
 		html += '</table>';
 
 		// Open a new window for the printable table
-		var win = window.open('', '');
+		var win = window.open('', '')!;
 
 		if (!win) {
 			dt.buttons.info(
@@ -143,8 +166,8 @@ DataTable.ext.buttons.print = {
 		// issues with Content Security Policy (CSP) and is compatible with modern browsers.
 		win.document.title = exportInfo.title;
 
-		$('style, link[rel="stylesheet"]').each(function () {
-			let node = this.cloneNode(true);
+		dom.s('style, link[rel="stylesheet"]').each(function (el) {
+			let node = el.cloneNode(true) as HTMLAnchorElement;
 
 			if (node.tagName.toLowerCase() === 'link') {
 				node.href = _relToAbs(node.href);
@@ -155,7 +178,7 @@ DataTable.ext.buttons.print = {
 
 		// Add any custom scripts (for example for paged.js)
 		if (config.customScripts) {
-			config.customScripts.forEach(function (script) {
+			config.customScripts.forEach(function (script: string) {
 				var tag = win.document.createElement('script');
 				tag.src = script;
 				win.document.getElementsByTagName('head')[0].appendChild(tag);
@@ -175,11 +198,16 @@ DataTable.ext.buttons.print = {
 			(exportInfo.messageBottom || '') +
 			'</div>';
 
-		$(win.document.body).addClass('dt-print-view');
+		dom.s(win.document.body).classAdd('dt-print-view');
 
-		$('img', win.document.body).each(function (i, img) {
-			img.setAttribute('src', _relToAbs(img.getAttribute('src')));
-		});
+		dom.s(win.document.body)
+			.find('img')
+			.each(function (img) {
+				img.setAttribute(
+					'src',
+					_relToAbs(img.getAttribute('src') || '')
+				);
+			});
 
 		if (config.customize) {
 			config.customize(win, config, dt);
@@ -200,6 +228,8 @@ DataTable.ext.buttons.print = {
 
 	async: 100,
 
+	customScripts: null,
+
 	title: '*',
 
 	messageTop: '*',
@@ -215,4 +245,4 @@ DataTable.ext.buttons.print = {
 	autoPrint: true,
 
 	customize: null
-};
+} as ButtonConfig;

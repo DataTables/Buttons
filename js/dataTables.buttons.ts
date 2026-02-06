@@ -13,6 +13,7 @@ import {
 	ButtonConfig,
 	ButtonExportOptions,
 	ButtonHeaderFormatter,
+	ButtonsApiExportDataReturn,
 	ButtonsApiExportInfoParameter,
 	ButtonSelector,
 	ButtonsList,
@@ -531,7 +532,7 @@ var _filename = function (config: ButtonConfig, dt: Api) {
 	}
 
 	if (filename.indexOf('*') !== -1) {
-		filename = filename.replace(/\*/g, dom.c('head > title').text()).trim();
+		filename = filename.replace(/\*/g, dom.s('head > title').text()).trim();
 	}
 
 	// Strip characters which the OS will object to
@@ -578,7 +579,7 @@ var _title = function (config: ButtonConfig, dt: Api) {
 	return title === null
 		? null
 		: title.indexOf('*') !== -1
-		? title.replace(/\*/g, dom.c('head > title').text() || 'Exported data')
+		? title.replace(/\*/g, dom.s('head > title').text() || 'Exported data')
 		: title;
 };
 
@@ -608,7 +609,10 @@ var _message = function (
 	return message;
 };
 
-var _exportData = function (dt: Api, inOpts: ButtonExportOptions) {
+var _exportData = function (
+	dt: Api,
+	inOpts: ButtonExportOptions
+): ButtonsApiExportDataReturn {
 	var config = util.object.assignDeep<DeepRequired<ButtonExportOptions>>(
 		{},
 		{
@@ -721,7 +725,7 @@ var _exportData = function (dt: Api, inOpts: ButtonExportOptions) {
 		body[i] = row;
 	}
 
-	var data = {
+	var data: ButtonsApiExportDataReturn = {
 		header: header,
 		headerStructure: _headerFormatter(
 			config.format.header,
