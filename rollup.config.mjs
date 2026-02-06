@@ -11,6 +11,15 @@ export default [
 		external: ['datatables.net']
 	},
 	{
+		input: 'dist/buttons.html5.js',
+		output: {
+			file: 'dist/buttons.html5.js',
+			format: 'es'
+		},
+		plugins: [],
+		external: ['datatables.net']
+	},
+	{
 		// Create a single .d.ts file
 		input: './dist/interface.d.ts',
 		output: [{ file: 'dist/types.d.ts', format: 'es' }],

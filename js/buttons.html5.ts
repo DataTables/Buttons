@@ -6,229 +6,18 @@
  * Copyright © 2016 Eli Grey - http://eligrey.com
  */
 
-// Allow the constructor to pass in JSZip and PDFMake from external requires.
-// Otherwise, use globally defined variables, if they are available.
-var useJszip;
-var usePdfmake;
+import DataTable, { Api, HeaderStructure } from 'datatables.net';
+import saveAs from './fileSaver';
+import './interface';
+import { ButtonConfig } from './interface';
 
-function _jsZip() {
-	return useJszip || window.JSZip;
-}
-function _pdfMake() {
-	return usePdfmake || window.pdfMake;
-}
-
-DataTable.Buttons.pdfMake = function (_) {
-	if (!_) {
-		return _pdfMake();
-	}
-	usePdfmake = _;
-};
-
-DataTable.Buttons.jszip = function (_) {
-	if (!_) {
-		return _jsZip();
-	}
-	useJszip = _;
-};
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * FileSaver.js dependency
- */
-
-/*jslint bitwise: true, indent: 4, laxbreak: true, laxcomma: true, smarttabs: true, plusplus: true */
-
-var _saveAs = (function (view) {
-	'use strict';
-	// IE <10 is explicitly unsupported
-	if (
-		typeof view === 'undefined' ||
-		(typeof navigator !== 'undefined' &&
-			/MSIE [1-9]\./.test(navigator.userAgent))
-	) {
-		return;
-	}
-	var doc = view.document,
-		// only get URL when necessary in case Blob.js hasn't overridden it yet
-		get_URL = function () {
-			return view.URL || view.webkitURL || view;
-		},
-		save_link = doc.createElementNS('http://www.w3.org/1999/xhtml', 'a'),
-		can_use_save_link = 'download' in save_link,
-		click = function (node) {
-			var event = new MouseEvent('click');
-			node.dispatchEvent(event);
-		},
-		is_safari = /constructor/i.test(view.HTMLElement) || view.safari,
-		is_chrome_ios = /CriOS\/[\d]+/.test(navigator.userAgent),
-		throw_outside = function (ex) {
-			(view.setImmediate || view.setTimeout)(function () {
-				throw ex;
-			}, 0);
-		},
-		force_saveable_type = 'application/octet-stream',
-		// the Blob API is fundamentally broken as there is no "downloadfinished" event to subscribe to
-		arbitrary_revoke_timeout = 1000 * 40, // in ms
-		revoke = function (file) {
-			var revoker = function () {
-				if (typeof file === 'string') {
-					// file is an object URL
-					get_URL().revokeObjectURL(file);
-				}
-				else {
-					// file is a File
-					file.remove();
-				}
-			};
-			setTimeout(revoker, arbitrary_revoke_timeout);
-		},
-		dispatch = function (filesaver, event_types, event) {
-			event_types = [].concat(event_types);
-			var i = event_types.length;
-			while (i--) {
-				var listener = filesaver['on' + event_types[i]];
-				if (typeof listener === 'function') {
-					try {
-						listener.call(filesaver, event || filesaver);
-					} catch (ex) {
-						throw_outside(ex);
-					}
-				}
-			}
-		},
-		auto_bom = function (blob) {
-			// prepend BOM for UTF-8 XML and text/* types (including HTML)
-			// note: your browser will automatically convert UTF-16 U+FEFF to EF BB BF
-			if (
-				/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(
-					blob.type
-				)
-			) {
-				return new Blob([String.fromCharCode(0xfeff), blob], {
-					type: blob.type
-				});
-			}
-			return blob;
-		},
-		FileSaver = function (blob, name, no_auto_bom) {
-			if (!no_auto_bom) {
-				blob = auto_bom(blob);
-			}
-			// First try a.download, then web filesystem, then object URLs
-			var filesaver = this,
-				type = blob.type,
-				force = type === force_saveable_type,
-				object_url,
-				dispatch_all = function () {
-					dispatch(
-						filesaver,
-						'writestart progress write writeend'.split(' ')
-					);
-				},
-				// on any filesys errors revert to saving with object URLs
-				fs_error = function () {
-					if (
-						(is_chrome_ios || (force && is_safari)) &&
-						view.FileReader
-					) {
-						// Safari doesn't allow downloading of blob urls
-						var reader = new FileReader();
-						reader.onloadend = function () {
-							var url = is_chrome_ios
-								? reader.result
-								: reader.result.replace(
-										/^data:[^;]*;/,
-										'data:attachment/file;'
-								);
-							var popup = view.open(url, '_blank');
-							if (!popup) view.location.href = url;
-							url = undefined; // release reference before dispatching
-							filesaver.readyState = filesaver.DONE;
-							dispatch_all();
-						};
-						reader.readAsDataURL(blob);
-						filesaver.readyState = filesaver.INIT;
-						return;
-					}
-					// don't create more object URLs than needed
-					if (!object_url) {
-						object_url = get_URL().createObjectURL(blob);
-					}
-					if (force) {
-						view.location.href = object_url;
-					}
-					else {
-						var opened = view.open(object_url, '_blank');
-						if (!opened) {
-							// Apple does not allow window.open, see https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/WorkingwithWindowsandTabs/WorkingwithWindowsandTabs.html
-							view.location.href = object_url;
-						}
-					}
-					filesaver.readyState = filesaver.DONE;
-					dispatch_all();
-					revoke(object_url);
-				};
-			filesaver.readyState = filesaver.INIT;
-
-			if (can_use_save_link) {
-				object_url = get_URL().createObjectURL(blob);
-				setTimeout(function () {
-					save_link.href = object_url;
-					save_link.download = name;
-					click(save_link);
-					dispatch_all();
-					revoke(object_url);
-					filesaver.readyState = filesaver.DONE;
-				});
-				return;
-			}
-
-			fs_error();
-		},
-		FS_proto = FileSaver.prototype,
-		saveAs = function (blob, name, no_auto_bom) {
-			return new FileSaver(
-				blob,
-				name || blob.name || 'download',
-				no_auto_bom
-			);
-		};
-	// IE 10+ (native saveAs)
-	if (typeof navigator !== 'undefined' && navigator.msSaveOrOpenBlob) {
-		return function (blob, name, no_auto_bom) {
-			name = name || blob.name || 'download';
-
-			if (!no_auto_bom) {
-				blob = auto_bom(blob);
-			}
-			return navigator.msSaveOrOpenBlob(blob, name);
-		};
-	}
-
-	FS_proto.abort = function () {};
-	FS_proto.readyState = FS_proto.INIT = 0;
-	FS_proto.WRITING = 1;
-	FS_proto.DONE = 2;
-
-	FS_proto.error =
-		FS_proto.onwritestart =
-		FS_proto.onprogress =
-		FS_proto.onwrite =
-		FS_proto.onabort =
-		FS_proto.onerror =
-		FS_proto.onwriteend =
-			null;
-
-	return saveAs;
-})(
-	(typeof self !== 'undefined' && self) ||
-		(typeof window !== 'undefined' && window) ||
-		this.content
-);
+const dom = DataTable.dom;
+const util = DataTable.util;
+const dtButtons = DataTable.ext.buttons;
 
 // Expose file saver on the DataTables API. Can't attach to `DataTables.Buttons`
 // since this file can be loaded before Button's core!
-DataTable.fileSave = _saveAs;
+DataTable.fileSave = saveAs;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Local (private) functions
@@ -237,9 +26,9 @@ DataTable.fileSave = _saveAs;
 /**
  * Get the sheet name for Excel exports.
  *
- * @param {object}	config Button configuration
+ * @param config Button configuration
  */
-var _sheetname = function (config) {
+var _sheetname = function (config: ButtonConfig) {
 	var sheetName = 'Sheet1';
 
 	if (config.sheetName) {
@@ -252,10 +41,10 @@ var _sheetname = function (config) {
 /**
  * Get the newline character(s)
  *
- * @param {object}	config Button configuration
- * @return {string}				Newline character
+ * @param config Button configuration
+ * @return Newline character
  */
-var _newLine = function (config) {
+var _newLine = function (config: ButtonConfig) {
 	return config.newline
 		? config.newline
 		: navigator.userAgent.match(/Windows/)
@@ -267,18 +56,18 @@ var _newLine = function (config) {
  * Combine the data from the `buttons.exportData` method into a string that
  * will be used in the export file.
  *
- * @param	{DataTable.Api} dt		 DataTables API instance
- * @param	{object}				config Button configuration
- * @return {object}							 The data to export
+ * @param dt DataTables API instance
+ * @param config Button configuration
+ * @return The data to export
  */
-var _exportData = function (dt, config) {
+var _exportData = function (dt: Api, config: ButtonConfig) {
 	var newLine = _newLine(config);
 	var data = dt.buttons.exportData(config.exportOptions);
 	var boundary = config.fieldBoundary;
 	var separator = config.fieldSeparator;
 	var reBoundary = new RegExp(boundary, 'g');
 	var escapeChar = config.escapeChar !== undefined ? config.escapeChar : '\\';
-	var join = function (a) {
+	var join = function (a: any) {
 		var s = '';
 
 		// If there is a field boundary, then we might need to escape it in
@@ -290,8 +79,8 @@ var _exportData = function (dt, config) {
 
 			s += boundary
 				? boundary +
-				('' + a[i]).replace(reBoundary, escapeChar + boundary) +
-				boundary
+				  ('' + a[i]).replace(reBoundary, escapeChar + boundary) +
+				  boundary
 				: a[i];
 		}
 
@@ -339,35 +128,12 @@ var _exportData = function (dt, config) {
 };
 
 /**
- * Older versions of Safari (prior to tech preview 18) don't support the
- * download option required.
- *
- * @return {Boolean} `true` if old Safari
- */
-var _isDuffSafari = function () {
-	var safari =
-		navigator.userAgent.indexOf('Safari') !== -1 &&
-		navigator.userAgent.indexOf('Chrome') === -1 &&
-		navigator.userAgent.indexOf('Opera') === -1;
-
-	if (!safari) {
-		return false;
-	}
-
-	var version = navigator.userAgent.match(/AppleWebKit\/(\d+\.\d+)/);
-	if (version && version.length > 1 && version[1] * 1 < 603.1) {
-		return true;
-	}
-
-	return false;
-};
-
-/**
  * Convert from numeric position to letter for column names in Excel
- * @param  {int} n Column number
- * @return {string} Column letter(s) name
+ *
+ * @param n Column number
+ * @return Column letter(s) name
  */
-function createCellPos(n) {
+function createCellPos(n: number) {
 	var ordA = 'A'.charCodeAt(0);
 	var ordZ = 'Z'.charCodeAt(0);
 	var len = ordZ - ordA + 1;
@@ -383,7 +149,6 @@ function createCellPos(n) {
 
 try {
 	var _serialiser = new XMLSerializer();
-	var _ieExcel;
 } catch (t) {
 	// noop
 }
@@ -393,77 +158,17 @@ try {
  * allows the XSLX file to be easily defined with an object's structure matching
  * the files structure.
  *
- * @param {JSZip} zip ZIP package
- * @param {object} obj Object to add (recursive)
+ * @param zip ZIP package
+ * @param obj Object to add (recursive)
  */
-function _addToZip(zip, obj) {
-	if (_ieExcel === undefined) {
-		// Detect if we are dealing with IE's _awful_ serialiser by seeing if it
-		// drop attributes
-		_ieExcel =
-			_serialiser
-				.serializeToString(
-					new window.DOMParser().parseFromString(
-						excelStrings['xl/worksheets/sheet1.xml'],
-						'text/xml'
-					)
-				)
-				.indexOf('xmlns:r') === -1;
-	}
-
-	$.each(obj, function (name, val) {
-		if ($.isPlainObject(val)) {
+function _addToZip(zip: any, obj: any) {
+	util.object.each(obj, (name, val) => {
+		if (util.is.plainObject(val)) {
 			var newDir = zip.folder(name);
 			_addToZip(newDir, val);
 		}
 		else {
-			if (_ieExcel) {
-				// IE's XML serialiser will drop some name space attributes from
-				// from the root node, so we need to save them. Do this by
-				// replacing the namespace nodes with a regular attribute that
-				// we convert back when serialised. Edge does not have this
-				// issue
-				var worksheet = val.childNodes[0];
-				var i, ien;
-				var attrs = [];
-
-				for (i = worksheet.attributes.length - 1; i >= 0; i--) {
-					var attrName = worksheet.attributes[i].nodeName;
-					var attrValue = worksheet.attributes[i].nodeValue;
-
-					if (attrName.indexOf(':') !== -1) {
-						attrs.push({ name: attrName, value: attrValue });
-
-						worksheet.removeAttribute(attrName);
-					}
-				}
-
-				for (i = 0, ien = attrs.length; i < ien; i++) {
-					var attr = val.createAttribute(
-						attrs[i].name.replace(':', '_dt_b_namespace_token_')
-					);
-					attr.value = attrs[i].value;
-					worksheet.setAttributeNode(attr);
-				}
-			}
-
-			var str = _serialiser.serializeToString(val);
-
-			// Fix IE's XML
-			if (_ieExcel) {
-				// IE doesn't include the XML declaration
-				if (str.indexOf('<?xml') === -1) {
-					str =
-						'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-						str;
-				}
-
-				// Return namespace attributes to being as such
-				str = str.replace(/_dt_b_namespace_token_/g, ':');
-
-				// Remove testing name space that IE puts into the space preserve attr
-				str = str.replace(/xmlns:NS[\d]+="" NS[\d]+:/g, '');
-			}
+			var str = _serialiser.serializeToString(val as any);
 
 			// Safari, IE and Edge will put empty name space attributes onto
 			// various elements making them useless. This strips them out
@@ -478,23 +183,23 @@ function _addToZip(zip, obj) {
  * Create an XML node and add any children, attributes, etc without needing to
  * be verbose in the DOM.
  *
- * @param  {object} doc      XML document
- * @param  {string} nodeName Node name
- * @param  {object} opts     Options - can be `attr` (attributes), `children`
- *   (child nodes) and `text` (text content)
- * @return {node}            Created node
+ * @param doc XML document
+ * @param nodeName Node name
+ * @param opts Options - can be `attr` (attributes), `children` (child nodes)
+ *   and `text` (text content)
+ * @return Created node
  */
-function _createNode(doc, nodeName, opts) {
+function _createNode(doc: XMLDocument, nodeName: string, opts?: any) {
 	var tempNode = doc.createElement(nodeName);
 
 	if (opts) {
 		if (opts.attr) {
-			$(tempNode).attr(opts.attr);
+			dom.s(tempNode).attr(opts.attr);
 		}
 
 		if (opts.children) {
-			$.each(opts.children, function (key, value) {
-				tempNode.appendChild(value);
+			util.object.each(opts.children, function (key, value) {
+				tempNode.appendChild(value as any);
 			});
 		}
 
@@ -508,11 +213,12 @@ function _createNode(doc, nodeName, opts) {
 
 /**
  * Get the width for an Excel column based on the contents of that column
- * @param  {object} data Data for export
- * @param  {int}    col  Column index
- * @return {int}         Column width
+ *
+ * @param data Data for export
+ * @param col  Column index
+ * @return Column width
  */
-function _excelColWidth(data, col) {
+function _excelColWidth(data: any, col: number) {
 	var max = data.header[col].length;
 	var len, lineSplit, str;
 
@@ -528,7 +234,7 @@ function _excelColWidth(data, col) {
 		// based on the longest line in the string
 		if (str.indexOf('\n') !== -1) {
 			lineSplit = str.split('\n');
-			lineSplit.sort(function (a, b) {
+			lineSplit.sort(function (a: string, b: string) {
 				return b.length - a.length;
 			});
 
@@ -555,7 +261,7 @@ function _excelColWidth(data, col) {
 }
 
 // Excel - Pre-defined strings to build a basic XLSX file
-var excelStrings = {
+var excelStrings: Record<string, string> = {
 	'_rels/.rels':
 		'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
 		'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
@@ -797,14 +503,14 @@ var _excelSpecials = [
 	{
 		match: /^\-?\d+\.\d%$/,
 		style: 60,
-		fmt: function (d) {
+		fmt: function (d: any) {
 			return d / 100;
 		}
 	}, // Percent with d.p.
 	{
 		match: /^\-?\d+\.?\d*%$/,
 		style: 56,
-		fmt: function (d) {
+		fmt: function (d: any) {
 			return d / 100;
 		}
 	}, // Percent
@@ -816,14 +522,14 @@ var _excelSpecials = [
 	{
 		match: /^\([\d,]+\)$/,
 		style: 61,
-		fmt: function (d) {
+		fmt: function (d: any) {
 			return -1 * d.replace(/[\(\)]/g, '');
 		}
 	}, // Negative numbers indicated by brackets
 	{
 		match: /^\([\d,]+\.\d{2}\)$/,
 		style: 62,
-		fmt: function (d) {
+		fmt: function (d: any) {
 			return -1 * d.replace(/[\(\)]/g, '');
 		}
 	}, // Negative numbers indicated by brackets - 2d.p.
@@ -832,16 +538,22 @@ var _excelSpecials = [
 	{
 		match: /^(19\d\d|[2-9]\d\d\d)\-(0\d|1[012])\-[0123][\d]$/,
 		style: 67,
-		fmt: function (d) {
+		fmt: function (d: any) {
 			return Math.round(25569 + Date.parse(d) / (86400 * 1000));
 		}
 	} //Date yyyy-mm-dd
 ];
 
-var _excelMergeCells = function (rels, row, column, rowspan, colspan) {
-	var mergeCells = $('mergeCells', rels);
+var _excelMergeCells = function (
+	rels: Document,
+	row: number,
+	column: number,
+	rowspan: number,
+	colspan: number
+) {
+	var mergeCells = dom.s(rels).find('mergeCells');
 
-	mergeCells[0].appendChild(
+	mergeCells.get(0).appendChild(
 		_createNode(rels, 'mergeCell', {
 			attr: {
 				ref:
@@ -864,7 +576,7 @@ var _excelMergeCells = function (rels, row, column, rowspan, colspan) {
 //
 // Copy to clipboard
 //
-DataTable.ext.buttons.copyHtml5 = {
+dtButtons.copyHtml5 = {
 	className: 'buttons-copy buttons-html5',
 
 	text: function (dt) {
@@ -873,16 +585,16 @@ DataTable.ext.buttons.copyHtml5 = {
 
 	action: function (e, dt, button, config, cb) {
 		var exportData = _exportData(dt, config);
-		var info = dt.buttons.exportInfo(config);
+		var info = dt.buttons.exportInfo(config as any);
 		var newline = _newLine(config);
 		var output = exportData.str;
-		var hiddenDiv = $('<div/>').css({
-			height: 1,
-			width: 1,
+		var hiddenDiv = dom.c('div').css({
+			height: '1px',
+			width: '1px',
 			overflow: 'hidden',
 			position: 'fixed',
-			top: 0,
-			left: 0
+			top: '0',
+			left: '0'
 		});
 
 		if (info.title) {
@@ -901,15 +613,17 @@ DataTable.ext.buttons.copyHtml5 = {
 			output = config.customize(output, config, dt);
 		}
 
-		var textarea = $('<textarea readonly/>')
+		var textarea = dom
+			.c<HTMLTextAreaElement>('textarea')
+			.prop('readonly', true)
 			.val(output)
 			.appendTo(hiddenDiv);
 
 		// For browsers that support the copy execCommand, try to use it
 		if (document.queryCommandSupported('copy')) {
 			hiddenDiv.appendTo(dt.table().container());
-			textarea[0].focus();
-			textarea[0].select();
+			textarea.get(0).focus();
+			textarea.get(0).select();
 
 			try {
 				var successful = document.execCommand('copy');
@@ -940,32 +654,33 @@ DataTable.ext.buttons.copyHtml5 = {
 		}
 
 		// Otherwise we show the text box and instruct the user to use it
-		var message = $(
-			'<span>' +
+		var message = dom
+			.c('span')
+			.html(
 				dt.i18n(
 					'buttons.copyKeys',
 					'Press <i>ctrl</i> or <i>\u2318</i> + <i>C</i> to copy the table data<br>to your system clipboard.<br><br>' +
 						'To cancel, click this message or press escape.'
-				) +
-				'</span>'
-		).append(hiddenDiv);
+				)
+			)
+			.append(hiddenDiv);
 
 		dt.buttons.info(
 			dt.i18n('buttons.copyTitle', 'Copy to clipboard'),
-			message,
+			message.get(0),
 			0
 		);
 
 		// Select the text so when the user activates their system clipboard
 		// it will copy that text
-		textarea[0].focus();
-		textarea[0].select();
+		textarea.get(0).focus();
+		textarea.get(0).select();
 
 		// Event to hide the message when the user is done
-		var container = $(message).closest('.dt-button-info');
+		var container = message.closest('.dt-button-info');
 		var close = function () {
 			container.off('click.buttons-copy');
-			$(document).off('.buttons-copy');
+			dom.s(document).off('.buttons-copy');
 			dt.buttons.info(false);
 		};
 
@@ -973,7 +688,8 @@ DataTable.ext.buttons.copyHtml5 = {
 			close();
 			cb();
 		});
-		$(document)
+
+		dom.s(document)
 			.on('keydown.buttons-copy', function (e) {
 				if (e.keyCode === 27) {
 					// esc
@@ -1006,18 +722,18 @@ DataTable.ext.buttons.copyHtml5 = {
 	messageTop: '*',
 
 	messageBottom: '*'
-};
+} as ButtonConfig;
 
 //
 // CSV export
 //
-DataTable.ext.buttons.csvHtml5 = {
+dtButtons.csvHtml5 = {
 	bom: false,
 
 	className: 'buttons-csv buttons-html5',
 
 	available: function () {
-		return window.FileReader !== undefined && window.Blob;
+		return (window.FileReader !== undefined && window.Blob) ? true : false;
 	},
 
 	text: function (dt) {
@@ -1027,7 +743,7 @@ DataTable.ext.buttons.csvHtml5 = {
 	action: function (e, dt, button, config, cb) {
 		// Set the text
 		var output = _exportData(dt, config).str;
-		var info = dt.buttons.exportInfo(config);
+		var info = dt.buttons.exportInfo(config as any);
 		var charset = config.charset;
 
 		if (config.customize) {
@@ -1051,7 +767,7 @@ DataTable.ext.buttons.csvHtml5 = {
 			output = String.fromCharCode(0xfeff) + output;
 		}
 
-		_saveAs(
+		saveAs(
 			new Blob([output], { type: 'text/csv' + charset }),
 			info.filename,
 			true
@@ -1081,21 +797,20 @@ DataTable.ext.buttons.csvHtml5 = {
 	header: true,
 
 	footer: true
-};
+} as ButtonConfig;
 
 //
 // Excel (xlsx) export
 //
-DataTable.ext.buttons.excelHtml5 = {
+dtButtons.excelHtml5 = {
 	className: 'buttons-excel buttons-html5',
 
 	available: function () {
 		return (
 			window.FileReader !== undefined &&
-			_jsZip() !== undefined &&
-			!_isDuffSafari() &&
+			DataTable.Buttons.jszip() !== undefined &&
 			_serialiser
-		);
+		) ? true : false;
 	},
 
 	text: function (dt) {
@@ -1105,13 +820,12 @@ DataTable.ext.buttons.excelHtml5 = {
 	action: function (e, dt, button, config, cb) {
 		var rowPos = 0;
 		var dataStartRow, dataEndRow;
-		var getXml = function (type) {
+		var getXml = function (type: string) {
 			var str = excelStrings[type];
 
-			//str = str.replace( /xmlns:/g, 'xmlns_' ).replace( /mc:/g, 'mc_' );
-
-			return $.parseXML(str);
+			return new window.DOMParser().parseFromString(str, 'text/xml');
 		};
+
 		var rels = getXml('xl/worksheets/sheet1.xml');
 		var relsGet = rels.getElementsByTagName('sheetData')[0];
 
@@ -1134,16 +848,18 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		var data = dt.buttons.exportData(config.exportOptions);
 		var currentRow, rowNode;
-		var addRow = function (row) {
+		var addRow = function (row: any[]) {
 			currentRow = rowPos + 1;
 			rowNode = _createNode(rels, 'row', { attr: { r: currentRow } });
 
 			for (var i = 0, ien = row.length; i < ien; i++) {
-				// Concat both the Cell Columns as a letter and the Row of the cell.
+				// Concat both the Cell Columns as a letter and the Row of the
+				// cell.
 				var cellId = createCellPos(i) + '' + currentRow;
 				var cell = null;
 
-				// For null, undefined of blank cell, continue so it doesn't create the _createNode
+				// For null, undefined of blank cell, continue so it doesn't
+				// create the _createNode
 				if (row[i] === null || row[i] === undefined || row[i] === '') {
 					if (config.createEmptyCells === true) {
 						row[i] = '';
@@ -1212,7 +928,7 @@ DataTable.ext.buttons.excelHtml5 = {
 							: originalContent.replace(
 									/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g,
 									''
-							);
+							  );
 
 						cell = _createNode(rels, 'c', {
 							attr: {
@@ -1242,25 +958,25 @@ DataTable.ext.buttons.excelHtml5 = {
 			rowPos++;
 		};
 
-		var addHeader = function (structure) {
+		var addHeader = function (structure: HeaderStructure[][]) {
 			structure.forEach(function (row) {
 				addRow(
 					row.map(function (cell) {
 						return cell ? cell.title : '';
-					}),
-					rowPos
+					})
 				);
-				$('row:last c', rels).attr('s', '2'); // bold
+
+				dom.s(rels).find('row').last().find('c').attr('s', '2'); // bold
 
 				// Add any merge cells
-				row.forEach(function (cell, columnCounter) {
-					if (cell && (cell.colSpan > 1 || cell.rowSpan > 1)) {
+				row.forEach(function (cell, columnCounter: number) {
+					if (cell && (cell.colspan > 1 || cell.rowspan > 1)) {
 						_excelMergeCells(
 							rels,
 							rowPos,
 							columnCounter,
-							cell.rowSpan,
-							cell.colSpan
+							cell.rowspan,
+							cell.colspan
 						);
 					}
 				});
@@ -1268,15 +984,15 @@ DataTable.ext.buttons.excelHtml5 = {
 		};
 
 		// Title and top messages
-		var exportInfo = dt.buttons.exportInfo(config);
+		var exportInfo = dt.buttons.exportInfo(config as any);
 		if (exportInfo.title) {
-			addRow([exportInfo.title], rowPos);
+			addRow([exportInfo.title]);
 			_excelMergeCells(rels, rowPos, 0, 1, data.header.length);
-			$('row:last c', rels).attr('s', '51'); // centre
+			dom.s(rels).find('row').last().find('c').attr('s', '51'); // centre
 		}
 
 		if (exportInfo.messageTop) {
-			addRow([exportInfo.messageTop], rowPos);
+			addRow([exportInfo.messageTop]);
 			_excelMergeCells(rels, rowPos, 0, 1, data.header.length);
 		}
 
@@ -1289,7 +1005,7 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		// Table body
 		for (var n = 0, ie = data.body.length; n < ie; n++) {
-			addRow(data.body[n], rowPos);
+			addRow(data.body[n]);
 		}
 
 		dataEndRow = rowPos;
@@ -1301,13 +1017,13 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		// Below the table
 		if (exportInfo.messageBottom) {
-			addRow([exportInfo.messageBottom], rowPos);
+			addRow([exportInfo.messageBottom]);
 			_excelMergeCells(rels, rowPos, 0, 1, data.header.length);
 		}
 
 		// Set column widths
 		var cols = _createNode(rels, 'cols');
-		$('worksheet', rels).prepend(cols);
+		dom.s(rels).find('worksheet').prepend(cols);
 
 		for (var i = 0, ien = data.header.length; i < ien; i++) {
 			cols.appendChild(
@@ -1325,41 +1041,43 @@ DataTable.ext.buttons.excelHtml5 = {
 		// Workbook modifications
 		var workbook = xlsx.xl['workbook.xml'];
 
-		$('sheets sheet', workbook).attr('name', _sheetname(config));
+		dom.s(workbook).find('sheets sheet').attr('name', _sheetname(config));
 
 		// Auto filter for columns
 		if (config.autoFilter) {
-			$('mergeCells', rels).before(
-				_createNode(rels, 'autoFilter', {
-					attr: {
-						ref:
-							'A' +
-							dataStartRow +
-							':' +
-							createCellPos(data.header.length - 1) +
-							dataEndRow
-					}
-				})
-			);
-
-			$('definedNames', workbook).append(
-				_createNode(workbook, 'definedName', {
-					attr: {
-						name: '_xlnm._FilterDatabase',
-						localSheetId: '0',
-						hidden: 1
-					},
-					text:
-						'\'' +
-						_sheetname(config).replace(/'/g, '\'\'') +
-						'\'!$A$' +
+			let node = _createNode(rels, 'autoFilter', {
+				attr: {
+					ref:
+						'A' +
 						dataStartRow +
-						':$' +
+						':' +
 						createCellPos(data.header.length - 1) +
-						'$' +
 						dataEndRow
-				})
-			);
+				}
+			});
+
+			dom.s(node).insertBefore(dom.s(rels).find('mergeCells'));
+
+			dom.s(workbook)
+				.find('definedNames')
+				.append(
+					_createNode(workbook, 'definedName', {
+						attr: {
+							name: '_xlnm._FilterDatabase',
+							localSheetId: '0',
+							hidden: 1
+						},
+						text:
+							"'" +
+							_sheetname(config).replace(/'/g, "''") +
+							"'!$A$" +
+							dataStartRow +
+							':$' +
+							createCellPos(data.header.length - 1) +
+							'$' +
+							dataEndRow
+					})
+				);
 		}
 
 		// Let the developer customise the document if they want to
@@ -1368,11 +1086,13 @@ DataTable.ext.buttons.excelHtml5 = {
 		}
 
 		// Excel doesn't like an empty mergeCells tag
-		if ($('mergeCells', rels).children().length === 0) {
-			$('mergeCells', rels).remove();
+		let merge = dom.s(rels).find('mergeCells');
+
+		if (merge.children().count() === 0) {
+			merge.remove();
 		}
 
-		var jszip = _jsZip();
+		var jszip = DataTable.Buttons.jszip();
 		var zip = new jszip();
 		var zipConfig = {
 			compression: 'DEFLATE',
@@ -1383,31 +1103,32 @@ DataTable.ext.buttons.excelHtml5 = {
 
 		_addToZip(zip, xlsx);
 
-		// Modern Excel has a 218 character limit on the file name + path of the file (why!?)
+		// Modern Excel has a 218 character limit on the file name + path of the
+		// file (why!?)
 		// https://support.microsoft.com/en-us/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
 		// So we truncate to allow for this.
 		var filename = exportInfo.filename;
 
-		if (filename > 175) {
+		if (filename.length > 175) {
 			filename = filename.substr(0, 175);
 		}
 
-		// Let the developer customize the final zip file if they want to before it is generated and sent to the browser
+		// Let the developer customize the final zip file if they want to before
+		// it is generated and sent to the browser
 		if (config.customizeZip) {
 			config.customizeZip(zip, data, filename);
 		}
 
-
 		if (zip.generateAsync) {
 			// JSZip 3+
-			zip.generateAsync(zipConfig).then(function (blob) {
-				_saveAs(blob, filename);
+			zip.generateAsync(zipConfig).then(function (blob: any) {
+				saveAs(blob, filename);
 				cb();
 			});
 		}
 		else {
 			// JSZip 2.5
-			_saveAs(zip.generate(zipConfig), filename);
+			saveAs(zip.generate(zipConfig), filename);
 			cb();
 		}
 	},
@@ -1435,16 +1156,16 @@ DataTable.ext.buttons.excelHtml5 = {
 	autoFilter: false,
 
 	sheetName: ''
-};
+} as ButtonConfig;
 
 //
 // PDF export - using pdfMake - http://pdfmake.org
 //
-DataTable.ext.buttons.pdfHtml5 = {
+dtButtons.pdfHtml5 = {
 	className: 'buttons-pdf buttons-html5',
 
 	available: function () {
-		return window.FileReader !== undefined && _pdfMake();
+		return window.FileReader !== undefined && DataTable.Buttons.pdfMake();
 	},
 
 	text: function (dt) {
@@ -1453,7 +1174,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 
 	action: function (e, dt, button, config, cb) {
 		var data = dt.buttons.exportData(config.exportOptions);
-		var info = dt.buttons.exportInfo(config);
+		var info = dt.buttons.exportInfo(config as any); // Need better typing
 		var rows = [];
 
 		if (config.header) {
@@ -1466,7 +1187,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 									colSpan: cell.colspan,
 									rowSpan: cell.rowspan,
 									style: 'tableHeader'
-							}
+							  }
 							: {};
 					})
 				);
@@ -1482,7 +1203,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 								? ''
 								: typeof d === 'string'
 								? d
-								: d.toString()
+								: (d as any).toString()
 					};
 				})
 			);
@@ -1498,14 +1219,14 @@ DataTable.ext.buttons.pdfHtml5 = {
 									colSpan: cell.colspan,
 									rowSpan: cell.rowspan,
 									style: 'tableFooter'
-							}
+							  }
 							: {};
 					})
 				);
 			});
 		}
 
-		var doc = {
+		var doc: any = {
 			pageSize: config.pageSize,
 			pageOrientation: config.orientation,
 			content: [
@@ -1521,7 +1242,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 						body: rows
 					},
 					layout: {
-						hLineWidth: function (i, node) {
+						hLineWidth: function (i: number, node: any) {
 							if (i === 0 || i === node.table.body.length) {
 								return 0;
 							}
@@ -1530,7 +1251,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 						vLineWidth: function () {
 							return 0;
 						},
-						hLineColor: function (i, node) {
+						hLineColor: function (i: number, node: any) {
 							return i === node.table.headerRows ||
 								i ===
 									node.table.body.length -
@@ -1538,7 +1259,7 @@ DataTable.ext.buttons.pdfHtml5 = {
 								? '#333'
 								: '#ddd';
 						},
-						fillColor: function (rowIndex) {
+						fillColor: function (rowIndex: number) {
 							if (rowIndex < data.headerStructure.length) {
 								return '#fff';
 							}
@@ -1606,9 +1327,9 @@ DataTable.ext.buttons.pdfHtml5 = {
 			config.customize(doc, config, dt);
 		}
 
-		var pdf = _pdfMake().createPdf(doc);
+		var pdf = DataTable.Buttons.pdfMake().createPdf(doc);
 
-		if (config.download === 'open' && !_isDuffSafari()) {
+		if (config.download === 'open') {
 			pdf.open();
 		}
 		else {
@@ -1647,4 +1368,4 @@ DataTable.ext.buttons.pdfHtml5 = {
 	customize: null,
 
 	download: 'download'
-};
+} as ButtonConfig;

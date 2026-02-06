@@ -1,4 +1,9 @@
-import DataTables, { Api, ColumnSelector, Dom, HeaderStructure } from 'datatables.net';
+import DataTables, {
+	Api,
+	ColumnSelector,
+	Dom,
+	HeaderStructure
+} from 'datatables.net';
 import Buttons from './Buttons';
 import './interface';
 
@@ -54,6 +59,22 @@ declare module 'datatables.net' {
 		 * Buttons class
 		 */
 		Buttons: typeof Buttons;
+
+		/**
+		 * FileServer.js's `saveAs` function. Only present when buttons.html5 is
+		 * loaded.
+		 *
+		 * @param blob Data to save
+		 * @param name File name to create
+		 * @param opts Options
+		 * @param popup Popup
+		 */
+		fileSave: (
+			blob: string | Blob,
+			name?: string,
+			opts?: any,
+			popup?: any
+		) => void;
 	}
 
 	interface ExtButtons {

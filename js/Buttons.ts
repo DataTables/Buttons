@@ -45,6 +45,16 @@ var _buttonCounter = 0;
 // Custom entity decoder for data export
 var _entityDecoder: EntityDecoder | null = null;
 
+var useJszip: any;
+var usePdfmake: any;
+
+function _jsZip() {
+	return useJszip || (window as any).JSZip;
+}
+function _pdfMake() {
+	return usePdfmake || (window as any).pdfMake;
+}
+
 // Allow for jQuery slim
 export function fadeIn(
 	el: Dom,
@@ -407,6 +417,34 @@ export default class Buttons {
 	 */
 	public static entityDecoder = function (fn: EntityDecoder) {
 		_entityDecoder = fn;
+	};
+
+	/**
+	 * Set the pdfMake library for use with the pdfHtml5 button type
+	 *
+	 * @param _ 
+	 * @returns pdfMake library that is set
+	 */
+	public static pdfMake (_?: any) {
+		if (_) {
+			usePdfmake = _;
+		}
+
+		return _pdfMake();
+	}
+
+	/**
+	 * Set the JSZip library for use with the excelHtml5 button type
+	 *
+	 * @param _ 
+	 * @returns JSZip library that is set
+	 */
+	public static jszip (_?: any) {
+		if (_) {
+			useJszip = _;
+		}
+
+		return _jsZip();
 	};
 
 	/**

@@ -15,6 +15,7 @@
     "files": [
         "js/dataTables.buttons.ts",
         "js/buttons.colVis.ts",
+        "js/buttons.html5.ts",
         "js/buttons.print.ts",
     ]
 }
