@@ -4,15 +4,18 @@ import './interface';
 
 export default DataTables;
 
-type Full<T> = {
-  [P in keyof T]-?: T[P];
-}
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables' types integration
  */
 declare module 'datatables.net' {
-	interface Config {
+	interface Options {
+		/**
+		 * Buttons extension options
+		 */
+		buttons?: boolean | ConfigButtons | ButtonsList;
+	}
+
+	interface Defaults {
 		/**
 		 * Buttons extension options
 		 */
@@ -29,10 +32,6 @@ declare module 'datatables.net' {
 	interface Feature {
 		buttons?: ConfigButtons | ButtonsList;
 	}
-
-	// interface Buttons {
-	// 	collection: ButtonConfig;
-	// }
 
 	interface Api<T> {
 		/**
@@ -55,26 +54,15 @@ declare module 'datatables.net' {
 
 	interface ExtButtons {
 		[name: string]: ButtonConfig | ButtonFunction;
-
-		// collection: ButtonCollection;
-		// copy: ButtonCopy;
-		// copyHtml5: ButtonCopyHtml5;
-		// csv: ButtonCsv;
-		// csvHtml5: ButtonCsvHtml5;
-		// excel: ButtonExcel;
-		// excelHtml5: ButtonExcelHtml5;
-		// pageLength: ButtonPageLength;
-		// pdf: ButtonPdf;
-		// pdfHtml5: ButtonPdfHtml5;
-
-
-		// split: ButtonSplit;
-
-		// collection: CollectionButtons['collection'];
 	}
 
 	interface Context {
 		_buttons: ContextButtons[];
+	}
+
+	interface ApiSelector {
+		/** Options modifier used in this instance (if any) */
+		buttonGroup?: GroupSelector;
 	}
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -192,6 +180,13 @@ declare module 'datatables.net' {
 		 * @returns DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
 		 */
 		trigger(): Api<any>;
+
+		/**
+		 * Internal reference
+		 *
+		 * @ignore
+		 */
+		_groupSelector: GroupSelector;
 	}
 
 	interface ApiButtons<T> {
@@ -202,7 +197,11 @@ declare module 'datatables.net' {
 		 *
 		 * @returns DataTables API instance for chaining.
 		 */
-		info(title: string, message?: string, time?: number): Api<any>;
+		info(
+			title: string | false,
+			message?: string | HTMLElement,
+			time?: number
+		): Api<any>;
 
 		/**
 		 * Get meta information that is common to many different button types.
@@ -392,11 +391,11 @@ declare module 'datatables.net' {
 
 		/** Create a CSV file with the table data */
 		csv: {
-			extend: 'csv',
+			extend: 'csv';
 			bom?: boolean;
 			filename?: string;
 			extension?: string;
-			exportOptions?: ButtonExportOptions,
+			exportOptions?: ButtonExportOptions;
 			fieldSeparator?: string;
 			fieldBoundary?: string;
 			escapeChar?: string;
@@ -409,10 +408,10 @@ declare module 'datatables.net' {
 
 		/** Create an Excel XLSX file with the table data */
 		excel: {
-			extend: 'excel',
+			extend: 'excel';
 			filename?: string;
 			extension?: string;
-			exportOptions?: ButtonExportOptions,
+			exportOptions?: ButtonExportOptions;
 			header?: boolean;
 			footer?: boolean;
 			title?: string;
@@ -421,40 +420,48 @@ declare module 'datatables.net' {
 			createEmptyCells?: boolean;
 			autoFilter?: boolean;
 			sheetName?: string;
-			customize?: null | ((win: Window, conf: Buttons['print'], dt: Api<any>) => void);
+			customize?:
+				| null
+				| ((win: Window, conf: Buttons['print'], dt: Api<any>) => void);
 		};
 
 		excelHtml5: Buttons['excel'];
 
 		/** Construct a view of the table suitable for printing */
 		print: {
-			extend: 'print',
+			extend: 'print';
 			title?: string;
 			messageTop?: string;
 			messageBottom?: string;
-			exportOptions?: ButtonExportOptions,
+			exportOptions?: ButtonExportOptions;
 			header?: boolean;
 			footer?: boolean;
 			autoPrint?: boolean;
-			customize?: null | ((xlsx: any, conf: Buttons['print'], dt: Api<any>) => void);
-			customizeZip?: null | ((zip: any, data: any, filename: any) => void);
+			customize?:
+				| null
+				| ((xlsx: any, conf: Buttons['print'], dt: Api<any>) => void);
+			customizeZip?:
+				| null
+				| ((zip: any, data: any, filename: any) => void);
 		};
 
 		/** Create a PDF file with the table data */
 		pdf: {
-			extend: 'pdf',
+			extend: 'pdf';
 			title?: string;
 			filename?: string;
 			extension?: string;
-			exportOptions?: ButtonExportOptions,
+			exportOptions?: ButtonExportOptions;
 			orientation?: string;
 			pageSize?: string;
-			header?: true,
-			footer?: true,
+			header?: true;
+			footer?: true;
 			messageTop?: string;
 			messageBottom?: string;
-			customize?: null | ((doc: any, config: Buttons['pdf'], dt: Api<any>) => void),
-			download?: 'download' | 'open'
+			customize?:
+				| null
+				| ((doc: any, config: Buttons['pdf'], dt: Api<any>) => void);
+			download?: 'download' | 'open';
 		};
 
 		pdfHtml5: Buttons['pdf'];
@@ -467,12 +474,15 @@ declare module 'datatables.net' {
 	}
 }
 
-interface ButtonsApiExportInfoParameter {
-	extension?: string | (() => string);
-	filename?: string | (() => string);
-	messageBottom?: null | string | (() => string);
-	messageTop?: null | string | (() => string);
-	title?: null | string | (() => string);
+export interface ButtonsApiExportInfoParameter {
+	extension?: ResolvableOption;
+	filename?: ResolvableOption;
+	messageBottom?: ResolvableOption;
+	messageTop?: ResolvableOption;
+	title?: ResolvableOption;
+
+	/** @deprecated */
+	message?: string | null;
 }
 
 interface ButtonsApiExportInfoReturn {
@@ -770,90 +780,7 @@ export interface ButtonFunction {
 	(dt: Api, conf: ButtonConfig): string | ButtonConfig | undefined;
 }
 
-export interface ButtonObject extends ButtonConfig {
-
-}
-
-// export interface ButtonCollection extends ButtonConfig {
-// 	closeButton?: boolean;
-// }
-
-// export interface ButtonSplit extends ButtonConfig {
-// 	closeButton?: boolean;
-// }
-
-// export interface ButtonCopy extends ButtonFunction {}
-// export interface ButtonCopyHtml5 extends ButtonConfig {
-// 	extend: 'copy';
-// 	exportOptions?: ButtonExportOptions;
-// 	fieldSeparator?: string;
-// 	fieldBoundary?: string;
-// 	header?: boolean;
-// 	footer?: boolean;
-// 	title?: string;
-// 	messageTop?: string;
-// 	messageBottom?: string;
-// }
-
-// export interface ButtonCsv extends ButtonFunction {}
-// export interface ButtonCsvHtml5 extends ButtonConfig {
-// 	extend: 'csv';
-// 	bom?: boolean;
-// 	filename?: string;
-// 	extension?: string;
-// 	exportOptions?: ButtonExportOptions;
-// 	fieldSeparator?: string;
-// 	fieldBoundary?: string;
-// 	escapeChar?: string;
-// 	charset?: string | null;
-// 	header?: boolean;
-// 	footer?: boolean;
-// }
-
-// export interface ButtonExcel extends ButtonFunction {}
-// export interface ButtonExcelHtml5 extends ButtonConfig {
-// 	extend: 'excel';
-// 	filename?: string;
-// 	extension?: string;
-// 	exportOptions?: ButtonExportOptions;
-// 	header?: boolean;
-// 	footer?: boolean;
-// 	title?: string;
-// 	messageTop?: string;
-// 	messageBottom?: string;
-// 	createEmptyCells?: boolean;
-// 	autoFilter?: boolean;
-// 	sheetName?: string;
-// 	customize?:
-// 		| null
-// 		| ((win: Window, conf: ButtonExcelHtml5, dt: Api<any>) => void);
-// }
-
-// export interface ButtonPdf extends ButtonFunction {}
-// export interface ButtonPdfHtml5 extends ButtonConfig {
-// 	extend: 'pdf';
-// 	title?: string;
-// 	filename?: string;
-// 	extension?: string;
-// 	exportOptions?: ButtonExportOptions;
-// 	orientation?: string;
-// 	pageSize?: string;
-// 	header?: true;
-// 	footer?: true;
-// 	messageTop?: string;
-// 	messageBottom?: string;
-// 	customize?:
-// 		| null
-// 		| ((doc: any, config: ButtonPdfHtml5, dt: Api<any>) => void);
-// 	download?: 'download' | 'open';
-// }
-
-// export interface ButtonPageLength extends ButtonFunction {}
-
-// export interface ButtonSpacer extends ButtonConfig {
-
-// }
-
+export interface ButtonObject extends ButtonConfig {}
 
 export interface CollectionButtons {
 	/** Collection button */
@@ -891,7 +818,7 @@ export type ButtonSelectorTypes = string | number | JQuery<any> | Dom;
 
 export interface ButtonExportOptions {
 	rows?: any;
-	columns?: ButtonSelectorTypes | ButtonSelectorTypes[];
+	columns?: ColumnSelector;
 	customizeData?: FunctionButtonCustomizeData;
 	modifier?: any;
 	orthogonal?: string;
@@ -900,11 +827,24 @@ export interface ButtonExportOptions {
 	decodeEntities?: boolean;
 	trim?: boolean;
 	format?: {
-		header?: any;
-		footer?: any;
-		body?: any;
+		header?: ButtonHeaderFormatter;
+		footer?: ButtonHeaderFormatter;
+		body?: ButtonBodyFormatter;
 	};
 }
+
+export type ButtonHeaderFormatter = (
+	str: string,
+	idx: number,
+	el: HTMLElement
+) => string;
+
+export type ButtonBodyFormatter = (
+	str: string,
+	row: number,
+	column: number,
+	el: HTMLElement
+) => string;
 
 export type FunctionButtonCustomizeData = (content: any) => void;
 
@@ -992,7 +932,8 @@ export type GroupSelector =
 	| string
 	| Array<number | string>
 	| Dom
-	| Node;
+	| Node
+	| null;
 
 export type ButtonSelector =
 	| null
@@ -1018,3 +959,5 @@ export interface SelectListButtons {
 	name?: string;
 	idx: string;
 }
+
+export type ResolvableOption = null | undefined | string | ((config: ButtonConfig, dt: Api) => string)

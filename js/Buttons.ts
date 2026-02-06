@@ -42,13 +42,11 @@ var _instCounter = 0;
 // Button namespacing counter for namespacing events on individual buttons
 var _buttonCounter = 0;
 
-// var Buttons.buttons = DataTable.ext.buttons;
-
 // Custom entity decoder for data export
 var _entityDecoder: EntityDecoder | null = null;
 
 // Allow for jQuery slim
-function _fadeIn(el: Dom, duration: number, fn?: (this: Dom) => void) {
+export function fadeIn(el: Dom, duration: number=400, fn?: (this: Dom) => void) {
 	// if ($.fn.animate) {
 	// 	el.stop().fadeIn(duration, fn);
 	// }
@@ -61,7 +59,7 @@ function _fadeIn(el: Dom, duration: number, fn?: (this: Dom) => void) {
 	// }
 }
 
-function _fadeOut(el: Dom, duration: number, fn?: (this: Dom) => void) {
+export function fadeOut(el: Dom, duration: number=400, fn?: (this: Dom) => void) {
 	// if ($.fn.animate) {
 	// 	el.stop().fadeOut(duration, fn);
 	// }
@@ -95,7 +93,7 @@ export default class Buttons {
 		insertPoint: HTMLElement = document.body
 	) {
 		if (show) {
-			_fadeIn(
+			fadeIn(
 				dom
 					.c('div')
 					.classAdd(className)
@@ -105,7 +103,7 @@ export default class Buttons {
 			);
 		}
 		else {
-			_fadeOut(dom.s('div.' + className), fade, function () {
+			fadeOut(dom.s('div.' + className), fade, function () {
 				this.classRemove(className).remove();
 			});
 		}
@@ -443,7 +441,7 @@ export default class Buttons {
 		var close = function () {
 			closed = true;
 
-			_fadeOut(dom.s(containerSelector), options.fade, function () {
+			fadeOut(dom.s(containerSelector), options.fade, function () {
 				this.detach();
 			});
 
@@ -573,7 +571,7 @@ export default class Buttons {
 				.classAdd('dtb-collection-closeable');
 		}
 
-		_fadeIn(display.insertAfter(hostNode), options.fade);
+		fadeIn(display.insertAfter(hostNode), options.fade);
 
 		var tableContainer = dom.s(hostButton.table().container());
 		var position = display.css('position');
@@ -921,7 +919,7 @@ export default class Buttons {
 	 * @param action Function to set
 	 * @return Self for chaining
 	 */
-	public action(node: HTMLElement, action?: ButtonAction) {
+	public action(node: HTMLElement | Dom, action?: ButtonAction) {
 		var button = this._nodeToButton(node);
 
 		if (action === undefined) {
@@ -943,7 +941,7 @@ export default class Buttons {
 	 * @param flag Enable / disable flag
 	 * @return Self for chaining or boolean for getter
 	 */
-	public active(node: HTMLElement, flag?: boolean) {
+	public active(node: HTMLElement | Dom, flag?: boolean) {
 		var button = this._nodeToButton(node);
 		var klass = this.c.dom.button.active;
 
@@ -1011,7 +1009,7 @@ export default class Buttons {
 	/**
 	 * Clear buttons from a collection and then insert new buttons
 	 */
-	public collectionRebuild(node: HTMLElement, newButtons: ButtonsList) {
+	public collectionRebuild(node: HTMLElement | Dom, newButtons: ButtonsList) {
 		var button = this._nodeToButton(node);
 
 		if (!button) {
@@ -1022,7 +1020,7 @@ export default class Buttons {
 			var i;
 			// Need to reverse the array
 			for (i = button.buttons.length - 1; i >= 0; i--) {
-				this.remove(button.buttons[i].node.get(0));
+				this.remove(button.buttons[i].node);
 			}
 
 			// If the collection has prefix and / or postfix buttons we need to add them in
@@ -1069,7 +1067,7 @@ export default class Buttons {
 	 * @param node Button node
 	 * @return Self for chaining
 	 */
-	public disable(node: HTMLElement) {
+	public disable(node: HTMLElement | Dom) {
 		var button = this._nodeToButton(node);
 
 		if (button) {
@@ -1135,7 +1133,7 @@ export default class Buttons {
 	 * @param flag Enable / disable flag
 	 * @return Self for chaining
 	 */
-	public enable(node: HTMLElement, flag = true) {
+	public enable(node: HTMLElement | Dom, flag = true) {
 		if (flag === false) {
 			return this.disable(node);
 		}
@@ -1217,7 +1215,7 @@ export default class Buttons {
 	 * @param node Button node
 	 * @return Button element, or container
 	 */
-	public node(node?: HTMLElement) {
+	public node(node?: HTMLElement | Dom) {
 		if (!node) {
 			return this.dom.container;
 		}
@@ -1233,7 +1231,7 @@ export default class Buttons {
 	 * @param flag true to add, false to remove, undefined to get
 	 * @return Getter value or this if a setter.
 	 */
-	public processing(node: HTMLElement, flag?: boolean) {
+	public processing(node: HTMLElement | Dom, flag?: boolean) {
 		var dt = this.s.dt;
 		var button = this._nodeToButton(node);
 
@@ -1248,7 +1246,7 @@ export default class Buttons {
 				flag,
 				dt.button(node),
 				dt,
-				dom.s(node),
+				button.node,
 				button.conf
 			]);
 		}
@@ -1262,7 +1260,7 @@ export default class Buttons {
 	 * @param node Button node
 	 * @return Self for chaining
 	 */
-	public remove(node: HTMLElement) {
+	public remove(node: HTMLElement | Dom) {
 		let button = this._nodeToButton(node);
 
 		if (!button) {
@@ -1286,7 +1284,7 @@ export default class Buttons {
 			button.conf.destroy.call(
 				dt.button(node),
 				dt,
-				dom.s(node),
+				button.node,
 				button.conf
 			);
 		}
@@ -1313,7 +1311,7 @@ export default class Buttons {
 	 * @param node Button index
 	 * @return Button text
 	 */
-	public text(node: HTMLElement): string;
+	public text(node: HTMLElement | Dom): string;
 	/**
 	 * Set the text for a button
 	 *
@@ -1321,8 +1319,8 @@ export default class Buttons {
 	 * @param label Text to set
 	 * @return Buttons instance
 	 */
-	public text(node: HTMLElement, label: string | FunctionButtonText): Buttons;
-	public text(node: HTMLElement, label?: string | FunctionButtonText): any {
+	public text(node: HTMLElement | Dom, label: string | FunctionButtonText): Buttons;
+	public text(node: HTMLElement | Dom, label?: string | FunctionButtonText): any {
 		let button = this._nodeToButton(node);
 
 		if (!button) {
@@ -2052,11 +2050,15 @@ export default class Buttons {
 	 * @return Button object
 	 */
 	private _nodeToButton(
-		node: HTMLElement,
+		node: HTMLElement | Dom,
 		buttons?: ButtonSettings[]
 	): ButtonSettings | void {
 		if (!buttons) {
 			buttons = this.s.buttons;
+		}
+
+		if (util.is.dom(node)) {
+			node = node.get(0);
 		}
 
 		for (var i = 0, ien = buttons.length; i < ien; i++) {
@@ -2084,11 +2086,15 @@ export default class Buttons {
 	 * @return Button's host array
 	 */
 	private _nodeToHost(
-		node: HTMLElement,
+		node: HTMLElement | Dom,
 		buttons?: ButtonSettings[]
 	): ButtonSettings[] | void {
 		if (!buttons) {
 			buttons = this.s.buttons;
+		}
+
+		if (util.is.dom(node)) {
+			node = node.get(0);
 		}
 
 		for (var i = 0, ien = buttons.length; i < ien; i++) {
