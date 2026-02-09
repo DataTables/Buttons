@@ -50,7 +50,7 @@ describe('buttons - button().processing()', function() {
 		});
 
 		it('Button has class on it', function() {
-			expect($(table.button(1).node()).hasClass('processing')).toBe(true);
+			expect($(table.button(1).node().get()).hasClass('processing')).toBe(true);
 		});
 
 		it('Disable processing for second button', function() {
@@ -63,7 +63,7 @@ describe('buttons - button().processing()', function() {
 		});
 
 		it('Class was removed', function() {
-			expect($(table.button(1).node()).hasClass('processing')).toBe(false);
+			expect($(table.button(1).node().get()).hasClass('processing')).toBe(false);
 		});
 
 		it('Enable processing for all buttons', function() {

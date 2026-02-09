@@ -37,8 +37,8 @@ describe('Buttons - options - buttons.action', function() {
 		it('Action function called with correct params', function() {
 			expect(params.length).toBe(5);
 			expect(params[0] instanceof $.Event).toBe(true);
-			expect(params[1] instanceof $.fn.dataTable.Api).toBe(true);
-			expect(params[2] instanceof $).toBe(true);
+			expect(params[1] instanceof DataTable.Api).toBe(true);
+			expect(params[2] instanceof DataTable.dom.Dom).toBe(true);
 			expect(params[3].text).toBe('second');
 			expect(typeof params[4]).toBe('function');
 		});

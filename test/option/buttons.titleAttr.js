@@ -38,8 +38,8 @@ describe('Buttons - options - buttons.titleAttr', function() {
 		});
 		it('Function passed correct params', function() {
 			expect(params.length).toBe(3);
-			expect(params[0] instanceof $.fn.dataTable.Api).toBe(true);
-			expect(params[1] instanceof $).toBe(true);
+			expect(params[0] instanceof DataTable.Api).toBe(true);
+			expect(params[1] instanceof DataTable.dom.Dom).toBe(true);
 			expect(params[2].name).toBe('third');
 		});
 	});

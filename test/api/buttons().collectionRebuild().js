@@ -27,7 +27,7 @@ describe('buttons - buttons().collectionRebuild()', function () {
 			expect(typeof table.buttons().collectionRebuild).toBe('function');
 		});
 		it('Returns an API instance', function () {
-			expect(table.buttons(0).collectionRebuild([{ text: 'second' }]) instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.buttons(0).collectionRebuild([{ text: 'second' }]) instanceof DataTable.Api).toBe(true);
 		});
 	});
 

@@ -19,7 +19,7 @@ describe('buttons - button().text()', function() {
 			expect(typeof table.button(0).text()).toBe('string');
 		});
 		it('Setter returns an API instance', function() {
-			expect(table.button(0).text('fred') instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.button(0).text('fred') instanceof DataTable.Api).toBe(true);
 		});
 	});
 

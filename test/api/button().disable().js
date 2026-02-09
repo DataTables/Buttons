@@ -15,7 +15,7 @@ describe('buttons - button().disable()', function () {
 			expect(typeof table.button().disable).toBe('function');
 		});
 		it('Returns an API instance', function () {
-			expect(table.button(0).disable() instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.button(0).disable() instanceof DataTable.Api).toBe(true);
 		});
 	});
 

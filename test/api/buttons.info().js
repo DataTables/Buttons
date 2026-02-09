@@ -15,7 +15,7 @@ describe('buttons - buttons.info()', function() {
 			expect(typeof table.buttons.info).toBe('function');
 		});
 		it('Returns an API instance', function() {
-			expect(table.buttons.info('unit_test') instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.buttons.info('unit_test') instanceof DataTable.Api).toBe(true);
 		});
 		it('Is removed when table destroyed', function() {
 			table.destroy();

@@ -333,7 +333,7 @@ DataTable.Api.register(
 // Remove a button
 DataTable.Api.registerPlural(
 	'buttons().remove()',
-	'buttons().remove()',
+	'button().remove()',
 	function (this: ApiButtonMethods<SelectedButtons>) {
 		this.each(function (set) {
 			set.inst.remove(set.node);
@@ -386,7 +386,11 @@ DataTable.Api.register(
 				.attr('id', 'datatables_buttons_info')
 				.classAdd('dt-button-info')
 				.html(title)
-				.append(message || '')
+				.append(
+					dom.c('div')[typeof message === 'string' ? 'html' : 'append'](
+						message
+					)
+				)
 				.css('display', 'none')
 				.appendTo('body')
 		);
@@ -450,38 +454,21 @@ DataTable.Buttons = Buttons;
 // they will have been if the `B` option was used in `dom`, otherwise we should
 // create the buttons instance here so they can be inserted into the document
 // using the API.
-dom.s(document).on('plugin-init.dt', function (e, settings: Context) {
+dom.s(document).on('init.dt plugin-init.dt', function (e, settings: Context) {
 	if (e.namespace !== 'dt') {
 		return;
 	}
 
-	let init = settings.init.buttons as
-		| boolean
-		| Partial<ConfigButtons | ButtonsList>;
-	let defaults = (DataTable.defaults as any).buttons as
-		| boolean
-		| Partial<ConfigButtons | ButtonsList>;
+	var opts = settings.init.buttons || DataTable.defaults.buttons;
 
-	if (init || defaults) {
-		let opts: Partial<ConfigButtons | ButtonsList> = {};
-
-		if (util.is.plainObject(defaults)) {
-			util.object.assign(opts, defaults);
-		}
-
-		if (util.is.plainObject(init)) {
-			util.object.assign(opts, init);
-		}
-
-		if (init !== false) {
-			new Buttons(settings, opts);
-		}
+	if (opts && !settings._buttons) {
+		new Buttons(settings, opts).container();
 	}
 });
 
 function _init(
 	settings: Context,
-	options: Partial<ConfigButtons | ButtonsList> = {}
+	options?: Partial<ConfigButtons | ButtonsList>
 ) {
 	var api = new DataTable.Api(settings);
 	var opts = options

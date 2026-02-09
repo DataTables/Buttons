@@ -804,17 +804,17 @@ export default class Buttons {
 						return;
 					}
 
-					// andSelf is deprecated in jQ1.8, but we want 1.7 compat
-					// var back = $.fn.addBack ? 'addBack' : 'andSelf';
-					// var parent = dom.s(e.target).parent().eq(0);
-
 					if (
-						// TODO Not actually sure what this is for?
-						// (
-						// 	!$(e.target).parents()[back]().filter(content).length &&
-						// 	parent.classHas('dt-buttons')
-						// ) ||
-						dom.s(e.target).classHas('dt-button-background')
+						// Background click
+						dom.s(e.target).classHas('dt-button-background') ||
+						dom.s(e.target).classHas('dtb-popover-close') ||
+						(
+							// If not the current display element, or in the
+							// modal then somehow they have clicked behind the
+							// background
+							e.target !== display.get(0) &&
+							display.find(e.target).count() === 0
+						)
 					) {
 						close();
 					}

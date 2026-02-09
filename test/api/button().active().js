@@ -26,7 +26,7 @@ describe('buttons - button().active()', function() {
 			expect(typeof table.button(0).active()).toBe('boolean');
 		});
 		it('Setter returns an API instance', function() {
-			expect(table.button(0).active(true) instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.button(0).active(true) instanceof DataTable.Api).toBe(true);
 		});
 	});
 

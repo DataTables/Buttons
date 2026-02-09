@@ -18,7 +18,7 @@ describe('buttons - button().add()', function () {
 			expect(
 				table.button().add(null, {
 					text: '1'
-				}) instanceof $.fn.dataTable.Api
+				}) instanceof DataTable.Api
 			).toBe(true);
 		});
 	});

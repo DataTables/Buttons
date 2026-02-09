@@ -15,7 +15,7 @@ describe('buttons - button().trigger()', function() {
 			expect(typeof table.button().trigger).toBe('function');
 		});
 		it('Returns an API instance', function() {
-			expect(table.button(0).trigger() instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.button(0).trigger() instanceof DataTable.Api).toBe(true);
 		});
 	});
 

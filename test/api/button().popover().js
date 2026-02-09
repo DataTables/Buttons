@@ -20,7 +20,7 @@ describe('buttons - button().popover()', function () {
 		});
 
 		it('Returns an API instance', function () {
-			expect(table.button(0).popover() instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.button(0).popover() instanceof DataTable.Api).toBe(true);
 		});
 	});
 

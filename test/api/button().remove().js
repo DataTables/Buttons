@@ -19,7 +19,7 @@ describe('buttons - button().remove()', function () {
 			table.button().add(null, {
 				text: '1'
 			});
-			expect(table.button(0).remove() instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.button(0).remove() instanceof DataTable.Api).toBe(true);
 		});
 	});
 

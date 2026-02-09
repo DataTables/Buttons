@@ -32,7 +32,7 @@ describe('Buttons - options - buttons.available', function() {
 		});
 		it('Available function called with correct params', function() {
 			expect(params.length).toBe(2);
-			expect(params[0] instanceof $.fn.dataTable.Api).toBe(true);
+			expect(params[0] instanceof DataTable.Api).toBe(true);
 			expect(params[1].text).toBe('first');
 		});
 		it('If true, button present', function() {

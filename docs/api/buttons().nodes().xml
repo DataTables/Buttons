@@ -6,16 +6,18 @@
 
 	<type type="function">
 		<signature>buttons().nodes()</signature>
-		<returns type="jQuery">
-			A jQuery object that contains the nodes for the selected buttons
+		<returns type="Dom">
+			A DataTables `Dom` object that contains the nodes for the selected buttons
 		</returns>
 		<description>
-			Get a jQuery object that contains a reference to the nodes for the selected buttons.
+			Get a DataTables `Dom` object that contains a reference to the nodes for the selected buttons.
 		</description>
 	</type>
 
 	<description>
-		It can often be useful to have access to the DOM node of a button so you can manipulate it using directly jQuery or DOM methods. This method provides exactly that option.
+		It can often be useful to have access to the DOM node of a button so you can manipulate it. This method provides exactly that option.
+		
+		Upgrade note: Please be aware that prior to Buttons 4, this method would return a jQuery object, but due to jQuery being removed as a dependency, it will now return a DataTables `Dom` instance.
 	</description>
 
 	<example title="Set the background colour for selected buttons"><![CDATA[

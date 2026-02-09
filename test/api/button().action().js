@@ -16,7 +16,7 @@ describe('buttons - button().action()', function() {
 			expect(typeof table.button().action).toBe('function');
 		});
 		it('Returns an API instance', function() {
-			expect(table.button(0).action(function test() {}) instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.button(0).action(function test() {}) instanceof DataTable.Api).toBe(true);
 		});
 
 		dt.html('basic');
@@ -38,8 +38,8 @@ describe('buttons - button().action()', function() {
 
 			expect(args.length).toBe(5);
 			expect(typeof args[0]).toBe('object');
-			expect(args[1] instanceof $.fn.dataTable.Api).toBe(true);
-			expect(args[2] instanceof $).toBe(true);
+			expect(args[1] instanceof DataTable.Api).toBe(true);
+			expect(args[2] instanceof DataTable.dom.Dom).toBe(true);
 			expect(typeof args[3]).toBe('object');
 			expect(args[3].text).toBe('test');
 			expect(typeof args[4]).toBe('function');

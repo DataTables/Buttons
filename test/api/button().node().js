@@ -15,7 +15,7 @@ describe('buttons - button().node()', function() {
 			expect(typeof table.button().node).toBe('function');
 		});
 		it('Returns an API instance', function() {
-			expect(table.button(0).node() instanceof $).toBe(true);
+			expect(table.button(0).node() instanceof DataTable.dom.Dom).toBe(true);
 		});
 	});
 

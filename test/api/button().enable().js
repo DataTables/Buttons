@@ -18,7 +18,7 @@ describe('buttons - button().enable()', function() {
 			table.button().disable(null, {
 				text: '1'
 			});
-			expect(table.button(0).enable() instanceof $.fn.dataTable.Api).toBe(true);
+			expect(table.button(0).enable() instanceof DataTable.Api).toBe(true);
 		});
 	});
 

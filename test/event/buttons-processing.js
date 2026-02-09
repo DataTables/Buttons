@@ -51,9 +51,9 @@ describe('buttons - buttons-processing', function() {
 			expect(params.length).toBe(6);
 			expect(params[0] instanceof $.Event).toBe(true);
 			expect(typeof params[1]).toBe('boolean');
-			expect(params[2] instanceof $.fn.dataTable.Api).toBe(true);
-			expect(params[3] instanceof $.fn.dataTable.Api).toBe(true);
-			expect(params[4] instanceof $).toBe(true);
+			expect(params[2] instanceof DataTable.Api).toBe(true);
+			expect(params[3] instanceof DataTable.Api).toBe(true);
+			expect(params[4] instanceof DataTable.dom.Dom).toBe(true);
 			expect(typeof params[5]).toBe('object');
 		});
 		it('Activates on the correct button', function() {
