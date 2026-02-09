@@ -62,9 +62,9 @@ util.object.assignDeep(DataTable.Buttons.defaults, {
 			}
 		}
 	},
-	buttonCreated: function (config, button) {
-		return config.buttons
-			? dom.c('div').classAdd('btn-group').append(button)
+	buttonCreated: function (config, button, inCollection) {
+		return config.buttons && ! inCollection
+			? dom.c('div').classAdd('btn-group a').append(button)
 			: button;
 	}
 });

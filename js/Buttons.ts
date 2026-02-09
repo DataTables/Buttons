@@ -1942,7 +1942,7 @@ export default class Buttons {
 
 		// Style integration callback for DOM manipulation
 		if (this.c.buttonCreated) {
-			inserter = this.c.buttonCreated(config, inserter);
+			inserter = this.c.buttonCreated(config, inserter, inCollection);
 		}
 
 		var splitDiv: Dom;

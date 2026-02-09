@@ -930,10 +930,15 @@ export interface DefaultsButtons {
 	 *
 	 * @param config
 	 * @param inserter
+	 * @param inCollection
 	 * @returns
 	 * @internal
 	 */
-	buttonCreated?: (config: ButtonConfig, inserter: Dom) => Dom;
+	buttonCreated?: (
+		config: ButtonConfig,
+		inserter: Dom,
+		inCollection: boolean
+	) => Dom;
 }
 
 export interface ConfigButtons extends Partial<DefaultsButtons> {}
