@@ -3,13 +3,55 @@
 @use 'mixins.scss';
 @use 'common.scss';
 
-$dtb-button-colour: rgba(0, 0, 0, 0.1) !default;
-$dtb-button-focus-colour: rgba(121, 172, 233, 1) !default;
-$dtb-button-border: 1px solid mixins.dtb-shade(transparent, 30%) !default;
+:root {
+	--dtb-button_background: rgba(0, 0, 0, 0.05);
+	--dtb-button_border: 1px solid rgba(0, 0, 0, 0.3);
+	--dtb-button_border-radius: 3px;
+	--dtb-button_box-shadow: none;
+	--dtb-button_color: inherit;
 
-$dtb-dark-button-colour: rgba(255, 255, 255, 0.15);
-// $dtb-dark-button-focus-colour: 
-$dtb-dark-button-border: 1px solid rgb(89, 91, 94);
+	--dtb-button_background-hover: rgba(0, 0, 0, 0.1);
+	--dtb-button_border-hover: 1px solid rgba(0, 0, 0, 0.5);
+	--dtb-button_border-radius-hover: var(--dtb-button_border-radius);
+	--dtb-button_box-shadow-hover: none;
+	--dtb-button_color-hover: var(--dtb-button_border-radius);
+
+	--dtb-button_background-active: rgba(178.5, 178.5, 178.5, 0.1);
+	--dtb-button_border-active: var(--dtb-button_border);
+	--dtb-button_border-radius-active: var(--dtb-button_border-radius);
+	--dtb-button_box-shadow-active: inset 1px 1px 3px #999999;
+	--dtb-button_color-active: var(--dtb-button_border-radius);
+
+	--dtb-button_background-active-hover: rgba(127.5, 127.5, 127.5, 0.1);
+	--dtb-button_border-active-hover: var(--dtb-button_border);
+	--dtb-button_border-radius-active-hover: var(--dtb-button_border-radius);
+	--dtb-button_box-shadow-active-hover: inset 1px 1px 3px #999999;
+	--dtb-button_color-active-hover: var(--dtb-button_border-radius);
+
+	--dtb-collection_border: 1px solid rgba( 0, 0, 0, 0.4 );
+	--dtb-collection_background-color: white;
+	--dtb-collection_box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.3);
+
+	&.dark {
+		--dtb-button_background: rgba(255, 255, 255, 0.05);
+		--dtb-button_border: 1px solid rgb(255, 255, 255, 0.2);
+
+		--dtb-button_background-hover: rgba(0, 0, 0, 0.1);
+		--dtb-button_border-hover: 1px solid rgba(255, 255, 255, 0.3);
+
+		--dtb-button_background-active: rgba(255, 255, 255, 0.1);
+		--dtb-button_border-active: var(--dtb-button_border);
+		--dtb-button_box-shadow-active: inset 0 0 3px #111;
+
+		--dtb-button_background-active-hover: rgba(255, 255, 255, 0.2);
+		--dtb-button_border-active-hover: var(--dtb-button_border);
+		--dtb-button_box-shadow-active-hover: inset 0 0 3px #111;
+
+		--dtb-collection_border: 1px solid rgba(255, 255, 255, 0.15);
+		--dtb-collection_background-color: rgb(33, 37, 41);
+		--dtb-collection_box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.8);
+	}
+}
 
 div.dt-buttons {
 	> .dt-button,
@@ -21,25 +63,22 @@ div.dt-buttons {
 		margin-right: 0.167em;
 		margin-bottom: 0.333em;
 		padding: 0.5em 1em;
-		border: $dtb-button-border;
-		border-radius: 2px;
 		cursor: pointer;
 		font-size: 0.88em;
 		line-height: 1.6em;
-		color: inherit;
 		white-space: nowrap;
 		overflow: hidden;
-		@include mixins.dtb-two-stop-gradient(
-			color.adjust($dtb-button-colour, $lightness: 90%),
-			$dtb-button-colour
-		);
 		-webkit-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
 		text-decoration: none;
-		outline: none;
 		text-overflow: ellipsis;
+		border: var(--dtb-button_border);
+		border-radius: var(--dtb-button_border-radius);
+		box-shadow: var(--dtb-button_box-shadow);
+		background: var(--dtb-button_background);
+		color: var(--dtb-button_color);
 
 		&:first-child {
 			margin-left: 0;
@@ -51,18 +90,18 @@ div.dt-buttons {
 		}
 
 		&.dt-button-active:not(.disabled) {
-			@include mixins.dtb-two-stop-gradient(
-				color.adjust($dtb-button-colour, $lightness: 70%),
-				color.adjust($dtb-button-colour, $lightness: -20%)
-			);
-			box-shadow: inset 1px 1px 3px #999999;
+			border: var(--dtb-button_border-active);
+			border-radius: var(--dtb-button_border-radius-active);
+			box-shadow: var(--dtb-button_box-shadow-active);
+			background: var(--dtb-button_background-active);
+			color: var(--dtb-button_color-active);
 
 			&:hover:not(.disabled) {
-				box-shadow: inset 1px 1px 3px #999999;
-				@include mixins.dtb-two-stop-gradient(
-					color.adjust($dtb-button-colour, $lightness: 50%),
-					color.adjust($dtb-button-colour, $lightness: -50%)
-				);
+				border: var(--dtb-button_border-active-hover);
+				border-radius: var(--dtb-button_border-radius-active-hover);
+				box-shadow: var(--dtb-button_box-shadow-active-hover);
+				background: var(--dtb-button_background-active-hover);
+				color: var(--dtb-button_color-active-hover);
 			}
 		}
 
@@ -71,15 +110,11 @@ div.dt-buttons {
 		}
 
 		&:hover:not(.disabled) {
-			border: 1px solid #666;
-			@include mixins.dtb-two-stop-gradient(
-				color.adjust($dtb-button-colour, $lightness: 60%),
-				color.adjust($dtb-button-colour, $lightness: -30%)
-			);
-		}
-
-		&:focus:not(.disabled) {
-			outline: 2px solid rgb(53, 132, 228);
+			border: var(--dtb-button_border-hover);
+			border-radius: var(--dtb-button_border-radius-hover);
+			box-shadow: var(--dtb-button_box-shadow-hover);
+			background: var(--dtb-button_background-hover);
+			color: var(--dtb-button_color-hover);
 		}
 		
 		embed { 
@@ -147,12 +182,12 @@ div.dt-button-collection {
 	margin-top: 3px;
 	margin-bottom: 3px;
 	padding: 0.75em 0;
-	border: 1px solid rgba( 0, 0, 0, 0.4 );
-	background-color: white;
+	border: var(--dtb-collection_border);
+	background-color: var(--dtb-collection_background-color);
 	overflow: hidden;
 	z-index: 2002;
 	border-radius: 5px;
-	box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.3);
+	box-shadow: var(--dtb-collection_box-shadow);
 	box-sizing: border-box;
 
 	.dt-button {
@@ -253,55 +288,15 @@ div.dt-button-background {
 
 html.dark {
 	div.dt-buttons {
-		> .dt-button,
-		> div.dt-button-split .dt-button {
-			border: $dtb-dark-button-border;
-			background: $dtb-dark-button-colour;
-			
-			&.dt-button-active:not(.disabled) {
-				background: color.adjust($dtb-dark-button-colour, $lightness: -30%);
-				box-shadow: inset 1px 1px 2px black;
-		
-				&:hover:not(.disabled) {
-					background: color.adjust($dtb-dark-button-colour, $lightness: -50%);
-					box-shadow: inset 1px 1px 3px black;
-				}
-			}
-		
-			&:hover:not(.disabled) {
-				background: color.adjust($dtb-dark-button-colour, $lightness: -30%);
-			}
-
-			&:focus:not(.disabled) {
-				outline: 2px solid rgb(110, 168, 254);
-			}
-		}
-
 		> div.dt-button-split {
 			.dt-button:first-child {
 				border-right: 1px solid rgba(255, 255, 255, 0.1);
-
-				&:hover {
-					border-right: $dtb-dark-button-border;
-				}
-			}
-		
-			.dt-button:last-child {
-				&:hover {
-					border-left: $dtb-dark-button-border;
-				}
 			}
 		}
 	}
 
-	div.dt-button-collection {
-		border: 1px solid rgba(255, 255, 255, 0.15);
-		background-color: rgb(33, 37, 41);
-		box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.8);
-	}
-
 	div.dt-button-info {
-		background-color: var(--dt-html-background);
+		background-color: var(--dt-html_background);
 		border: 1px solid rgba(255, 255, 255, 0.15);
 	}
 }
