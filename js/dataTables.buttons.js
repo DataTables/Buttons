@@ -931,7 +931,7 @@ $.extend(Buttons.prototype, {
 		// Note that this is _not_ documented. It is currently
 		// for style integration only
 		if (this.c.buttonCreated) {
-			inserter = this.c.buttonCreated(config, inserter);
+			inserter = this.c.buttonCreated(config, inserter, inCollection);
 		}
 
 		var splitDiv;

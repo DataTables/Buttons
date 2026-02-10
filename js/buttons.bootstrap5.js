@@ -59,8 +59,10 @@ $.extend(true, DataTable.Buttons.defaults, {
 			}
 		}
 	},
-	buttonCreated: function (config, button) {
-		return config.buttons ? $('<div class="btn-group"/>').append(button) : button;
+	buttonCreated: function (config, button, inCollection) {
+		return config.buttons && ! inCollection
+			? $('<div class="btn-group"/>').append(button)
+			: button;
 	}
 });
 
