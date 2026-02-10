@@ -186,7 +186,6 @@
 	}
 }
 
-
 @mixin dtb-processing {
 	color: rgba(0, 0, 0, 0.2);
 
@@ -201,7 +200,7 @@
 
 		display: block;
 		content: ' ';
-		border: 2px solid rgb(40,40,40);
+		border: var(--dtb-processing_border);
 		border-radius: 50%;
 		border-left-color: transparent;
 		border-right-color: transparent;
@@ -210,6 +209,7 @@
 			-ms-animation: dtb-spinner 1500ms infinite linear;
 			-webkit-animation: dtb-spinner 1500ms infinite linear;
 			-moz-animation: dtb-spinner 1500ms infinite linear;
+		filter: var(--dtb-processing_filter);
 	}
 }
 

@@ -2,6 +2,11 @@
 @use 'mixins.scss';
 @use 'common.scss';
 
+:root[data-theme="dark"] {
+	--dtb-processing_border: 2px solid rgb(224, 224, 224);
+	--dtb-processing_filter: drop-shadow(0px 0px 3px black);
+}
+
 .dt-button {
 	position: relative;
 }
@@ -100,9 +105,9 @@ div.dt-button-background {
 div.dt-buttons.field.is-grouped {
 	display: block;
 
-	button.btn.processing,
-	div.btn.processing,
-	a.btn.processing {
+	button.button.processing,
+	div.button.processing,
+	a.button.processing {
 		@include mixins.dtb-processing();
 	}
 }

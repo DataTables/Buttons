@@ -2,6 +2,11 @@
 @use 'mixins.scss';
 @use 'common.scss';
 
+:root[data-bs-theme="dark"] {
+	--dtb-processing_border: 2px solid rgb(224, 224, 224);
+	--dtb-processing_filter: drop-shadow(0px 0px 3px black);
+}
+
 div.dt-buttons {
 	div.btn-group {
 		position: initial;
