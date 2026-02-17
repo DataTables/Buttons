@@ -1575,7 +1575,7 @@ export default class Buttons {
 				continue;
 			}
 
-			isSplit = conf.split ? true : false; // TODO wut? conf.config && conf.config.split ? true : false;
+			isSplit = conf.split ? true : false;
 
 			// If the configuration is an array, then expand the buttons at this
 			// point
@@ -1597,10 +1597,6 @@ export default class Buttons {
 				conf,
 				inCollection,
 				conf.split !== undefined,
-				// TODO don't understand this
-				//  ||
-				// 	(conf.config !== undefined &&
-				// 		conf.config.split !== undefined),
 				inSplit
 			);
 
@@ -1897,13 +1893,6 @@ export default class Buttons {
 			if (!config.namespace) {
 				config.namespace = '.dt-button-' + _buttonCounter++;
 			}
-
-			// TODO This was for Bulma. Confirm that split still works for Bulma
-			// with out it.
-			// TODO!
-			// if (config.config !== undefined && config.config.split) {
-			// 	config.split = config.config.split;
-			// }
 		}
 		else {
 			button = dom.c('div').html(config.html);
@@ -2338,17 +2327,6 @@ export default class Buttons {
 
 			// Stash the current class name
 			var originalClassName = objArray.className;
-
-			// TODO Was added for Bulma. I don't understand why it is here.
-			// What's it doing here?
-			// TODO!
-			// if (conf.config !== undefined && objArray.config !== undefined) {
-			// 	conf.config = util.object.assign(
-			// 		{},
-			// 		objArray.config,
-			// 		conf.config
-			// 	);
-			// }
 
 			conf = util.object.assign({}, objArray, conf) as ButtonConfig;
 
