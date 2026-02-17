@@ -55,22 +55,14 @@ function _pdfMake() {
 	return usePdfmake || (window as any).pdfMake;
 }
 
-// Allow for jQuery slim
 export function fadeIn(
 	el: Dom,
 	duration: number = 400,
 	fn?: (this: Dom) => void
 ) {
-	// if ($.fn.animate) {
-	// 	el.stop().fadeIn(duration, fn);
-	// }
-	// else {
-	el.css('display', 'block');
-
-	if (fn) {
-		fn.call(el);
-	}
-	// }
+	el.css({
+		opacity: '0'
+	}).transition({ opacity: '1' }, duration, null, fn);
 }
 
 export function fadeOut(
@@ -78,16 +70,9 @@ export function fadeOut(
 	duration: number = 400,
 	fn?: (this: Dom) => void
 ) {
-	// if ($.fn.animate) {
-	// 	el.stop().fadeOut(duration, fn);
-	// }
-	// else {
-	el.css('display', 'none');
-
-	if (fn) {
-		fn.call(el);
-	}
-	// }
+	el.css({
+		opacity: '1'
+	}).transition({ opacity: '0' }, duration, null, fn);
 }
 
 export default class Buttons {
@@ -111,7 +96,7 @@ export default class Buttons {
 		insertPoint: HTMLElement = document.body
 	) {
 		if (show) {
-			let div = dom.c('div').classAdd(className).css('display', 'none');
+			let div = dom.c('div').classAdd(className).css('opacity', '0');
 
 			if (insertPoint === document.body) {
 				div.appendTo(insertPoint);
@@ -422,10 +407,10 @@ export default class Buttons {
 	/**
 	 * Set the pdfMake library for use with the pdfHtml5 button type
 	 *
-	 * @param _ 
+	 * @param _
 	 * @returns pdfMake library that is set
 	 */
-	public static pdfMake (_?: any) {
+	public static pdfMake(_?: any) {
 		if (_) {
 			usePdfmake = _;
 		}
@@ -436,16 +421,16 @@ export default class Buttons {
 	/**
 	 * Set the JSZip library for use with the excelHtml5 button type
 	 *
-	 * @param _ 
+	 * @param _
 	 * @returns JSZip library that is set
 	 */
-	public static jszip (_?: any) {
+	public static jszip(_?: any) {
 		if (_) {
 			useJszip = _;
 		}
 
 		return _jsZip();
-	};
+	}
 
 	/**
 	 * Display (and replace if there is an existing one) a popover attached to a
@@ -581,7 +566,7 @@ export default class Buttons {
 			.classAdd(options.collectionLayout)
 			.classAdd(options.splitAlignClass)
 			.classAdd(mod)
-			.css('display', 'none')
+			.css('opacity', '0')
 			.attr({
 				'aria-modal': true,
 				role: 'dialog'
@@ -629,8 +614,6 @@ export default class Buttons {
 		else {
 			display.insertAfter(hostNode);
 		}
-
-		fadeIn(display, options.fade);
 
 		var tableContainer = dom.s(hostButton.table().container());
 		var position = display.css('position');
@@ -761,6 +744,8 @@ export default class Buttons {
 			});
 		}
 
+		fadeIn(display, options.fade);
+
 		if (options.background) {
 			Buttons.background(
 				true,
@@ -808,13 +793,11 @@ export default class Buttons {
 						// Background click
 						dom.s(e.target).classHas('dt-button-background') ||
 						dom.s(e.target).classHas('dtb-popover-close') ||
-						(
-							// If not the current display element, or in the
-							// modal then somehow they have clicked behind the
-							// background
-							e.target !== display.get(0) &&
-							display.find(e.target).count() === 0
-						)
+						// If not the current display element, or in the
+						// modal then somehow they have clicked behind the
+						// background
+						(e.target !== display.get(0) &&
+							display.find(e.target).count() === 0)
 					) {
 						close();
 					}
