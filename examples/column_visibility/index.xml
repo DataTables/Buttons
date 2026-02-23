@@ -3,7 +3,7 @@
 
 <title lib="Buttons">Column visibility examples</title>
 
-<js lib="jquery" />
+<js lib="datatables" />
 <info><![CDATA[
 
 The column visibility plug-in for the DataTables Buttons extension provides a suite of buttons that can be used to very easily control the visibility of columns in a table.
