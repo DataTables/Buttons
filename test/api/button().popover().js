@@ -28,7 +28,7 @@ describe('buttons - button().popover()', function () {
 		dt.html('basic');
 
 		it('Simple table with 4 custom buttons', function () {
-			$.fx.off = true; // disables lightbox animation
+			DataTable.Dom.transitions = false; // disables lightbox animation
 
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
@@ -70,7 +70,7 @@ describe('buttons - button().popover()', function () {
 		dt.html('basic');
 
 		it('Popover Tests', function () {
-			$.fx.off = true; // disables lightbox animation
+			DataTable.Dom.transitions = false; // disables lightbox animation
 
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',

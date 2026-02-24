@@ -52,7 +52,7 @@ describe('buttons - collection', function () {
 			expect($('button.dt-button').length).toBe(3);
 		});
 		it('Collection can be closed', function () {
-			$('button.dt-button').click();
+			$('button.dt-button').eq(0).click();
 			expect($('button.dt-button').length).toBe(1);
 		});
 	});

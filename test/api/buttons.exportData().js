@@ -12,7 +12,7 @@ describe('buttons - buttons.exportData()', function() {
 
 		dt.html('basic');
 		it('Ensure its a function', function() {
-			$.fx.off = true; // disables lightbox animation
+			DataTable.Dom.transitions = false; // disables lightbox animation
 
 			table = $('#example').DataTable();
 			expect(typeof table.buttons.exportData).toBe('function');

@@ -12,7 +12,7 @@ describe('buttons - buttons-processing', function() {
 	describe('Check the defaults', function() {
 		dt.html('basic');
 		it('Set stuff up', function() {
-			$.fx.off = true; // disables lightbox animation
+			DataTable.Dom.transitions = false; // disables lightbox animation
 
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',

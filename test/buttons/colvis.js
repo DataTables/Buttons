@@ -9,7 +9,7 @@ describe('buttons - colvis', function() {
 	describe('Check the defaults', function() {
 		dt.html('basic');
 		it('Ensure correct number of buttons', function() {
-			$.fx.off = true; // disables lightbox animation
+			DataTable.Dom.transitions = false; // disables lightbox animation
 
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
@@ -64,7 +64,7 @@ describe('buttons - colvis', function() {
 
 		dt.html('basic');
 		it('Ensure correct number of buttons', function() {
-			$.fx.off = true; // disables lightbox animation
+			DataTable.Dom.transitions = false; // disables lightbox animation
 
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',

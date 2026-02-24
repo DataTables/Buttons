@@ -18,7 +18,7 @@ describe('buttons - pageLength', function () {
 	describe('Check the defaults', function () {
 		dt.html('basic');
 		it('Ensure looks as expected', function () {
-			$.fx.off = true; // disables lightbox animation
+			DataTable.Dom.transitions = false; // disables lightbox animation
 			$('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: ['pageLength']

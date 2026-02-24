@@ -34,7 +34,7 @@ describe('buttons - button().collectionRebuild()', function () {
 	describe('Functional tests - basic', function () {
 		dt.html('basic');
 		it('Confirm original button', function () {
-			$.fx.off = true; // disables lightbox animation
+			DataTable.Dom.transitions = false; // disables lightbox animation
 			table = $('#example').DataTable({
 				dom: 'Bfrtip',
 				buttons: [
