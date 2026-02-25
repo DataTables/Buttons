@@ -42,16 +42,20 @@ new DataTable('#example', {
 				{
 					extend: 'print',
 					customize: function (win) {
-						$(win.document.body)
-							.css('font-size', '10pt')
-							.prepend(
-								'<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
-							);
+						let body = win.document.body;
+						let table = body.querySelector('table');
+						let img = document.createElement('img');
 
-						$(win.document.body)
-							.find('table')
-							.addClass('compact')
-							.css('font-size', 'inherit');
+						img.src = 'http://datatables.net/media/images/logo-fade.png';
+						img.style.position = 'absolute';
+						img.style.top = '0';
+						img.style.left = '0';
+
+						body.style.fontSize = '10pt';
+						body.prepend(img);
+
+						table.classList.add('compact');
+						table.style.fontSize = 'inherit';
 					}
 				}
 			]
@@ -70,7 +74,7 @@ If you wish to customise the print view document, this can be done through the `
 
 This simple example shows:
 
-* How an image can be inserted into the print view document using jQuery
+* How an image can be inserted into the print view document
 * The document's font-size can be adjusted to be suitable for printing
 * A class added to the table to improve its layout for printing
 * The font-size of the table set to match the main document's font-size.
