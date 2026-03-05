@@ -1,5 +1,5 @@
-/*! jQuery UI integration for DataTables' Buttons
- * © SpryMedia Ltd - datatables.net/license
+/*! Buttons jQuery UI styling for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
  */
 
 DataTable.util.object.assignDeep(DataTable.Buttons.defaults, {

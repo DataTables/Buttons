@@ -1,8 +1,8 @@
-/*! Bootstrap integration for DataTables' Buttons
- * © SpryMedia Ltd - datatables.net/license
+/*! Buttons Fomantic styling for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
  */
 
-var dom = DataTable.dom;
+var dom = DataTable.Dom;
 var util = DataTable.util;
 
 util.object.assignDeep(DataTable.Buttons.defaults, {

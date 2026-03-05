@@ -30,34 +30,15 @@ css_frameworks buttons $OUT_DIR/css
 # Typescript build
 ts_extension Buttons buttons true
 
-# # Copy JS
-# rsync -r js $OUT_DIR
-# js_wrap $OUT_DIR/js/dataTables.buttons.js "jquery datatables.net"
-# js_frameworks buttons $OUT_DIR/js "jquery datatables.net-FW datatables.net-buttons"
-
 rsync -r dist/buttons.*.js $OUT_DIR/js/
 
-js_wrap $OUT_DIR/js/buttons.colVis.js "datatables.net datatables.net-buttons"
-js_wrap $OUT_DIR/js/buttons.html5.js "datatables.net datatables.net-buttons"
-js_wrap $OUT_DIR/js/buttons.print.js "datatables.net datatables.net-buttons"
+VERSION=$(grep "version.*[0-9]\+[.][0-9]\+[.][0-9]" dist/dataTables.buttons.js | perl -nle'print $& if m{\d+\.\d+\.\d+(\-\w*(\-\d+)?)?}')
 
-
+js_wrap $OUT_DIR/js/buttons.colVis.js $VERSION "datatables.net datatables.net-buttons"
+js_wrap $OUT_DIR/js/buttons.html5.js $VERSION "datatables.net datatables.net-buttons"
+js_wrap $OUT_DIR/js/buttons.print.js $VERSION "datatables.net datatables.net-buttons"
 
 rm -r dist
-
-# # Copy Types
-# if [ -d $OUT_DIR/types ]; then
-# 	rm -r $OUT_DIR/types		
-# fi
-# mkdir $OUT_DIR/types
-
-# if [ -d types/ ]; then
-# 	cp types/* $OUT_DIR/types
-# else
-# 	if [ -f types.d.ts ]; then
-# 		cp types.d.ts $OUT_DIR/types
-# 	fi
-# fi
 
 # Copy and build examples
 rsync -r examples $OUT_DIR

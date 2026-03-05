@@ -2,7 +2,7 @@
  * Print button for Buttons and DataTables.
  * © SpryMedia Ltd - datatables.net/license
  */
-import DataTable from 'datatables.net';
+import DataTable, { Dom, util } from 'datatables.net';
 import { ButtonConfig } from './interface';
 
 var _link = document.createElement('a');
@@ -27,9 +27,6 @@ var _relToAbs = function (href: string) {
 
 	return _link.protocol + '//' + linkHost + _link.pathname + _link.search;
 };
-
-const dom = DataTable.dom;
-const util = DataTable.util;
 
 DataTable.ext.buttons.print = {
 	className: 'buttons-print',
@@ -166,7 +163,7 @@ DataTable.ext.buttons.print = {
 		// issues with Content Security Policy (CSP) and is compatible with modern browsers.
 		win.document.title = exportInfo.title;
 
-		dom.s('style, link[rel="stylesheet"]').each(function (el) {
+		Dom.s('style, link[rel="stylesheet"]').each(function (el) {
 			let node = el.cloneNode(true) as HTMLAnchorElement;
 
 			if (node.tagName.toLowerCase() === 'link') {
@@ -198,9 +195,9 @@ DataTable.ext.buttons.print = {
 			(exportInfo.messageBottom || '') +
 			'</div>';
 
-		dom.s(win.document.body).classAdd('dt-print-view');
+		Dom.s(win.document.body).classAdd('dt-print-view');
 
-		dom.s(win.document.body)
+		Dom.s(win.document.body)
 			.find('img')
 			.each(function (img) {
 				img.setAttribute(

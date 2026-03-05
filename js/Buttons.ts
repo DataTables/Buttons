@@ -1,7 +1,13 @@
-/*! Buttons for DataTables 3.2.6
- * © SpryMedia Ltd - datatables.net/license
+/*! Buttons for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
  */
-import DataTable, { Api, ApiButtonMethods, Context, Dom } from 'datatables.net';
+import DataTable, {
+	Api,
+	ApiButtonMethods,
+	Context,
+	Dom,
+	util
+} from 'datatables.net';
 import {
 	ButtonAction,
 	ButtonConfig,
@@ -31,8 +37,6 @@ if (!DataTable.versionCheck('3')) {
 	throw 'Warning: Buttons requires DataTables 3 or newer';
 }
 
-const dom = DataTable.dom;
-const util = DataTable.util;
 const _exportTextarea = document.createElement('textarea');
 
 // Used for namespacing events added to the document by each instance, so they
@@ -96,7 +100,7 @@ export default class Buttons {
 		insertPoint: HTMLElement = document.body
 	) {
 		if (show) {
-			let div = dom.c('div').classAdd(className).css('opacity', '0');
+			let div = Dom.c('div').classAdd(className).css('opacity', '0');
 
 			if (insertPoint === document.body) {
 				div.appendTo(insertPoint);
@@ -108,7 +112,7 @@ export default class Buttons {
 			fadeIn(div, fade);
 		}
 		else {
-			fadeOut(dom.s('div.' + className), fade, function () {
+			fadeOut(Dom.s('div.' + className), fade, function () {
 				this.classRemove(className).remove();
 			});
 		}
@@ -301,12 +305,12 @@ export default class Buttons {
 				}
 				else {
 					// CSS selector on the nodes
-					dom.s(nodes)
+					Dom.s(nodes)
 						.filter(selector)
 						.each(function (el) {
 							ret.push({
 								inst: inst,
-								node: dom.s(el)
+								node: Dom.s(el)
 							});
 						});
 				}
@@ -318,7 +322,7 @@ export default class Buttons {
 				if (idx !== -1) {
 					ret.push({
 						inst: inst,
-						node: dom.s(nodes[idx])
+						node: Dom.s(nodes[idx])
 					});
 				}
 			}
@@ -472,13 +476,13 @@ export default class Buttons {
 			options.tag + '.' + options.containerClassName.replace(/ /g, '.');
 		var hostButtonNode = hostButton.node();
 		var hostNode = options.collectionLayout.includes('fixed')
-			? dom.s('body')
+			? Dom.s('body')
 			: hostButton.node();
 
 		var close = function () {
 			closed = true;
 
-			fadeOut(dom.s(containerSelector), options.fade, function () {
+			fadeOut(Dom.s(containerSelector), options.fade, function () {
 				this.detach();
 			});
 
@@ -486,7 +490,7 @@ export default class Buttons {
 				.nodes()
 				.attr('aria-expanded', 'false');
 
-			dom.s('div.dt-button-background').off('click.dtb-collection');
+			Dom.s('div.dt-button-background').off('click.dtb-collection');
 			Buttons.background(
 				false,
 				options.backgroundClassName,
@@ -494,12 +498,12 @@ export default class Buttons {
 				hostNode.get(0)
 			);
 
-			dom.w.off('resize.resize.dtb-collection');
-			dom.s('body').off('.dtb-collection');
+			Dom.w.off('resize.resize.dtb-collection');
+			Dom.s('body').off('.dtb-collection');
 			dt.off('buttons-action.b-internal');
 			dt.off('destroy.dtb-popover');
 
-			dom.s('body').trigger('buttons-popover-hide.dt');
+			Dom.s('body').trigger('buttons-popover-hide.dt');
 		};
 
 		if (contentIn === false) {
@@ -523,14 +527,14 @@ export default class Buttons {
 
 		let content: Dom =
 			typeof contentIn === 'string'
-				? dom.c('div').html(contentIn).children()
-				: dom.s(contentIn);
+				? Dom.c('div').html(contentIn).children()
+				: Dom.s(contentIn);
 
 		// Sort buttons if defined
 		if (options.sort) {
 			var elements = content.find('button').mapTo(function (el) {
 				return {
-					text: dom.s(el).text(),
+					text: Dom.s(el).text(),
 					el: el
 				};
 			});
@@ -560,8 +564,7 @@ export default class Buttons {
 			mod = 'dtb-b1';
 		}
 
-		var display = dom
-			.c(options.tag)
+		var display = Dom.c(options.tag)
 			.classAdd(options.containerClassName)
 			.classAdd(options.collectionLayout)
 			.classAdd(options.splitAlignClass)
@@ -580,9 +583,9 @@ export default class Buttons {
 		hostButtonNode.attr('aria-expanded', 'true');
 
 		if (!hostNode.isAttached()) {
-			let possibilities = dom
-				.s(document.body)
-				.children('div, section, p');
+			let possibilities = Dom.s(document.body).children(
+				'div, section, p'
+			);
 
 			hostNode = possibilities.eq(possibilities.count() - 1);
 		}
@@ -615,7 +618,7 @@ export default class Buttons {
 			display.insertAfter(hostNode);
 		}
 
-		var tableContainer = dom.s(hostButton.table().container());
+		var tableContainer = Dom.s(hostButton.table().container());
 		var position = display.css('position');
 
 		if (options.span === 'container' || options.align === 'dt-container') {
@@ -627,7 +630,7 @@ export default class Buttons {
 		// Useful for wide popovers such as SearchPanes
 		if (position === 'absolute') {
 			// Align relative to the host button
-			var offsetParent = dom.s(hostNode.get(0).offsetParent);
+			var offsetParent = Dom.s(hostNode.get(0).offsetParent);
 			var buttonPosition = hostNode.position();
 			var buttonOffset = hostNode.offset();
 			var containerPosition = offsetParent.position();
@@ -689,11 +692,11 @@ export default class Buttons {
 			// Window adjustment
 			if (
 				containerPosition.left + left + popoverSizes.width >
-				dom.w.width()
+				Dom.w.width()
 			) {
 				// Overflowing the document to the right
 				left =
-					dom.w.width() - popoverSizes.width - containerPosition.left;
+					Dom.w.width() - popoverSizes.width - containerPosition.left;
 			}
 
 			if (buttonOffset.left + left < 0) {
@@ -703,7 +706,7 @@ export default class Buttons {
 
 			if (
 				containerPosition.top + top + popoverSizes.height >
-				dom.w.height() + dom.w.scrollTop()
+				Dom.w.height() + Dom.w.scrollTop()
 			) {
 				// Pop up if otherwise we'd need the user to scroll down
 				top =
@@ -713,7 +716,7 @@ export default class Buttons {
 					popoverSizes.marginBottom;
 			}
 
-			if (offsetParent.offset().top + top < dom.w.scrollTop()) {
+			if (offsetParent.offset().top + top < Dom.w.scrollTop()) {
 				// Correction for when the top is beyond the top of the page
 				top = buttonPosition.top + hostNode.height('outer');
 			}
@@ -727,7 +730,7 @@ export default class Buttons {
 		else {
 			// Fix position - centre on screen
 			var place = function () {
-				var half = dom.w.height() / 2;
+				var half = Dom.w.height() / 2;
 
 				var top = display.height() / 2;
 				if (top > half) {
@@ -739,7 +742,7 @@ export default class Buttons {
 
 			place();
 
-			dom.w.on('resize.dtb-collection', function () {
+			Dom.w.on('resize.dtb-collection', function () {
 				place();
 			});
 		}
@@ -759,7 +762,7 @@ export default class Buttons {
 		// background element, iOS Safari will ignore the body click
 		// listener below. An empty function here is all that is
 		// required to make it work...
-		dom.s('div.dt-button-background').on(
+		Dom.s('div.dt-button-background').on(
 			'click.dtb-collection',
 			function () {}
 		);
@@ -783,7 +786,7 @@ export default class Buttons {
 		setTimeout(function () {
 			closed = false;
 
-			dom.s('body')
+			Dom.s('body')
 				.on('click.dtb-collection', function (e) {
 					if (closed) {
 						return;
@@ -791,8 +794,8 @@ export default class Buttons {
 
 					if (
 						// Background click
-						dom.s(e.target).classHas('dt-button-background') ||
-						dom.s(e.target).classHas('dtb-popover-close') ||
+						Dom.s(e.target).classHas('dt-button-background') ||
+						Dom.s(e.target).classHas('dtb-popover-close') ||
 						// If not the current display element, or in the
 						// modal then somehow they have clicked behind the
 						// background
@@ -1141,7 +1144,7 @@ export default class Buttons {
 	 */
 	public destroy() {
 		// Key event listener
-		dom.s('body').off('keyup.' + this.s.namespace);
+		Dom.s('body').off('keyup.' + this.s.namespace);
 
 		// Individual button destroy (so they can remove their own events if
 		// needed). Take a copy as the array is modified by `remove`
@@ -1284,7 +1287,7 @@ export default class Buttons {
 		if (button) {
 			button.node.classToggle('processing', flag);
 
-			dom.s(dt.table().node()).trigger('buttons-processing.dt', false, [
+			Dom.s(dt.table().node()).trigger('buttons-processing.dt', false, [
 				flag,
 				dt.button(node),
 				dt,
@@ -1442,9 +1445,9 @@ export default class Buttons {
 		};
 
 		this.dom = {
-			container: dom
-				.c(this.c.dom.container.tag)
-				.classAdd(this.c.dom.container.className)
+			container: Dom.c(this.c.dom.container.tag).classAdd(
+				this.c.dom.container.className
+			)
 		};
 
 		var that = this;
@@ -1471,7 +1474,7 @@ export default class Buttons {
 		});
 
 		// Global key event binding to listen for button keys
-		dom.c('body').on('keyup.' + this.s.namespace, function (e) {
+		Dom.c('body').on('keyup.' + this.s.namespace, function (e) {
 			if (
 				!document.activeElement ||
 				document.activeElement === document.body
@@ -1621,7 +1624,7 @@ export default class Buttons {
 
 			// Create the dropdown for a collection
 			if (built.conf.buttons) {
-				built.collection = dom.c(domCollection.container.content.tag);
+				built.collection = Dom.c(domCollection.container.content.tag);
 				built.conf._collection = built.collection;
 
 				this._expandButton(
@@ -1637,7 +1640,7 @@ export default class Buttons {
 
 			// And the split collection
 			if (built.conf.split) {
-				built.collection = dom.c(domCollection.container.tag);
+				built.collection = Dom.c(domCollection.container.tag);
 				built.conf._collection = built.collection;
 
 				for (var j = 0; j < built.conf.split.length; j++) {
@@ -1734,8 +1737,7 @@ export default class Buttons {
 
 		// Spacers don't do much other than insert an element into the DOM
 		if (config.spacer) {
-			var spacer = dom
-				.c(domStructure.spacer.tag)
+			var spacer = Dom.c(domStructure.spacer.tag)
 				.classAdd([
 					'dt-button-spacer',
 					config.style || '',
@@ -1778,7 +1780,7 @@ export default class Buttons {
 					done
 				);
 
-				dom.s(dt.table().node()).trigger('buttons-action.dt', false, [
+				Dom.s(dt.table().node()).trigger('buttons-action.dt', false, [
 					dt.button(button),
 					dt,
 					button,
@@ -1805,8 +1807,7 @@ export default class Buttons {
 			var clickBlurs =
 				config.clickBlurs === undefined ? true : config.clickBlurs;
 
-			button = dom
-				.c(tag)
+			button = Dom.c(tag)
 				.classAdd(domStructure.className)
 				.attr('aria-controls', this.s.dt.table().node().id)
 				.on('click.dtb', function (e) {
@@ -1848,8 +1849,7 @@ export default class Buttons {
 
 			if (domStructure.liner.tag) {
 				var lc = domStructure.liner.tag.toLowerCase();
-				var liner = dom
-					.c(lc)
+				var liner = Dom.c(lc)
 					.html(text(config.text || ''))
 					.classAdd(domStructure.liner.className);
 
@@ -1895,14 +1895,13 @@ export default class Buttons {
 			}
 		}
 		else {
-			button = dom.c('div').html(config.html);
+			button = Dom.c('div').html(config.html);
 		}
 
 		var buttonContainer = this.c.dom.buttonContainer;
 		var inserter;
 		if (buttonContainer && buttonContainer.tag) {
-			inserter = dom
-				.c(buttonContainer.tag)
+			inserter = Dom.c(buttonContainer.tag)
 				.classAdd(buttonContainer.className)
 				.append(button);
 		}
@@ -1928,8 +1927,7 @@ export default class Buttons {
 				: this.c.dom.split;
 			var wrapperConf = dropdownConf.wrapper;
 
-			splitDiv = dom
-				.c(wrapperConf.tag)
+			splitDiv = Dom.c(wrapperConf.tag)
 				.classAdd(wrapperConf.className)
 				.append(button);
 
@@ -1963,7 +1961,7 @@ export default class Buttons {
 					);
 				}
 
-				dom.s(dt.table().node()).trigger('buttons-action.dt', false, [
+				Dom.s(dt.table().node()).trigger('buttons-action.dt', false, [
 					dt.button(button),
 					dt,
 					button,
@@ -1972,8 +1970,7 @@ export default class Buttons {
 				button.attr('aria-expanded', true);
 			};
 
-			var dropButton = dom
-				.c('button')
+			var dropButton = Dom.c('button')
 				.classAdd([
 					dropdownConf.dropdown.className,
 					'dt-button',
@@ -2062,12 +2059,12 @@ export default class Buttons {
 
 				if (this._checkAnyEnabled(button.buttons)) {
 					// Enable the split
-					dom.s(splitBtn)
+					Dom.s(splitBtn)
 						.classRemove(this.c.dom.button.disabled)
 						.prop('disabled', false);
 				}
 				else {
-					dom.s(splitBtn)
+					Dom.s(splitBtn)
 						.classAdd(this.c.dom.button.disabled)
 						.prop('disabled', false);
 				}

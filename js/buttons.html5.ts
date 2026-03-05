@@ -6,13 +6,11 @@
  * Copyright © 2016 Eli Grey - http://eligrey.com
  */
 
-import DataTable, { Api, HeaderStructure } from 'datatables.net';
+import DataTable, { Api, Dom, HeaderStructure, util } from 'datatables.net';
 import saveAs from './fileSaver';
 import './interface';
 import { ButtonConfig } from './interface';
 
-const dom = DataTable.dom;
-const util = DataTable.util;
 const dtButtons = DataTable.ext.buttons;
 
 // Expose file saver on the DataTables API. Can't attach to `DataTables.Buttons`
@@ -194,7 +192,7 @@ function _createNode(doc: XMLDocument, nodeName: string, opts?: any) {
 
 	if (opts) {
 		if (opts.attr) {
-			dom.s(tempNode).attr(opts.attr);
+			Dom.s(tempNode).attr(opts.attr);
 		}
 
 		if (opts.children) {
@@ -551,7 +549,7 @@ var _excelMergeCells = function (
 	rowspan: number,
 	colspan: number
 ) {
-	var mergeCells = dom.s(rels).find('mergeCells');
+	var mergeCells = Dom.s(rels).find('mergeCells');
 
 	mergeCells.get(0).appendChild(
 		_createNode(rels, 'mergeCell', {
@@ -588,7 +586,7 @@ dtButtons.copyHtml5 = {
 		var info = dt.buttons.exportInfo(config as any);
 		var newline = _newLine(config);
 		var output = exportData.str;
-		var hiddenDiv = dom.c('div').css({
+		var hiddenDiv = Dom.c('div').css({
 			height: '1px',
 			width: '1px',
 			overflow: 'hidden',
@@ -613,7 +611,7 @@ dtButtons.copyHtml5 = {
 			output = config.customize(output, config, dt);
 		}
 
-		var textarea = dom
+		var textarea = Dom
 			.c<HTMLTextAreaElement>('textarea')
 			.prop('readonly', true)
 			.val(output)
@@ -654,7 +652,7 @@ dtButtons.copyHtml5 = {
 		}
 
 		// Otherwise we show the text box and instruct the user to use it
-		var message = dom
+		var message = Dom
 			.c('span')
 			.html(
 				dt.i18n(
@@ -680,7 +678,7 @@ dtButtons.copyHtml5 = {
 		var container = message.closest('.dt-button-info');
 		var close = function () {
 			container.off('click.buttons-copy');
-			dom.s(document).off('.buttons-copy');
+			Dom.s(document).off('.buttons-copy');
 			dt.buttons.info(false);
 		};
 
@@ -689,7 +687,7 @@ dtButtons.copyHtml5 = {
 			cb();
 		});
 
-		dom.s(document)
+		Dom.s(document)
 			.on('keydown.buttons-copy', function (e) {
 				if (e.keyCode === 27) {
 					// esc
@@ -966,7 +964,7 @@ dtButtons.excelHtml5 = {
 					})
 				);
 
-				dom.s(rels).find('row').last().find('c').attr('s', '2'); // bold
+				Dom.s(rels).find('row').last().find('c').attr('s', '2'); // bold
 
 				// Add any merge cells
 				row.forEach(function (cell, columnCounter: number) {
@@ -988,7 +986,7 @@ dtButtons.excelHtml5 = {
 		if (exportInfo.title) {
 			addRow([exportInfo.title]);
 			_excelMergeCells(rels, rowPos, 0, 1, data.header.length);
-			dom.s(rels).find('row').last().find('c').attr('s', '51'); // centre
+			Dom.s(rels).find('row').last().find('c').attr('s', '51'); // centre
 		}
 
 		if (exportInfo.messageTop) {
@@ -1023,7 +1021,7 @@ dtButtons.excelHtml5 = {
 
 		// Set column widths
 		var cols = _createNode(rels, 'cols');
-		dom.s(rels).find('worksheet').prepend(cols);
+		Dom.s(rels).find('worksheet').prepend(cols);
 
 		for (var i = 0, ien = data.header.length; i < ien; i++) {
 			cols.appendChild(
@@ -1041,7 +1039,7 @@ dtButtons.excelHtml5 = {
 		// Workbook modifications
 		var workbook = xlsx.xl['workbook.xml'];
 
-		dom.s(workbook).find('sheets sheet').attr('name', _sheetname(config));
+		Dom.s(workbook).find('sheets sheet').attr('name', _sheetname(config));
 
 		// Auto filter for columns
 		if (config.autoFilter) {
@@ -1056,9 +1054,9 @@ dtButtons.excelHtml5 = {
 				}
 			});
 
-			dom.s(node).insertBefore(dom.s(rels).find('mergeCells'));
+			Dom.s(node).insertBefore(Dom.s(rels).find('mergeCells'));
 
-			dom.s(workbook)
+			Dom.s(workbook)
 				.find('definedNames')
 				.append(
 					_createNode(workbook, 'definedName', {
@@ -1086,7 +1084,7 @@ dtButtons.excelHtml5 = {
 		}
 
 		// Excel doesn't like an empty mergeCells tag
-		let merge = dom.s(rels).find('mergeCells');
+		let merge = Dom.s(rels).find('mergeCells');
 
 		if (merge.children().count() === 0) {
 			merge.remove();

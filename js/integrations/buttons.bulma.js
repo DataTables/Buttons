@@ -1,8 +1,8 @@
-/*! Bulma integration for DataTables' Buttons
- * © SpryMedia Ltd - datatables.net/license
+/*! Buttons Bulma styling for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
  */
 
-var dom = DataTable.dom;
+var Dom = DataTable.Dom;
 var util = DataTable.util;
 
 util.object.assignDeep(DataTable.Buttons.defaults, {
@@ -66,7 +66,7 @@ util.object.assignDeep(DataTable.Buttons.defaults, {
 		// For collections
 		if (config.buttons) {
 			// Wrap the dropdown content in a menu element
-			config._collection = dom
+			config._collection = Dom
 				.c('div')
 				.classAdd('dropdown-menu')
 				.append(config._collection);

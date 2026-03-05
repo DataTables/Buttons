@@ -4,7 +4,9 @@ import DataTable, {
 	ApiButtonsMethods,
 	ApiSelectorModifier,
 	Context,
-	HeaderStructure
+	Dom,
+	HeaderStructure,
+	util
 } from 'datatables.net';
 import Buttons, { fadeIn, fadeOut } from './Buttons';
 import './interface';
@@ -28,9 +30,6 @@ import {
 type DeepRequired<T> = Required<{
 	[K in keyof T]: T[K] extends Required<T[K]> ? T[K] : DeepRequired<T[K]>;
 }>;
-
-const dom = DataTable.dom;
-const util = DataTable.util;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables API
@@ -181,7 +180,7 @@ DataTable.Api.registerPlural(
 	'buttons().nodes()',
 	'button().node()',
 	function (this: ApiButtonMethods<SelectedButtons>) {
-		var d = new DataTable.dom.Dom();
+		var d = new Dom();
 
 		this.each(function (set) {
 			d.add(set.inst.node(set.node).get(0));
@@ -258,7 +257,7 @@ DataTable.Api.register(
 DataTable.Api.register(
 	'buttons().containers()',
 	function (this: ApiButtonMethods<SelectedButtons>) {
-		var domInst = new DataTable.dom.Dom();
+		var domInst = new Dom();
 		var groupSelector = this._groupSelector;
 
 		// We need to use the group selector directly, since if there are no buttons
@@ -355,7 +354,7 @@ DataTable.Api.register(
 		time?: number
 	) {
 		var that = this;
-		let info = dom.s('#datatables_buttons_info');
+		let info = Dom.s('#datatables_buttons_info');
 
 		if (title === false) {
 			this.off('destroy.btn-info');
@@ -381,13 +380,13 @@ DataTable.Api.register(
 		title = title ? '<h2>' + title + '</h2>' : '';
 
 		fadeIn(
-			dom
+			Dom
 				.c('div')
 				.attr('id', 'datatables_buttons_info')
 				.classAdd('dt-button-info')
 				.html(title)
 				.append(
-					dom.c('div')[typeof message === 'string' ? 'html' : 'append'](
+					Dom.c('div')[typeof message === 'string' ? 'html' : 'append'](
 						message
 					)
 				)
@@ -454,7 +453,7 @@ DataTable.Buttons = Buttons;
 // they will have been if the `B` option was used in `dom`, otherwise we should
 // create the buttons instance here so they can be inserted into the document
 // using the API.
-dom.s(document).on('init.dt plugin-init.dt', function (e, settings: Context) {
+Dom.s(document).on('init.dt plugin-init.dt', function (e, settings: Context) {
 	if (e.namespace !== 'dt') {
 		return;
 	}
@@ -519,7 +518,7 @@ var _filename = function (config: ButtonConfig, dt: Api) {
 	}
 
 	if (filename.indexOf('*') !== -1) {
-		filename = filename.replace(/\*/g, dom.s('head > title').text()).trim();
+		filename = filename.replace(/\*/g, Dom.s('head > title').text()).trim();
 	}
 
 	// Strip characters which the OS will object to
@@ -566,7 +565,7 @@ var _title = function (config: ButtonConfig, dt: Api) {
 	return title === null
 		? null
 		: title.indexOf('*') !== -1
-		? title.replace(/\*/g, dom.s('head > title').text() || 'Exported data')
+		? title.replace(/\*/g, Dom.s('head > title').text() || 'Exported data')
 		: title;
 };
 
@@ -581,7 +580,7 @@ var _message = function (
 		return null;
 	}
 
-	var caption = dom.s(dt.table().container()).find('caption').eq(0);
+	var caption = Dom.s(dt.table().container()).find('caption').eq(0);
 
 	if (message === '*') {
 		var side = caption.css('caption-side');
@@ -650,9 +649,9 @@ var _exportData = function (
 					var val = '';
 
 					if (el) {
-						var inner = dom.s(el).find('.dt-column-title');
+						var inner = Dom.s(el).find('.dt-column-title');
 
-						val = inner.count() ? inner.html() : dom.s(el).html();
+						val = inner.count() ? inner.html() : Dom.s(el).html();
 					}
 
 					return config.format.footer(val, idx, el);

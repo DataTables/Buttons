@@ -1,8 +1,8 @@
-/*! Foundation integration for DataTables' Buttons
- * © SpryMedia Ltd - datatables.net/license
+/*! Buttons Foundation styling for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
  */
 
-var dom = DataTable.dom;
+var Dom = DataTable.Dom;
 var util = DataTable.util;
 
 util.object.assignDeep(DataTable.Buttons.defaults, {
@@ -51,16 +51,16 @@ util.object.assignDeep(DataTable.Buttons.defaults, {
 	}
 });
 
-dom.s(document).on('buttons-popover.dt', function () {
+Dom.s(document).on('buttons-popover.dt', function () {
 	var notButton = false;
 
-	dom.s('.dtsp-panesContainer').each(function (el) {
-		if (!dom.s(el).is('button')) {
+	Dom.s('.dtsp-panesContainer').each(function (el) {
+		if (!Dom.s(el).is('button')) {
 			notButton = true;
 		}
 	});
 
 	if (notButton) {
-		dom.s('.dtsp-panesContainer').classRemove('button-group stacked');
+		Dom.s('.dtsp-panesContainer').classRemove('button-group stacked');
 	}
 });

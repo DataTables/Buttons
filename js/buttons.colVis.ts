@@ -6,8 +6,6 @@
 import DataTable from 'datatables.net';
 import { ButtonConfig, FunctionButton } from './interface';
 
-const dom = DataTable.dom;
-const util = DataTable.util;
 const dtButtons = DataTable.ext.buttons;
 
 // A collection of column visibility buttons

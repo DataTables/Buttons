@@ -1,5 +1,5 @@
-/*! Bootstrap integration for DataTables' Buttons
- * © SpryMedia Ltd - datatables.net/license
+/*! Buttons Bootstrap 3 styling for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
  */
 
 DataTable.util.object.assignDeep(DataTable.Buttons.defaults, {

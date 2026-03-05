@@ -1,8 +1,8 @@
-/*! Bootstrap integration for DataTables' Buttons
- * © SpryMedia Ltd - datatables.net/license
+/*! Buttons Bootstrap 5 styling for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
  */
 
-var dom = DataTable.dom;
+var Dom = DataTable.Dom;
 var util = DataTable.util;
 
 util.object.assignDeep(DataTable.Buttons.defaults, {
@@ -64,7 +64,7 @@ util.object.assignDeep(DataTable.Buttons.defaults, {
 	},
 	buttonCreated: function (config, button, inCollection) {
 		return config.buttons && ! inCollection
-			? dom.c('div').classAdd('btn-group a').append(button)
+			? Dom.c('div').classAdd('btn-group a').append(button)
 			: button;
 	}
 });

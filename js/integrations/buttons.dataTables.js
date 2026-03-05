@@ -1,3 +1,3 @@
-/*! DataTables styling wrapper for Buttons
- * © SpryMedia Ltd - datatables.net/license
+/*! Buttons default styling for DataTables
+ * Copyright (c) SpryMedia Ltd - datatables.net/license
  */
