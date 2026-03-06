@@ -2,29 +2,7 @@
 <dt-example table-type="html" order="2">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip buttons-html5">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				'copyHtml5',
-				{
-					text: 'TSV',
-					extend: 'csvHtml5',
-					fieldSeparator: '\t',
-					extension: '.tsv'
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip buttons-html5">
 <![CDATA[
 
 new DataTable('#example', {
@@ -44,7 +22,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Tab separated values</title>
 

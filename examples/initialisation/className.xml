@@ -17,34 +17,7 @@ a.green {
 	color: green !important;
 }
 </css>
-<js lib="jquery datatables buttons">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					text: 'Red',
-					className: 'red'
-				},
-				{
-					text: 'Orange',
-					className: 'orange'
-				},
-				{
-					text: 'Green',
-					className: 'green'
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons">
 <![CDATA[
 
 new DataTable('#example', {
@@ -69,7 +42,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Class names</title>
 

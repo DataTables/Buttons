@@ -2,32 +2,7 @@
 <dt-example table-type="html" order="4">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons buttons-html5">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: ['copyHtml5']
-		}
-	},
-	language: {
-		buttons: {
-			copyTitle: 'Ajouté au presse-papiers',
-			copyKeys:
-				'Appuyez sur <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> pour copier les données du tableau à votre presse-papiers. <br><br>Pour annuler, cliquez sur ce message ou appuyez sur Echap.',
-			copySuccess: {
-				_: '%d lignes copiées',
-				1: '1 ligne copiée'
-			}
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-html5">
 <![CDATA[
 
 new DataTable('#example', {
@@ -50,7 +25,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Copy button internationalisation</title>
 

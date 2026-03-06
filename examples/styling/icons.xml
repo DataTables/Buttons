@@ -2,42 +2,7 @@
 <dt-example table-type="html" order="7">
 
 <css lib="datatables buttons font-awesome"/>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'copyHtml5',
-					text: '<i class="fa fa-files-o"></i>',
-					titleAttr: 'Copy'
-				},
-				{
-					extend: 'excelHtml5',
-					text: '<i class="fa fa-file-excel-o"></i>',
-					titleAttr: 'Excel'
-				},
-				{
-					extend: 'csvHtml5',
-					text: '<i class="fa fa-file-text-o"></i>',
-					titleAttr: 'CSV'
-				},
-				{
-					extend: 'pdfHtml5',
-					text: '<i class="fa fa-file-pdf-o"></i>',
-					titleAttr: 'PDF'
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
 new DataTable('#example', {
@@ -70,7 +35,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Icons</title>
 

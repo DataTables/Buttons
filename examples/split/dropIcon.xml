@@ -2,54 +2,7 @@
 <dt-example table-type="html" order="7">
 
 <css lib="datatables buttons" />
-<js lib="jquery datatables buttons buttons-colvis jszip pdfmake vfsfonts buttons-html5 buttons-print">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					text: 'Popover',
-					dropIcon: true,
-					action: function () {
-						this.popover('<span>Popover information...</span>', {
-							collectionLayout: 'fixed'
-						});
-					}
-				},
-				{
-					extend: 'collection',
-					text: 'Export',
-					buttons: ['copy', 'pdf', 'excel', 'print']
-				},
-				{
-					extend: 'collection',
-					text: 'Split',
-					split: [
-						{
-							text: 'Inner popover',
-							dropIcon: true,
-							action: function () {
-								this.popover('<span>Popover information from split...</span>');
-							}
-						},
-						{
-							extend: 'copy',
-							split: ['pdf', 'excel', 'print']
-						}
-					]
-				},
-				'colvis'
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-colvis jszip pdfmake vfsfonts buttons-html5 buttons-print">
 <![CDATA[
 
 new DataTable('#example', {
@@ -94,7 +47,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Dropdown icon</title>
 

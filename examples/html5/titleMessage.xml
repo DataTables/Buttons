@@ -2,51 +2,7 @@
 <dt-example table-type="html" order="1">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
-<![CDATA[
-
-var printCounter = 0;
-
-$('#example').DataTable({
-	caption: "A fictional company's staff table.",
-	layout: {
-		topStart: {
-			buttons: [
-				'copy',
-				{
-					extend: 'excel',
-					messageTop:
-						'The information in this table is copyright to Sirius Cybernetics Corp.'
-				},
-				{
-					extend: 'pdf',
-					messageBottom: null
-				},
-				{
-					extend: 'print',
-					messageTop: function () {
-						printCounter++;
-
-						if (printCounter === 1) {
-							return 'This is the first time you have printed this document.';
-						}
-						else {
-							return (
-								'You have printed this document ' + printCounter + ' times'
-							);
-						}
-					},
-					messageBottom: null
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
 <![CDATA[
 
 var printCounter = 0;
@@ -88,7 +44,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Export titles and messages</title>
 

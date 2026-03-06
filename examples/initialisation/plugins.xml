@@ -2,42 +2,7 @@
 <dt-example table-type="html" order="12">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons">
-<![CDATA[
-
-DataTable.ext.buttons.alert = {
-	className: 'buttons-alert',
-
-	action: function (e, dt, node, config) {
-		alert(this.text());
-	}
-};
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'alert',
-					text: 'My button 1'
-				},
-				{
-					extend: 'alert',
-					text: 'My button 2'
-				},
-				{
-					extend: 'alert',
-					text: 'My button 3'
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons">
 <![CDATA[
 
 DataTable.ext.buttons.alert = {
@@ -70,7 +35,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Plug-ins</title>
 

@@ -12,28 +12,7 @@
 }
 ]]>
 </css>
-<js lib="jquery datatables buttons buttons-print">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'print',
-					customScripts: [
-						'https://unpkg.com/pagedjs/dist/paged.polyfill.js'
-					]
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-print">
 <![CDATA[
 
 new DataTable('#example', {
@@ -52,7 +31,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Adding scripts to the print view window</title>
 

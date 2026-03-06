@@ -2,33 +2,7 @@
 <dt-example table-type="html" order="5">
 
 <css lib="datatables buttons" />
-<js lib="jquery datatables buttons buttons-colvis">
-<![CDATA[
-
-$('#example').DataTable({
-	columnDefs: [
-		{
-			targets: 1,
-			className: 'noVis'
-		}
-	],
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'colvis',
-					columns: ':not(.noVis)',
-					popoverTitle: 'Column visibility selector'
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-colvis">
 <![CDATA[
 
 new DataTable('#example', {
@@ -52,7 +26,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Select columns</title>
 

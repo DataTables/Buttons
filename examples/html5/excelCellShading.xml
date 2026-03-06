@@ -2,36 +2,7 @@
 <dt-example table-type="html" order="9">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip buttons-html5">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'excelHtml5',
-					customize: function (xlsx) {
-						var sheet = xlsx.xl.worksheets['sheet1.xml'];
-
-						// Loop over the cells in column `C`
-						$('row c[r^="C"]', sheet).each(function () {
-							// Get the value
-							if ($('is t', this).text() == 'New York') {
-								$(this).attr('s', '20');
-							}
-						});
-					}
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip buttons-html5">
 <![CDATA[
 
 new DataTable('#example', {
@@ -61,7 +32,7 @@ new DataTable('#example', {
 
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Excel - Cell background</title>
 

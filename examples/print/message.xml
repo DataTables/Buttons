@@ -2,27 +2,7 @@
 <dt-example table-type="html" order="2">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons buttons-print">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'print',
-					messageTop:
-						'This print was produced using the Print button for DataTables'
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-print">
 <![CDATA[
 
 new DataTable('#example', {
@@ -40,7 +20,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Custom message</title>
 

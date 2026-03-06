@@ -2,31 +2,7 @@
 <dt-example table-type="html" order="10">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip buttons-html5">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'excelHtml5',
-					customize: function (xlsx) {
-						var sheet = xlsx.xl.worksheets['sheet1.xml'];
-
-						// Selector to add a border
-						$('row c[r*="10"]', sheet).attr('s', '25');
-					}
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip buttons-html5">
 <![CDATA[
 
 new DataTable('#example', {
@@ -51,7 +27,7 @@ new DataTable('#example', {
 
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Excel - Customise borders</title>
 

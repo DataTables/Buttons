@@ -2,26 +2,7 @@
 <dt-example table-type="html" order="11">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons pdfmake vfsfonts buttons-html5">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'pdfHtml5',
-					messageTop: 'PDF created by PDFMake with Buttons for DataTables.'
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
 new DataTable('#example', {
@@ -38,7 +19,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">PDF - message</title>
 

@@ -2,27 +2,7 @@
 <dt-example table-type="html" order="2">
 
 <css lib="datatables buttons" />
-<js lib="jquery datatables buttons buttons-colvis">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'colvis',
-					collectionLayout: 'fixed columns',
-					popoverTitle: 'Column visibility control'
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-colvis">
 <![CDATA[
 
 new DataTable('#example', {
@@ -43,7 +23,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Multi-column layout</title>
 

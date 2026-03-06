@@ -7,21 +7,7 @@ body.dt-print-view h1 {
 	margin: 1em;
 }
 </css>
-<js lib="jquery datatables buttons buttons-print">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: ['print']
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-print">
 <![CDATA[
 
 new DataTable('#example', {
@@ -33,7 +19,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">CSS styling in print view</title>
 

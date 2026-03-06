@@ -2,37 +2,7 @@
 <dt-example table-type="html" order="6">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons buttons-print">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'print',
-					customize: function (win) {
-						$(win.document.body)
-							.css('font-size', '10pt')
-							.prepend(
-								'<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
-							);
-
-						$(win.document.body)
-							.find('table')
-							.addClass('compact')
-							.css('font-size', 'inherit');
-					}
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-print">
 <![CDATA[
 
 new DataTable('#example', {
@@ -64,7 +34,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Customisation of the print view window</title>
 

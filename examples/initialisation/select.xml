@@ -2,36 +2,7 @@
 <dt-example table-type="html" order="16">
 
 <css lib="datatables buttons select"/>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print select">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				'copy',
-				'csv',
-				'excel',
-				'pdf',
-				{
-					extend: 'print',
-					text: 'Print all (not just selected)',
-					exportOptions: {
-						modifier: {
-							selected: null
-						}
-					}
-				}
-			]
-		}
-	},
-	select: true
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print select">
 <![CDATA[
 
 new DataTable('#example', {
@@ -58,7 +29,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Select integration - export selected rows</title>
 

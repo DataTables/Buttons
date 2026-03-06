@@ -2,36 +2,7 @@
 <dt-example table-type="html" order="4">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons buttons-print select">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'print',
-					text: 'Print all',
-					exportOptions: {
-						modifier: {
-							selected: null
-						}
-					}
-				},
-				{
-					extend: 'print',
-					text: 'Print selected'
-				}
-			]
-		}
-	},
-	select: true
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-print select">
 <![CDATA[
 
 new DataTable('#example', {
@@ -58,7 +29,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Export options - row selector</title>
 

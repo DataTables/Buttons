@@ -2,27 +2,7 @@
 <dt-example table-type="html" order="12">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons pdfmake vfsfonts buttons-html5">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'pdfHtml5',
-					orientation: 'landscape',
-					pageSize: 'LEGAL'
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
 new DataTable('#example', {
@@ -40,7 +20,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">PDF - page size and orientation</title>
 

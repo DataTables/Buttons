@@ -2,26 +2,7 @@
 <dt-example table-type="html" order="2">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{ extend: 'copyHtml5', footer: false },
-				{ extend: 'excelHtml5', footer: false },
-				{ extend: 'csvHtml5', footer: false },
-				{ extend: 'pdfHtml5', footer: false }
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
 new DataTable('#example', {
@@ -38,7 +19,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Exclude footer in export</title>
 

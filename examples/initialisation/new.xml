@@ -2,24 +2,7 @@
 <dt-example table-type="html" order="3">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
-<![CDATA[
-
-var table = $('#example').DataTable();
-
-new DataTable.Buttons(table, {
-	buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-});
-
-table
-	.buttons(0, null)
-	.container()
-	.prependTo(table.table().container());
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
 <![CDATA[
 
 let table = new DataTable('#example');
@@ -34,7 +17,7 @@ table
 	.prependTo(table.table().container());
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Initialisation: instance</title>
 

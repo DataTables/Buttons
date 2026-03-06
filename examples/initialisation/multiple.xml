@@ -6,44 +6,7 @@
 		clear: both;
 	}
 </css>
-<js lib="jquery datatables buttons">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					text: 'Button 1',
-					action: function (e, dt, node, config) {
-						alert('Button 1 clicked on');
-					}
-				}
-			]
-		},
-		bottom1Start: {
-			buttons: [
-				{
-					text: 'Button 2',
-					action: function (e, dt, node, conf) {
-						alert('Button 2 clicked on');
-					}
-				},
-				{
-					text: 'Button 3',
-					action: function (e, dt, node, conf) {
-						alert('Button 3 clicked on');
-					}
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons">
 <![CDATA[
 
 new DataTable('#example', {
@@ -78,7 +41,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Multiple button groups</title>
 

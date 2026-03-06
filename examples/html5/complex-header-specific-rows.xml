@@ -8,58 +8,7 @@
 		box-sizing: border-box;
 	}
 </css>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
-<![CDATA[
-
-var exportOptions = {
-	customizeData: function (data) {
-		// Remove the second header row by popping it off the array
-		data.headerStructure.pop();
-		console.log(data);
-	}
-};
-
-$('#example').DataTable({
-	ajax: '../../../../examples/ajax/data/objects.txt',
-	columns: [
-		{ data: 'name' },
-		{ data: 'position' },
-		{ data: 'office' },
-		{ data: 'extn' },
-		{ data: 'start_date' },
-		{ data: 'salary' }
-	],
-	layout: {
-		topStart: {
-			buttons: [
-				{ extend: 'copyHtml5', exportOptions: exportOptions },
-				{ extend: 'excelHtml5', exportOptions: exportOptions },
-				{ extend: 'pdfHtml5', exportOptions: exportOptions }
-			]
-		}
-	},
-	initComplete: function () {
-		this.api()
-			.columns()
-			.every(function () {
-				// Get the input element from the second header row
-				var input = $('input', this.header(1));
-				var column = this;
-
-				// Event listener for user input
-				input.on('keyup', function () {
-					if (column.search() !== input.val()) {
-						column.search(input.val()).draw();
-					}
-				});
-			});
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
 let exportOptions = {
@@ -108,7 +57,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Complex table headers - selected header rows</title>
 

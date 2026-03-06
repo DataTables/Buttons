@@ -2,20 +2,7 @@
 <dt-example table-type="html" order="2">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
-<![CDATA[
-
-$('#example').DataTable({
-	buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-	layout: {
-		topStart: 'buttons'
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
 <![CDATA[
 
 new DataTable('#example', {
@@ -26,7 +13,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Initialisation: Top level `buttons` option</title>
 

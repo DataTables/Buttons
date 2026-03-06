@@ -2,22 +2,7 @@
 <dt-example table-type="html" order="8">
 
 <css lib="datatables buttons" />
-<js lib="jquery datatables buttons buttons-colvis">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: ['colvis']
-		}
-	},
-	stateSave: true
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-colvis">
 <![CDATA[
 
 new DataTable('#example', {
@@ -30,7 +15,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">State saving</title>
 

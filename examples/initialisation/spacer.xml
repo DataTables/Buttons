@@ -2,33 +2,7 @@
 <dt-example table-type="html" order="18">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				'copy',
-				'print',
-				{
-					extend: 'spacer',
-					style: 'bar',
-					text: 'Export files:'
-				},
-				'csv',
-				'excel',
-				'spacer',
-				'pdf'
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
 <![CDATA[
 
 new DataTable('#example', {
@@ -52,7 +26,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Space between buttons</title>
 

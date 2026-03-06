@@ -2,26 +2,7 @@
 <dt-example table-type="html" order="5">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons buttons-print">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'print',
-					autoPrint: false
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-print">
 <![CDATA[
 
 new DataTable('#example', {
@@ -38,7 +19,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Disable auto print</title>
 

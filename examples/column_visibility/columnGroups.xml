@@ -2,39 +2,7 @@
 <dt-example table-type="html" order="7">
 
 <css lib="datatables buttons" />
-<js lib="jquery datatables buttons buttons-colvis">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'colvisGroup',
-					text: 'Office info',
-					show: [1, 2],
-					hide: [3, 4, 5]
-				},
-				{
-					extend: 'colvisGroup',
-					text: 'HR info',
-					show: [3, 4, 5],
-					hide: [1, 2]
-				},
-				{
-					extend: 'colvisGroup',
-					text: 'Show all',
-					show: '*'
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons buttons-colvis">
 <![CDATA[
 
 new DataTable('#example', {
@@ -64,7 +32,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Column groups</title>
 

@@ -2,39 +2,7 @@
 <dt-example table-type="html" order="8">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					text: 'Button <u>1</u>',
-					key: '1',
-					action: function (e, dt, node, config) {
-						alert('Button 1 activated');
-					}
-				},
-				{
-					text: 'Button <u><i>shift</i> 2</u>',
-					key: {
-						shiftKey: true,
-						key: '2'
-					},
-					action: function (e, dt, node, config) {
-						alert('Button 2 activated');
-					}
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons">
 <![CDATA[
 
 new DataTable('#example', {
@@ -64,7 +32,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Keyboard activation</title>
 

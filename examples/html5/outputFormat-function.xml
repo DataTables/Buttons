@@ -2,43 +2,7 @@
 <dt-example table-type="ajax" order="7">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5">
-<![CDATA[
-
-var exportFormatter = {
-	format: {
-		body: function (data, row, column, node) {
-			// Strip $ from salary column to make it numeric
-			return column === 5 ? data.replace(/[$,]/g, '') : data;
-		}
-	}
-};
-
-$('#example').DataTable({
-	ajax: '../../../../examples/ajax/data/objects.txt',
-	columns: [
-		{ data: 'name' },
-		{ data: 'position' },
-		{ data: 'office' },
-		{ data: 'extn' },
-		{ data: 'start_date' },
-		{ data: 'salary' }
-	],
-	layout: {
-		topStart: {
-			buttons: [
-				{ extend: 'copyHtml5', exportOptions: exportFormatter },
-				{ extend: 'excelHtml5', exportOptions: exportFormatter },
-				{ extend: 'pdfHtml5', exportOptions: exportFormatter }
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5">
 <![CDATA[
 
 let exportFormatter = {
@@ -72,7 +36,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Format output data - export options</title>
 

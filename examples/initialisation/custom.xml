@@ -2,28 +2,7 @@
 <dt-example table-type="html" order="6">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					text: 'My button',
-					action: function (e, dt, node, config) {
-						alert('Button activated');
-					}
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons">
 <![CDATA[
 
 new DataTable('#example', {
@@ -42,7 +21,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Custom button</title>
 

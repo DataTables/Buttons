@@ -2,21 +2,7 @@
 <dt-example table-type="html" order="7" framework="bulma">
 
 <css lib="datatables buttons font-awesome"/>
-<js lib="jquery datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print buttons-colvis">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: ['copy', 'excel', 'pdf', 'colvis']
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print buttons-colvis">
 <![CDATA[
 
 new DataTable('#example', {
@@ -28,7 +14,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Bulma</title>
 

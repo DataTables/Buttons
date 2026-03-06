@@ -2,30 +2,7 @@
 <dt-example table-type="html" order="9">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons jszip buttons-html5">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'excelHtml5',
-					customize: function (xlsx) {
-						var sheet = xlsx.xl.worksheets['sheet1.xml'];
-
-						$('row c[r^="C"]', sheet).attr('s', '2');
-					}
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons jszip buttons-html5">
 <![CDATA[
 
 new DataTable('#example', {
@@ -48,7 +25,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Excel - Bold text</title>
 

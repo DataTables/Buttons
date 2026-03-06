@@ -2,26 +2,7 @@
 <dt-example table-type="html" order="0">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons pdfmake vfsfonts jszip buttons-html5">
-<![CDATA[
-
-$('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: [
-				{
-					extend: 'csv',
-					split: ['pdf', 'excel']
-				}
-			]
-		}
-	}
-});
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons pdfmake vfsfonts jszip buttons-html5">
 <![CDATA[
 
 new DataTable('#example', {
@@ -38,7 +19,7 @@ new DataTable('#example', {
 });
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Split Dropdown Button</title>
 

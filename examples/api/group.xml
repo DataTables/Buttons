@@ -2,58 +2,7 @@
 <dt-example table-type="html" order="4">
 
 <css lib="datatables buttons"/>
-<js lib="jquery datatables buttons">
-<![CDATA[
-
-var table = $('#example').DataTable({
-	layout: {
-		topStart: {
-			buttons: {
-				name: 'first',
-				buttons: [
-					{
-						text: 'Button 1',
-						action: function (e, dt, node, conf) {
-							console.log('Button 1 clicked on');
-						}
-					},
-					{
-						text: 'Button 2',
-						action: function (e, dt, node, conf) {
-							console.log('Button 2 clicked on');
-						}
-					}
-				]
-			}
-		},
-		bottom1Start: {
-			buttons: {
-				name: 'second',
-				buttons: [
-					{
-						text: 'Button 3',
-						action: function (e, dt, node, conf) {
-							alert('Button 3 clicked on');
-						}
-					},
-					{
-						text: 'Button 4',
-						action: function (e, dt, node, conf) {
-							alert('Button 4 clicked on');
-						}
-					}
-				]
-			}
-		}
-	}
-});
-
-table.button('second', 0).text('Button 3 - API updated');
-
-]]>
-</js>
-
-<js-vanilla>
+<js lib="datatables buttons">
 <![CDATA[
 
 let table = new DataTable('#example', {
@@ -102,7 +51,7 @@ let table = new DataTable('#example', {
 table.button('second', 0).text('Button 3 - API updated');
 
 ]]>
-</js-vanilla>
+</js>
 
 <title lib="Buttons">Group selection</title>
 
