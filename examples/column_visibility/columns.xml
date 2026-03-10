@@ -32,7 +32,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-The `b-button colvis` button type provides a `columns` option to allow you to select what columns should be included in the column visibility control list. This option is a `dt-type column-selector` and thus a number of methods to select the columns included are available including CSS selectors and data index selectors.
+The `b-button colvis` button type provides a `columns` option to allow you to select what columns should be included in the column visibility control list. This option is a `dt-type DataTable.ColumnSelector` and thus a number of methods to select the columns included are available including CSS selectors and data index selectors.
 
 This example shows a CSS selector being used to exclude the second column in the table from the list - note that the _Position_ column is not included in the column visibility list.
 

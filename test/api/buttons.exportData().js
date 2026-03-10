@@ -48,27 +48,27 @@ describe('buttons - buttons.exportData()', function() {
 			});
 			defaultData = table.buttons.exportData();
 		});
-		it('row-selector - default', function() {
+		it('DataTable.RowSelector - default', function() {
 			table = $('#example').DataTable();
 			expect(defaultData.body.length).toBe(58);
 		});
-		it('row-selector - modified', function() {
+		it('DataTable.RowSelector - modified', function() {
 			var data = table.buttons.exportData({ rows: ':nth-child(odd)' });
 			expect(data.body.length).toBe(5);
 			expect(data.body[1][0]).toBe('Ashton Cox');
 		});
-		it('column-selector - default', function() {
+		it('DataTable.ColumnSelector - default', function() {
 			expect(defaultData.body[0].length).toBe(6);
 		});
-		it('column-selector - modified', function() {
+		it('DataTable.ColumnSelector - modified', function() {
 			var data = table.buttons.exportData({ columns: [3, 4, 5] });
 			expect(data.body[0].length).toBe(3);
 			expect(data.body[2][0]).toBe('66');
 		});
-		it('selector-modifier - default', function() {
+		it('DataTable.SelectorModifier - default', function() {
 			expect(defaultData.body[0][0]).toBe('Airi Satou');
 		});
-		it('selector-modifier - modified', function() {
+		it('DataTable.SelectorModifier - modified', function() {
 			var data = table.buttons.exportData({ modifier: { order: 'original' } });
 			expect(data.body[0][0]).toBe('Tiger Nixon');
 		});

@@ -34,7 +34,7 @@ new DataTable('#example', {
 
 <info><![CDATA[
 
-The `exportOptions.columns` option of the `b-button print` button provides the ability to select only certain columns (using a `dt-type column-selector`). In this example only the visible columns are used for the printing.
+The `exportOptions.columns` option of the `b-button print` button provides the ability to select only certain columns (using a `dt-type DataTable.ColumnSelector`). In this example only the visible columns are used for the printing.
 
 The column visibility buttons (`b-button colvis`) are included in this example so the column visibility can be easily changed. Additionally, the last column in the table, Salary, is hidden by default (using `dt-init columns.visible`).
 

@@ -42,7 +42,7 @@ new DataTable('#example', {
 
 All of the data export buttons have an `exportOptions` option which can be used to specify information about what data should be exported and how. The options given for this parameter are passed directly to the `b-api buttons.exportData()` method to obtain the required data.
 
-One of the most commonly used is the `columns` option which defines the columns that should be used as part of the export. This is given as a `dt-type column-selector`, making it simple to tell it if you want only visible columns, or a mix of the columns available.
+One of the most commonly used is the `columns` option which defines the columns that should be used as part of the export. This is given as a `dt-type DataTable.ColumnSelector`, making it simple to tell it if you want only visible columns, or a mix of the columns available.
 
 In this example the copy button will export column index 0 and all visible columns, the Excel button will export only the visible columns and the PDF button will export column indexes 0, 1, 2 and 5 only.
 

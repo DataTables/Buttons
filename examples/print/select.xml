@@ -37,7 +37,7 @@ new DataTable('#example', {
 
 By default, the export buttons (including _Print_) will automatically detect if any rows are selected (by the [Select extension for DataTables](https://datatables.net/extensions/select)) and only export the data from those selected rows. If no rows are selected, all rows will be exported.
 
-If you wish to customise this behaviour, you can use the `exportOptions` object to determine what columns and rows are included in the printed data. A DataTables `-type selector-modifier` object can be given using the `exportOptions.modifier` option and has the ability to determine the order of the print table and if filtering rows are included, among other actions.
+If you wish to customise this behaviour, you can use the `exportOptions` object to determine what columns and rows are included in the printed data. A DataTables `-type DataTable.SelectorModifier` object can be given using the `exportOptions.modifier` option and has the ability to determine the order of the print table and if filtering rows are included, among other actions.
 
 In this example the Select extension is used to give the end user the ability to select rows by clicking on them. Two print buttons are utilised in this example to demonstrate the `exportOptions` option:
 
