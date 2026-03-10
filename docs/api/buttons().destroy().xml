@@ -6,7 +6,7 @@
 
 	<type type="function">
 		<signature>buttons().destroy()</signature>
-		<returns type="DataTables.Api">
+		<returns type="DataTable.Api">
 			DataTables API instance.
 		</returns>
 		<description>

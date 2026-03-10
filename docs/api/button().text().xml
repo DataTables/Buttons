@@ -23,7 +23,7 @@
 
 			A function can also be defined, which will be executed whenever Buttons updates the button display text and the result used as the text to be displayed in the button. Please refer to `b-init buttons.buttons.text` for the function signature.
 		</parameter>
-		<returns type="DataTables.Api">
+		<returns type="DataTable.Api">
 			DataTables API instance with the selected button in the result set, available for chaining further operations on the buttons.
 		</returns>
 		<description>

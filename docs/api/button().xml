@@ -14,7 +14,7 @@
 		<parameter type="button-selector" name="buttonSelector">
 			Selector to obtain the button that should be acted upon.
 		</parameter>
-		<returns type="DataTables.Api">
+		<returns type="DataTable.Api">
 			DataTables API instance where the result set contains information about the selected button so operations can be chained.
 		</returns>
 		<description>

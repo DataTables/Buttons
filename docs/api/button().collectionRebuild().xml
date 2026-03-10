@@ -9,7 +9,7 @@
 		<parameter type="array" name="buttons" default="undefined">
             An array that is full of objects, strings or functions that are used to create buttons. Please refer to `b-init buttons.buttons` for full details of the configuration options available here.
 		</parameter>
-		<returns type="DataTables.Api">
+		<returns type="DataTable.Api">
 			DataTables API instance with the selected button in the result set, available for chaining further operations on the button.
 		</returns>
 		<description>

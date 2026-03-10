@@ -9,7 +9,7 @@
 		<parameter type="boolean" name="state" default="true">
 			Optional parameter that can be used to disable buttons when set to `false`. This can be useful for changing a buttons enabled state on a conditional operator.
 		</parameter>
-		<returns type="DataTables.Api">
+		<returns type="DataTable.Api">
 			DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
 		</returns>
 		<description>

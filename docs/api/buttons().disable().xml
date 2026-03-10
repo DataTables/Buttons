@@ -6,7 +6,7 @@
 
 	<type type="function">
 		<signature>buttons().disable()</signature>
-		<returns type="DataTables.Api">
+		<returns type="DataTable.Api">
 			DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
 		</returns>
 		<description>

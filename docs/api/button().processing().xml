@@ -19,7 +19,7 @@
 		<parameter type="boolean" name="set">
 			Flag to indicate if the processing state should be enabled (`true`) or disabled (`false`).
 		</parameter>
-		<returns type="DataTables.Api">
+		<returns type="DataTable.Api">
 			DataTables API instance with the selected button in the result set, available for chaining further operations on the buttons.
 		</returns>
 		<description>

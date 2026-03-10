@@ -22,7 +22,7 @@
 		<description>
 			Display / hide an information message to the end user to indicate that something has happened.
 		</description>
-		<returns type="DataTables.Api">
+		<returns type="DataTable.Api">
 			DataTables API instance for chaining.
 		</returns>
 	</type>

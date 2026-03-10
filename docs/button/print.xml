@@ -36,7 +36,7 @@
 
 		As well as a string value, a function may also be assigned to the `message` property. This function will be executed when the button needs to display the message and the returned value from the function will be used. The function is passed in three parameters:
 
-		* `-type DataTables.Api` - The DataTable API instance
+		* `-type DataTable.Api` - The DataTable API instance
 		* `-type jQuery` - jQuery object for the button node
 		* `-type object` - Configuration object for the button.
 

@@ -19,7 +19,7 @@
 		<parameter type="boolean" name="draw" default="true" since="2.1.0">
 			Indicate if Buttons should immediately draw the new button (`true`) or not (`false`). This can be useful when added a large number of buttons, as disabling the draw until the last item can significantly improve performance.
 		</parameter>
-		<returns type="DataTables.Api">
+		<returns type="DataTable.Api">
 			New DataTables API instance with the result set containing the newly created button. This means it is possible to immediately using the chaining API to manipulate the button.
 		</returns>
 		<description>

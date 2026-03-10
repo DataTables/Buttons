@@ -9,7 +9,7 @@
 		<parameter type="boolean" name="state">
 			Get the current active state of the buttons.
 		</parameter>
-		<returns type="DataTables.Api">
+		<returns type="DataTable.Api">
 			API instance which contains `true` if currently active, otherwise `false` for each selected button in the result set.
 		</returns>
 		<description>
@@ -22,7 +22,7 @@
 		<parameter type="function" name="state">
 			Set the active state (`true`) or remove (`false`).
 		</parameter>
-		<returns type="DataTables.Api">
+		<returns type="DataTable.Api">
 			DataTables API instance with the selected buttons in the result set, available for chaining further operations on the buttons.
 		</returns>
 		<description>

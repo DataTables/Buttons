@@ -16,8 +16,8 @@
 
 	<extend>columnToggle</extend>
 
-	<option type="column-selector" name="columns" default="undefined">
-		Columns selector that defines the columns to include in the column visibility button set. By default this is `-type undefined` which results in all columns being selected, but any of the `-type column-selector` options can be used to define a custom button set.
+	<option type="DataTable.ColumnSelector" name="columns" default="undefined">
+		Columns selector that defines the columns to include in the column visibility button set. By default this is `-type undefined` which results in all columns being selected, but any of the `-type DataTable.ColumnSelector` options can be used to define a custom button set.
 	</option>
 
 	<option type="boolean" name="visibility" default="undefined">
