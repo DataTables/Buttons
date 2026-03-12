@@ -2,10 +2,10 @@ import DataTable, {
 	Api,
 	ApiButtonMethods,
 	ApiButtonsMethods,
-	ApiSelectorModifier,
 	Context,
 	Dom,
 	HeaderStructure,
+	SelectorModifier,
 	util
 } from 'datatables.net';
 import Buttons, { fadeIn, fadeOut } from './Buttons';
@@ -662,7 +662,7 @@ var _exportData = function (
 	// If Select is available on this table, and any rows are selected, limit the export
 	// to the selected rows. If no rows are selected, all rows will be exported. Specify
 	// a `selected` modifier to control directly.
-	var modifier = util.object.assign<ApiSelectorModifier>({}, config.modifier);
+	var modifier = util.object.assign<SelectorModifier>({}, config.modifier);
 
 	if (
 		(dt as any).select &&
