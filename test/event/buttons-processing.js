@@ -53,7 +53,7 @@ describe('buttons - buttons-processing', function() {
 			expect(typeof params[1]).toBe('boolean');
 			expect(params[2] instanceof DataTable.Api).toBe(true);
 			expect(params[3] instanceof DataTable.Api).toBe(true);
-			expect(params[4] instanceof DataTable.dom.Dom).toBe(true);
+			expect(params[4] instanceof DataTable.Dom).toBe(true);
 			expect(typeof params[5]).toBe('object');
 		});
 		it('Activates on the correct button', function() {

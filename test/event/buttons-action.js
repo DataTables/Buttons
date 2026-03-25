@@ -62,7 +62,7 @@ describe('buttons - buttons-action', function() {
 			expect(params[0] instanceof $.Event).toBe(true);
 			expect(params[1] instanceof DataTable.Api).toBe(true);
 			expect(params[2] instanceof DataTable.Api).toBe(true);
-			expect(params[3] instanceof DataTable.dom.Dom).toBe(true);
+			expect(params[3] instanceof DataTable.Dom).toBe(true);
 			expect(typeof params[4]).toBe('object');
 		});
 		it('Activates on the correct button', function() {

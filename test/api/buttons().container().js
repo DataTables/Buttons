@@ -16,7 +16,7 @@ describe('buttons - buttons().container()', function() {
 			expect(typeof table.buttons().container).toBe('function');
 		});
 		it('Returns a jQuery instance', function() {
-			expect(table.buttons(0, 0).container() instanceof DataTable.dom.Dom).toBe(true);
+			expect(table.buttons(0, 0).container() instanceof DataTable.Dom).toBe(true);
 		});
 	});
 

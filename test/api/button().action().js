@@ -39,7 +39,7 @@ describe('buttons - button().action()', function() {
 			expect(args.length).toBe(5);
 			expect(typeof args[0]).toBe('object');
 			expect(args[1] instanceof DataTable.Api).toBe(true);
-			expect(args[2] instanceof DataTable.dom.Dom).toBe(true);
+			expect(args[2] instanceof DataTable.Dom).toBe(true);
 			expect(typeof args[3]).toBe('object');
 			expect(args[3].text).toBe('test');
 			expect(typeof args[4]).toBe('function');
