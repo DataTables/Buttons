@@ -3,7 +3,7 @@
  * © SpryMedia Ltd - datatables.net/license
  */
 
-import DataTable from 'datatables.net';
+import DataTable, { util } from 'datatables.net';
 import { ButtonConfig, FunctionButton } from './interface';
 
 const dtButtons = DataTable.ext.buttons;
@@ -163,7 +163,7 @@ dtButtons.columnVisibility = {
 		title = DataTable.Buttons.stripHtmlComments(title);
 
 		// Use whatever HTML stripper DataTables is configured for
-		title = DataTable.util.stripHtml(title).trim();
+		title = util.stripHtml(title).trim();
 
 		return conf.columnText ? conf.columnText(dt, idx, title) : title;
 	}
