@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="Buttons">
+	<name>colOrder</name>
+	<summary>A button collection that provides column ordering control</summary>
+	<since>4.0.0</since>
+
+	<description>
+		This button will create a collection button that when activated will show a list of the columns in the table and provide the end user with the ability to modify the ordering that is applied to the table.
+
+		The individual ordering buttons use `-button columnOrder`, and behave in the manner described in the documentation for that button - e.g. they have sub-buttons that the user can use to control the ordering direction.
+
+		While ordering of data in the table is typically done by clicking in a column header, this button type can be useful to have complete control over table ordering when columns are hidden, or if using [CardView](https://datatables.net/manual/extensions/cardview), when the table is hidden and cards are shown.
+	</description>
+
+	<extend>collection</extend>
+
+	<option type="string" name="text" default="Order">
+		The button's display text. The text can be configured using this option (see `b-init buttons.buttons.text`) or the `buttons.order.dropdown` option of the DataTables `dt-init language` object.
+	</option>
+
+	<option type="string" name="className" default="buttons-collection buttons-order">
+		The button's class name. See `b-init buttons.buttons.className` for details.
+	</option>
+
+	<option type="DataTable.ColumnSelector" name="columns" default="undefined">
+		Columns selector that defines the columns to include in the ordering button set. By default this is `-type undefined` which results in all columns being selected, but any of the `-type DataTable.ColumnSelector` options can be used to define a custom button set.
+	</option>
+
+	<example title="Show the `colOrder` button with default options"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: ['colOrder']
+		}
+	}
+});
+]]></example>
+
+	<example title="Show the `colOrder` button, but do not include the first column in the list of columns"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'colOrder',
+					columns: 'th:nth-child(n+2)'
+				}
+			]
+		}
+	}
+});
+]]></example>
+
+</dt-button>

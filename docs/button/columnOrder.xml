@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-button library="Buttons">
+	<name>columnOrder</name>
+	<summary>A button that will control the ordering on a single column</summary>
+	<since>4.0.0</since>
+
+	<description>
+		Buttons created by extending this button type will have the ability to control the ordering of a column - i.e. when activated the table will order by the target column.
+
+		The behaviour of the button will depend on the state of the table:
+
+		* If already ordering by the target column, the ordering will be inverted.
+		* If not year ordering by the target column, the first ordering in `-init columns.orderSequence` will be used.
+
+		In both cases the order will immediately be applied and the table redrawn.
+
+		Additionally, this button type makes use of _split_ buttons to allow a tidy UI to be displayed to the end user, while still giving them full control. In this case, the sub-buttons will give the end user the ability to specify which direction of ordering should be applied. If `-init columns.orderSequence` is used to restrict the ordering to a specific direction, the split buttons will not be shown.
+	</description>
+
+	<option type="string" name="text">
+		The button's display text. By default the button title will match the title of the target column. Please note, that for the sub-buttons, if you wish to translate the `ascending` and `descending` phrases, please use `buttons.order.asc` and `buttons.order.desc`, respectively, in the DataTables `-init language` object.
+	</option>
+
+	<option type="string" name="className" default="buttons-collection buttons-column-order">
+		The button's class name. See `b-init buttons.buttons.className` for details.
+	</option>
+
+	<option type="DataTable.ColumnSelector" name="column" default="undefined">
+		A selector for the column that will be managed by this button. You can use a column index, or a selector, as defined by the column selector option. Only a single column should be selected.
+	</option>
+
+	<example title="Show the `columnOrder` button"><![CDATA[
+new DataTable('#myTable', {
+	layout: {
+		topStart: {
+			buttons: [
+				{
+					extend: 'columnOrder',
+					text: 'Order by Position',
+					column: 1
+				}
+			]
+		}
+	}
+});
+]]></example>
+
+</dt-button>

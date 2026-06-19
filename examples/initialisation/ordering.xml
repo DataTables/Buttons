@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dt-example table-type="html" order="14">
+
+<css lib="datatables buttons"/>
+<js lib="datatables buttons">
+<![CDATA[
+
+new DataTable('#example', {
+	layout: {
+		topStart: {
+			buttons: [
+				'colOrder',
+				{
+					extend: 'columnOrder',
+					text: 'Order by Position',
+					column: 1
+				},
+				{
+					extend: 'columnOrder',
+					text: 'Order by Office',
+					column: 2
+				}
+			]
+		}
+	}
+});
+
+]]>
+</js>
+
+<title lib="Buttons">Ordering buttons</title>
+
+<info><![CDATA[
+
+Buttons has two built in button types which can be used to control ordering in the table:
+
+* `-button colOrder` - similar to its counterpart for column visibility (`-button colvis`) this button will show a dropdown of selected columns (all by default), allowing the end user to select what order they want to be applied to the table.
+* `-button columnOrder` - this button will control a single column and order the table by that column when activated. The collection button is made up of these button types.
+
+This example demonstrates both button types - the first is a dropdown allowing ordering on any column, while the second two buttons are specific to the _Position_ and _Office_ columns.
+
+]]></info>
+
+</dt-example>
+
