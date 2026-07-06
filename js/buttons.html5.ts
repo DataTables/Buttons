@@ -611,8 +611,7 @@ dtButtons.copyHtml5 = {
 			output = config.customize(output, config, dt);
 		}
 
-		var textarea = Dom
-			.c<HTMLTextAreaElement>('textarea')
+		var textarea = Dom.c<HTMLTextAreaElement>('textarea')
 			.prop('readonly', true)
 			.val(output)
 			.appendTo(hiddenDiv);
@@ -652,8 +651,7 @@ dtButtons.copyHtml5 = {
 		}
 
 		// Otherwise we show the text box and instruct the user to use it
-		var message = Dom
-			.c('span')
+		var message = Dom.c('span')
 			.html(
 				dt.i18n(
 					'buttons.copyKeys',
@@ -731,7 +729,7 @@ dtButtons.csvHtml5 = {
 	className: 'buttons-csv buttons-html5',
 
 	available: function () {
-		return (window.FileReader !== undefined && window.Blob) ? true : false;
+		return window.FileReader !== undefined && window.Blob ? true : false;
 	},
 
 	text: function (dt) {
@@ -804,11 +802,11 @@ dtButtons.excelHtml5 = {
 	className: 'buttons-excel buttons-html5',
 
 	available: function () {
-		return (
-			window.FileReader !== undefined &&
+		return window.FileReader !== undefined &&
 			DataTable.Buttons.jszip() !== undefined &&
 			_serialiser
-		) ? true : false;
+			? true
+			: false;
 	},
 
 	text: function (dt) {
@@ -845,6 +843,7 @@ dtButtons.excelHtml5 = {
 		};
 
 		var data = dt.buttons.exportData(config.exportOptions);
+		var columnTypes = dt.columns(config.exportOptions.columns).types();
 		var currentRow, rowNode;
 		var addRow = function (row: any[]) {
 			currentRow = rowPos + 1;
@@ -903,10 +902,11 @@ dtButtons.excelHtml5 = {
 
 				if (!cell) {
 					if (
-						typeof row[i] === 'number' ||
-						(row[i].match &&
-							row[i].match(/^-?\d+(\.\d+)?([eE]\-?\d+)?$/) && // Includes exponential format
-							!row[i].match(/^0\d+/))
+						columnTypes[i].includes('num') &&
+						(typeof row[i] === 'number' ||
+							(row[i].match &&
+								row[i].match(/^-?\d+(\.\d+)?([eE]\-?\d+)?$/) && // Includes exponential format
+								!row[i].match(/^0\d+/)))
 					) {
 						// Detect numbers - don't match numbers with leading zeros
 						// or a negative anywhere but the start
