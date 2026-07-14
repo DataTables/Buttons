@@ -5,7 +5,7 @@ DT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/../.."
 # If not run from DataTables build script, redirect to there, for setup
 if [ -z "$DT_BUILD" ]; then
 	cd $DT_DIR/build
-	./make.sh extension AutoFill $1
+	./make.sh extension Buttons $1
 	cd -
 	exit
 else
