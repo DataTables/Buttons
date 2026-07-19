@@ -7,7 +7,7 @@ body.dt-print-view h1 {
 	margin: 1em;
 }
 </css>
-<js lib="datatables buttons buttons-print">
+<js lib="datatables buttons">
 <![CDATA[
 
 new DataTable('#example', {

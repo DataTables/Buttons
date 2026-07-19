@@ -4,13 +4,6 @@
 	<summary>Create and save a CSV file that contains the data from the table (HTML5)</summary>
 	<since>1.0.0</since>
 
-	<requires>
-		* Buttons' _HTML5 export button_ plug-in.
-		* A browser that supports local file saving (IE10+, Chrome, Firefox, Opera).
-
-		To ensure that all files required for CSV HTML5 export are included, the [DataTables download builder](/download) is recommend - select the _HTML5 export_ option.
-	</requires>
-
 	<description>
 		This button provides the end user with the ability to save the table's data into a locally created [Comma Separated Values](https://en.wikipedia.org/wiki/Comma-separated_values) (CSV) file. That file can then be used by variety of programs including spreadsheet and data analysis applications.
 

@@ -4,12 +4,6 @@
 	<summary>Create and save a CSV file that contains the data from the table</summary>
 	<since>1.0.0</since>
 
-	<requires>
-		* Buttons' _HTML5 export button_ plug-in (`-button csvHtml5`)
-
-		To ensure that all files required for CSV export are included, the [DataTables download builder](/download) is recommend.
-	</requires>
-
 	<description>
 		This button type serves as a proxy that will automatically detect if the `b-button csvHtml5` buttons can be used based on the browser's capabilities and the libraries available on the page.
 

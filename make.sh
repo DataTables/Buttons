@@ -30,6 +30,7 @@ rsync -r dist/buttons.*.js $OUT_DIR/js/
 
 VERSION=$(grep "version.*[0-9]\+[.][0-9]\+[.][0-9]" dist/dataTables.buttons.js | perl -nle'print $& if m{\d+\.\d+\.\d+(\-\w*(\-\d+)?)?}')
 
+# Legacy files. Used for cases where these files are explicitly included and that shouldn't cause an error
 js_wrap $OUT_DIR/js/buttons.colVis.js $VERSION "datatables.net datatables.net-buttons"
 js_wrap $OUT_DIR/js/buttons.html5.js $VERSION "datatables.net datatables.net-buttons"
 js_wrap $OUT_DIR/js/buttons.print.js $VERSION "datatables.net datatables.net-buttons"

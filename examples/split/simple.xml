@@ -2,7 +2,7 @@
 <dt-example table-type="html" order="0">
 
 <css lib="datatables buttons"/>
-<js lib="datatables buttons pdfmake vfsfonts jszip buttons-html5">
+<js lib="datatables buttons pdfmake vfsfonts jszip">
 <![CDATA[
 
 new DataTable('#example', {

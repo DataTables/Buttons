@@ -4,10 +4,6 @@
 	<summary>A set of Buttons to set the visibility of individual columns</summary>
 	<since>1.0.0</since>
 
-	<requires>
-		* Buttons' _Column visibility button_ plug-in
-	</requires>
-
 	<description>
 		This button type actually creates multiple buttons in a Button instance, one button for each column that has been selected (or all columns if no selector is given). Each button is automatically given the same title as the header text for that column, and gives the ability to control the visibility of each column through the button's `visibility` option.
 

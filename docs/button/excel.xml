@@ -5,9 +5,9 @@
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _HTML5 export button_ plug-in (`-button excelHtml5`)
+		* [JSZip](https://stuk.github.io/jszip/)
 
-		To ensure that all files required for Excel export are included, the [DataTables download builder](/download) is recommend.
+		To ensure that all files required for Excel HTML5 export are included, the [DataTables download builder](/download) is recommend - select the _HTML5 export_ and _JSZip_ options.
 	</requires>
 
 	<description>

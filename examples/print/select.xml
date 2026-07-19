@@ -2,7 +2,7 @@
 <dt-example table-type="html" order="4">
 
 <css lib="datatables buttons"/>
-<js lib="datatables buttons buttons-print select">
+<js lib="datatables buttons select">
 <![CDATA[
 
 new DataTable('#example', {

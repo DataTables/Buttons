@@ -4,10 +4,6 @@
 	<summary>A button collection that provides column visibility control</summary>
 	<since>1.0.0</since>
 
-	<requires>
-		* Buttons' _Column visibility button_ plug-in
-	</requires>
-
 	<description>
 		This button will create a collection button that when activated will show a list of the columns in the table and provide the end user with the ability to toggle column visibility to suit their own requirements.
 	</description>

@@ -4,10 +4,6 @@
 	<summary>A single button that controls the visibility of one or more columns</summary>
 	<since>1.0.0</since>
 
-	<requires>
-		* Buttons' _Column visibility button_ plug-in
-	</requires>
-
 	<description>
 		This button type creates a single button that can control the visibility of one or more columns in a DataTable (its counterpart `b-button columnsVisibility` will be expanded to a single button for each column). This provides the ability to have show all / hide all buttons that control all of the table's columns or a subset of those columns.
 

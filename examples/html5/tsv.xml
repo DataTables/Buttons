@@ -2,7 +2,7 @@
 <dt-example table-type="html" order="2">
 
 <css lib="datatables buttons"/>
-<js lib="datatables buttons jszip buttons-html5">
+<js lib="datatables buttons jszip">
 <![CDATA[
 
 new DataTable('#example', {

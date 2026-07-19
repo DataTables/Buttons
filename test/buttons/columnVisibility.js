@@ -1,7 +1,7 @@
 // TK COLIN: This is the same as columnToggle - not sure what the difference should be
 describe('buttons - columnVisibility', function() {
 	dt.libs({
-		js: ['jquery', 'datatables', 'buttons', 'buttons-colVis'],
+		js: ['jquery', 'datatables', 'buttons'],
 		css: ['datatables', 'buttons']
 	});
 

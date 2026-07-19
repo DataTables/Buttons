@@ -2,7 +2,7 @@
 <dt-example table-type="html" order="6" framework="semanticui">
 
 <css lib="datatables buttons"/>
-<js lib="semanticui datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print buttons-colvis">
+<js lib="semanticui datatables buttons jszip pdfmake vfsfonts">
 <![CDATA[
 
 new DataTable('#example', {

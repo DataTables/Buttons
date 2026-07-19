@@ -4,12 +4,6 @@
 	<summary>Copy table data to clipboard button</summary>
 	<since>1.0.0</since>
 
-	<requires>
-		* Buttons' _HTML5 export button_ plug-in (`-button copyHtml5`)
-
-		To ensure that all files required for Copy export are included, the [DataTables download builder](/download) is recommend.
-	</requires>
-
 	<description>
 		This button type serves as a proxy that will automatically detect if the `b-button copyHtml5` button can be used based on the browser's capabilities and the libraries available on the page.
 

@@ -4,10 +4,6 @@
 	<summary>Restore the visibility of column to their original state</summary>
 	<since>1.0.0</since>
 
-	<requires>
-		* Buttons' _Column visibility button_ plug-in
-	</requires>
-
 	<description>
 		This `b-button colvisRestore` button type provides a single click button that will restore the visibility state of the columns to match that when the button was created. This works by reading the state as the button is created (which is generally during the initialisation of the table) and then restoring those values when activated by the end user.
 	</description>

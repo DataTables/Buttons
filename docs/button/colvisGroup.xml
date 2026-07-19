@@ -4,10 +4,6 @@
 	<summary>Show and hide multiple columns</summary>
 	<since>1.0.0</since>
 
-	<requires>
-		* Buttons' _Column visibility button_ plug-in
-	</requires>
-
 	<description>
 		When working with column visibility you may wish to present a control to the end user that provides the ability to set various columns to both show and hide at the same time - allowing grouping to occur. The `b-button colvisGroup` button type provides this ability for Buttons. This button provides exactly this option.
 

@@ -12,7 +12,7 @@
 }
 ]]>
 </css>
-<js lib="datatables buttons buttons-print">
+<js lib="datatables buttons">
 <![CDATA[
 
 new DataTable('#example', {

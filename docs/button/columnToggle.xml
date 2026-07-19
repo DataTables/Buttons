@@ -4,10 +4,6 @@
 	<summary>A single button that will toggle the visibility of one or more columns</summary>
 	<since>1.0.0</since>
 
-	<requires>
-		* Buttons' _Column visibility button_ plug-in
-	</requires>
-
 	<description>
 		The `b-button columnToggle` button type is very similar to the `b-button columnsToggle` button, but instead of being expanded to show a single button for each column in the table, it is a single button that will toggle the visibility of one or more columns in the table (based on the `columns` parameter).
 

@@ -8,7 +8,7 @@
 		box-sizing: border-box;
 	}
 </css>
-<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5">
+<js lib="datatables buttons jszip pdfmake vfsfonts">
 <![CDATA[
 
 let exportOptions = {

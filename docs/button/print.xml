@@ -4,10 +4,6 @@
 	<summary>Button show a printable view of the table's data</summary>
 	<since>1.0.0</since>
 
-	<requires>
-		* Buttons' _Print_ plug-in.
-	</requires>
-
 	<description>
 		The print view button will take a copy of the data displayed in a table (based on the selector options given in the `exportOptions` parameter) and construct a new, temporary, table that is shown in a new window. The browser's `print` command is then automatically invoked (although this can be disabled - see the `autoPrint` option below) and finally the window closed when the print action has been completed or cancelled by the end user.
 

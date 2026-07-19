@@ -5,10 +5,8 @@
 	<since>1.0.0</since>
 
 	<requires>
-		* Buttons' _HTML5 export button_ plug-in.
 		* [PDFMake](http://pdfmake.org/)
 		* A Font file - [PDFMake provides Roboto in `vfs_fonts.js`](http://pdfmake.org/#/gettingstarted) or a [custom font](https://github.com/bpampuch/pdfmake/wiki/Custom-Fonts---client-side) can be used.
-		* A browser that supports local file saving (IE10+, Chrome, Safari, Firefox, Opera).
 
 		To ensure that all files required for PDF HTML5 export are included, the [DataTables download builder](/download) is recommend - select the _HTML5 export_ and _pdfmake_ options.
 	</requires>

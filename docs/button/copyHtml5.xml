@@ -4,12 +4,6 @@
 	<summary>Copy table data to clipboard button (HTML)</summary>
 	<since>1.0.0</since>
 
-	<requires>
-		* Buttons' _HTML5 export button_ plug-in.
-
-		To ensure that all files required for Copy HTML5 export are included, the [DataTables download builder](/download) is recommend - select the _HTML5 export_ option.
-	</requires>
-
 	<description>
 		<![CDATA[
 		This button provides a simple copy-to-clipboard action to the end user, copied the table's data to the system clipboard. In most cases this will just be automatically available on the users clipboard, but if your browser doesn't support the required APIs for that a message is shown to the end user inviting them to use their keyboard or the _Edit_ menu to copy the table's data. The copy is done from an almost completely hidden `-tag textarea` element so the end user won't see it, but the browser is still above to give the textarea focus and select the text.

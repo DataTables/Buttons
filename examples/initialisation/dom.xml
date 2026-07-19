@@ -17,7 +17,7 @@ div.dt-paging {
 }
 </css>
 
-<js lib="datatables buttons jszip pdfmake vfsfonts buttons-html5 buttons-print">
+<js lib="datatables buttons jszip pdfmake vfsfonts">
 <![CDATA[
 
 new DataTable('#example', {
