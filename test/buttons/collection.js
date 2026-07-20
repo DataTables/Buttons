@@ -10,7 +10,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('Ensure collection button is as expected', function () {
 			$('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -61,7 +63,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('align - button-left', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -82,7 +86,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('align - button-right', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -102,7 +108,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('align - container', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -123,7 +131,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('align - dt-container', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -146,7 +156,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('action', function (done) {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -173,7 +185,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('autoClose - default (false)', function (done) {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -201,7 +215,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('autoClose - true', function (done) {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -230,7 +246,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('autoClose - false', function (done) {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -259,7 +277,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('background', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -276,7 +296,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('backgroundClassName', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -294,7 +316,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('className - applies to collection button', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -314,7 +338,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('collectionLayout - fixed', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -337,7 +363,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('collectionLayout - two-column', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -377,7 +405,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('collectionLayout - three-column', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -418,7 +448,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('collectionLayout - four-column', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -464,7 +496,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('collectionLayout - four-column fixed', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -512,7 +546,9 @@ describe('buttons - collection', function () {
 			$('#dt-test-loader-container').width(1000);
 
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -559,7 +595,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('collectionLayout with popoverTitle', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -582,7 +620,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('popoverTitle', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -600,7 +640,9 @@ describe('buttons - collection', function () {
 		it('dropup - false', function () {
 			$('#dt-test-loader-container').prepend('<div style="height: 300px;"></div>');
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -618,7 +660,9 @@ describe('buttons - collection', function () {
 		it('dropup - true', function () {
 			$('#dt-test-loader-container').prepend('<div style="height: 300px;"></div>');
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -635,7 +679,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('fade', async function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						extend: 'collection',
@@ -662,7 +708,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('postfixButtons', async function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -683,7 +731,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('prefixButtons', async function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -704,7 +754,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('prefixButtons and postFixButtons', async function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -727,7 +779,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('align - button-right', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -750,7 +804,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('Text', function () {
 			$('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
@@ -771,7 +827,9 @@ describe('buttons - collection', function () {
 		dt.html('basic');
 		it('Only one button initially', function () {
 			table = $('#example').DataTable({
-				dom: 'Bfrtip',
+				layout: {
+					topStart: 'buttons'
+				},
 				buttons: [
 					{
 						fade: 0, // saves having to sleep in the tests
