@@ -57,6 +57,11 @@
 }
 
 div.dt-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 4px;
+	justify-content: center;
+
 	> .dt-button,
 	> div.dt-button-split .dt-button {
 		position: relative;
