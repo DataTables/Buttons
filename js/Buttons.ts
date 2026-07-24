@@ -861,10 +861,7 @@ export default class Buttons {
 
 		do {
 			previous = input;
-			input = input.replace(
-				/(<!--.*?--!?>)|(<!--[\S\s]+?--!?>)|(<!--[\S\s]*?$)/g,
-				''
-			);
+			input = input.replace(/<!--[\s\S]*?(?:--!?>|$)/g, '');
 		} while (input !== previous);
 
 		return input;
@@ -2373,4 +2370,3 @@ export default class Buttons {
 		return conf;
 	}
 }
-

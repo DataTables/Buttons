@@ -9,6 +9,28 @@
 */
 var _global: any = window;
 
+function isUtf8TextOrXml(typeString) {
+  if (!typeString) {
+    return false;
+  }
+  
+  const [mediaType, ...params] = typeString.toLowerCase().split(';').map(s => s.trim());
+  
+  const isTargetType = 
+    mediaType.startsWith('text/') ||
+    mediaType === 'application/xml' ||
+    (mediaType.includes('/') && mediaType.endsWith('+xml'));
+
+  if (!isTargetType) {
+    return false;
+  }
+
+  return params.some(param => {
+    const [key, val] = param.split('=').map(s => s.trim());
+    return key === 'charset' && val === 'utf-8';
+  });
+}
+
 function bom (blob: any, opts: any) {
   if (typeof opts === 'undefined') opts = { autoBom: false }
   else if (typeof opts !== 'object') {
@@ -18,7 +40,7 @@ function bom (blob: any, opts: any) {
 
   // prepend BOM for UTF-8 XML and text/* types (including HTML)
   // note: your browser will automatically convert UTF-16 U+FEFF to EF BB BF
-  if (opts.autoBom && /^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
+  if (opts.autoBom && isUtf8TextOrXml(blob.type)) {
     return new Blob([String.fromCharCode(0xFEFF), blob], { type: blob.type })
   }
   return blob
