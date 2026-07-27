@@ -19,7 +19,7 @@ util.object.assignDeep(DataTable.Buttons.defaults, {
 		collection: {
 			container: {
 				tag: 'div',
-				className: 'dropdown-menu dt-button-collection'
+				className: 'dropdown-menu show dt-button-collection'
 			},
 			closeButton: false,
 			button: {
