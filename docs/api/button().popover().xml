@@ -38,7 +38,7 @@ Configuration object to control the specifics of the popover. It supports the fo
 * `-type number` `fade` Fade in / out time of the popover
 	* Number in milli-seconds.
 		</parameter>
-		<returns type="DataTable.API">
+		<returns type="DataTable.Api">
 			DataTable API instance - no mutations.
 		</returns>
 		<description>

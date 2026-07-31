@@ -12,7 +12,7 @@
 	<default value="undefined"/>
 
 	<description>
-		By default Buttons will use the `tag` property defined by `-feature buttons.dom.button` configuration object as the name of the HTML element to create. This option provides the ability to override that on a per-button basis, where as `-feature buttons.dom.button` will apply to all buttons.
+		By default Buttons will use the `tag` property defined by `DataTable.Buttons.defaults.dom.button` object as the name of the HTML element to create. This option provides the ability to override that on a per-button basis, where as `DataTable.Buttons.defaults.dom.button` will apply to all buttons.
 	</description>
 
 	<example title="Use an `a` tag for a button"><![CDATA[

@@ -6,7 +6,7 @@
 
 	<type type="function">
 		<signature>button().node()</signature>
-		<returns type="Dom">
+		<returns type="DataTable.Dom">
 			A DataTables `Dom` object that contains the node of the selected button
 		</returns>
 		<description>

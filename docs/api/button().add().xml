@@ -6,7 +6,7 @@
 
 	<type type="function">
 		<signature>button().add( index, config, draw )</signature>
-		<parameter type="int|string|null" name="index">
+		<parameter type="number|string|null" name="index">
 			Insert index for the button. This option can be one of:
 
 			* An integer value if the value is to be inserted into the main buttons collection,
