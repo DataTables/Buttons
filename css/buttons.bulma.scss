@@ -127,6 +127,13 @@ span.dt-button-spacer {
 	}
 }
 
+// When FA has not been loaded, this layer will be used to provide a fallback
+// icon
+@layer fallback {
+	.fa-angle-down::before {
+		content: "\25BC";
+	}
+}
 
 div.dt-button-collection {
 	.is-disabled {
