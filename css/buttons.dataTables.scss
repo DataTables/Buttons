@@ -260,14 +260,16 @@ div.dt-button-collection {
 		}
 	}
 
+	@include mixins.dtb-fixed-collection();
+
 	&.fixed {
+		background-color: var(--dtb-collection_background-color);
+
 		.dt-button {
 			border-radius: 0.25em;
 			background: rgba(255, 255, 255, 0.1);
 		}
 	}
-
-	@include mixins.dtb-fixed-collection();
 }
 
 div.dt-button-background {
