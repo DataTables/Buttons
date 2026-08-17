@@ -390,7 +390,6 @@ DataTable.Api.register(
 						message
 					)
 				)
-				.css('display', 'none')
 				.appendTo('body')
 		);
 
