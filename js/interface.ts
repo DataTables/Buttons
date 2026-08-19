@@ -27,7 +27,7 @@ declare module 'datatables.net' {
 		buttons?: boolean | ConfigButtons | ButtonsList;
 	}
 
-	interface ConfigLanguage {
+	interface Language {
 		/**
 		 * Buttons language options
 		 */
