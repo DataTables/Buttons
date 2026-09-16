@@ -51,7 +51,7 @@ util.object.assignDeep(DataTable.Buttons.defaults, {
 	}
 });
 
-Dom.s(document).on('buttons-popover.dt', function () {
+Dom.on('buttons-popover.dt', function () {
 	var notButton = false;
 
 	Dom.s('.dtsp-panesContainer').each(function (el) {
