@@ -1,3 +1,5 @@
+import DataTable from 'datatables.net';
+
 /*
 * FileSaver.js
 * A saveAs() FileSaver implementation.
@@ -7,7 +9,7 @@
 * License : https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md (MIT)
 * source  : http://purl.eligrey.com/github/FileSaver.js
 */
-var _global: any = window;
+var _global = DataTable.use('win');
 
 function isUtf8TextOrXml(typeString) {
   if (!typeString) {

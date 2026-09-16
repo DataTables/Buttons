@@ -5,7 +5,7 @@
 import { Dom, util } from 'datatables.net';
 import { ButtonConfig } from '../interface';
 
-var _link = document.createElement('a');
+var _link: HTMLAnchorElement;
 
 /**
  * Convert a URL from a relative to an absolute address so it will work
@@ -16,6 +16,10 @@ var _link = document.createElement('a');
 var _relToAbs = function (href: string) {
 	// Assign to a link on the original page so the browser will do all the
 	// hard work of figuring out where the file actually is
+	if (!_link) {
+		_link = Dom.c<HTMLAnchorElement>('a')[0];
+	}
+
 	_link.href = href;
 	var linkHost = _link.host;
 

@@ -43,7 +43,7 @@ if (!DataTable.versionCheck('3')) {
 // Expose file saver on the DataTables API.
 DataTable.fileSave = saveAs;
 
-const _exportTextarea = document.createElement('textarea');
+var _exportTextarea: HTMLTextAreaElement;
 
 // Used for namespacing events added to the document by each instance, so they
 // can be removed on destroy
@@ -389,6 +389,10 @@ export default class Buttons {
 				str = _entityDecoder(str);
 			}
 			else {
+				if (! _exportTextarea) {
+					_exportTextarea = Dom.c<HTMLTextAreaElement>('textarea')[0];
+				}
+
 				_exportTextarea.innerHTML = str;
 				str = _exportTextarea.value;
 			}

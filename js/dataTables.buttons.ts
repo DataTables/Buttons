@@ -452,7 +452,7 @@ DataTable.Buttons = Buttons;
 // they will have been if the `B` option was used in `dom`, otherwise we should
 // create the buttons instance here so they can be inserted into the document
 // using the API.
-Dom.s(document).on('init.dt plugin-init.dt', function (e, settings: Context) {
+Dom.on('init.dt plugin-init.dt', function (e, settings: Context) {
 	if (e.namespace !== 'dt') {
 		return;
 	}
