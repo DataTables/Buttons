@@ -36,8 +36,8 @@ import {
 import './buttons/index';
 import saveAs from './fileSaver';
 
-if (!DataTable.versionCheck('3')) {
-	throw 'Warning: Buttons requires DataTables 3 or newer';
+if (!DataTable.versionCheck('3.1')) {
+	throw 'Warning: Buttons requires DataTables 3.1 or newer';
 }
 
 // Expose file saver on the DataTables API.
