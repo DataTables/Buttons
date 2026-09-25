@@ -959,7 +959,7 @@ export default class Buttons {
 	/**
 	 * Version information
 	 */
-	public static version = '4.1.1';
+	public static version = '4.1.2';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
