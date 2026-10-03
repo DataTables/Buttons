@@ -586,6 +586,7 @@ export const excelHtml5: ButtonConfig = {
 
 				if (!cell) {
 					if (
+						columnTypes[i] &&
 						columnTypes[i].includes('num') &&
 						(typeof row[i] === 'number' ||
 							(row[i].match &&
