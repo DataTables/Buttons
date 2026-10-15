@@ -39,11 +39,11 @@
 			  * `-type function` `customizeData` (since Buttons 1.5.2) - Function that can be used to modify the data used for the export, after all of it has been gathered and pre-processed by the above formatting options. A single argument is passed in and no return parameter is expected (mutate the object passed in to alter the data):
 			    1. Data for export. This is an object with the following properties:
 				  * `header` - Array of data for the header
-				  * `headerStructure` - 2D array describing the header cells, including rowspan and colspan information
+				  * `headerStructure` (since Buttons 3) - 2D array describing the header cells, including rowspan and colspan information
 				  * `footer` - Array of data for the footer
-				  * `footerStructure` - 2D array describing the footer cells, including rowspan and colspan information
+				  * `footerStructure` (since Buttons 3) - 2D array describing the footer cells, including rowspan and colspan information
 				  * `body` - 2D array of data for the body
-				  * `columnTypes` - Array of the DataTables detected type names for the selected columns. This can be changed when columns are added, removed or reordered by `customizeData`.
+				  * `columnTypes` (since Buttons 4.1.3) - Array of the DataTables detected type names for the selected columns. This can be changed when columns are added, removed or reordered by `customizeData`.
 			  ]]>
 		</parameter>
 		<description>
