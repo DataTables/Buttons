@@ -261,8 +261,7 @@ declare module 'datatables.net' {
 		 * Obtain data from a DataTable that is suitable for exporting by saving
 		 * into a file or copying to clipboard.
 		 *
-		 * @returns An object with 3 properties, one each for the data in the
-		 * header, body and footer.
+		 * @returns An object containing the data and metadata used for export.
 		 */
 		exportData(
 			options?: ButtonsApiExportDataParameter
