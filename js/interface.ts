@@ -913,7 +913,9 @@ export type ButtonBodyFormatter = (
 	el: HTMLElement
 ) => string;
 
-export type FunctionButtonCustomizeData = (content: any) => void;
+export type FunctionButtonCustomizeData = (
+	content: ButtonsApiExportDataReturn
+) => void;
 
 type FunctionButtonColvisColumnText = (
 	dt: Api<any>,
