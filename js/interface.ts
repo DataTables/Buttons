@@ -573,6 +573,7 @@ export interface ButtonsApiExportDataReturn {
 	footer: string[];
 	footerStructure: HeaderStructure[][];
 	body: string[][];
+	columnTypes: string[];
 }
 
 interface DefaultsButtonsDom {

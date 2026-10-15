@@ -25,7 +25,8 @@ describe('buttons - buttons.exportData()', function() {
 				'headerStructure',
 				'footer',
 				'footerStructure',
-				'body'
+				'body',
+				'columnTypes'
 			]);
 		});
 	});
@@ -64,6 +65,26 @@ describe('buttons - buttons.exportData()', function() {
 			var data = table.buttons.exportData({ columns: [3, 4, 5] });
 			expect(data.body[0].length).toBe(3);
 			expect(data.body[2][0]).toBe('66');
+		});
+		it('Column types - default', function() {
+			expect(defaultData.columnTypes).toEqual(
+				table.columns().types().toArray()
+			);
+		});
+		it('Column types - selected columns', function() {
+			var data = table.buttons.exportData({ columns: [3, 4, 5] });
+			expect(data.columnTypes).toEqual(
+				table.columns([3, 4, 5]).types().toArray()
+			);
+		});
+		it('Column types - customizeData', function() {
+			var data = table.buttons.exportData({
+				customizeData: function(data) {
+					data.columnTypes.splice(1, 0, 'string');
+				}
+			});
+			expect(data.columnTypes.length).toBe(7);
+			expect(data.columnTypes[1]).toBe('string');
 		});
 		it('DataTable.SelectorModifier - default', function() {
 			expect(defaultData.body[0][0]).toBe('Airi Satou');
