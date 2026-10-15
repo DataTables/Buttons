@@ -527,7 +527,7 @@ export const excelHtml5: ButtonConfig = {
 		};
 
 		var data = dt.buttons.exportData(config.exportOptions);
-		var columnTypes = dt.columns(config.exportOptions.columns).types();
+		var columnTypes = data.columnTypes;
 		var currentRow, rowNode;
 		var addRow = function (row: any[]) {
 			currentRow = rowPos + 1;

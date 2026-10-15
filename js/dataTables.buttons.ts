@@ -721,7 +721,8 @@ var _exportData = function (
 			config.format.footer,
 			dt.table().footer.structure(config.columns)
 		),
-		body: body
+		body: body,
+		columnTypes: dt.columns(config.columns).types().toArray()
 	};
 
 	if (config.customizeData) {
