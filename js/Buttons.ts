@@ -741,13 +741,13 @@ export default class Buttons {
 			// Fix position - centre on screen
 			var place = function () {
 				var half = Dom.w.height() / 2;
-
 				var top = display.height() / 2;
+
 				if (top > half) {
 					top = half;
 				}
 
-				display.css('marginTop', top + 'px');
+				display.css('marginTop', -top + 'px');
 			};
 
 			place();
