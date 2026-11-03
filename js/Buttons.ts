@@ -389,7 +389,7 @@ export default class Buttons {
 				str = _entityDecoder(str);
 			}
 			else {
-				if (! _exportTextarea) {
+				if (!_exportTextarea) {
 					_exportTextarea = Dom.c<HTMLTextAreaElement>('textarea')[0];
 				}
 
@@ -832,7 +832,7 @@ export default class Buttons {
 						return;
 					}
 
-					if (elements.get().includes(active)) {
+					if (!elements.get().includes(active)) {
 						// If current focus is not inside the popover
 						first.focus();
 						e.preventDefault();
