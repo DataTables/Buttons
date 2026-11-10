@@ -31,6 +31,7 @@
 	--dtb-collection_border: 1px solid rgba( 0, 0, 0, 0.4 );
 	--dtb-collection_background-color: white;
 	--dtb-collection_box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.3);
+	--dtb-collection_width: 200px;
 
 	&.dark {
 		--dtb-button_background: rgba(255, 255, 255, 0.05);
@@ -185,7 +186,7 @@ div.dt-button-collection {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 200px;
+	width: var(--dtb-collection_width);
 	margin-top: 3px;
 	margin-bottom: 3px;
 	padding: 0.75em 0;
