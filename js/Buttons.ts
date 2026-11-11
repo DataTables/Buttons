@@ -404,7 +404,7 @@ export default class Buttons {
 			// define the output as a string, which is done with a leading quote
 			// mark. This should not be done on data which is just purely
 			// numeric though.
-			if (!str.match(/^[+-]?\d+\.?\d*$/) && str.match(/^[=+\-@\t\r]/)) {
+			if (!Buttons.isNumber(str) && str.match(/^[=+\-@\t\r]/)) {
 				str = "'" + str;
 			}
 		}
@@ -421,6 +421,16 @@ export default class Buttons {
 	public static entityDecoder = function (fn: EntityDecoder) {
 		_entityDecoder = fn;
 	};
+
+	/**
+	 * Check if a value contains a number
+	 *
+	 * @param val Value to check
+	 * @returns `true` if it is
+	 */
+	public static isNumber = function (val: any): boolean {
+		return !isNaN(parseFloat(val)) && !isNaN(val - 0)
+	}
 
 	/**
 	 * Set the pdfMake library for use with the pdfHtml5 button type
