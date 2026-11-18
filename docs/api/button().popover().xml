@@ -6,10 +6,12 @@
 
 	<type type="function">
 		<signature>button().popover( content [, options ] )</signature>
-		<parameter type="string|node" name="content">
+		<parameter type="string|node|false" name="content">
 			The content to display in the popover. This should be an HTML string (including a wrapping element), or a node that you already have and wish to display in the popover.
+
+			If `false` is given, the existing popover will be hidden (if shown).
 		</parameter>
-		<parameter type="object" name="options">
+		<parameter type="object" name="options" default="{}">
 Configuration object to control the specifics of the popover. It supports the following properties:
 
 * `-type string` `collectionLayout` - Class name for additional styling to be applied. Be a combination of `fixed` and one of the column layout classes if required.
@@ -36,7 +38,7 @@ Configuration object to control the specifics of the popover. It supports the fo
 	* `true` - Show above the button when visible
 	* `false` - Show below the button (default)
 * `-type number` `fade` Fade in / out time of the popover
-	* Number in milli-seconds.
+	* Number in milliseconds.
 		</parameter>
 		<returns type="DataTable.Api">
 			DataTable API instance - no mutations.
