@@ -178,6 +178,21 @@ declare module 'datatables.net' {
 		node(): Dom;
 
 		/**
+		 * Show popover box for a button, allowing extra user input or
+		 * information to be shown. This gives the ability to define your own
+		 * content for display in context to the button.
+		 *
+		 * @param content The content to display in the popover. Can be `false`
+		 *   to hide an existing popover.
+		 * @param options Configuration object to control the specifics of the
+		 *   popover.
+		 */
+		popover(
+			content: HTMLElement | string | false,
+			options: PopoverOptions
+		): Api;
+
+		/**
 		 * Determine if a button is currently in the processing state or not.
 		 *
 		 * @returns true if the button is currently in its processing state,

@@ -646,7 +646,10 @@ export default class Buttons {
 		var position = display.css('position');
 
 		if (options.span === 'container' || options.align === 'dt-container') {
-			hostNode = hostNode.parent();
+			if (hostNode.get(0) !== document.body) {
+				hostNode = hostNode.parent();
+			}
+
 			display.css('width', tableContainer.width() + 'px');
 		}
 
