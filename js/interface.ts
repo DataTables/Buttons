@@ -588,6 +588,7 @@ interface DefaultsButtonsDom {
 		button?: {
 			active?: string;
 			className?: string;
+			disabled?: string;
 			tag: string;
 		};
 		split?: SplitStruct;
@@ -611,6 +612,7 @@ export interface SplitStruct {
 export interface ElStruct {
 	className: string;
 	tag: string;
+	disabled?: string;
 }
 
 export interface ButtonDom extends ElStruct {

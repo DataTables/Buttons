@@ -429,8 +429,8 @@ export default class Buttons {
 	 * @returns `true` if it is
 	 */
 	public static isNumber = function (val: any): boolean {
-		return !isNaN(parseFloat(val)) && !isNaN(val - 0)
-	}
+		return !isNaN(parseFloat(val)) && !isNaN(val - 0);
+	};
 
 	/**
 	 * Set the pdfMake library for use with the pdfHtml5 button type
@@ -1137,16 +1137,34 @@ export default class Buttons {
 		var button = this._nodeToButton(node);
 
 		if (button) {
+			let domStructure = util.object.assignDeep<
+				DefaultsButtons['dom']['button']
+			>({}, this.c.dom.button);
+
+			if (button.inCollection) {
+				util.object.assignDeep(
+					domStructure,
+					this.c.dom.collection.button
+				);
+			}
+
 			if (button.isSplit) {
 				button.node
 					.children()
 					.eq(0)
-					.classAdd(this.c.dom.button.disabled)
+					.classAdd(domStructure.disabled)
 					.prop('disabled', true);
 			}
 			else {
+				button.node.classAdd(domStructure.disabled).prop('disabled', true);
+			}
+
+			// The liner could have a disabled class on it as well
+			if (domStructure.liner && domStructure.liner.disabled) {
 				button.node
-					.classAdd(this.c.dom.button.disabled)
+					.children()
+					.eq(0)
+					.classAdd(domStructure.liner.disabled)
 					.prop('disabled', true);
 			}
 
@@ -1207,16 +1225,38 @@ export default class Buttons {
 		var button = this._nodeToButton(node);
 
 		if (button) {
+			// Get the right DOM structure for the level, extending from the
+			// base
+			let domStructure = util.object.assignDeep<
+				DefaultsButtons['dom']['button']
+			>({}, this.c.dom.button);
+
+			if (button.inCollection) {
+				util.object.assignDeep(
+					domStructure,
+					this.c.dom.collection.button
+				);
+			}
+
 			if (button.isSplit) {
 				button.node
 					.children()
 					.eq(0)
-					.classRemove(this.c.dom.button.disabled)
+					.classRemove(domStructure.disabled)
 					.prop('disabled', false);
 			}
 			else {
 				button.node
-					.classRemove(this.c.dom.button.disabled)
+					.classRemove(domStructure.disabled)
+					.prop('disabled', false);
+			}
+
+			// The liner could have a disabled class on it as well
+			if (domStructure.liner && domStructure.liner.disabled) {
+				button.node
+					.children()
+					.eq(0)
+					.classRemove(domStructure.liner.disabled)
 					.prop('disabled', false);
 			}
 
