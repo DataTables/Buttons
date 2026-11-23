@@ -976,7 +976,7 @@ export default class Buttons {
 	/**
 	 * Version information
 	 */
-	public static version = '4.1.3';
+	public static version = '4.1.4';
 
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
